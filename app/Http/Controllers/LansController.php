@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lan;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -43,6 +44,8 @@ class LansController extends Controller
 		$lan->duration = $request->duration;
 		$lan->budget = $request->budget;
 		$lan->save();
+		
+		$lan->users()->attach(Auth::user()->id);
 		
 		return response()->json([
 		'success'=>'Votre Lan a été correctement enregistrées'

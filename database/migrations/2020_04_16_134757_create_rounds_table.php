@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanUserTable extends Migration
+class CreateRoundsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateLanUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('lan_user', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('rounds', function (Blueprint $table) {
+            $table->id('id_round');
+            $table->unsignedInteger('player_count_max_round');
+			$table->unsignedInteger('length_match_round');
+			$table->unsignedInteger('players_per_match_round');
         });
     }
 
@@ -26,6 +28,6 @@ class CreateLanUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lan_user');
+        Schema::dropIfExists('rounds');
     }
 }

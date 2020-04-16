@@ -19,4 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('lan', 'LansController');
+
 Route::get('/home', 'HomeController@index')->name('home');

@@ -5,7 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">
+					<div class="row">
+						<div class="col mt-2">
+							<h3 class="lead-title">List Lans</h3>
+						</div>
+						<div class="col mt-1">
+							<form method="GET" action="{{ route('lan.create') }}">
+							@csrf
+							@method('GET')
+								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
+							</form>
+						</div>
+					</div>
+				</div>
 
                 <div class="card-body">
                     @if (session('status'))

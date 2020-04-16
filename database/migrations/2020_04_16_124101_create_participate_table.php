@@ -15,10 +15,12 @@ class CreateParticipateTable extends Migration
     {
         Schema::create('participate', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->bigInteger('user_id')->unsigned();
-			$table->bigInteger('lan_id')->unsigned();
-			$table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			      $table->bigInteger('user_id')->unsigned();
+			      $table->bigInteger('lan_id')->unsigned();
+            $table->integer('rank_lan')->unsigned();
+            $table->integer('score_lan')->unsigned();
+			      $table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
+			      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

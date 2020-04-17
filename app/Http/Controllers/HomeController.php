@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Lan;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $lans = Auth::user()->lans;
+        $lans = Lan::get();
 		
 		return view('home', compact('lans'));
     }

@@ -16,9 +16,10 @@ class LansController extends Controller
      */
     public function index()
     {
-        $lans = Auth::user()->lans;
+		$user = Auth::user();
+        $lans = $user->lans;
 		
-		return view('home', compact('lans'));
+		return view('dashboard.index', compact('lans', 'user'));
     }
 
     /**

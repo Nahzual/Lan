@@ -16,7 +16,9 @@ class LansController extends Controller
      */
     public function index()
     {
-        //
+        $lans = Auth::user()->lans;
+		
+		return view('home', compact('lans'));
     }
 
     /**
@@ -60,7 +62,9 @@ class LansController extends Controller
      */
     public function show($id)
     {
-        //
+		$lan = Auth::user()->lans()->findOrFail($id);
+		
+		return view('lan.show', compact('lan'));
     }
 
     /**
@@ -71,7 +75,9 @@ class LansController extends Controller
      */
     public function edit($id)
     {
-        //
+		$lan = Auth::user()->lans()->findOrFail($id);
+		
+		return view('lan.edit', compact('lan'));
     }
 
     /**
@@ -83,7 +89,13 @@ class LansController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		$lan = Auth::user()->lans()->findOrFail($id);
+		
+		//Met à jour la lan 
+		$lan->update($request->all());
+		$lan->save();
+		
+        return redirect(route('lan.show', $id));
     }
 
     /**
@@ -94,6 +106,10 @@ class LansController extends Controller
      */
     public function destroy($id)
     {
-        //
+		$lan = Auth::user()->lans()->findOrFail($id);
+		
+		//Supprime le bateau
+		$lan->delete();
+		return redirect(route('lan.index'));
     }
 }

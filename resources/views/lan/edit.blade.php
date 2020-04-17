@@ -8,7 +8,7 @@
                 <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">Editing Lan: {{$lan->name}}</h3>
+							<h3 class="lead-title">Editing Lan : {{$lan->name}}</h3>
 						</div>
 					</div>
 				</div>

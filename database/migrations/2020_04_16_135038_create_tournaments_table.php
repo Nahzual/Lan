@@ -22,7 +22,7 @@ class CreateTournamentsTable extends Migration
             $table->unsignedInteger('player_count_tournament');
             $table->string('match_mod_tournament');
             $table->unsignedInteger('max_player_count_tournament');
-            $table->bigInteger('id_game');
+            $table->unsignedBigInteger('id_game');
             $table->timestamps();
 
             $table->foreign('id_game')->references('id_game')->on('games')->onDelete('cascade');

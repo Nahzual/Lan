@@ -14,8 +14,8 @@ class DividedIn extends Migration
     public function up()
     {
       Schema::create('divided_in', function (Blueprint $table) {
-          $table->bigInteger('id_round');
-          $table->bigInteger('id_tournament');
+          $table->unsignedBigInteger('id_round');
+          $table->unsignedBigInteger('id_tournament');
           $table->foreign('id_round')->references('id_round')->on('rounds')->onDelete('cascade');
           $table->foreign('id_tournament')->references('id_tournament')->on('tournaments')->onDelete('cascade');
       });

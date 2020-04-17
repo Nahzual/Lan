@@ -14,8 +14,8 @@ class Contains extends Migration
     public function up()
     {
       Schema::create('contains', function (Blueprint $table) {
-          $table->bigInteger('id_shopping');
-          $table->bigInteger('id_material');
+          $table->unsignedBigInteger('id_shopping');
+          $table->unsignedBigInteger('id_material');
           $table->unsignedInteger('quantity');
           $table->foreign('id_shopping')->references('id_shopping')->on('shoppings')->onDelete('cascade');
           $table->foreign('id_material')->references('id_material')->on('materials')->onDelete('cascade');

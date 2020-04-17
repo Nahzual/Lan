@@ -14,8 +14,8 @@ class Needs extends Migration
     public function up()
     {
       Schema::create('needs', function (Blueprint $table) {
-          $table->bigInteger('id_material');
-          $table->bigInteger('id_lan');
+          $table->unsignedBigInteger('id_material');
+          $table->unsignedBigInteger('id_lan');
           $table->unsignedInteger('quantity');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
           $table->foreign('id_material')->references('id_material')->on('materials')->onDelete('cascade');

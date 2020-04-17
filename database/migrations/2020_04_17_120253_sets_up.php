@@ -14,8 +14,8 @@ class SetsUp extends Migration
     public function up()
     {
       Schema::create('sets_up', function (Blueprint $table) {
-          $table->bigInteger('id_tournament');
-          $table->bigInteger('id_lan');
+          $table->unsignedBigInteger('id_tournament');
+          $table->unsignedBigInteger('id_lan');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
           $table->foreign('id_tournament')->references('id_tournament')->on('tournaments')->onDelete('cascade');
       });

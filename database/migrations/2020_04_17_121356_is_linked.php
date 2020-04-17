@@ -14,8 +14,8 @@ class IsLinked extends Migration
     public function up()
     {
       Schema::create('is_linked', function (Blueprint $table) {
-          $table->bigInteger('id_lan');
-          $table->bigInteger('id_tasklist');
+          $table->unsignedBigInteger('id_lan');
+          $table->unsignedBigInteger('id_tasklist');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
           $table->foreign('id_tasklist')->references('id_tasklist')->on('tasklists')->onDelete('cascade');
       });

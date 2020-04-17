@@ -16,8 +16,8 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id('id_activity');
             $table->string('name_activity');
-			      $table->longText('desc_activity');
-            $table->bigInteger('id_lan');
+		    $table->longText('desc_activity');
+            $table->unsignedBigInteger('id_lan');
 
             $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
         });

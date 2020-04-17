@@ -21,7 +21,7 @@ class CreateLansTable extends Migration
             $table->integer('duration');
             $table->integer('budget');
             $table->tinyInteger('waiting_lan')->default(1);
-            $table->bigInteger('location_id');
+            $table->unsignedBigInteger('location_id');
             $table->timestamps();
 
             $table->foreign('location_id')->references('id_location')->on('locations')->onDelete('cascade');

@@ -14,9 +14,9 @@ class UsesPort extends Migration
     public function up()
     {
       Schema::create('uses_port', function (Blueprint $table) {
-          $table->bigInteger('id_port');
-          $table->bigInteger('id_game');
-          $table->foreign('id_port')->references('id_connexionport')->on('connexionport')->onDelete('cascade');
+          $table->unsignedBigInteger('id_port');
+          $table->unsignedBigInteger('id_game');
+          $table->foreign('id_port')->references('id_connexionport')->on('connexionports')->onDelete('cascade');
           $table->foreign('id_game')->references('id_game')->on('games')->onDelete('cascade');
       });
     }

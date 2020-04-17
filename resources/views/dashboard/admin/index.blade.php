@@ -55,6 +55,58 @@
                 <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
+							<h3 class="lead-title">Lans waiting to be confirmed</h3>
+						</div>
+					</div>
+				</div>
+
+        <div class="card-header text-center">
+					<div class="row lead">
+						<div class="col">#</div>
+						<div class="col">Name</div>
+						<div class="col">View</div>
+            <div class="col">Accept</div>
+						<div class="col">Reject</div>
+					</div>
+				</div>
+
+                <div class="card-body text-center">
+						@foreach($waiting_lans as $lan)
+							<div class="row">
+								<div class="col mt-2 lead-text">{{$lan->id}}</div>
+								<div class="col mt-2 lead-text">{{$lan->name}}</div>
+
+								<div class="col">
+									<a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
+								</div>
+                <div class="col">
+                  {!! Form::model($lan, ['method' => 'put', 'url' => route('lan.update', $lan)]) !!}
+                    {{ Form::hidden('waiting_lan', 0) }}
+										{{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> Accept', ['class' => 'btn btn-success', 'type' => 'submit']) }}
+									{{ Form::close() }}
+								</div>
+								<div class="col">
+                  {!! Form::model($lan, ['method' => 'put', 'url' => route('lan.update', $lan)]) !!}
+                    {{ Form::hidden('waiting_lan', 2) }}
+										{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> Accept', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+									{{ Form::close() }}
+								</div>
+							</div>
+							<br>
+						@endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+					<div class="row">
+						<div class="col mt-2">
 							<h3 class="lead-title">List My Lans</h3>
 						</div>
 						<div class="col mt-1">

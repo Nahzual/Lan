@@ -16,10 +16,16 @@ class LansController extends Controller
      */
     public function index()
     {
-		$user = Auth::user();
+
+		    $user = Auth::user();
         $lans = $user->lans;
-		
-		return view('dashboard.index', compact('lans', 'user'));
+
+        if($user->rank_user==1){
+          $waiting_lans = Lan::where('waiting_lan','=','1')->get();
+
+          return view('dashboard.admin.index', compact('lans', 'user','waiting_lans'));
+        }
+        else return view('dashboard.index', compact('lans', 'user'));
     }
 
     /**
@@ -47,11 +53,11 @@ class LansController extends Controller
 		$lan->duration = $request->duration;
 		$lan->budget = $request->budget;
 		$lan->save();
-		
+
 		$lan->users()->attach(Auth::user()->id, ['rank_lan' => 1, 'score_lan' => 0]);
-		
+
 		return response()->json([
-		'success'=>'Votre Lan a été correctement enregistrées'
+		'success'=>'Votre Lan a été correctement enregistrée'
 		]);
     }
 
@@ -63,9 +69,12 @@ class LansController extends Controller
      */
     public function show($id)
     {
-		$lan = Auth::user()->lans()->findOrFail($id);
-		
-		return view('lan.show', compact('lan'));
+      if(Auth::check()){
+        $lan = Lan::findOrFail($id);
+        return view('lan.show', compact('lan'));
+      }else{
+        return redirect('/home');
+      }
     }
 
     /**
@@ -76,8 +85,19 @@ class LansController extends Controller
      */
     public function edit($id)
     {
-		$lan = Auth::user()->lans()->findOrFail($id);
-		
+
+    if(Auth::check()){
+      $user=Auth::user();
+      if($user->lans()->findOrFail($id)==null && $user->rank!=1){
+        return redirect('/home');
+      }else{
+        $lan = Lan::findOrFail($id);
+        return view('lan.edit', compact('lan'));
+      }
+    }else{
+      return redirect('/home');
+    }
+
 		return view('lan.edit', compact('lan'));
     }
 
@@ -90,13 +110,21 @@ class LansController extends Controller
      */
     public function update(Request $request, $id)
     {
-		$lan = Auth::user()->lans()->findOrFail($id);
-		
-		//Met à jour la lan 
-		$lan->update($request->all());
-		$lan->save();
-		
-        return redirect(route('lan.show', $id));
+
+      if(Auth::check()){
+        $user=Auth::user();
+        if($user->lans()->findOrFail($id)==null && $user->rank!=1){
+          return redirect('/home');
+        }else{
+          $lan = Lan::findOrFail($id);
+          $lan->update($request->all());
+          $lan->save();
+
+          return redirect(route('lan.show', $id));
+        }
+      }else{
+        return redirect('/home');
+      }
     }
 
     /**
@@ -108,7 +136,7 @@ class LansController extends Controller
     public function destroy($id)
     {
 		$lan = Auth::user()->lans()->findOrFail($id);
-		
+
 		//Supprime le bateau
 		$lan->delete();
 		return redirect(route('lan.index'));

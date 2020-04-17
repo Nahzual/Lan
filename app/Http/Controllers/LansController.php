@@ -45,7 +45,7 @@ class LansController extends Controller
 		$lan->budget = $request->budget;
 		$lan->save();
 		
-		$lan->users()->attach(Auth::user()->id);
+		$lan->users()->attach(Auth::user()->id, ['rank_lan' => 1, 'score_lan' => 0]);
 		
 		return response()->json([
 		'success'=>'Votre Lan a été correctement enregistrées'

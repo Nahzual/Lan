@@ -15,12 +15,15 @@ class CreateLansTable extends Migration
     {
         Schema::create('lans', function (Blueprint $table) {
             $table->id();
-			$table->string('name');
-			$table->integer('max_num_registrants');
-			$table->date('opening_date');
-			$table->integer('duration');
-			$table->integer('budget');
+			      $table->string('name');
+			      $table->integer('max_num_registrants');
+			      $table->date('opening_date');
+            $table->integer('duration');
+            $table->integer('budget');
+            $table->bigInteger('location_id');
             $table->timestamps();
+
+            $table->foreign('location_id')->references('id_location')->on('locations')->onDelete('cascade');
         });
     }
 

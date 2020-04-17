@@ -15,6 +15,9 @@ class CreateMatchsTable extends Migration
     {
         Schema::create('matchs', function (Blueprint $table) {
             $table->id('id_match');
+            $table->bigInteger('id_round');
+
+            $table->foreign('id_round')->references('id_round')->on('rounds')->onDelete('cascade');
         });
     }
 

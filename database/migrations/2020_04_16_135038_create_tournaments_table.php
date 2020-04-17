@@ -15,14 +15,17 @@ class CreateTournamentsTable extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id('id_tournament');
-			$table->string('name_tournament');
-			$table->longText('desc_tournament');
-			$table->date('opening_date_tournament');
-			$table->boolean('is_finished_tournament')->default(false);
-			$table->unsignedInteger('player_count_tournament');
-			$table->string('match_mod_tournament');
-			$table->unsignedInteger('max_player_count_tournament');
+            $table->string('name_tournament');
+            $table->longText('desc_tournament');
+            $table->date('opening_date_tournament');
+            $table->boolean('is_finished_tournament')->default(false);
+            $table->unsignedInteger('player_count_tournament');
+            $table->string('match_mod_tournament');
+            $table->unsignedInteger('max_player_count_tournament');
+            $table->bigInteger('id_game');
             $table->timestamps();
+
+            $table->foreign('id_game')->references('id_game')->on('games')->onDelete('cascade');
         });
     }
 

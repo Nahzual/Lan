@@ -29,6 +29,6 @@ class Requires extends Migration
      */
     public function down()
     {
-      Schema::dropIfExists('favorite_games');
+      Schema::dropIfExists('requires');
     }
 }

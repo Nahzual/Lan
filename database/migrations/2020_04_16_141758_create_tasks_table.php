@@ -16,11 +16,11 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id('id_task');
             $table->string('name_task');
-		    $table->longText('desc_task');
-		    $table->date('deadline_task');
-            $table->unsignedBigInteger('id_tasklist');
+		        $table->longText('desc_task');
+		        $table->date('deadline_task');
+            $table->unsignedBigInteger('id_lan');
 
-            $table->foreign('id_tasklist')->references('id_tasklist')->on('tasklists')->onDelete('cascade');
+            $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
         });
     }
 

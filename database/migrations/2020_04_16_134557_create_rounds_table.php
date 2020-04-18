@@ -16,8 +16,11 @@ class CreateRoundsTable extends Migration
         Schema::create('rounds', function (Blueprint $table) {
             $table->id('id_round');
             $table->unsignedInteger('player_count_max_round');
-			$table->unsignedInteger('length_match_round');
-			$table->unsignedInteger('players_per_match_round');
+			      $table->unsignedInteger('length_match_round');
+			      $table->unsignedInteger('players_per_match_round');
+            $table->unsignedBigInteger('id_tournament');
+
+            $table->foreign('id_tournament')->references('id_tournament')->on('tournaments')->onDelete('cascade');
         });
     }
 

@@ -16,6 +16,9 @@ class CreateStreetsTable extends Migration
         Schema::create('streets', function (Blueprint $table) {
             $table->id('id_street');
 			$table->string('name_street', 30);
+			$table->unsignedBigInteger('city_id');
+			
+			$table->foreign('city_id')->references('id_city')->on('cities')->onDelete('cascade');
         });
     }
 

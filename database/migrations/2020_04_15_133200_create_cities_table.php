@@ -17,6 +17,9 @@ class CreateCitiesTable extends Migration
             $table->id('id_city');
 			$table->string('name_city');
             $table->unsignedBigInteger('zip_city');
+			$table->unsignedBigInteger('department_id');
+			
+			$table->foreign('department_id')->references('id_department')->on('departments')->onDelete('cascade');
         });
     }
 

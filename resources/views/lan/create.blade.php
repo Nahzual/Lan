@@ -33,6 +33,32 @@
 								{!! Form::text('budget', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
+						<div class="bg-light">
+							<div class="form-group">
+								{!! Form::label('num_location', 'Numero Street', ['class' => 'lead']) !!}
+								{!! Form::text('num_location', null, ['class' => 'form-control']) !!}
+							</div>
+							<div class="form-group">
+								{!! Form::label('name_street', 'Name Street', ['class' => 'lead']) !!}
+								{!! Form::text('name_street', null, ['class' => 'form-control']) !!}
+							</div>
+							<div class="form-group">
+								{!! Form::label('name_city', 'Name City', ['class' => 'lead']) !!}
+								{!! Form::text('name_city', null, ['class' => 'form-control']) !!}
+							</div>
+							<div class="form-group">
+								{!! Form::label('zip_city', 'Zip', ['class' => 'lead']) !!}
+								{!! Form::text('zip_city', null, ['class' => 'form-control']) !!}
+							</div>
+							<div class="form-group">
+								{!! Form::label('name_department', 'Name Department', ['class' => 'lead']) !!}
+								{!! Form::text('name_department', null, ['class' => 'form-control']) !!}
+							</div>
+							<div class="form-group">
+								{!! Form::label('name_country', 'Name Country', ['class' => 'lead']) !!}
+								{!! Form::text('name_country', null, ['class' => 'form-control']) !!}
+							</div>
+						</div>
 						<div class="form-group row text-center">
 							<div class="col">
 								<button type="submit" class="btn btn-primary" id="AddNewLanSubmit"><i class='fa fa-plus-square'></i> Add</button>
@@ -70,7 +96,13 @@
 					max_num_registrants: $('#max_num_registrants').val(),
 					opening_date: $('#opening_date').val(),
 					duration: $('#duration').val(),
-					budget: $('#budget').val()
+					budget: $('#budget').val(),
+					num_location: $('#num_location').val(),
+					name_street: $('#name_street').val(),
+					name_city: $('#name_city').val(),
+					zip_city: $('#zip_city').val(),
+					name_department: $('#name_department').val(),
+					name_country: $('#name_country').val()
 				},
 				success: function(result){
 					$('.alert ').show();

@@ -15,9 +15,9 @@ class CreateLansTable extends Migration
     {
         Schema::create('lans', function (Blueprint $table) {
             $table->id();
-			      $table->string('name');
-			      $table->integer('max_num_registrants');
-			      $table->date('opening_date');
+			$table->string('name');
+			$table->integer('max_num_registrants');
+			$table->date('opening_date');
             $table->integer('duration');
             $table->integer('budget');
             $table->tinyInteger('waiting_lan')->default(1);

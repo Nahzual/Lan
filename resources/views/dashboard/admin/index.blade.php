@@ -60,6 +60,9 @@
 					</div>
 				</div>
 
+        <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
+        <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+
         <div class="card-header text-center">
 					<div class="row lead">
 						<div class="col">#</div>
@@ -80,7 +83,7 @@
 									<a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
 								</div>
                 <div class="col">
-                  {!! Form::model($lan, ['method' => 'put', 'url' => route('lan.update', $lan)]) !!}
+                  {!! Form::model($lan, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$lan->id.')']) !!}
                     {{ Form::hidden('waiting_lan', 0) }}
 										{{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> Accept', ['class' => 'btn btn-success', 'type' => 'submit']) }}
 									{{ Form::close() }}
@@ -88,7 +91,7 @@
 								<div class="col">
                   {!! Form::model($lan, ['method' => 'put', 'url' => route('lan.update', $lan)]) !!}
                     {{ Form::hidden('waiting_lan', 2) }}
-										{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> Accept', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+										{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> Reject', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
 									{{ Form::close() }}
 								</div>
 							</div>
@@ -163,4 +166,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js_includes')
+<script src="/js/ajax/lan/ajax_validate.js"></script>
 @endsection

@@ -81,5 +81,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('js_includes')
 </body>
 </html>

@@ -163,7 +163,12 @@ class LansController extends Controller
     {
 		if(Auth::check()){
 			$lan = Lan::findOrFail($id);
-			return view('lan.show', compact('lan'));
+			$location = $lan->location;
+			$street = $location->street;
+			$city = $street->city;
+			$department = $city->department;
+			$country = $department->country;
+			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'));
 		}else{
 			return redirect('/home');
 		}

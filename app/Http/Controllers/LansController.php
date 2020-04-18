@@ -58,7 +58,7 @@ class LansController extends Controller
 			$country = new Country();
 			$country->name_country = $request->name_country;
 			$country->save();
-			$country = Country::findOrFail($country->id);
+			//$country = Country::findOrFail($country->id);
 		}else{
 			$departments = $country->departments;
 		}
@@ -75,9 +75,8 @@ class LansController extends Controller
 			$department = new Department();
 			$department->name_department = $request->name_department;
 			$department->country()->associate($country);
-			//$department->country_id = $country->id_country;
 			$department->save();
-			$department = Department::findOrFail($department->id);
+			//$department = Department::findOrFail($department->id);
 		}else{
 			$cities = $department->cities;
 		}
@@ -96,9 +95,8 @@ class LansController extends Controller
 			$city->name_city = $request->name_city;
 			$city->zip_city = $request->zip_city;
 			$city->department()->associate($department);
-			//$city->department_id = $department->id_department;
 			$city->save();
-			$city = City::findOrFail($city->id);
+			//$city = City::findOrFail($city->id);
 		}else{
 			$streets = $city->streets;
 		}
@@ -116,9 +114,8 @@ class LansController extends Controller
 			$street = new Street();
 			$street->name_street = $request->name_street;
 			$street->city()->associate($city);
-			//$street->city_id = $city->id_city;
 			$street->save();
-			$street = Street::findOrFail($street->id);
+			//$street = Street::findOrFail($street->id);
 		}else{
 			$locations = $street->locations;
 		}
@@ -136,9 +133,8 @@ class LansController extends Controller
 			$location = new Location();
 			$location->num_street = $request->num_location;
 			$location->street()->associate($street);
-			//$location->street_id = $street->id_street;
 			$location->save();
-			$location = Location::findOrFail($location->id);
+			//$location = Location::findOrFail($location->id);
 		}
 		
 		$lan = new Lan();
@@ -148,7 +144,6 @@ class LansController extends Controller
 		$lan->duration = $request->duration;
 		$lan->budget = $request->budget;
 		$lan->location()->associate($location);
-		//$lan->location_id = $location->id_location;
 		$lan->save();
 		
 		$lan->users()->attach(Auth::user()->id, ['rank_lan' => 1, 'score_lan' => 0]);

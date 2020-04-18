@@ -14,6 +14,7 @@ class UsesPort extends Migration
     public function up()
     {
       Schema::create('uses_port', function (Blueprint $table) {
+		  $table->id();
           $table->unsignedBigInteger('id_port');
           $table->unsignedBigInteger('id_game');
           $table->unsignedBigInteger('id_lan');

@@ -14,6 +14,7 @@ class CanPlay extends Migration
     public function up()
     {
       Schema::create('can_play', function (Blueprint $table) {
+		  $table->id();
           $table->unsignedBigInteger('id_lan');
           $table->unsignedBigInteger('id_game');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');

@@ -14,7 +14,7 @@ class CreateShoppingsTable extends Migration
     public function up()
     {
         Schema::create('shoppings', function (Blueprint $table) {
-            $table->id('id_shopping');
+            $table->id();
 			$table->unsignedInteger('cost_shopping');
         });
     }

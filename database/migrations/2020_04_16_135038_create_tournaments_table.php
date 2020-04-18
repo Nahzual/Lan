@@ -14,7 +14,7 @@ class CreateTournamentsTable extends Migration
     public function up()
     {
         Schema::create('tournaments', function (Blueprint $table) {
-            $table->id('id_tournament');
+            $table->id();
             $table->string('name_tournament');
             $table->longText('desc_tournament');
             $table->date('opening_date_tournament');

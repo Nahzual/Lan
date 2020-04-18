@@ -14,7 +14,7 @@ class CreateRoundsTable extends Migration
     public function up()
     {
         Schema::create('rounds', function (Blueprint $table) {
-            $table->id('id_round');
+            $table->id();
             $table->unsignedInteger('player_count_max_round');
 			      $table->unsignedInteger('length_match_round');
 			      $table->unsignedInteger('players_per_match_round');

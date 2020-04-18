@@ -14,7 +14,7 @@ class CreateMaterialsTable extends Migration
     public function up()
     {
         Schema::create('materials', function (Blueprint $table) {
-            $table->id('id_material');
+            $table->id();
 			$table->longText('desc_material');
 			$table->string('name_material');
         });

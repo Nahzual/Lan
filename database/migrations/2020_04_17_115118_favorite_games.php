@@ -14,6 +14,7 @@ class FavoriteGames extends Migration
     public function up()
     {
       Schema::create('favorite_games', function (Blueprint $table) {
+		  $table->id();
           $table->unsignedBigInteger('id_user');
           $table->unsignedBigInteger('id_game');
           $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

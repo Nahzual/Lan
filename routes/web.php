@@ -23,3 +23,8 @@ Route::resource('lan', 'LansController');
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/az', function(){
+	$t = App\Lan::all()->first();
+	dd($t->location());
+});

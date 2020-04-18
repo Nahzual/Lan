@@ -14,7 +14,7 @@ class CreateStreetsTable extends Migration
     public function up()
     {
         Schema::create('streets', function (Blueprint $table) {
-            $table->id('id_street');
+            $table->id();
 			$table->string('name_street', 30);
 			$table->unsignedBigInteger('city_id');
 			

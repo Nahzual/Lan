@@ -14,6 +14,7 @@ class Requires extends Migration
     public function up()
     {
       Schema::create('requires', function (Blueprint $table) {
+		  $table->id();
           $table->unsignedBigInteger('id_lan');
           $table->unsignedBigInteger('id_shopping');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');

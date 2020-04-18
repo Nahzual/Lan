@@ -14,7 +14,7 @@ class CreateConnexionportsTable extends Migration
     public function up()
     {
         Schema::create('connexionports', function (Blueprint $table) {
-            $table->id('id_connexionport');
+            $table->id();
             $table->unsignedInteger('port_connexionport');
         });
     }

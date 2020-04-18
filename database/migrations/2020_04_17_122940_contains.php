@@ -14,6 +14,7 @@ class Contains extends Migration
     public function up()
     {
       Schema::create('contains', function (Blueprint $table) {
+		  $table->id();
           $table->unsignedBigInteger('id_shopping');
           $table->unsignedBigInteger('id_material');
           $table->unsignedInteger('quantity');

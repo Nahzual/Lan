@@ -14,6 +14,7 @@ class Needs extends Migration
     public function up()
     {
       Schema::create('needs', function (Blueprint $table) {
+		  $table->id();
           $table->unsignedBigInteger('id_material');
           $table->unsignedBigInteger('id_lan');
           $table->unsignedInteger('quantity');

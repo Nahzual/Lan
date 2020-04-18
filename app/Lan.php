@@ -47,6 +47,6 @@ class Lan extends Model
   }
 
   public function location(){
-    return $this->hasOne('App\Location');
+    return $this->belongsTo('App\Location');
   }
 }

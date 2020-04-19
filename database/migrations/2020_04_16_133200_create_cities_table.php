@@ -19,7 +19,7 @@ class CreateCitiesTable extends Migration
             $table->unsignedBigInteger('zip_city');
 			$table->unsignedBigInteger('department_id');
 			
-			$table->foreign('department_id')->references('id_department')->on('departments')->onDelete('cascade');
+			$table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
         });
     }
 

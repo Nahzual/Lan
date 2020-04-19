@@ -18,7 +18,7 @@ class Oppose extends Migration
           $table->unsignedBigInteger('id_user');
           $table->unsignedBigInteger('id_match');
           $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-          $table->foreign('id_match')->references('id_match')->on('matchs')->onDelete('cascade');
+          $table->foreign('id_match')->references('id')->on('matchs')->onDelete('cascade');
       });
     }
 

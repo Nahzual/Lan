@@ -24,7 +24,7 @@ class CreateLansTable extends Migration
             $table->unsignedBigInteger('location_id');
             $table->timestamps();
 
-            $table->foreign('location_id')->references('id_location')->on('locations')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
         });
     }
 

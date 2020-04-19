@@ -18,7 +18,7 @@ class CreateDepartmentsTable extends Migration
 			$table->string('name_department');
 			$table->unsignedBigInteger('country_id');
 			
-			$table->foreign('country_id')->references('id_country')->on('countries')->onDelete('cascade');
+			$table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
 

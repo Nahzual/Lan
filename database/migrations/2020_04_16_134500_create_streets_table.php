@@ -18,7 +18,7 @@ class CreateStreetsTable extends Migration
 			$table->string('name_street', 30);
 			$table->unsignedBigInteger('city_id');
 			
-			$table->foreign('city_id')->references('id_city')->on('cities')->onDelete('cascade');
+			$table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
     }
 

@@ -20,7 +20,7 @@ class CreateRoundsTable extends Migration
 			      $table->unsignedInteger('players_per_match_round');
             $table->unsignedBigInteger('id_tournament');
 
-            $table->foreign('id_tournament')->references('id_tournament')->on('tournaments')->onDelete('cascade');
+            $table->foreign('id_tournament')->references('id')->on('tournaments')->onDelete('cascade');
         });
     }
 

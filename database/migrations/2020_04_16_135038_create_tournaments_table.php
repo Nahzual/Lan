@@ -26,7 +26,7 @@ class CreateTournamentsTable extends Migration
             $table->unsignedBigInteger('id_lan');
             $table->timestamps();
 
-            $table->foreign('id_game')->references('id_game')->on('games')->onDelete('cascade');
+            $table->foreign('id_game')->references('id')->on('games')->onDelete('cascade');
             $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
         });
     }

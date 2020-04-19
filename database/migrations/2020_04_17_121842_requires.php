@@ -18,7 +18,7 @@ class Requires extends Migration
           $table->unsignedBigInteger('id_lan');
           $table->unsignedBigInteger('id_shopping');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
-          $table->foreign('id_shopping')->references('id_shopping')->on('shoppings')->onDelete('cascade');
+          $table->foreign('id_shopping')->references('id')->on('shoppings')->onDelete('cascade');
       });
     }
 

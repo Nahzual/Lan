@@ -18,7 +18,7 @@ class CreateLocationsTable extends Migration
             $table->unsignedInteger('num_street');
       			$table->unsignedBigInteger('street_id');
 
-      			$table->foreign('street_id')->references('id_street')->on('streets')->onDelete('cascade');
+      			$table->foreign('street_id')->references('id')->on('streets')->onDelete('cascade');
         });
     }
 

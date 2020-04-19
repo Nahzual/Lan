@@ -18,7 +18,7 @@ class FavoriteGames extends Migration
           $table->unsignedBigInteger('id_user');
           $table->unsignedBigInteger('id_game');
           $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-          $table->foreign('id_game')->references('id_game')->on('games')->onDelete('cascade');
+          $table->foreign('id_game')->references('id')->on('games')->onDelete('cascade');
       });
     }
 

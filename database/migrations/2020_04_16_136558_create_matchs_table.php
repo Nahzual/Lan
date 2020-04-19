@@ -17,7 +17,7 @@ class CreateMatchsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_round');
 
-            $table->foreign('id_round')->references('id_round')->on('rounds')->onDelete('cascade');
+            $table->foreign('id_round')->references('id')->on('rounds')->onDelete('cascade');
         });
     }
 

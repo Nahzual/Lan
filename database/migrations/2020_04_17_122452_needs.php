@@ -19,7 +19,7 @@ class Needs extends Migration
           $table->unsignedBigInteger('id_lan');
           $table->unsignedInteger('quantity');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
-          $table->foreign('id_material')->references('id_material')->on('materials')->onDelete('cascade');
+          $table->foreign('id_material')->references('id')->on('materials')->onDelete('cascade');
       });
     }
 

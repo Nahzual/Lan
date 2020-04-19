@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $lans = Lan::get();
-		
-		return view('home', compact('lans'));
+        $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'))->get();
+
+		    return view('home', compact('lans'));
     }
 }

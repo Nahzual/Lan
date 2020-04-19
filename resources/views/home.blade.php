@@ -18,6 +18,7 @@
 						<div class="col">Name</div>
 						<div class="col">Participants</div>
 						<div class="col">Date</div>
+            <div class="col"></div>
 					</div>
 				</div>
 

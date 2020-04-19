@@ -32,6 +32,14 @@
 								{!! Form::label('budget', 'Budget', ['class' => 'lead']) !!}
 								{!! Form::text('budget', null, ['class' => 'form-control']) !!}
 							</div>
+              <div class="form-group">
+                {!! Form::label('room_length', 'Room length', ['class' => 'lead']) !!}
+                {!! Form::text('room_length', null, ['class' => 'form-control']) !!}
+              </div>
+              <div class="form-group">
+                {!! Form::label('room_width', 'Room width', ['class' => 'lead']) !!}
+                {!! Form::text('room_width', null, ['class' => 'form-control']) !!}
+              </div>
 						</div>
 						<div class="bg-light">
 							<div class="form-group">
@@ -63,7 +71,7 @@
 							<div class="col">
 								<button type="submit" class="btn btn-primary" id="AddNewLanSubmit"><i class='fa fa-plus-square'></i> Add</button>
 							</div>
-							
+
 							<div class="col">
 								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> Go Back to Lan List</a>
 							</div>
@@ -102,7 +110,9 @@
 					name_city: $('#name_city').val(),
 					zip_city: $('#zip_city').val(),
 					name_department: $('#name_department').val(),
-					name_country: $('#name_country').val()
+					name_country: $('#name_country').val(),
+          room_width: $('#room_width').val(),
+          room_length: $('#room_length').val()
 				},
 				success: function(result){
 					$('.alert ').show();

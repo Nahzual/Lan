@@ -39,7 +39,41 @@
       								{!! Form::label('budget', 'Budget', ['class' => 'lead']) !!}
       								{!! Form::text('budget', null, ['class' => 'form-control']) !!}
       							</div>
+                    <div class="form-group">
+      								{!! Form::label('room_length', 'Room length', ['class' => 'lead']) !!}
+      								{!! Form::text('room_length', null, ['class' => 'form-control']) !!}
+      							</div>
+                    <div class="form-group">
+      								{!! Form::label('room_width', 'Room width', ['class' => 'lead']) !!}
+      								{!! Form::text('room_width', null, ['class' => 'form-control']) !!}
+      							</div>
       						</div>
+                  <div class="bg-light">
+                    <div class="form-group">
+                      {!! Form::label('num_street', 'Numero Street', ['class' => 'lead']) !!}
+                      {!! Form::text('num_street', $location->num_street, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('name_street', 'Name Street', ['class' => 'lead']) !!}
+                      {!! Form::text('name_street', $street->name_street, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('name_city', 'Name City', ['class' => 'lead']) !!}
+                      {!! Form::text('name_city', $city->name_city, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('zip_city', 'Zip', ['class' => 'lead']) !!}
+                      {!! Form::text('zip_city', $city->zip_city, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('name_department', 'Name Department', ['class' => 'lead']) !!}
+                      {!! Form::text('name_department', $department->name_department, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('name_country', 'Name Country', ['class' => 'lead']) !!}
+                      {!! Form::text('name_country', $country->name_country, ['class' => 'form-control']) !!}
+                    </div>
+                  </div>
       						<div class="form-group row text-center">
       							<div class="col">
       								<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>

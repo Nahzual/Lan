@@ -13,14 +13,16 @@ class CreateLanUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('lan_user', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->unsigned();
-			$table->unsignedBigInteger('lan_id')->unsigned();
-            $table->unsignedInteger('rank_lan')->unsigned();
-            $table->unsignedInteger('score_lan')->unsigned();
-			$table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+      Schema::create('lan_user', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('user_id')->unsigned();
+        $table->unsignedBigInteger('lan_id')->unsigned();
+        $table->unsignedInteger('rank_lan')->unsigned();
+        $table->unsignedInteger('score_lan')->unsigned();
+        $table->unsignedInteger('place_number')->unsigned();
+
+        $table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

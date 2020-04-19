@@ -20,6 +20,8 @@ class CreateLansTable extends Migration
 			      $table->date('opening_date');
             $table->integer('duration');
             $table->integer('budget');
+            $table->unsignedInteger('room_width');
+            $table->unsignedInteger('room_length');
             $table->tinyInteger('waiting_lan')->default(1);
             $table->unsignedBigInteger('location_id');
             $table->timestamps();

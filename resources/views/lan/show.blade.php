@@ -29,6 +29,14 @@
 						<label class="lead col-3 mt-1 text-center">Budget</label>
 						<label class="form-control col-8">{{$lan->budget}} €</label>
 					</div>
+          <div class="row">
+            <label class="lead col-3 mt-1 text-center">Room width</label>
+            <label class="form-control col-8">{{$lan->room_width}} m</label>
+          </div>
+          <div class="row">
+            <label class="lead col-3 mt-1 text-center">Room length</label>
+            <label class="form-control col-8">{{$lan->room_length}} m</label>
+          </div>
 					<div class="row">
 						<label class="lead col-3 mt-1 text-center">Numero Street</label>
 						<label class="form-control col-8">{{$location->num_street}}</label>

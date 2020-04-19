@@ -49,4 +49,20 @@ class Lan extends Model
   public function location(){
     return $this->belongsTo('App\Location');
   }
+
+  public function street(){
+    return $this->location()->belongsTo('App\Street');
+  }
+
+  public function city(){
+    return $this->street()->belongsTo('App\City');
+  }
+
+  public function department(){
+    return $this->city()->belongsTo('App\Department');
+  }
+
+  public function country(){
+    return $this->department()->belongsTo('App\Country');
+  }
 }

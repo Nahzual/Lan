@@ -17,6 +17,7 @@ class CreateMaterialsTable extends Migration
             $table->id();
 			$table->longText('desc_material');
 			$table->string('name_material');
+			$table->unsignedInteger('price_material');
         });
     }
 

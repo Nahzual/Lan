@@ -39,6 +39,9 @@ Route::resource('tournament/round/match', 'MatchesController');
 Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 Route::resource('task', 'TasksController');
+Route::resource('activity', 'ActivitiesController');
+
+
 
 /*LAN ADMIN ROUTES*/
 

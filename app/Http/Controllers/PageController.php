@@ -24,7 +24,7 @@ class PageController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request){
+    public function home(Request $request){
         $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'));
 
         // lan research based on location
@@ -74,5 +74,10 @@ class PageController extends Controller
         else if(isset($request->date2)) return view('home', compact('lans'))->with(['date2'=>$request->date2]);
         else if(isset($request->location)) return view('home', compact('lans'))->with(['location'=>$request->location]);
 
+    }
+
+    public function contact()
+    {
+	return view('contact');
     }
 }

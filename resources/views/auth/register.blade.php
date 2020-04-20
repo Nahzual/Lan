@@ -24,7 +24,7 @@
                                 @enderror
                             </div>
                         </div>
-						
+
 						<div class="form-group row">
                             <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
@@ -38,7 +38,7 @@
                                 @enderror
                             </div>
                         </div>
-						
+
 						<div class="form-group row">
                             <label for="pseudo" class="col-md-4 col-form-label text-md-right">{{ __('Pseudo') }}</label>
 
@@ -66,7 +66,7 @@
                                 @enderror
                             </div>
                         </div>
-						
+
 						<div class="form-group row">
                             <label for="tel_user" class="col-md-4 col-form-label text-md-right">{{ __('Tel') }}</label>
 
@@ -101,6 +101,43 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
+                        </div>
+
+                        <div class="form-group row">
+                          {!! Form::label('num_street', 'Numero Street', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                          <div class="col-md-6">
+                            {!! Form::text('num_street', null, ['class' => 'form-control']) !!}
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          {!! Form::label('name_street', 'Name Street', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                          <div class="col-md-6">
+                            {!! Form::text('name_street', null, ['class' => 'form-control']) !!}
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          {!! Form::label('name_city', 'Name City', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                          <div class="col-md-6">
+                            {!! Form::text('name_city', null, ['class' => 'form-control']) !!}
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          {!! Form::label('zip_city', 'Zip', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                          <div class="col-md-6">
+                            {!! Form::text('zip_city', null, ['class' => 'form-control']) !!}
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          {!! Form::label('name_department', 'Name Department', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                          <div class="col-md-6">
+                            {!! Form::text('name_department', null, ['class' => 'form-control']) !!}
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          {!! Form::label('name_country', 'Name Country', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+                          <div class="col-md-6">
+                            {!! Form::text('name_country', null, ['class' => 'form-control']) !!}
+                          </div>
                         </div>
 
                         <div class="form-group row mb-0">

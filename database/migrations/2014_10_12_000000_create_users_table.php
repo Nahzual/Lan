@@ -23,6 +23,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('tel_user',10);
             $table->unsignedInteger('rank_user')->default(0);
+            $table->unsignedBigInteger('location_id');
+
+            $table->foreign('location_id')->references('id')->on('location');
             $table->rememberToken();
             $table->timestamps();
         });

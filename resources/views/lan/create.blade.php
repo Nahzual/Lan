@@ -22,7 +22,7 @@
 							</div>
 							<div class="form-group">
 								{!! Form::label('opening_date', 'Date', ['class' => 'lead']) !!}
-								{!! Form::text('opening_date', null, ['class' => 'form-control']) !!}
+								{!! Form::date('opening_date', null, ['class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
 								{!! Form::label('duration', 'Duration', ['class' => 'lead']) !!}

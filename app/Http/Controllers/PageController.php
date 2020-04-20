@@ -66,6 +66,7 @@ class PageController extends Controller
 
         $lans=$lans->get();
 
+
         if(isset($request->date1) && isset($request->date2) && isset($request->location)) return view('home', compact('lans'))->with(['location'=>$request->location,'date1'=>$request->date1,'date2'=>$request->date2]);
         else if(isset($request->date1) && isset($request->date2)) return view('home', compact('lans'))->with(['date1'=>$request->date1,'date2'=>$request->date2]);
         else if(isset($request->date1) && isset($request->location)) return view('home', compact('lans'))->with(['location'=>$request->location,'date1'=>$request->date1]);
@@ -73,6 +74,7 @@ class PageController extends Controller
         else if(isset($request->date1)) return view('home', compact('lans'))->with(['date1'=>$request->date1]);
         else if(isset($request->date2)) return view('home', compact('lans'))->with(['date2'=>$request->date2]);
         else if(isset($request->location)) return view('home', compact('lans'))->with(['location'=>$request->location]);
+        else return view('home', compact('lans'));
 
     }
 

@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('rank_user')->default(0);
             $table->unsignedBigInteger('location_id');
 
-            $table->foreign('location_id')->references('id')->on('location');
+            $table->foreign('location_id')->references('id')->on('locations');
             $table->rememberToken();
             $table->timestamps();
         });

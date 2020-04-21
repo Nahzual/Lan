@@ -21,15 +21,18 @@ class LansController extends Controller
      */
     public function index()
     {
-
-		    $user = Auth::user();
-        $lans = $user->lans;
+      if(Auth::check()){
+        $user = Auth::user();
+        $lans = $user->lans()->where('lan_user.rank_lan','=','1')->get();
 
         if($user->rank_user==1){
 			       $waiting_lans = Lan::where('waiting_lan','=','1')->get();
-
-			          return view('dashboard.admin.index', compact('lans', 'user','waiting_lans'));
+			       return view('dashboard.admin.index', compact('lans', 'user','waiting_lans'));
         }else return view('dashboard.index', compact('lans', 'user'));
+      }else{
+        return redirect('/');
+      }
+
     }
 
     /**
@@ -161,7 +164,6 @@ class LansController extends Controller
        */
       public function show($id)
       {
-  		if(Auth::check()){
   			$lan = Lan::findOrFail($id);
   			$location = $lan->location;
   			$street = $location->street;
@@ -169,10 +171,7 @@ class LansController extends Controller
   			$department = $city->department;
   			$country = $department->country;
   			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'));
-  		}else{
-  			return redirect('/home');
-  		}
-    }
+      }
 
     /**
      * Show the form for editing the specified resource.

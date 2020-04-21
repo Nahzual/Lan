@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/', 'PageController@home')->name('home');
 Route::get('/home', 'PageController@home')->name('home');
+Route::post('/home', 'PageController@homeLanList');
 
 Route::get('/contact', 'PageController@contact')->name('contact');
 Route::get('/contactus', 'PageController@contact')->name('contact');

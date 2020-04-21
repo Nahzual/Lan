@@ -58,7 +58,7 @@
                             @endif
                         @else
 				<li class="nav-item">
-								<a class="nav-link" href="{{ route('lan.index') }}"><i class='fa fa-wrench'></i> {{ __('Dashboard') }}</a>
+								<a class="nav-link" href="{{ route('dashboard') }}"><i class='fa fa-wrench'></i> {{ __('Dashboard') }}</a>
                             </li>
 			    @if(Auth::user()->rank_user==1)
 

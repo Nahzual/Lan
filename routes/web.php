@@ -29,6 +29,8 @@ Route::get('/contactus', 'PageController@contact')->name('contact');
 
 /*LOGGED ROUTES*/
 Route::resource('lan', 'LansController');
+Route::get('lan/participate/{id}', 'LansController@participate')->name('lan.participate');
+Route::post('lan/participate/{id}', 'LansController@postParticipate');
 Route::get('/dashboard', 'LansController@index')->name('dashboard');
 Route::resource('game', 'GamesController');
 Route::resource('tournament', 'TournamentsController');

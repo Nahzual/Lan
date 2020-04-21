@@ -9,6 +9,7 @@ use App\Street;
 use App\Department;
 use App\Country;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -23,10 +24,10 @@ class LansController extends Controller
     {
       if(Auth::check()){
         $user = Auth::user();
-        $lans = $user->lans()->where('lan_user.rank_lan','=','1')->get();
+        $lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
 
-        if($user->rank_user==1){
-			       $waiting_lans = Lan::where('waiting_lan','=','1')->get();
+        if($user->rank_user==config('ranks.SITE_ADMIN')){
+			       $waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
 			       return view('dashboard.admin.index', compact('lans', 'user','waiting_lans'));
         }else return view('dashboard.index', compact('lans', 'user'));
       }else{
@@ -149,10 +150,10 @@ class LansController extends Controller
     		$lan->location()->associate($location);
     		$lan->save();
 
-    		$lan->users()->attach(Auth::user()->id, ['rank_lan' => 1, 'score_lan' => 0, 'place_number' => 0]);
+    		$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
 
     		return response()->json([
-    		    'success'=>'Votre Lan a été correctement enregistrée'
+    		    'success'=>'Your LAN has been saved successfully.'
     		]);
       }
 
@@ -183,7 +184,7 @@ class LansController extends Controller
     {
   		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->findOrFail($id)==null && $user->rank!=1){
+  			if($user->lans()->findOrFail($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
   				return redirect('/home');
   			}else{
   				$lan = Lan::findOrFail($id);
@@ -211,8 +212,8 @@ class LansController extends Controller
 
   		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->findOrFail($id)==null && $user->rank!=1){
-          return response()->json(['error'=>'Cette lan n\'a pas pu être modifiée car vous n\'en êtes pas administrateur']);
+  			if($user->lans()->find($id)==null && $user->rank!=config('ranks.ADMIN')){
+          return response()->json(['error'=>'You have to be an admin of this LAN to edit it.']);
   			}else{
   				$lan = Lan::findOrFail($id);
   				$lan->update($request->all());
@@ -331,11 +332,38 @@ class LansController extends Controller
           if($location!=$lan_location) $lan->location()->associate($location);
   				$lan->save();
 
-  				return response()->json(['success'=>'Votre LAN a bien été modifiée.']);
+  				return response()->json(['success'=>'Your LAN has been successfully edited.']);
   			}
   		}else{
-        return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
+        return response()->json(['error'=>'Please login to perform this action.']);
   		}
+    }
+
+    public function participate($id){
+      if(Auth::check()){
+        $lan=Lan::findOrFail($id);
+
+        return view('lan.participate',compact('lan'));
+      }else{
+        return redirect('/');
+      }
+    }
+
+    public function postParticipate($id,Request $request){
+      if(Auth::check()){
+        $lan=Lan::findOrFail($id);
+        $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
+        if(count($place_taken)==0){
+          $user=Auth::user();
+          $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
+          return response()->json(['success'=>'You have been successfully registered to this LAN.']);
+        }else{
+          return response()->json(['error'=>'This place has already been taken, please choose another one.']);
+        }
+
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
     }
 
     /**

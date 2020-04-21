@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -62,7 +63,6 @@
 
         <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
         <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
-
         <div class="card-header text-center">
 					<div class="row lead">
 						<div class="col">#</div>

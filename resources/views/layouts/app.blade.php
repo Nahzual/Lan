@@ -99,6 +99,8 @@
         </nav>
 
         <main class="py-4">
+          <div class="container alert alert-success mt-2" style="<?php  echo (!session('success')) ? 'display:none' : ''; ?>"><?php echo (session('success')) ? session('success') : ''; ?></div>
+          <div class="container alert alert-danger mt-2" style="<?php  echo (!session('error')) ? 'display:none' : ''; ?>"><?php echo (session('error')) ? session('error') : ''; ?></div>
             @yield('content')
         </main>
     </div>

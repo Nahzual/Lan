@@ -31,9 +31,8 @@ class LansController extends Controller
 			       return view('dashboard.admin.index', compact('lans', 'user','waiting_lans'));
         }else return view('dashboard.index', compact('lans', 'user'));
       }else{
-        return redirect('/');
+        return redirect('/login')->with('error','Please log in to have access to this page.');
       }
-
     }
 
     /**
@@ -53,108 +52,116 @@ class LansController extends Controller
      * @return \Illuminate\Http\Response
      */
 	   public function store(Request $request){
-  	    //Country
-    		$countries = Country::where('name_country','=',$request->name_country)->get();
-    		if($countries != null){$country = $countries->first();}
-    		if(!isset($country)){
-    			$country = new Country();
-    			$country->name_country = $request->name_country;
-    			$country->save();
-    			//$country = Country::findOrFail($country->id);
-    		}else{
-    			$departments = $country->departments;
-    		}
-    		//Department
-    		if(isset($departments)){
-    			foreach($departments as $tdepartment){
-    				if($tdepartment->name_department == $request->name_department){
-    					$department = $tdepartment;
-    					break;
-    				}
-    			}
-    		}
-    		if(!isset($department)){
-    			$department = new Department();
-    			$department->name_department = $request->name_department;
-    			$department->country()->associate($country);
-    			$department->save();
-    			//$department = Department::findOrFail($department->id);
-    		}else{
-    			$cities = $department->cities;
-    		}
 
-    		//City
-    		if(isset($cities)){
-    			foreach($cities as $tcity){
-    				if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
-    					$city = $tcity;
-    					break;
-    				}
-    			}
-    		}
-    		if(!isset($city)){
-    			$city = new City();
-    			$city->name_city = $request->name_city;
-    			$city->zip_city = $request->zip_city;
-    			$city->department()->associate($department);
-    			$city->save();
-    			//$city = City::findOrFail($city->id);
-    		}else{
-    			$streets = $city->streets;
-    		}
+       if(Auth::check()){
+         //Country
+     		$countries = Country::where('name_country','=',$request->name_country)->get();
+     		if($countries != null){$country = $countries->first();}
+     		if(!isset($country)){
+     			$country = new Country();
+     			$country->name_country = $request->name_country;
+     			$country->save();
+     			//$country = Country::findOrFail($country->id);
+     		}else{
+     			$departments = $country->departments;
+     		}
+     		//Department
+     		if(isset($departments)){
+     			foreach($departments as $tdepartment){
+     				if($tdepartment->name_department == $request->name_department){
+     					$department = $tdepartment;
+     					break;
+     				}
+     			}
+     		}
+     		if(!isset($department)){
+     			$department = new Department();
+     			$department->name_department = $request->name_department;
+     			$department->country()->associate($country);
+     			$department->save();
+     			//$department = Department::findOrFail($department->id);
+     		}else{
+     			$cities = $department->cities;
+     		}
 
-    		//Street
-    		if(isset($streets)){
-    			foreach($streets as $tstreet){
-    				if($tstreet->name_street == $request->name_street){
-    					$street = $tstreet;
-    					break;
-    				}
-    			}
-    		}
-    		if(!isset($street)){
-    			$street = new Street();
-    			$street->name_street = $request->name_street;
-    			$street->city()->associate($city);
-    			$street->save();
-    			//$street = Street::findOrFail($street->id);
-    		}else{
-    			$locations = $street->locations;
-    		}
+     		//City
+     		if(isset($cities)){
+     			foreach($cities as $tcity){
+     				if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
+     					$city = $tcity;
+     					break;
+     				}
+     			}
+     		}
+     		if(!isset($city)){
+     			$city = new City();
+     			$city->name_city = $request->name_city;
+     			$city->zip_city = $request->zip_city;
+     			$city->department()->associate($department);
+     			$city->save();
+     			//$city = City::findOrFail($city->id);
+     		}else{
+     			$streets = $city->streets;
+     		}
 
-    		//Location
-    		if(isset($locations)){
-    			foreach($locations as $tlocation){
-    				if($tlocation->num_street == $request->num_location){
-    					$location = $tlocation;
-    					break;
-    				}
-    			}
-    		}
-    		if(!isset($location)){
-    			$location = new Location();
-    			$location->num_street = $request->num_location;
-    			$location->street()->associate($street);
-    			$location->save();
-    			//$location = Location::findOrFail($location->id);
-    		}
+     		//Street
+     		if(isset($streets)){
+     			foreach($streets as $tstreet){
+     				if($tstreet->name_street == $request->name_street){
+     					$street = $tstreet;
+     					break;
+     				}
+     			}
+     		}
+     		if(!isset($street)){
+     			$street = new Street();
+     			$street->name_street = $request->name_street;
+     			$street->city()->associate($city);
+     			$street->save();
+     			//$street = Street::findOrFail($street->id);
+     		}else{
+     			$locations = $street->locations;
+     		}
 
-    		$lan = new Lan();
-    		$lan->name = $request->name;
-    		$lan->max_num_registrants = $request->max_num_registrants;
-    		$lan->opening_date = $request->opening_date;
-    		$lan->duration = $request->duration;
-    		$lan->budget = $request->budget;
-        $lan->room_width = $request->room_width;
-        $lan->room_length = $request->room_length;
-    		$lan->location()->associate($location);
-    		$lan->save();
+     		//Location
+     		if(isset($locations)){
+     			foreach($locations as $tlocation){
+     				if($tlocation->num_street == $request->num_location){
+     					$location = $tlocation;
+     					break;
+     				}
+     			}
+     		}
+     		if(!isset($location)){
+     			$location = new Location();
+     			$location->num_street = $request->num_location;
+     			$location->street()->associate($street);
+     			$location->save();
+     			//$location = Location::findOrFail($location->id);
+     		}
 
-    		$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
+     		$lan = new Lan();
+     		$lan->name = $request->name;
+     		$lan->max_num_registrants = $request->max_num_registrants;
+     		$lan->opening_date = $request->opening_date;
+     		$lan->duration = $request->duration;
+     		$lan->budget = $request->budget;
+         $lan->room_width = $request->room_width;
+         $lan->room_length = $request->room_length;
+     		$lan->location()->associate($location);
+     		$lan->save();
 
-    		return response()->json([
-    		    'success'=>'Your LAN has been saved successfully.'
-    		]);
+     		$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
+
+     		return response()->json([
+     		    'success'=>'Your LAN has been saved successfully.'
+     		]);
+      }else{
+        return response()->json([
+     		    'error'=>'Please log in to perform this action.'
+     		]);
+      }
+
       }
 
       /**
@@ -184,8 +191,8 @@ class LansController extends Controller
     {
   		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->findOrFail($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return redirect('/home');
+  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
   			}else{
   				$lan = Lan::findOrFail($id);
           $location = $lan->location;
@@ -196,7 +203,7 @@ class LansController extends Controller
   				return view('lan.edit', compact('lan', 'location', 'street', 'city', 'department', 'country'));
   			}
   		}else{
-  			return redirect('/home');
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
   		}
     }
 
@@ -345,7 +352,7 @@ class LansController extends Controller
 
         return view('lan.participate',compact('lan'));
       }else{
-        return redirect('/');
+        return redirect('/login')->with('error','You must be logged in to join a LAN.');
       }
     }
 

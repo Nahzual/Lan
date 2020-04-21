@@ -13,9 +13,6 @@
 					             </div>
 				       </div>
 
-               <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-               <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
-
               <div class="card-body">
                 {!! Form::model($lan, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$lan->id.')']) !!}
       						<div class="bg-light">

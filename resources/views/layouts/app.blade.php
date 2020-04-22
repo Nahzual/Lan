@@ -99,9 +99,24 @@
         </nav>
 
         <main class="py-4">
-          <div class="container alert alert-success mt-2" style="<?php  echo (!session('success')) ? 'display:none' : ''; ?>"><?php echo (session('success')) ? session('success') : ''; ?></div>
-          <div class="container alert alert-danger mt-2" style="<?php  echo (!session('error')) ? 'display:none' : ''; ?>"><?php echo (session('error')) ? session('error') : ''; ?></div>
-            @yield('content')
+
+          <!-- Success message -->
+          <div class="container alert alert-dismissible alert-success show mt-2" style="<?php  echo (!session('success')) ? 'display:none' : ''; ?>" role="alert">
+            <?php echo (session('success')) ? session('success') : ''; ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- Error message -->
+          <div class="container alert alert-dismissible alert-danger show mt-2" style="<?php  echo (!session('error')) ? 'display:none' : ''; ?>" role="alert">
+            <?php echo (session('error')) ? session('error') : ''; ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          @yield('content')
         </main>
     </div>
     @yield('js_includes')

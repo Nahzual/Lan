@@ -8,7 +8,7 @@
                 <div class="card-header">
 					        <div class="row">
 						              <div class="col mt-2">
-							                  <h3 class="lead-title">Adding helper to Lan : {{$lan->name}}</h3>
+							                  <h3 class="lead-title">Adding admin to Lan : {{$lan->name}}</h3>
 						              </div>
 					             </div>
 				       </div>
@@ -17,11 +17,11 @@
                <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
                <div class="card-body">
-                 {!! Form::open(['method' => 'post','onsubmit'=>'searchHelper(event,'.$lan->id.')']) !!}
+                 {!! Form::open(['method' => 'post','onsubmit'=>'searchAdmin(event,'.$lan->id.')']) !!}
                    <div class="bg-light">
-                     <h4 class='lead'>Helper's name :</h4>
+                     <h4 class='lead'>Admin's name :</h4>
                      <div class="form-group">
-                       {!! Form::hidden('view_path', 'user.helper.show_add') !!}
+                       {!! Form::hidden('view_path', 'user.admin.show_add') !!}
                        {!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}
                      </div>
                    </div>
@@ -48,5 +48,5 @@
 @endsection
 
 @section('js_includes')
-<script src="/js/ajax/lan/ajax_add_helper.js"></script>
+<script src="/js/ajax/lan/ajax_add_admin.js"></script>
 @endsection

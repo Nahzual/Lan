@@ -74,7 +74,6 @@ class GamesController extends Controller
     {
   		if(Auth::check()){
   				return view('game.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class GamesController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

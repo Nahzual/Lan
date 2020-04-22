@@ -80,8 +80,10 @@
       							</div>
       						</div>
       					{!! Form::close() !!}
-                <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-                <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+
+                <div id="response-success" class="container alert alert-success mt-2" style="display:none"></div>
+                <div id="response-error" class="container alert alert-danger mt-2" style="display:none"></div>
+
               </div>
             </div>
           </div>

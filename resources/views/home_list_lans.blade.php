@@ -11,7 +11,7 @@
 						@foreach($lans as $lan)
 						<div class="row">
 							<div class="col mt-2 lead-text">{{$lan->name}}</div>
-							<div class="col mt-2 lead-text">{{ count($lan->users) }}/{{ $lan->max_num_registrants }}</div>
+							<div class="col mt-2 lead-text">{{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }}</div>
 							<div class="col mt-2 lead-text">{{$lan->opening_date}}</div>
 
 							<div class="col">

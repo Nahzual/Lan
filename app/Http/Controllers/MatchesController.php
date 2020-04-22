@@ -74,7 +74,6 @@ class MatchesController extends Controller
     {
   		if(Auth::check()){
   				return view('match.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class MatchesController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

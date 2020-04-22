@@ -1,7 +1,7 @@
       <div class="card">
         <div class="card-header">
           <div class="col mt-2">
-            <h3 class="lead-title">Helpers</h3>
+            <h3 class="lead-title">Admins</h3>
           </div>
           <div class="row lead text-center">
             <div class="col-3">#</div>
@@ -11,17 +11,17 @@
           </div>
         </div>
         <div class="card-body text-center">
-        @if (isset($helpers))
-          @foreach($helpers as $helper)
+        @if (isset($admins))
+          @foreach($admins as $admin)
           <div class="row">
-            <div class="col-3 mt-2 lead-text">{{$helper->id}}</div>
-            <div class="col mt-2 lead-text">{{$helper->pseudo}}</div>
+            <div class="col-3 mt-2 lead-text">{{$admin->id}}</div>
+            <div class="col mt-2 lead-text">{{$admin->pseudo}}</div>
 
             <div class="col">
-              <a class="btn btn-success" href="{{ route('user.show', $helper->id) }}"><i class='fa fa-eye'></i> View</a>
+              <a class="btn btn-success" href="{{ route('user.show', $admin->id) }}"><i class='fa fa-eye'></i> View</a>
             </div>
             <div class="col">
-              {!! Form::open(['method' => 'post','onsubmit'=>'removeuser(event,'.$lan->id.','.$helper->id.')']) !!}
+              {!! Form::open(['method' => 'post','url'=>'','onsubmit'=>'removeAdmin(event,'.$lan->id.','.$admin->id.')']) !!}
                 <div class="form-group row text-center">
                   <div class="col">
                     <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Remove</button>
@@ -35,7 +35,7 @@
           @endif
           <div class="form-group row text-center">
             <div class="col">
-              <a class="btn btn-primary" href="{{ route('lan.add_helper', $lan->id) }}"><i class='fa fa-plus-square'></i> Add helpers</a>
+              <a class="btn btn-primary" href="{{ route('lan.add_admin', $lan->id) }}"><i class='fa fa-plus-square'></i> Add admins</a>
             </div>
           </div>
         </div>

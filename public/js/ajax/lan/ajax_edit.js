@@ -21,7 +21,7 @@ function sendRequest(e,id){
           +'&room_length='+$("[name='room_length']").val()
           +'&room_width='+$("[name='room_width']").val(),
     success: function(data){
-      if(data.success!=""){
+      if(data.success != undefined){
         $('#response-success').show();
         $('#response-success').html(data.success);
       }else{

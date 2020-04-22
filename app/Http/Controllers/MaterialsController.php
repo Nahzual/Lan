@@ -74,7 +74,6 @@ class MaterialsController extends Controller
     {
   		if(Auth::check()){
   				return view('material.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class MaterialsController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

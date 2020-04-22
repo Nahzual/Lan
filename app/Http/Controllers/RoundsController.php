@@ -74,7 +74,6 @@ class RoundsController extends Controller
     {
   		if(Auth::check()){
   				return view('round.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class RoundsController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

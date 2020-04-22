@@ -7,7 +7,7 @@ function sendRequestAccept(e,id){
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_accept").val(),
     success: function(data){
-      if(data.success!=""){
+      if(data.success != undefined){
         $('#response-success').show();
         $('#response-success').html("The LAN has been successfully accepted.");
       }else{
@@ -32,7 +32,7 @@ function sendRequestReject(e,id){
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_reject").val(),
     success: function(data){
-      if(data.success!=""){
+      if(data.success != undefined){
         $('#response-success').show();
         $('#response-success').html("The LAN has been successfully rejected.");
       }else{

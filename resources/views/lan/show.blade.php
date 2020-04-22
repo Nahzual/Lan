@@ -54,17 +54,31 @@
       </div>
     </div>
 
-    <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-    <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
-    <div class="mt-2 row justify-content-center">
-      <div class="col-md-8">
+@if ($userIsLanAdmin)
+<div id="response-success-admin" class="container alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-admin" class="container alert alert-danger mt-2" style="display:none"></div>
+
+  <div class="mt-2 row justify-content-center">
+    <div class="col-md-8">
+      @include('user.admin.show_remove')
+    </div>
+  </div>
+
+  <div id="response-success-helper" class="container alert alert-success mt-2" style="display:none"></div>
+  <div id="response-error-helper" class="container alert alert-danger mt-2" style="display:none"></div>
+
+  <div class="mt-2 row justify-content-center">
+    <div class="col-md-8">
       @include('user.helper.show_remove')
     </div>
   </div>
+@endif
+
 </div>
 @endsection
 
 @section('js_includes')
 <script src="/js/ajax/lan/ajax_add_helper.js"></script>
+<script src="/js/ajax/lan/ajax_add_admin.js"></script>
 @endsection

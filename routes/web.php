@@ -29,11 +29,22 @@ Route::get('/contactus', 'PageController@contact')->name('contact');
 
 /*LOGGED ROUTES*/
 Route::resource('lan', 'LansController');
+
+// player participation
 Route::get('lan/participate/{id}', 'LansController@participate')->name('lan.participate');
 Route::post('lan/participate/{id}', 'LansController@postParticipate');
+Route::delete('lan/participate/{id}', 'LansController@removePlayer');
+
+// helper participation
 Route::get('lan/helper/{id}', 'LansController@addHelper')->name('lan.add_helper');
 Route::post('lan/helper/{id}', 'LansController@postAddHelper');
 Route::delete('lan/helper/{id}', 'LansController@removeHelper');
+
+// admin participation
+Route::get('lan/admin/{id}', 'LansController@addAdmin')->name('lan.add_admin');
+Route::post('lan/admin/{id}', 'LansController@postAddAdmin');
+Route::delete('lan/admin/{id}', 'LansController@removeAdmin');
+
 Route::get('/dashboard', 'LansController@index')->name('dashboard');
 Route::resource('game', 'GamesController');
 Route::resource('tournament', 'TournamentsController');
@@ -45,7 +56,7 @@ Route::resource('tournament/round/match', 'MatchesController');
 Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 Route::resource('task', 'TasksController');
-Route::resource('activity', 'ActivitiesController');
+//Route::resource('activity', 'ActivitiesController');
 
 
 

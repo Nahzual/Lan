@@ -1,4 +1,4 @@
-function searchHelper(e,lanID){
+function searchAdmin(e,lanID){
   if(e!=null) e.preventDefault();
 
   $.ajax({
@@ -20,15 +20,15 @@ function searchHelper(e,lanID){
   return false;
 }
 
-function addHelper(e,lanID,helperID){
+function addAdmin(e,lanID,adminID){
   if(e!=null) e.preventDefault();
 
   $.ajax({
     type: "POST",
-    url: '/lan/helper/'+lanID,
+    url: '/lan/admin/'+lanID,
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()
-          +'&id_user='+helperID,
+          +'&id_user='+adminID,
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();
@@ -46,22 +46,22 @@ function addHelper(e,lanID,helperID){
   return false;
 }
 
-function removeHelper(e,lanID,helperID){
+function removeAdmin(e,lanID,adminID){
   if(e!=null) e.preventDefault();
 
   $.ajax({
     type: "DELETE",
-    url: '/lan/helper/'+lanID,
+    url: '/lan/admin/'+lanID,
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()
-          +'&id_user='+helperID,
+          +'&id_user='+adminID,
     success: function(data){
       if(data.success != undefined){
-        $('#response-success-helper').show();
-        $('#response-success-helper').html(data.success);
+        $('#response-success-admin').show();
+        $('#response-success-admin').html(data.success);
       }else{
-        $('#response-error-helper').show();
-        $('#response-error-helper').html(data.error);
+        $('#response-error-admin').show();
+        $('#response-error-admin').html(data.error);
       }
     },
     error: function(xhr,status,error){

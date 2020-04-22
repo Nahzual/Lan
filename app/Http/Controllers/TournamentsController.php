@@ -74,7 +74,6 @@ class TournamentsController extends Controller
     {
   		if(Auth::check()){
   				return view('tournament.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class TournamentsController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

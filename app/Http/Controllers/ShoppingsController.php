@@ -74,7 +74,6 @@ class ShoppingsController extends Controller
     {
   		if(Auth::check()){
   				return view('shopping.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class ShoppingsController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

@@ -17,7 +17,7 @@
                <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
               <div class="card-body">
-                {!! Form::model($lan, ['method' => 'post', 'onsubmit' => 'return sendRequest(event,'.$lan->id.')']) !!}
+                {!! Form::model($lan, ['method' => 'post', 'onsubmit' => 'return addPlayer(event,'.$lan->id.')']) !!}
       						<div class="bg-light">
       							<div class="form-group">
       								{!! Form::label('place_number', 'Place number', ['class' => 'lead']) !!}

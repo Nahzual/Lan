@@ -25,12 +25,14 @@ class LansController extends Controller
     {
       if(Auth::check()){
         $user = Auth::user();
-        $lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+        $admin_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+        $helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+        $player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
 
         if($user->rank_user==config('ranks.SITE_ADMIN')){
 			       $waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
-			       return view('dashboard.admin.index', compact('lans', 'user','waiting_lans'));
-        }else return view('dashboard.index', compact('lans', 'user'));
+			       return view('dashboard.admin.index', compact('admin_lans','helper_lans','player_lans', 'user','waiting_lans'));
+        }else return view('dashboard.index', compact('admin_lans','helper_lans','player_lans', 'user'));
       }else{
         return redirect('/login')->with('error','Please log in to have access to this page.');
       }
@@ -186,9 +188,10 @@ class LansController extends Controller
   			$country = $department->country;
         if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
           $helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','helpers'));
+          $admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','helpers','admins'))->with(['userIsLanAdmin'=>true]);
         }else{
-          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'));
+          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'))->with(['userIsLanAdmin'=>false]);
         }
       }
 
@@ -230,7 +233,7 @@ class LansController extends Controller
 
   		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank!=config('ranks.ADMIN')){
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
           return response()->json(['error'=>'You have to be an admin of this LAN to edit it.']);
   			}else{
   				$lan = Lan::findOrFail($id);
@@ -370,15 +373,30 @@ class LansController extends Controller
     public function postParticipate($id,Request $request){
       if(Auth::check()){
         $lan=Lan::findOrFail($id);
-        $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
-        if(count($place_taken)==0){
-          $user=Auth::user();
-          $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
-          return response()->json(['success'=>'You have been successfully registered to this LAN.']);
+        $user=Auth::user();
+        $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
+        if($lan_user_player==null){
+          $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
+          if(count($place_taken)==0){
+            $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
+            return response()->json(['success'=>'You have been successfully registered to this LAN.']);
+          }else{
+            return response()->json(['error'=>'This place has already been taken, please choose another one.']);
+          }
         }else{
-          return response()->json(['error'=>'This place has already been taken, please choose another one.']);
+          return response()->json(['error'=>'You are already participating to this LAN.']);
         }
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
 
+    public function removePlayer($id){
+      if(Auth::check()){
+        $lan=Lan::findOrFail($id);
+        $user=Auth::user();
+        DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
+        return response()->json(['success'=>'You are no longer registered to this LAN.']);
       }else{
         return response()->json(['error'=>'Please login to perform this action.']);
       }
@@ -393,7 +411,7 @@ class LansController extends Controller
           return view('lan.add_helper',compact('lan'));
         }
       }else{
-        return redirect('/login')->with('error','You must be logged in to join a LAN.');
+        return redirect('/login')->with('error','Please login to perform this action.');
       }
     }
 
@@ -434,6 +452,66 @@ class LansController extends Controller
           }
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to remove helpers from it.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
+
+    public function addAdmin($id){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan==null){
+          return back()->with('error','You have to be an admin of this LAN to add helpers to it.');
+        }else{
+          return view('lan.add_admin',compact('lan'));
+        }
+      }else{
+        return redirect('/login')->with('error','Please login to perform this action.');
+      }
+    }
+
+    public function postAddAdmin($id,Request $request){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null){
+          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          if($user!=null){
+            $lan_user_admin=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first();
+            if($lan_user_admin==null){
+              $lan->users()->attach($user,['rank_lan'=>config('ranks.ADMIN'),'score_lan'=>'0','place_number'=>'0']);
+              return response()->json(['success'=>'The user "'.$user->pseudo.'" is now admin on this LAN.']);
+            }else{
+              return response()->json(['error'=>'The user "'.$user->pseudo.'" is already admin on this LAN.']);
+            }
+          }else{
+            return response()->json(['error'=>'This user doesn\'t exist.']);
+          }
+        }else{
+          return response()->json(['error'=>'You have to be an admin of this LAN to add admins to it.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
+
+    public function removeAdmin($id,Request $request){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null){
+          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          if($user!=null){
+            if(count($lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get())>1){
+              DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.ADMIN'))->delete();
+              return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer admin on this LAN.']);
+            }else{
+              return response()->json(['error'=>'You are the last admin on this LAN, please add at least an other admin before removing yourself from this LAN\'s admin list.']);
+            }
+          }else{
+            return response()->json(['error'=>'This user doesn\'t exist or isn\'t admin on this lan.']);
+          }
+        }else{
+          return response()->json(['error'=>'You have to be an admin of this LAN to remove admins from it.']);
         }
       }else{
         return response()->json(['error'=>'Please login to perform this action.']);

@@ -74,7 +74,6 @@ class TasksController extends Controller
     {
   		if(Auth::check()){
   				return view('task.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +90,7 @@ class TasksController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
     }
 
     /**

@@ -85,9 +85,9 @@ class UsersController extends Controller
      */
     public function search(Request $request)
     {
-      $helpers=User::where('pseudo','LIKE',$request->pseudo)->get();
+      $users=User::where('pseudo','LIKE',$request->pseudo)->get();
       $lan=Lan::where('id','=',$request->lan_id)->first();
-      return view('user.helper.show_add',compact('helpers','lan'));
+      return view($request->view_path,compact('users','lan'));
     }
 
     /**

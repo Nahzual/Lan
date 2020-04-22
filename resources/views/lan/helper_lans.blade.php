@@ -12,13 +12,5 @@
   <div class="col">
     <a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
   </div>
-  <div class="col">
-    <a class="btn btn-warning" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
-  </div>
-  <div class="col">
-    {{ Form::open([ 'method'  => 'delete', 'route' => [ 'lan.destroy', $lan->id ] ]) }}
-      {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
-    {{ Form::close() }}
-  </div>
 </div>
 <br>

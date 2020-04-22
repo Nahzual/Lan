@@ -9,7 +9,10 @@
 					<h3 class="lead-title">Creating new Lan</h3>
 				</div>
 				<div class="card-body">
-					<div class ="alert alert-success" style="display:none"></div>
+
+          <div id="response-success" class="container alert alert-success mt-2" style="display:none"></div>
+          <div id="response-error" class="container alert alert-danger mt-2" style="display:none"></div>
+
 					{!! Form::open(['method' => 'put', 'id' => 'CreateNewLanForm']) !!}
 						<div class="bg-light">
 							<div class="form-group">
@@ -115,8 +118,13 @@
           room_length: $('#room_length').val()
 				},
 				success: function(result){
-					$('.alert ').show();
-					$('.alert ').html(result.success);
+          if(result.success!=undefined){
+            $('#response-success').show();
+  					$('#response-success').html(result.success);
+          }else{
+            $('#response-error').show();
+            $('#response-error').html(result.error);
+          }
 				}
 			});
 		});

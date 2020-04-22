@@ -8,6 +8,7 @@ use App\City;
 use App\Street;
 use App\Department;
 use App\Country;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,12 @@ class LansController extends Controller
      */
     public function create()
     {
-        return view('lan.create');
+        if(Auth::check()){
+          return view('lan.create');
+        }else{
+          return redirect('/login')->with('error','You have to be logged in to create a new LAN.');
+        }
+
     }
 
     /**
@@ -178,7 +184,12 @@ class LansController extends Controller
   			$city = $street->city;
   			$department = $city->department;
   			$country = $department->country;
-  			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'));
+        if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
+          $helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','helpers'));
+        }else{
+          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'));
+        }
       }
 
     /**
@@ -368,6 +379,62 @@ class LansController extends Controller
           return response()->json(['error'=>'This place has already been taken, please choose another one.']);
         }
 
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
+
+    public function addHelper($id){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan==null){
+          return back()->with('error','You have to be an admin of this LAN to add helpers to it.');
+        }else{
+          return view('lan.add_helper',compact('lan'));
+        }
+      }else{
+        return redirect('/login')->with('error','You must be logged in to join a LAN.');
+      }
+    }
+
+    public function postAddHelper($id,Request $request){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null){
+          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          if($user!=null){
+            $lan_user_helper=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first();
+            if($lan_user_helper==null){
+              $lan->users()->attach($user,['rank_lan'=>config('ranks.HELPER'),'score_lan'=>'0','place_number'=>'0']);
+              return response()->json(['success'=>'The user "'.$user->pseudo.'" is now helper on this LAN.']);
+            }else{
+              return response()->json(['error'=>'The user "'.$user->pseudo.'" is already helper on this LAN.']);
+            }
+          }else{
+            return response()->json(['error'=>'This user doesn\'t exist.']);
+          }
+        }else{
+          return response()->json(['error'=>'You have to be an admin of this LAN to add helpers to it.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
+
+    public function removeHelper($id,Request $request){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null){
+          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          if($user!=null){
+            DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.HELPER'))->delete();
+            return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer helper on this LAN.']);
+          }else{
+            return response()->json(['error'=>'This user doesn\'t exist or isn\'t helper on this lan.']);
+          }
+        }else{
+          return response()->json(['error'=>'You have to be an admin of this LAN to remove helpers from it.']);
+        }
       }else{
         return response()->json(['error'=>'Please login to perform this action.']);
       }

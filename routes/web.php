@@ -31,6 +31,9 @@ Route::get('/contactus', 'PageController@contact')->name('contact');
 Route::resource('lan', 'LansController');
 Route::get('lan/participate/{id}', 'LansController@participate')->name('lan.participate');
 Route::post('lan/participate/{id}', 'LansController@postParticipate');
+Route::get('lan/helper/{id}', 'LansController@addHelper')->name('lan.add_helper');
+Route::post('lan/helper/{id}', 'LansController@postAddHelper');
+Route::delete('lan/helper/{id}', 'LansController@removeHelper');
 Route::get('/dashboard', 'LansController@index')->name('dashboard');
 Route::resource('game', 'GamesController');
 Route::resource('tournament', 'TournamentsController');
@@ -51,6 +54,7 @@ Route::resource('activity', 'ActivitiesController');
 /*GLOBAL ADMIN ROUTES*/
 
 Route::resource('user', 'UsersController');
+Route::get('search/user/', 'UsersController@search');
 
 Route::get('/az', function(){
 	$t = App\Lan::all()->first();

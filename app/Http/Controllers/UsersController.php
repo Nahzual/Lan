@@ -8,6 +8,7 @@ use App\City;
 use App\Street;
 use App\Department;
 use App\Country;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class UsersController extends Controller
     public function index()
     {
 
-        return view('user.index');
+      return view('user.index');
     }
 
     /**
@@ -48,22 +49,6 @@ class UsersController extends Controller
     		]);
       }
 
-      /**
-       * Display the specified resource.
-       *
-       * @param  int  $id
-       * @return \Illuminate\Http\Response
-       */
-      public function show($id)
-      {
-  		if(Auth::check()){
-
-  			return view('user.show');
-  		}else{
-  			return redirect('/home');
-  		}
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -74,7 +59,6 @@ class UsersController extends Controller
     {
   		if(Auth::check()){
   				return view('user.edit');
-  			}
   		}else{
   			return redirect('/home');
   		}
@@ -91,7 +75,19 @@ class UsersController extends Controller
     {
 
         return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-  		
+
+    }
+
+    /**
+     * Display a listing of the resource fitting the Request
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+      $helpers=User::where('pseudo','LIKE',$request->pseudo)->get();
+      $lan=Lan::where('id','=',$request->lan_id)->first();
+      return view('user.helper.show_add',compact('helpers','lan'));
     }
 
     /**

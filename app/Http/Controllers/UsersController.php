@@ -10,11 +10,18 @@ use App\Department;
 use App\Country;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+
+    public function __construct(){
+      $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,17 +57,26 @@ class UsersController extends Controller
       }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the logged-in user.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
   		if(Auth::check()){
-  				return view('user.edit');
+          $user=Auth::user();
+          if($user->id==$id){
+            $location = $user->location;
+      			$street = $location->street;
+      			$city = $street->city;
+      			$department = $city->department;
+      			$country = $department->country;
+            return view('auth.edit',compact('user','location','street','city','department','country'));
+          }else{
+            return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
+          }
   		}else{
-  			return redirect('/home');
+  			return redirect('/login')->with('error','Please log in to perform this action.');
   		}
     }
 
@@ -73,9 +89,154 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+      if(!isset($request->password) && !isset($request->password_confirmation)){
+        unset($request->password);
+        unset($request->password_confirmation);
+      }
 
-        return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
+      $this->validate($request, [
+        'name' => ['required', 'string', 'max:24'],
+        'lastname' => ['required', 'string', 'max:24'],
+        'pseudo' => ['required', 'string', 'max:24',Rule::unique('users')->ignore($id)],
+        'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($id)],
+        'tel_user' => ['required','digits:10',Rule::unique('users')->ignore($id)],
+        'password' => ['nullable','string', 'min:8', 'confirmed']
+      ]);
 
+      if(Auth::check()){
+  			$user=Auth::user();
+        if($user->id==$id){
+          $location = $user->location;
+          $user_location=$location;
+    			$street = $location->street;
+          $user_street=$street;
+    			$city = $street->city;
+          $user_city=$city;
+    			$department = $city->department;
+          $user_department=$department;
+    			$country = $department->country;
+          $user_country=$country;
+
+          //Country
+          if(isset($request->name_country) && $request->name_country!=$country->name_country){
+
+            $countries = Country::where('name_country','=',$request->name_country)->get();
+            if($countries != null){$country = $countries->first();}
+            if(!isset($country)){
+              $country = new Country();
+              $country->name_country = $request->name_country;
+              $country->save();
+            }
+          }
+
+      		//Department
+          if(isset($request->name_department) && $request->name_department!=$department->name_department){
+
+            $departments=$country->departments;
+            $department=null;
+            if(isset($departments)){
+        			foreach($departments as $tdepartment){
+        				if($tdepartment->name_department == $request->name_department){
+        					$department = $tdepartment;
+        					break;
+        				}
+        			}
+        		}
+          }
+
+      		if(!isset($department) || $country!=$user_country){
+      			$department = new Department();
+      			$department->name_department = $request->name_department;
+      			$department->country()->associate($country);
+      			$department->save();
+      		}
+
+      		//City
+          if(isset($request->name_city) && ($request->name_city!=$city->name_city || $request->zip_city!=$city->zip_city)){
+            $cities=$department->cities;
+            $city=null;
+
+            if(isset($cities)){
+        			foreach($cities as $tcity){
+        				if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
+        					$city = $tcity;
+        					break;
+        				}
+        			}
+        		}
+          }
+
+          if(!isset($city) || $department!=$user_department){
+      			$city = new City();
+      			$city->name_city = $request->name_city;
+      			$city->zip_city = $request->zip_city;
+      			$city->department()->associate($department);
+      			$city->save();
+      		}
+
+      		//Street
+          if(isset($request->name_street) && $request->name_street!=$street->name_street){
+            $streets=$city->streets;
+            $street=null;
+
+            if(isset($streets)){
+        			foreach($streets as $tstreet){
+        				if($tstreet->name_street == $request->name_street){
+        					$street = $tstreet;
+        					break;
+        				}
+        			}
+        		}
+          }
+
+      		if(!isset($street) || $city!=$user_city){
+      			$street = new Street();
+      			$street->name_street = $request->name_street;
+      			$street->city()->associate($city);
+      			$street->save();
+      		}
+
+          if(isset($request->num_street) && $request->num_street!=$location->num_street){
+            $locations=$street->locations;
+            $location=null;
+
+        		//Location
+        		if(isset($locations)){
+        			foreach($locations as $tlocation){
+        				if($tlocation->num_street == $request->num_street){
+        					$location = $tlocation;
+        					break;
+        				}
+        			}
+        		}
+          }
+
+      		if(!isset($location) || $street!=$user_street){
+      			$location = new Location();
+      			$location->num_street = $request->num_street;
+      			$location->street()->associate($street);
+      			$location->save();
+      		}
+
+          if($location!=$user_location) $user->location()->associate($location);
+
+          $user->name=$request->name;
+          $user->lastname=$request->lastname;
+          $user->pseudo=$request->pseudo;
+          if(isset($request->password) && isset($request->password_confirmation) && !Hash::check($user->password,$request->password))
+            $user->password=Hash::make($request->password);
+          $user->email=$request->email;
+          $user->tel_user=$request->tel_user;
+
+  				$user->save();
+
+  				return redirect('/dashboard')->with('success','You successfully edited your profile.');
+        }else{
+          return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
+        }
+      }else{
+        return redirect('/login')->with('error','Please log in to perform this action.');
+      }
     }
 
     /**

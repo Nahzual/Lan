@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-					<h3 class="lead-title">Creating new Lan</h3>
+					<h3 class="lead-title">Creating a new Lan</h3>
 				</div>
 				<div class="card-body">
 
@@ -17,57 +17,48 @@
 						<div class="bg-light">
 							<div class="form-group">
 								{!! Form::label('name', 'Name', ['class' => 'lead']) !!}
-								{!! Form::text('name', null, ['class' => 'form-control']) !!}
+								{!! Form::text('name', null, ['id'=>'name', 'class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
 								{!! Form::label('max_num_registrants', 'Maximum numbers of registrants', ['class' => 'lead']) !!}
-								{!! Form::text('max_num_registrants', null, ['class' => 'form-control']) !!}
+								{!! Form::number('max_num_registrants', null, ['id'=>'max_num_registrants','min'=>'1', 'class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
 								{!! Form::label('opening_date', 'Date', ['class' => 'lead']) !!}
-								{!! Form::date('opening_date', null, ['class' => 'form-control']) !!}
+								{!! Form::date('opening_date', null, ['id'=>'opening_date','class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
-								{!! Form::label('duration', 'Duration', ['class' => 'lead']) !!}
-								{!! Form::text('duration', null, ['class' => 'form-control']) !!}
+								{!! Form::label('duration', 'Duration (in days)', ['class' => 'lead']) !!}
+								{!! Form::number('duration', null, ['id'=>'duration','min'=>'1','class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
-								{!! Form::label('budget', 'Budget', ['class' => 'lead']) !!}
-								{!! Form::text('budget', null, ['class' => 'form-control']) !!}
+								{!! Form::label('budget', 'Budget (in €)', ['class' => 'lead']) !!}
+								{!! Form::number('budget', null, ['id'=>'budget','min'=>'0', 'class' => 'form-control']) !!}
 							</div>
               <div class="form-group">
-                {!! Form::label('room_length', 'Room length', ['class' => 'lead']) !!}
-                {!! Form::text('room_length', null, ['class' => 'form-control']) !!}
+                {!! Form::label('room_length', 'Room length (in meters)', ['class' => 'lead']) !!}
+                {!! Form::number('room_length', null, ['id'=>'room_length','min'=>'1', 'class' => 'form-control']) !!}
               </div>
               <div class="form-group">
-                {!! Form::label('room_width', 'Room width', ['class' => 'lead']) !!}
-                {!! Form::text('room_width', null, ['class' => 'form-control']) !!}
+                {!! Form::label('room_width', 'Room width (in meters)', ['class' => 'lead']) !!}
+                {!! Form::number('room_width', null, ['id'=>'room_width','min'=>'1', 'class' => 'form-control']) !!}
               </div>
 						</div>
 						<div class="bg-light">
-							<div class="form-group">
-								{!! Form::label('num_location', 'Numero Street', ['class' => 'lead']) !!}
-								{!! Form::text('num_location', null, ['class' => 'form-control']) !!}
+              {!! Form::label('location', 'Location', ['class' => 'lead']) !!}
+							<div id="location" class="input-group mb-1">
+								{!! Form::number('num_location', null, ['id'=>'num_location','min'=>'0', 'placeholder'=>'Street number','class' => 'form-control']) !!}
+                <span class="input-group-addon mr-2"></span>
+								{!! Form::text('name_street', null, ['id'=>'name_street','placeholder'=>'Street Name', 'class' => 'form-control']) !!}
+                <span class="input-group-addon mr-2"></span>
+                {!! Form::text('name_city', null, ['id'=>'name_city','placeholder'=>'City','class' => 'form-control']) !!}
 							</div>
-							<div class="form-group">
-								{!! Form::label('name_street', 'Name Street', ['class' => 'lead']) !!}
-								{!! Form::text('name_street', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('name_city', 'Name City', ['class' => 'lead']) !!}
-								{!! Form::text('name_city', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('zip_city', 'Zip', ['class' => 'lead']) !!}
-								{!! Form::text('zip_city', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('name_department', 'Name Department', ['class' => 'lead']) !!}
-								{!! Form::text('name_department', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('name_country', 'Name Country', ['class' => 'lead']) !!}
-								{!! Form::text('name_country', null, ['class' => 'form-control']) !!}
+              <div class="input-group mb-5">
+                {!! Form::text('zip_city', null, ['id'=>'zip_city','placeholder'=>'ZIP Code','class' => 'form-control']) !!}
+                <span class="input-group-addon mr-2"></span>
+                {!! Form::text('name_department', null, ['id'=>'name_department','placeholder'=>'Region Name','class' => 'form-control']) !!}
+                <span class="input-group-addon mr-2"></span>
+                {!! Form::text('name_country', null, ['id'=>'name_country','placeholder'=>'Country Name', 'class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row text-center">

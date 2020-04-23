@@ -60,7 +60,7 @@
 				<li class="nav-item">
 								<a class="nav-link" href="{{ route('dashboard') }}"><i class='fa fa-wrench'></i> {{ __('Dashboard') }}</a>
                             </li>
-			    @if(Auth::user()->rank_user==1)
+			    @if(Auth::user()->rank_user==config('ranks.SITE_ADMIN'))
 
 		 		<li class="nav-item">
 					<a class="nav-link" href="{{ url('/') }}"><i class='fa fa-user'></i> Users</a>
@@ -81,6 +81,13 @@
                                     <a class="dropdown-item" href="{{ url('/') }}" >
                                         <i class='fa fa-gamepad'></i> My Games
                                     </a> <!-- Insérer lien vers page listant les jeux en lien avec l'utilisateur-->
+
+                                    <a class="dropdown-item" href="{{ route('user.edit',Auth::id()) }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('edit-profile-form').submit();">
+                                        {{ __('Edit your profile') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -88,6 +95,10 @@
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+
+                                    <form id="edit-profile-form" action="{{ route('user.edit',Auth::id()) }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>

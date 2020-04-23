@@ -12,7 +12,7 @@
 							<h3 class="lead-title">Dashboard</h3>
 						</div>
 						<div class="col mt-1">
-							<form method="GET" action="{{ route('lan.create') }}">
+							<form method="GET" action="{{ route('user.edit',$user->id) }}">
 							@csrf
 							@method('GET')
 								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-edit'></i> Edit My Profile</button>

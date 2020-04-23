@@ -46,31 +46,22 @@
       							</div>
       						</div>
                   <div class="bg-light">
-                    <div class="form-group">
-                      {!! Form::label('num_street', 'Numero Street', ['class' => 'lead']) !!}
-                      {!! Form::text('num_street', $location->num_street, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                      {!! Form::label('name_street', 'Name Street', ['class' => 'lead']) !!}
-                      {!! Form::text('name_street', $street->name_street, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                      {!! Form::label('name_city', 'Name City', ['class' => 'lead']) !!}
-                      {!! Form::text('name_city', $city->name_city, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                      {!! Form::label('zip_city', 'Zip', ['class' => 'lead']) !!}
-                      {!! Form::text('zip_city', $city->zip_city, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                      {!! Form::label('name_department', 'Name Department', ['class' => 'lead']) !!}
-                      {!! Form::text('name_department', $department->name_department, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group">
-                      {!! Form::label('name_country', 'Name Country', ['class' => 'lead']) !!}
-                      {!! Form::text('name_country', $country->name_country, ['class' => 'form-control']) !!}
-                    </div>
-                  </div>
+                    {!! Form::label('location', 'Location', ['class' => 'lead']) !!}
+      							<div id="location" class="input-group mb-1">
+      								{!! Form::number('num_street', $location->num_street, ['id'=>'num_street','min'=>'0', 'placeholder'=>'Street number','class' => 'form-control']) !!}
+                      <span class="input-group-addon mr-2"></span>
+      								{!! Form::text('name_street', $street->name_street, ['id'=>'name_street','placeholder'=>'Street Name', 'class' => 'form-control']) !!}
+                      <span class="input-group-addon mr-2"></span>
+                      {!! Form::text('name_city', $city->name_city, ['id'=>'name_city','placeholder'=>'City','class' => 'form-control']) !!}
+      							</div>
+                    <div class="input-group mb-5">
+                      {!! Form::text('zip_city', $city->zip_city, ['id'=>'zip_city','placeholder'=>'ZIP Code','class' => 'form-control']) !!}
+                      <span class="input-group-addon mr-2"></span>
+                      {!! Form::text('name_department', $department->name_department, ['id'=>'name_department','placeholder'=>'Region Name','class' => 'form-control']) !!}
+                      <span class="input-group-addon mr-2"></span>
+                      {!! Form::text('name_country', $country->name_country, ['id'=>'name_country','placeholder'=>'Country Name', 'class' => 'form-control']) !!}
+      							</div>
+      						</div>
       						<div class="form-group row text-center">
       							<div class="col">
       								<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>

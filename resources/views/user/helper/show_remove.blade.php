@@ -21,7 +21,7 @@
               <a class="btn btn-success" href="{{ route('user.show', $helper->id) }}"><i class='fa fa-eye'></i> View</a>
             </div>
             <div class="col">
-              {!! Form::open(['method' => 'post','onsubmit'=>'removeuser(event,'.$lan->id.','.$helper->id.')']) !!}
+              {!! Form::open(['method' => 'post','onsubmit'=>'removeHelper(event,'.$lan->id.','.$helper->id.')']) !!}
                 <div class="form-group row text-center">
                   <div class="col">
                     <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Remove</button>

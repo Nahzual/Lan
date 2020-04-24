@@ -46,7 +46,13 @@ Route::post('lan/admin/{id}', 'LansController@postAddAdmin');
 Route::delete('lan/admin/{id}', 'LansController@removeAdmin');
 
 Route::get('/dashboard', 'LansController@index')->name('dashboard');
+
+// game routes
 Route::resource('game', 'GamesController');
+Route::post('/game/favorite/{id}','GamesController@addToFavorite')->name('game.add_favorite');
+Route::delete('/game/favorite/{id}','GamesController@removeFromFavorite')->name('game.remove_favorite');
+Route::get('/search/game','GamesController@search');
+
 Route::resource('tournament', 'TournamentsController');
 Route::resource('tournament/round', 'RoundsController');
 Route::resource('tournament/round/match', 'MatchesController');

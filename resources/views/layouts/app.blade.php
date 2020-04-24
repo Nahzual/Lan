@@ -66,7 +66,7 @@
 					<a class="nav-link" href="{{ url('/') }}"><i class='fa fa-user'></i> Users</a>
                             </li>
 		 		<li class="nav-item">
-					<a class="nav-link" href="{{ url('/') }}"><i class='fa fa-gamepad'></i> Games</a>
+					<a class="nav-link" href="{{ route('game.index') }}"><i class='fa fa-gamepad'></i> Games</a>
                             </li>
 			    @endif
                             <li class="nav-item dropdown">

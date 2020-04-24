@@ -1,11 +1,37 @@
-function sendRequestAccept(e,id){
+function addGameToFavorite(e,gameID){
   if(e!=null) e.preventDefault();
 
   $.ajax({
-    type: "PUT",
-    url: '/lan/'+id,
+    type: "POST",
+    url: '/game/favorite/'+gameID,
     dataType: 'json',
-    data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_accept").val(),
+    data: "_token="+$("[name='_token']").val(),
+    success: function(data){
+      if(data.success != undefined){
+        $('#response-success').show();
+        $('#response-success').html(data.success);
+      }else{
+        $('#response-error').show();
+        $('#response-error').html(data.error);
+      }
+    },
+    error: function(xhr,status,error){
+      $('#response-error').show();
+      $('#response-error').html("An error occured on the server, please try again later.");
+    }
+  });
+
+  return false;
+}
+
+function removeGameFromFavorite(e,gameID){
+  if(e!=null) e.preventDefault();
+
+  $.ajax({
+    type: "DELETE",
+    url: '/game/favorite/'+gameID,
+    dataType: 'json',
+    data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();
@@ -17,7 +43,7 @@ function sendRequestAccept(e,id){
         $('#response-error').html(data.error);
       }
     },
-    error: function(data){
+    error: function(xhr,status,error){
       $('#response-error').show();
       $('#response-success').hide();
       $('#response-error').html("An error occured on the server, please try again later.");
@@ -27,29 +53,22 @@ function sendRequestAccept(e,id){
   return false;
 }
 
-function sendRequestReject(e,id){
+function searchGames(e){
   if(e!=null) e.preventDefault();
 
   $.ajax({
-    type: "PUT",
-    url: '/lan/'+id,
-    dataType: 'json',
-    data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_reject").val(),
+    type: "GET",
+    url: '/search/game/',
+    dataType: 'html',
+    data: "_token="+$("[name='_token']").val()
+          +'&name_game='+$("[name='name_game']").val()
+          +'&view_path='+$('[name=view_path]').val(),
     success: function(data){
-      if(data.success != undefined){
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
-      }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
-      }
+      $('#request-result').html(data);
     },
-    error: function(data){
+    error: function(xhr,status,error){
       $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+      $('#response-error').html("An error occured on the server, please try again later. ( "+error+" )");
     }
   });
 

@@ -13,7 +13,9 @@ function searchHelper(e,lanID){
       $('#requestResult').html(data);
     },
     error: function(xhr,status,error){
-
+      $('#response-error').show();
+      $('#response-success').hide();
+      $('#response-error').html("An error occured on the server, please try again later.");
     }
   });
 
@@ -32,14 +34,18 @@ function addHelper(e,lanID,helperID){
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();
+        $('#response-error').hide();
         $('#response-success').html(data.success);
       }else{
         $('#response-error').show();
+        $('#response-success').hide();
         $('#response-error').html(data.error);
       }
     },
     error: function(xhr,status,error){
-
+      $('#response-error').show();
+      $('#response-success').hide();
+      $('#response-error').html("An error occured on the server, please try again later.");
     }
   });
 
@@ -58,14 +64,18 @@ function removeHelper(e,lanID,helperID){
     success: function(data){
       if(data.success != undefined){
         $('#response-success-helper').show();
+        $('#response-error-helper').hide();
         $('#response-success-helper').html(data.success);
       }else{
         $('#response-error-helper').show();
+        $('#response-success-helper').hide();
         $('#response-error-helper').html(data.error);
       }
     },
     error: function(xhr,status,error){
-
+      $('#response-error-helper').show();
+      $('#response-success-helper').hide();
+      $('#response-error-helper').html("An error occured on the server, please try again later.");
     }
   });
 

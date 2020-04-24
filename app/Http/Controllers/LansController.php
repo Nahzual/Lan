@@ -443,7 +443,7 @@ class LansController extends Controller
       if(Auth::check()){
         $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
         if($lan!=null){
-          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          $user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->select('users.id','pseudo')->first();
           if($user!=null){
             DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.HELPER'))->delete();
             return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer helper on this LAN.']);
@@ -499,7 +499,7 @@ class LansController extends Controller
       if(Auth::check()){
         $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
         if($lan!=null){
-          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          $user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('users.id','pseudo')->first();
           if($user!=null){
             if(count($lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get())>1){
               DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.ADMIN'))->delete();

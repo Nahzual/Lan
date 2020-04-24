@@ -6,36 +6,42 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-					<h3 class="lead-title">Creating new Material</h3>
+					<h3 class="lead-title">Creating new game</h3>
 				</div>
 				<div class="card-body">
-					<div class ="alert alert-success" style="display:none"></div>
+
+					<div class ="alert alert-success" id="response-success" style="display:none"></div>
+          <div class ="alert alert-danger" id="response-error" style="display:none"></div>
+
+
 					{!! Form::open(['method' => 'put', 'id' => 'CreateNewGameForm']) !!}
 						<div class="bg-light">
 							<div class="form-group">
 								{!! Form::label('name_game', 'Name', ['class' => 'lead']) !!}
 								{!! Form::text('name_game', null, ['class' => 'form-control']) !!}
 							</div>
-							<div class="form-group">
+              <div class="form-group">
 								{!! Form::label('desc_game', 'Description of the Game', ['class' => 'lead']) !!}
-								{!! Form::text('desc_game', null, ['class' => 'form-control']) !!}
+								{!! Form::textarea('desc_game', null, ['class' => 'form-control','size'=>'30x5']) !!}
 							</div>
-							<div class="form-group">
+              <div class="form-group">
 								{!! Form::label('release_date_game', 'Release Date', ['class' => 'lead']) !!}
-								{!! Form::text('release_date_game', null, ['class' => 'form-control']) !!}
+								{!! Form::date('release_date_game', null, ['class' => 'form-control']) !!}
 							</div>
-							<div class="form-group">
-								{!! Form::label('cost_game', 'Price ', ['class' => 'lead']) !!}
-								{!! Form::text('cost_game', null, ['class' => 'form-control']) !!}
+              <div class="form-group">
+								{!! Form::label('cost_game', 'Price (in €) ', ['class' => 'lead']) !!}
+								{!! Form::number('cost_game', null, ['min'=>'0', 'class' => 'form-control']) !!}
 							</div>
-							<div class="form-group">
-								{!! Form::label('is_multiplayer_game', 'type de jeu', ['class' => 'lead']) !!}
-								{!! Form::text('is_multiplayer_game', null, ['class' => 'form-control']) !!}
+              <div class="form-group">
+								{!! Form::label('is_multiplayer_game', 'Game Type : ', ['class' => 'lead']) !!}
+								{!! Form::select('is_multiplayer_game', [config('game.SOLO') => '1 player', config('game.MULTI_LOCAL') => 'Local multiplayer', config('game.MULTI_ONL')=>'Online multiplayer'], ['class' => 'form-control']) !!}
 							</div>
+
+
 						</div>
 						<div class="form-group row text-center">
 							<div class="col">
-								<button type="submit" class="btn btn-primary" id="AddNewMaterialSubmit"><i class='fa fa-plus-square'></i>Add</button>
+								<button type="submit" class="btn btn-primary" id="AddNewGameSubmit"><i class='fa fa-plus-square'></i>Add</button>
 							</div>
 
 							<div class="col">
@@ -65,6 +71,7 @@
 			$.ajax({
 				url: "{{ route('game.store')}}",
 				method: 'post',
+        dataType: 'json',
 				data: {
 					name_game: $('#name_game').val(),
 					desc_game: $('#desc_game').val(),
@@ -73,8 +80,14 @@
 					is_multiplayer_game: $('#is_multiplayer_game').val(),
 				},
 				success: function(result){
-					$('.alert ').show();
-					$('.alert ').html(result.success);
+          if(result.success!=undefined){
+            $('#response-success').show();
+  					$('#response-success').html(result.success);
+          }else{
+            $('#response-error').show();
+  					$('#response-error').html(result.error);
+          }
+
 				}
 			});
 		});

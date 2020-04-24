@@ -10,14 +10,18 @@ function addPlayer(e,id){
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();
+        $('#response-error').hide();
         $('#response-success').html(data.success);
       }else{
         $('#response-error').show();
+        $('#response-success').hide();
         $('#response-error').html(data.error);
       }
     },
     error: function(xhr,status,error){
-
+      $('#response-error').show();
+      $('#response-success').hide();
+      $('#response-error').html("An error occured on the server, please try again later.");
     }
   });
 
@@ -34,15 +38,19 @@ function removePlayer(e,id){
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
-        $('#response-success-player').show();
-        $('#response-success-player').html(data.success);
+        $('#response-success').show();
+        $('#response-error').hide();
+        $('#response-success').html(data.success);
       }else{
-        $('#response-error-player').show();
-        $('#response-error-player').html(data.error);
+        $('#response-error').show();
+        $('#response-success').hide();
+        $('#response-error').html(data.error);
       }
     },
     error: function(xhr,status,error){
-
+      $('#response-error').show();
+      $('#response-success').hide();
+      $('#response-error').html("An error occured on the server, please try again later.");
     }
   });
 

@@ -13,7 +13,9 @@ function sendRequest(e){
       $('#lanList').html(html_content);
     },
     error: function(xhr,status,error){
-
+      $('#response-error').show();
+      $('#response-success').hide();
+      $('#response-error').html("An error occured on the server, please try again later.");
     }
   });
 

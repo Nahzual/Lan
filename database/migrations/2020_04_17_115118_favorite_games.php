@@ -15,10 +15,10 @@ class FavoriteGames extends Migration
     {
       Schema::create('favorite_games', function (Blueprint $table) {
 		  $table->id();
-          $table->unsignedBigInteger('id_user');
-          $table->unsignedBigInteger('id_game');
-          $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-          $table->foreign('id_game')->references('id')->on('games')->onDelete('cascade');
+          $table->unsignedBigInteger('user_id');
+          $table->unsignedBigInteger('game_id');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
       });
     }
 
@@ -29,6 +29,6 @@ class FavoriteGames extends Migration
      */
     public function down()
     {
-      Schema::dropIfExists('favorite_games');  
+      Schema::dropIfExists('favorite_games');
     }
 }

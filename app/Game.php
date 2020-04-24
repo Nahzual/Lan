@@ -13,6 +13,8 @@ class Game extends Model
    */
   protected $fillable = ['name_game', 'desc_game', 'release_date_game', 'cost_game', 'is_multiplayer_game'];
 
+  public $timestamps=false;
+
   public function ports(){
     $this->belongsToMany('App\Connexionport','uses_port');
   }

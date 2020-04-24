@@ -34,11 +34,10 @@
 							</div>
               <div class="form-group">
 								{!! Form::label('is_multiplayer_game', 'Game Type : ', ['class' => 'lead']) !!}
-								{!! Form::select('is_multiplayer_game', [config('game.SOLO') => '1 player', config('game.MULTI_LOCAL') => 'Local multiplayer', config('game.MULTI_ONL')=>'Online multiplayer'], ['class' => 'form-control']) !!}
+								{!! Form::select('is_multiplayer_game', [config('game.SOLO') => '1 player', config('game.MULTI_LOCAL') => 'Local multiplayer', config('game.MULTI_ONL')=>'Online multiplayer'], null, ['class' => 'form-control']) !!}
 							</div>
-
-
 						</div>
+
 						<div class="form-group row text-center">
 							<div class="col">
 								<button type="submit" class="btn btn-primary" id="AddNewGameSubmit"><i class='fa fa-plus-square'></i>Add</button>

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<?php $date = date_create($lan->opening_date); ?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -19,7 +20,7 @@
         					</div>
         					<div class="row">
         						<label class="lead col-3 mt-1 text-center">Date</label>
-        						<label class="form-control col-8">{{$lan->opening_date}}</label>
+        						<label class="form-control col-8">{{date_format($date, config("display.DATE_FORMAT"))}}</label>
         					</div>
         					<div class="row">
         						<label class="lead col-3 mt-1 text-center">Duration</label>

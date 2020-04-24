@@ -9,26 +9,24 @@
         <div class="card-header">
           <div class="row">
             <div class="col mt-2">
-              <h3 class="lead-title">Games</h3>
+              <h3 class="lead-title">My favourite games</h3>
             </div>
-            @if($user->rank_user==config('ranks.SITE_ADMIN'))
-              <div class="col mt-1">
-                <form method="GET" action="{{ route('game.create') }}">
-                @csrf
-                @method('GET')
-                  <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create a new game</button>
-                </form>
-              </div>
-            @endif
+
+            <div class="col mt-1">
+              <form method="GET" action="{{ route('game.index') }}">
+              @csrf
+              @method('GET')
+                <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Add a favourite game</button>
+              </form>
+            </div>
           </div>
         </div>
-
 
         <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
         <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
         <div class="card-body">
-          {!! Form::open(['method' => 'post','onsubmit'=>'return searchGames(event)']) !!}
+          {!! Form::open(['method' => 'post','onsubmit'=>'return searchFavouriteGames(event)']) !!}
             <div class="bg-light">
               <h4 class='lead'>Game's name :</h4>
               <div class="form-group">
@@ -47,9 +45,6 @@
         <div id="request-result">
           <?php if(!isset($games)){
             $games=[];
-          }?>
-          <?php if(!isset($favourite_games)){
-            $favourite_games=[];
           }?>
           @include('game.list')
         </div>

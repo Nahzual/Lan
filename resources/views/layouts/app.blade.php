@@ -78,7 +78,7 @@
                                     <a class="dropdown-item" href="{{ url('/') }}" >
                                         My LANs
                                     </a> <!-- Insérer lien vers page listant les LANs en lien avec l'utilisateur-->
-                                    <a class="dropdown-item" href="{{ url('/') }}" >
+                                    <a class="dropdown-item" href="{{ route('game.favourite') }}" >
                                         <i class='fa fa-gamepad'></i> My Games
                                     </a> <!-- Insérer lien vers page listant les jeux en lien avec l'utilisateur-->
 

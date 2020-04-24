@@ -48,9 +48,10 @@ Route::delete('lan/admin/{id}', 'LansController@removeAdmin');
 Route::get('/dashboard', 'LansController@index')->name('dashboard');
 
 // game routes
+Route::get('/game/favourite/','GamesController@showFavouriteGames')->name('game.favourite');
 Route::resource('game', 'GamesController');
-Route::post('/game/favorite/{id}','GamesController@addToFavorite')->name('game.add_favorite');
-Route::delete('/game/favorite/{id}','GamesController@removeFromFavorite')->name('game.remove_favorite');
+Route::post('/game/favourite/{id}','GamesController@addToFavourite')->name('game.add_favourite');
+Route::delete('/game/favourite/{id}','GamesController@removeFromFavourite')->name('game.remove_favourite');
 Route::get('/search/game','GamesController@search');
 
 Route::resource('tournament', 'TournamentsController');

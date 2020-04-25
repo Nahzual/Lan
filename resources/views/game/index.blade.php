@@ -60,5 +60,10 @@
 @endsection
 
 @section('js_includes')
-<script src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script defer="defer" type="text/javascript" src="/js/responsive/game/responsive.js"></script>
+@endsection
+
+@section('css_includes')
+<link href="{{ asset('css/game/game.css') }}" rel="stylesheet">
 @endsection

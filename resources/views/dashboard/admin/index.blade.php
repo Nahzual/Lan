@@ -20,9 +20,9 @@
 
         <div class="card-header text-center">
 					<div class="row lead">
-						<div class="col">#</div>
+						<div class="hideOnVerySmallScreens col">#</div>
 						<div class="col">Name</div>
-						<div class="col">View</div>
+						<div class="hideOnVerySmallScreens col">View</div>
             <div class="col">Accept</div>
 						<div class="col">Reject</div>
 					</div>
@@ -31,10 +31,10 @@
                 <div class="card-body text-center">
 						@foreach($waiting_lans as $lan)
 							<div class="row">
-								<div class="col mt-2 lead-text">{{$lan->id}}</div>
+								<div class="hideOnVerySmallScreens col mt-2 lead-text">{{$lan->id}}</div>
 								<div class="col mt-2 lead-text">{{$lan->name}}</div>
 
-								<div class="col">
+								<div class="hideOnVerySmallScreens col">
 									<a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
 								</div>
                 <div class="col">

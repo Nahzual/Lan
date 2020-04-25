@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
 					        <div class="row">
@@ -38,7 +38,7 @@
 </div>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div id="requestResult">
           </div>
         </div>
@@ -49,4 +49,9 @@
 
 @section('js_includes')
 <script src="/js/ajax/lan/ajax_add_admin.js"></script>
+<script defer="defer" src="/js/responsive/lan/responsive-show-add-admin.js"></script>
+@endsection
+
+@section('css_includes')
+<link href="{{ asset('css/lan/lan-show-add-admin.css') }}" rel="stylesheet">
 @endsection

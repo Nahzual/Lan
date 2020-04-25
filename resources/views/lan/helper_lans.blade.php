@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col mt-2 lead-text">{{$lan->id}}</div>
+  <div class="col mt-2 lead-text hideOnVerySmallScreens">{{$lan->id}}</div>
   <div class="col mt-2 lead-text">{{$lan->name}}</div>
-  <div class="col mt-2 lead-text">{{ $lan->real_user_count() }}/{{$lan->max_num_registrants}}</div>
+  <div class="col mt-2 lead-text hideOnVerySmallScreens">{{ $lan->real_user_count() }}/{{$lan->max_num_registrants}}</div>
   <?php if($lan->waiting_lan==config('waiting.WAITING')){ ?>
   <div class="col mt-2 lead-text"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
 <?php }else if($lan->waiting_lan==config('waiting.ACCEPTED')){ ?>

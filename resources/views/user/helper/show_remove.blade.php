@@ -4,7 +4,7 @@
             <h3 class="lead-title">Helpers</h3>
           </div>
           <div class="row lead text-center">
-            <div class="col-3">#</div>
+            <div class="col-3 hideOnSmallScreens">#</div>
             <div class="col">Username</div>
             <div class="col"></div>
             <div class="col"></div>
@@ -14,7 +14,7 @@
         @if (isset($helpers))
           @foreach($helpers as $helper)
           <div class="row">
-            <div class="col-3 mt-2 lead-text">{{$helper->id}}</div>
+            <div class="col-3 mt-2 lead-text hideOnSmallScreens">{{$helper->id}}</div>
             <div class="col mt-2 lead-text">{{$helper->pseudo}}</div>
 
             <div class="col">

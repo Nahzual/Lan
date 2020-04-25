@@ -1,0 +1,13 @@
+
+.hideOnSmallScreens { display:none; }
+.hideOnVerySmallScreens { display:none; }
+
+/* Tablet */
+@media screen and (min-width: 600px) {
+  .hideOnVerySmallScreens  { display: block; }
+}
+
+/* Desktop*/
+@media screen and (min-width: 780px) {
+  .hideOnSmallScreens  { display: block; }
+}

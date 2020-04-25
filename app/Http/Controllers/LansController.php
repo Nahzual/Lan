@@ -526,10 +526,22 @@ class LansController extends Controller
      */
     public function destroy($id)
     {
-		$lan = Auth::user()->lans()->findOrFail($id);
+      if(Auth::check()){
+        $lan=Lan::find($id);
+        if($lan!=null){
+          $user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+          if($user!=null){
+            $lan->delete();
+            return response()->json(['success'=>'Your LAN has been successfully deleted.']);
+          }else{
+            return response()->json(['error'=>'You are not admin on this LAN.']);
+          }
+        }else{
+          return response()->json(['error'=>'This LAN doesn\'t exist.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please log in to perform this action.']);
+      }
 
-		//Supprime la lan
-		$lan->delete();
-		return redirect(route('lan.index'));
     }
 }

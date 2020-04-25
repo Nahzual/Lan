@@ -2,8 +2,8 @@
         <div class="card-header text-center">
           <h3 class="lead-title">Users</h3>
           <div class="row lead">
-            <div class="col-3">#</div>
-            <div class="col-3">Username</div>
+            <div class="hideOnSmallScreens col-2">#</div>
+            <div class="changeSize col-4">Username</div>
             <div class="col-3"></div>
             <div class="col-3"></div>
           </div>
@@ -11,8 +11,8 @@
         <div class="card-body text-center">
           @foreach($users as $admin)
           <div class="row">
-            <div class="col-3 mt-2 lead-text">{{$admin->id}}</div>
-            <div class="col-3 mt-2 lead-text">{{$admin->pseudo}}</div>
+            <div class="hideOnSmallScreens col-2 mt-2 lead-text">{{$admin->id}}</div>
+            <div class="changeSize col-4 mt-2 lead-text">{{$admin->pseudo}}</div>
 
             <div class="col-3 mt-2 lead-text">
               <a class="btn btn-success" href="{{ route('user.show', $admin->id) }}"><i class='fa fa-eye'></i> View</a>

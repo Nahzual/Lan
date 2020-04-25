@@ -21,30 +21,35 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Name</label>
-						<label class="form-control col-8">{{$user->name}}</label>
+
+          <div class="row d-flex justify-content-center">
+            <label class="col-md-2 col-form-label text-md-right">Name</label>
+            <label class="mx-2 form-control col-8">{{$user->name}}</label>
 					</div>
-					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Last Name</label>
-						<label class="form-control col-8">{{$user->lastname}}</label>
+
+          <div class="row d-flex justify-content-center">
+            <label class="col-md-2 col-form-label text-md-right">Last Name</label>
+            <label class="mx-2 form-control col-8">{{$user->lastname}}</label>
 					</div>
-					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Pseudo</label>
-						<label class="form-control col-8">{{$user->pseudo}}</label>
+
+          <div class="row d-flex justify-content-center">
+            <label class="col-md-2 col-form-label text-md-right">Pseudo</label>
+						<label class="mx-2 form-control col-8">{{$user->pseudo}}</label>
 					</div>
-					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Email</label>
-						<label class="form-control col-8">{{$user->email}}</label>
+
+          <div class="row d-flex justify-content-center">
+            <label class="col-md-2 col-form-label text-md-right">Email</label>
+						<label class="mx-2 form-control col-8">{{$user->email}}</label>
 					</div>
-					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Tel</label>
-						<label class="form-control col-8">{{$user->tel_user}}</label>
+
+          <div class="row d-flex justify-content-center">
+            <label class="col-md-2 col-form-label text-md-right">Tel</label>
+						<label class="mx-2 form-control col-8">{{$user->tel_user}}</label>
 					</div>
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 @yield('admin_section')
@@ -52,6 +57,9 @@
 <br><br>
 
 <!-- Admin LANs -->
+<div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -73,13 +81,13 @@
 
                 <div class="card-header text-center">
                   <div class="row lead">
-                    <div class="col">#</div>
+                    <div class="col hideOnSmallScreens">#</div>
                     <div class="col">Name</div>
                     <div class="col">Participants</div>
                     <div class="col">State</div>
                     <div class="col">View</div>
-                    <div class="col">Edit</div>
-                    <div class="col">Delete</div>
+                    <div class="col hideOnSmallScreens">Edit</div>
+                    <div class="col hideOnVerySmallScreens">Delete</div>
                   </div>
                 </div>
 
@@ -110,9 +118,9 @@
 
                 <div class="card-header text-center">
                   <div class="row lead">
-                    <div class="col">#</div>
+                    <div class="col hideOnVerySmallScreens">#</div>
                     <div class="col">Name</div>
-                    <div class="col">Participants</div>
+                    <div class="col hideOnVerySmallScreens">Participants</div>
                     <div class="col">State</div>
                     <div class="col">View</div>
                   </div>
@@ -150,10 +158,10 @@
 
                 <div class="card-header text-center">
                   <div class="row lead">
-                    <div class="col">#</div>
+                    <div class="col hideOnVerySmallScreens">#</div>
                     <div class="col">Name</div>
-                    <div class="col">Participants</div>
-                    <div class="col">View</div>
+                    <div class="col hideOnVerySmallScreens">Participants</div>
+                    <div class="col hideOnVerySmallScreens">View</div>
                     <div class="col">Quit</div>
                   </div>
                 </div>
@@ -172,4 +180,9 @@
 
 @section('js_includes')
 <script src="/js/ajax/lan/ajax_participate.js"></script>
+<script src="/js/ajax/lan/ajax_delete.js"></script>
+@endsection
+
+@section('css_includes')
+<link href="{{ asset('css/dashboard/user-dashboard.css') }}" rel="stylesheet">
 @endsection

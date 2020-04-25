@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
 					<div class="row">
@@ -58,4 +58,9 @@
 
 @section('js_includes')
 <script src="/js/ajax/home/ajax_lan_list.js"></script>
+<script defer="defer" type="text/javascript" src="/js/responsive/game/responsive.js"></script>
+@endsection
+
+@section('css_includes')
+<link href="{{ asset('css/home/home.css') }}" rel="stylesheet">
 @endsection

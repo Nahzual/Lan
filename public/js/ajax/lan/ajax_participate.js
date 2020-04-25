@@ -38,19 +38,19 @@ function removePlayer(e,id){
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
+        $('#response-success-player').show();
+        $('#response-error-player').hide();
+        $('#response-success-player').html(data.success);
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        $('#response-error-player').show();
+        $('#response-success-player').hide();
+        $('#response-error-player').html(data.error);
       }
     },
     error: function(xhr,status,error){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+      $('#response-error-player').show();
+      $('#response-success-player').hide();
+      $('#response-error-player').html("An error occured on the server, please try again later.");
     }
   });
 

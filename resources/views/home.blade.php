@@ -46,21 +46,19 @@
             </div>
           {!! Form::close() !!}
         </div>
-
-        <div id="lanList">
-          @include('home_list_lans',$lans)
-        </div>
       </div>
     </div>
+  </div>
+  <div id="lanList">
+    @include('home_list_lans',$lans)
   </div>
 </div>
 @endsection
 
 @section('js_includes')
 <script src="/js/ajax/home/ajax_lan_list.js"></script>
-<script defer="defer" type="text/javascript" src="/js/responsive/game/responsive.js"></script>
 @endsection
 
 @section('css_includes')
-<link href="{{ asset('css/home/home.css') }}" rel="stylesheet">
+<link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

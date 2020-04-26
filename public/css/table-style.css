@@ -1,0 +1,7 @@
+.card-table{
+  background-color: #e1e2e3;
+}
+
+.card-table > thead > tr > th,.card-table > tbody > tr > td,.card-table > tbody > tr > th{
+  border: 1px solid gray;
+}

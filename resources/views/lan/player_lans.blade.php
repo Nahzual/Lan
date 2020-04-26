@@ -1,14 +1,13 @@
-<div class="row">
-  <div class="hideOnVerySmallScreens col mt-2 lead-text">{{$lan->id}}</div>
-  <div class="col mt-2 lead-text">{{$lan->name}}</div>
-  <div class="col mt-2 lead-text hideOnVerySmallScreens">{{ $lan->real_user_count() }}/{{$lan->max_num_registrants}}</div>
-  <div class="col hideOnVerySmallScreens">
+<tr>
+  <th scope="row" class="text-center lead-text">{{$lan->id}}</th>
+  <td scope="col" class="text-center lead-text">{{$lan->name}}</td>
+  <td scope="col" class="text-center lead-text">{{ $lan->real_user_count() }}/{{$lan->max_num_registrants}}</td>
+  <td scope="col" class="text-center">
     <a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
-  </div>
-  <div class="col">
+  </td>
+  <td scope="col" class="text-center">
     {{ Form::open([ 'method'  => 'delete', 'onsubmit'=>'return removePlayer(event,'.$lan->id.')' ]) }}
       {{ Form::button('<i class="fa fa-sign-out" aria-hidden="true"></i> Quit', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
     {{ Form::close() }}
-  </div>
-</div>
-<br>
+  </td>
+</tr>

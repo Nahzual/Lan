@@ -1,6 +1,0 @@
-.hideOnSmallScreens { display:none; }
-
-/* Desktop*/
-@media screen and (min-width: 1000px) {
-  .hideOnSmallScreens  { display: block; }
-}

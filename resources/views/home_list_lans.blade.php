@@ -1,28 +1,32 @@
-        <div class="card-header text-center">
-					<div class="row lead">
-						<div class="col-5">Name</div>
-						<div class="col hideOnVerySmallScreens">Participants</div>
-						<div class="col hideOnSmallScreens">Date</div>
-            <div class="col-1"></div>
-            <div class="hideOnVerySmallScreens col-1"></div>
-					</div>
-				</div>
-        <div class="card-body text-center">
-						@foreach($lans as $lan)
-            <?php $date = date_create($lan->opening_date); ?>
+              <div class="table-responsive">
+                <table class="table card-table table-bordered">
+                  <thead class="card-table text-center">
+                    <th scope="col" class="lead">#</th>
+                    <th scope="col" class="lead ">Name</th>
+                    <th scope="col" class="lead">Participants</th>
+                    <th scope="col" class="lead ">Date</th>
+                    <th scope="col" class="lead "></th>
+                    <th scope="col" class="lead "></th>
+                  </thead>
 
-						<div class="row">
-							<div class="col-5 mt-2 lead-text">{{$lan->name}}</div>
-							<div class="hideOnVerySmallScreens col mt-2 lead-text">{{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }}</div>
-							<div class="hideOnSmallScreens col mt-2 lead-text">{{date_format($date, config("display.DATE_FORMAT"))}}</div>
+                  <tbody>
+                    <tr>
+                    @foreach($lans as $lan)
+                    <?php $date = date_create($lan->opening_date); ?>
+                      <th class="lead-text text-center">{{$lan->id}}</th>
+                      <td class="lead-text text-center">{{$lan->name}}</td>
+        							<td class="lead-text text-center">{{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }}</td>
+        							<td class="lead-text text-center">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
 
-							<div class="col">
-							  <a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
-							</div>
-              <div class="hideOnVerySmallScreens col">
-                <a class="btn btn-success" href="{{ route('lan.participate', $lan->id) }}"><i class="fa fa-sign-in"></i> Participate</a>
+        							<td class="text-center">
+        							  <a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
+        							</td>
+                      <td class="text-center">
+                        <a class="btn btn-success" href="{{ route('lan.participate', $lan->id) }}"><i class="fa fa-sign-in"></i> Participate</a>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
-						</div>
-						<br>
-						@endforeach
-        </div>
+            </div>

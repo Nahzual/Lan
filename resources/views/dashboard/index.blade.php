@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
 					<div class="row">
@@ -61,79 +61,79 @@
 <div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-        					<div class="row">
-        						<div class="col mt-2">
-        							<h3 class="lead-title">My LANs</h3>
-        						</div>
-        						<div class="col mt-1">
-        							<form method="GET" action="{{ route('lan.create') }}">
-        							@csrf
-        							@method('GET')
-        								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
-        							</form>
-        						</div>
-        					</div>
-        				</div>
-
-                <div class="card-header text-center">
-                  <div class="row lead">
-                    <div class="col hideOnSmallScreens">#</div>
-                    <div class="col">Name</div>
-                    <div class="col">Participants</div>
-                    <div class="col">State</div>
-                    <div class="col">View</div>
-                    <div class="col hideOnSmallScreens">Edit</div>
-                    <div class="col hideOnVerySmallScreens">Delete</div>
-                  </div>
-                </div>
-
-                <div class="card-body text-center">
-                  <div class="card-body text-center">
-                    @each('lan.my_lans',$admin_lans,'lan')
-                  </div>
-                </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col mt-2">
+              <h3 class="lead-title">My LANs</h3>
             </div>
+            <div class="col mt-1">
+              <form method="GET" action="{{ route('lan.create') }}">
+                @csrf
+                @method('GET')
+                <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table card-table table-bordered">
+          <thead class="card-table text-center">
+            <th scope="col" class="lead">#</th>
+            <th scope="col" class="lead ">Name</th>
+            <th scope="col" class="lead">Participants</th>
+            <th scope="col" class="lead ">State</th>
+            <th scope="col" class="lead ">View</th>
+            <th scope="col" class="lead">Edit</th>
+            <th scope="col" class="lead">Delete</th>
+          </thead>
+
+          <tbody>
+            @each('lan.my_lans',$admin_lans,'lan')
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 
 <br><br>
 
 <!-- Helper LANs -->
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-        					<div class="row">
-        						<div class="col mt-2">
-        							<h3 class="lead-title">LANs on which I am helper</h3>
-        						</div>
-        					</div>
-        				</div>
-
-                <div class="card-header text-center">
-                  <div class="row lead">
-                    <div class="col hideOnVerySmallScreens">#</div>
-                    <div class="col">Name</div>
-                    <div class="col hideOnVerySmallScreens">Participants</div>
-                    <div class="col">State</div>
-                    <div class="col">View</div>
-                  </div>
-                </div>
-
-                <div class="card-body text-center">
-                  <div class="card-body text-center">
-                    @each('lan.helper_lans',$helper_lans,'lan')
-                  </div>
-                </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col mt-2">
+              <h3 class="lead-title">LANs on which I am helper</h3>
             </div>
+          </div>
         </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table card-table table-bordered">
+          <thead class="card-table text-center">
+            <th scope="col" class="lead">#</th>
+            <th scope="col" class="lead ">Name</th>
+            <th scope="col" class="lead">Participants</th>
+            <th scope="col" class="lead ">State</th>
+            <th scope="col" class="lead ">View</th>
+          </thead>
+
+          <tbody>
+            @each('lan.helper_lans',$helper_lans,'lan')
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 
 <br><br>
@@ -143,37 +143,36 @@
 <div id="response-success-player" class="container alert alert-success mt-2" style="display:none"></div>
 <div id="response-error-player" class="container alert alert-danger mt-2" style="display:none"></div>
 
-
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-        					<div class="row">
-        						<div class="col mt-2">
-        							<h3 class="lead-title">LANs on which I am player</h3>
-        						</div>
-        					</div>
-        				</div>
-
-                <div class="card-header text-center">
-                  <div class="row lead">
-                    <div class="col hideOnVerySmallScreens">#</div>
-                    <div class="col">Name</div>
-                    <div class="col hideOnVerySmallScreens">Participants</div>
-                    <div class="col hideOnVerySmallScreens">View</div>
-                    <div class="col">Quit</div>
-                  </div>
-                </div>
-
-                <div class="card-body text-center">
-                  <div class="card-body text-center">
-                    @each('lan.player_lans',$player_lans,'lan')
-                  </div>
-                </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col mt-2">
+              <h3 class="lead-title">LANs on which I am player</h3>
             </div>
+          </div>
         </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table card-table table-bordered">
+          <thead class="card-table text-center">
+            <th scope="col" class="lead">#</th>
+            <th scope="col" class="lead ">Name</th>
+            <th scope="col" class="lead">Participants</th>
+            <th scope="col" class="lead ">View</th>
+            <th scope="col" class="lead ">Quit</th>
+          </thead>
+
+          <tbody>
+            @each('lan.player_lans',$player_lans,'lan')
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 
 @endsection
@@ -184,5 +183,5 @@
 @endsection
 
 @section('css_includes')
-<link href="{{ asset('css/dashboard/user-dashboard.css') }}" rel="stylesheet">
+<link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

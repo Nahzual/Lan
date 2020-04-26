@@ -49,9 +49,8 @@
 
 @section('js_includes')
 <script src="/js/ajax/lan/ajax_add_helper.js"></script>
-<script defer="defer" src="/js/responsive/lan/responsive-show-add-helper.js"></script>
 @endsection
 
 @section('css_includes')
-<link href="{{ asset('css/lan/lan-show-add-helper.css') }}" rel="stylesheet">
+<link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

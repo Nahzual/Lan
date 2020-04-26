@@ -43,14 +43,12 @@
         							<a class="btn btn-primary" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
         						</div>
                     @if ($userIsLanAdmin)
-
-
-                    {{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
-                      {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
-                    {{ Form::close() }}
+                      {{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
+                        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+                      {{ Form::close() }}
                     @endif
         						<div class="col">
-        								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> Go back to Lan List</a>
+        								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> To Lan List</a>
         						</div>
         				</div>
             </div>
@@ -91,5 +89,5 @@
 @endsection
 
 @section('css_includes')
-<link href="{{ asset('css/lan/lan-show.css') }}" rel="stylesheet">
+<link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

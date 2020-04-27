@@ -155,8 +155,8 @@ class LansController extends Controller
      		$lan->opening_date = $request->opening_date;
      		$lan->duration = $request->duration;
      		$lan->budget = $request->budget;
-         $lan->room_width = $request->room_width;
-         $lan->room_length = $request->room_length;
+			$lan->room_width = $request->room_width;
+			$lan->room_length = $request->room_length;
      		$lan->location()->associate($location);
      		$lan->save();
 
@@ -211,7 +211,7 @@ class LansController extends Controller
   				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
   			}else{
   				$lan = Lan::findOrFail($id);
-          $location = $lan->location;
+				$location = $lan->location;
     			$street = $location->street;
     			$city = $street->city;
     			$department = $city->department;

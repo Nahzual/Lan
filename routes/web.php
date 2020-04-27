@@ -66,7 +66,10 @@ Route::resource('tournament/round/match', 'MatchesController');
 Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 Route::resource('task', 'TasksController');
+
 //Route::resource('activity', 'ActivitiesController');
+Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');
+Route::post('lan/{lan}/activity/store', 'ActivitiesController@store')->name('activity.store');
 
 
 

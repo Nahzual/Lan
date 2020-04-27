@@ -7,13 +7,24 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-					         <h3 class="lead-title">Viewing : {{$lan->name}}</h3>
-				        </div>
+					<div class="row">
+						<div class="col mt-2">
+							<h3 class="lead-title">Viewing : {{$lan->name}}</h3>
+						</div>
+						<div class="col mt-1">
+							<form method="GET" action="{{ route('activity.create', $lan) }}">
+								@csrf
+								@method('GET')
+								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Activity</button>
+							</form>
+						</div>
+					</div>
+				</div>
 
                 <div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
                 <div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
 
-        				<div class="card-body">
+        			<div class="card-body">
         					<div class="row d-flex justify-content-center">
                     <label class="col-md-2 col-form-label text-md-right">Max number of players</label>
         						<label class="form-control col-8 h-100">{{$lan->max_num_registrants}}</label>

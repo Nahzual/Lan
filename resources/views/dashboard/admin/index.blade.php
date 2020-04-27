@@ -3,6 +3,9 @@
 @section('admin_section')
 <br><br>
 
+<div id="response-success" class="container alert alert-success mt-2" style="display:none"></div>
+<div id="response-error" class="container alert alert-danger mt-2" style="display:none"></div>
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-10">
@@ -16,9 +19,6 @@
         </div>
       </div>
 
-      <div id="response-success" class="container alert alert-success mt-2" style="display:none"></div>
-      <div id="response-error" class="container alert alert-danger mt-2" style="display:none"></div>
-
       <div class="table-responsive">
         <table class="table card-table table-bordered">
           <thead class="card-table text-center">
@@ -29,7 +29,7 @@
             <th scope="col" class="lead ">Reject</th>
           </thead>
 
-          <tbody>
+          <tbody class="text-center">
           @foreach($waiting_lans as $lan)
             <tr>
               <td class="lead-text">{{$lan->id}}</td>

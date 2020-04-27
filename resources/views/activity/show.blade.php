@@ -19,10 +19,10 @@
 					</div>
 					<div class="form-group row text-center">
 						<div class="col">
-							<a class="btn btn-primary" href="{{ route('activity.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
+							<a class="btn btn-warning" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
 						</div>
 						<div class="col">
-							<a class="btn btn-primary" href="{{ route('activity.index') }}"><i class='fa fa-arrow-left'></i> Go back to Lan List</a>
+							<a class="btn btn-primary" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go back to Lan List</a>
 						</div>
 					</div>
                 </div>

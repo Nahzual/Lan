@@ -8,87 +8,132 @@
             <div class="card">
                 <div class="card-header">
 					<div class="row">
-						<div class="col mt-2">
-							<h3 class="lead-title">Viewing : {{$lan->name}}</h3>
-						</div>
-						<div class="col mt-1">
-							<form method="GET" action="{{ route('activity.create', $lan) }}">
-								@csrf
-								@method('GET')
-								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Activity</button>
-							</form>
-						</div>
+						<h3 class="lead-title">Viewing : {{$lan->name}}</h3>
 					</div>
 				</div>
 
                 <div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
                 <div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
 
-        			<div class="card-body">
-        					<div class="row d-flex justify-content-center">
-                    <label class="col-md-2 col-form-label text-md-right">Max number of players</label>
-        						<label class="form-control col-8 h-100">{{$lan->max_num_registrants}}</label>
-        					</div>
-        					<div class="row d-flex justify-content-center">
-                    <label class="col-md-2 col-form-label text-md-right">Opening date</label>
-        						<label class="form-control col-8 h-100">{{date_format($date, config("display.DATE_FORMAT"))}}</label>
-        					</div>
-        					<div class="row d-flex justify-content-center">
-                    <label class="col-md-2 col-form-label text-md-right">Duration</label>
-        						<label class="form-control col-8 h-100">{{$lan->duration}} days</label>
-        					</div>
-        					<div class="row d-flex justify-content-center">
-                    <label class="col-md-2 col-form-label text-md-right">Budget</label>
-        						<label class="form-control col-8 h-100">{{$lan->budget}} €</label>
-        					</div>
-                  <div class="row d-flex justify-content-center">
-                    <label class="col-md-2 col-form-label text-md-right">Room dimensions</label>
-                    <label class="form-control col-8 h-100">{{$lan->room_width}}*{{$lan->room_length}} m</label>
-                  </div>
-        					<div class="row d-flex justify-content-center">
-                    <label class="col-md-2 col-form-label text-md-right">Location</label>
-        						<label class="form-control col-8 h-100">{{$location->num_street.' '.$street->name_street.' '.$city->zip_city.' '.$city->name_city.', '.$department->name_department.', '.$country->name_country}}</label>
-        					</div>
-        					<div class="form-group row text-center">
-        						<div class="col">
-        							<a class="btn btn-primary" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
-        						</div>
-                    @if ($userIsLanAdmin)
-                      {{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
-                        {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
-                      {{ Form::close() }}
-                    @endif
-        						<div class="col">
-        								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> To Lan List</a>
-        						</div>
-        				</div>
-            </div>
-			    </div>
-      </div>
+				<div class="card-body">
+					<div class="row d-flex justify-content-center">
+						<label class="col-md-2 col-form-label text-md-right">Max number of players</label>
+						<label class="form-control col-8 h-100">{{$lan->max_num_registrants}}</label>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<label class="col-md-2 col-form-label text-md-right">Opening date</label>
+						<label class="form-control col-8 h-100">{{date_format($date, config("display.DATE_FORMAT"))}}</label>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<label class="col-md-2 col-form-label text-md-right">Duration</label>
+						<label class="form-control col-8 h-100">{{$lan->duration}} days</label>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<label class="col-md-2 col-form-label text-md-right">Budget</label>
+						<label class="form-control col-8 h-100">{{$lan->budget}} €</label>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<label class="col-md-2 col-form-label text-md-right">Room dimensions</label>
+						<label class="form-control col-8 h-100">{{$lan->room_width}}*{{$lan->room_length}} m</label>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<label class="col-md-2 col-form-label text-md-right">Location</label>
+						<label class="form-control col-8 h-100">{{$location->num_street.' '.$street->name_street.' '.$city->zip_city.' '.$city->name_city.', '.$department->name_department.', '.$country->name_country}}</label>
+					</div>
+					<div class="form-group row text-center">
+						<div class="col">
+							<a class="btn btn-primary" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
+						</div>
+						@if ($userIsLanAdmin)
+						  {{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
+							{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+						  {{ Form::close() }}
+						@endif
+						<div class="col">
+								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> To Lan List</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
+</div>
 
+<div class="mt-5 row justify-content-center">
+	<div id="response-success-game" class="container alert alert-success mt-2" style="display:none"></div>
+	<div id="response-error-game" class="container alert alert-danger mt-2" style="display:none"></div>
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col mt-2">
+						<h3 class="lead-title">Activities</h3>
+					</div>
+					@if ($userIsLanAdmin)
+					<div class="col">
+						<a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> Add activities</a>
+					</div>
+					@endif
+				</div>
+			</div>
+		</div>
+		
+		<div class="table-responsive">
+			<table class="text-center table card-table table-bordered">
+			<thead class="card-table text-center">
+			<th scope="col" class="lead">#</th>
+			<th scope="col" class="lead ">Name</th>
+			<th scope="col" class="lead ">View</th>
+			<th scope="col" class="lead">Edit</th>
+			<th scope="col" class="lead">Delete</th>
+			</thead>
 
-    <div class="mt-5 row justify-content-center">
-      <div id="response-success-game" class="container alert alert-success mt-2" style="display:none"></div>
-      <div id="response-error-game" class="container alert alert-danger mt-2" style="display:none"></div>
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <div class="row">
-              <div class="col mt-2">
-                <h3 class="lead-title">Games</h3>
-              </div>
-              @if ($userIsLanAdmin)
-              <div class="col">
-                <a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> Add games</a>
-              </div>
-              @endif
-            </div>
-          </div>
-        </div>
-        @include('game.list_lan')
-      </div>
-    </div>
+			<tbody>
+				@foreach($activities as $activity)
+				<tr>
+					<th scope="row" class="lead-text">{{$activity->id}}</th>
+					<td scope="col" class="lead-text">{{$activity->name_activity}}</td>
+					<td scope="col" >
+						<a class="btn btn-success" href="{{ route('activity.show', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-eye'></i> View</a>
+					</td>
+					<td scope="col" class="">
+						<a class="btn btn-warning" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
+					</td>
+					<td scope="col" class="">
+						{{ Form::open([ 'method'  => 'delete', 'route' => [ 'activity.destroy', $lan, $activity ] ]) }}
+						{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+						{{ Form::close() }}
+					</td>
+				</tr>
+				@endforeach
+			</tbody>
+			</table>
+		</div>
+		
+	</div>
+</div>
+
+<div class="mt-5 row justify-content-center">
+	<div id="response-success-game" class="container alert alert-success mt-2" style="display:none"></div>
+	<div id="response-error-game" class="container alert alert-danger mt-2" style="display:none"></div>
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col mt-2">
+						<h3 class="lead-title">Games</h3>
+					</div>
+					@if ($userIsLanAdmin)
+					<div class="col">
+						<a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> Add games</a>
+					</div>
+					@endif
+				</div>
+			</div>
+		</div>
+		@include('game.list_lan')
+	</div>
+</div>
 
 
 @if ($userIsLanAdmin)

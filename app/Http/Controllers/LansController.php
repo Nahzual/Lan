@@ -181,20 +181,21 @@ class LansController extends Controller
        */
       public function show($id)
       {
-  			$lan = Lan::findOrFail($id);
-  			$location = $lan->location;
-  			$street = $location->street;
-  			$city = $street->city;
-  			$department = $city->department;
-  			$country = $department->country;
-        $games=$lan->games;
-        if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
-          $helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-          $admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','helpers','admins','games'))->with(['userIsLanAdmin'=>true]);
-        }else{
-          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','games'))->with(['userIsLanAdmin'=>false]);
-        }
+		$lan = Lan::findOrFail($id);
+		$location = $lan->location;
+		$street = $location->street;
+		$city = $street->city;
+		$department = $city->department;
+		$country = $department->country;
+		$games=$lan->games;
+		$activities = $lan->activities;
+		if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
+			$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+			$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'activities'))->with(['userIsLanAdmin'=>true]);
+		}else{
+			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false]);
+		}
       }
 
     /**

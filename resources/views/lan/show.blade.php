@@ -80,33 +80,33 @@
 		
 		<div class="table-responsive">
 			<table class="text-center table card-table table-bordered">
-			<thead class="card-table text-center">
-			<th scope="col" class="lead">#</th>
-			<th scope="col" class="lead ">Name</th>
-			<th scope="col" class="lead ">View</th>
-			<th scope="col" class="lead">Edit</th>
-			<th scope="col" class="lead">Delete</th>
-			</thead>
+				<thead class="card-table text-center">
+					<th scope="col" class="lead">#</th>
+					<th scope="col" class="lead ">Name</th>
+					<th scope="col" class="lead ">View</th>
+					<th scope="col" class="lead">Edit</th>
+					<th scope="col" class="lead">Delete</th>
+				</thead>
 
-			<tbody>
-				@foreach($activities as $activity)
-				<tr>
-					<th scope="row" class="lead-text">{{$activity->id}}</th>
-					<td scope="col" class="lead-text">{{$activity->name_activity}}</td>
-					<td scope="col" >
-						<a class="btn btn-success" href="{{ route('activity.show', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-eye'></i> View</a>
-					</td>
-					<td scope="col" class="">
-						<a class="btn btn-warning" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
-					</td>
-					<td scope="col" class="">
-						{{ Form::open([ 'method'  => 'delete', 'route' => [ 'activity.destroy', $lan, $activity ] ]) }}
-						{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
-						{{ Form::close() }}
-					</td>
-				</tr>
-				@endforeach
-			</tbody>
+				<tbody>
+					@foreach($activities as $activity)
+					<tr>
+						<th scope="row" class="lead-text">{{$activity->id}}</th>
+						<td scope="col" class="lead-text">{{$activity->name_activity}}</td>
+						<td scope="col" >
+							<a class="btn btn-success" href="{{ route('activity.show', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-eye'></i> View</a>
+						</td>
+						<td scope="col" class="">
+							<a class="btn btn-warning" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
+						</td>
+						<td scope="col" class="">
+							{{ Form::open([ 'method'  => 'delete', 'route' => [ 'activity.destroy', $lan, $activity ] ]) }}
+							{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+							{{ Form::close() }}
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
 			</table>
 		</div>
 		

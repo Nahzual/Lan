@@ -67,12 +67,13 @@ Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 Route::resource('task', 'TasksController');
 
+// Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');
 Route::post('lan/{lan}/activity/store', 'ActivitiesController@store')->name('activity.store');
 Route::get('lan/{lan}/activity/{activity}/show', 'ActivitiesController@show')->name('activity.show');
 Route::get('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@edit')->name('activity.edit');
-Route::post('lan/{lan}/activity/{activity}/destroy', 'ActivitiesController@destroy')->name('activity.destroy');
-
+Route::delete('lan/{lan}/activity/{activity}/destroy', 'ActivitiesController@destroy')->name('activity.destroy');
+Route::post('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')->name('activity.update');
 
 
 /*LAN ADMIN ROUTES*/

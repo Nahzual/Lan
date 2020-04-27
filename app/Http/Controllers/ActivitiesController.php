@@ -126,26 +126,26 @@ class ActivitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $user = Auth::user();
-		if($user->rank_user >= 1){
-			$activity = Activity::findOrFail($id);
-			$activity->update($request->all());
-			$activity->save();
-			return view('activity.edit', compact('activity'));
-		}else{
-			$lans = user()->lans;
-			foreach($lans as $lan){
-				$activity = $lan->activities()->find($id);
-				if(isset($activity)){
+    public function update(Request $request, $lanId, $activityId)
+    {	
+		if(Auth::check()){
+  			$user=Auth::user();
+  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
+  			}else{
+				$lan = $user->lans()->find($lanId);
+				$activity = $lan->activities()->find($activityId);
+				if($activity == null){
+					return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
+				}else{
 					$activity->update($request->all());
 					$activity->save();
-					return view('activity.edit', compact('activity'));
+					return view('activity.edit', compact('lan', 'activity'));
 				}
-			}
-		}
-		return view('home');
+  			}
+  		}else{
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+  		}
     }
 
     /**
@@ -156,6 +156,21 @@ class ActivitiesController extends Controller
      */
     public function destroy($lanId, $activityId)
     {
-        //
+        if(Auth::check()){
+  			$user=Auth::user();
+  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
+  			}else{
+				$lan = $user->lans()->find($lanId);
+				$activity = $lan->activities()->find($activityId);
+				if($activity == null){
+					return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
+				}else{
+					$activity->delete();
+				}
+  			}
+  		}else{
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+  		}
     }
 }

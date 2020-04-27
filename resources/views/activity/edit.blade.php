@@ -17,7 +17,7 @@
                <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
               <div class="card-body">
-                {!! Form::model($activity, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$activity->id.')']) !!}
+                {!! Form::model($activity, ['method' => 'post', 'route' => [ 'activity.update', $lan, $activity ]]) !!}
 					<div class="bg-light">
 						<div class="form-group">
 							{!! Form::label('name_activity', 'Name', ['class' => 'lead']) !!}
@@ -33,7 +33,7 @@
 							<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>
 						</div>
 						<div class="col">
-								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> Go Back to Lan List</a>
+							<a class="btn btn-primary" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go Back to Lan List</a>
 						</div>
 					</div>
 				{!! Form::close() !!}
@@ -42,8 +42,4 @@
           </div>
     </div>
 </div>
-@endsection
-
-@section('js_includes')
-<script src="/js/ajax/lan/ajax_edit.js"></script>
 @endsection

@@ -5,3 +5,7 @@
 .card-table > thead > tr > th,.card-table > tbody > tr > td,.card-table > tbody > tr > th{
   border: 1px solid gray;
 }
+
+.dark-hr{
+  border: 1px solid black;
+}

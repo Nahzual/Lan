@@ -9,15 +9,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col mt-2">
-              <h3 class="lead-title">My favourite games</h3>
-            </div>
-
-            <div class="col mt-1">
-              <form method="GET" action="{{ route('game.index') }}">
-              @csrf
-              @method('GET')
-                <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Add a favourite game</button>
-              </form>
+              <h3 class="lead-title">Adding games to : {{$lan->name}}<small>#{{$lan->id}}</small></h3>
             </div>
           </div>
         </div>
@@ -26,11 +18,11 @@
         <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
         <div class="card-body">
-          {!! Form::open(['method' => 'post','onsubmit'=>'return searchFavouriteGames(event)']) !!}
+          {!! Form::open(['method' => 'post','onsubmit'=>'return searchGames(event,'.$lan->id.')']) !!}
             <div class="bg-light">
               <h4 class='lead'>Game's name :</h4>
               <div class="form-group">
-                {!! Form::hidden('view_path', 'game.list') !!}
+                {!! Form::hidden('view_path', 'game.list_add_lan') !!}
                 {!! Form::text('name_game', null, ['required'=>'', 'class' => 'form-control']) !!}
               </div>
             </div>
@@ -46,7 +38,7 @@
           <?php if(!isset($games)){
             $games=[];
           }?>
-          @include('game.list')
+          @include('game.list_add_lan')
         </div>
       </div>
     </div>
@@ -55,10 +47,9 @@
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/ajax/game/ajax_lan.js"></script>
 @endsection
 
 @section('css_includes')
-<link href="{{ asset('css/game/game.css') }}" rel="stylesheet">
 <link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

@@ -23,7 +23,7 @@ class Lan extends Model
 
   public function games()
   {
-    return $this->belongsToMany('App\Game','can_play');
+    return $this->belongsToMany('App\Game','can_play','id_lan','id_game');
   }
 
   public function shoppings()

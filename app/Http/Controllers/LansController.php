@@ -9,6 +9,7 @@ use App\Street;
 use App\Department;
 use App\Country;
 use App\User;
+use App\Game;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -186,12 +187,13 @@ class LansController extends Controller
   			$city = $street->city;
   			$department = $city->department;
   			$country = $department->country;
+        $games=$lan->games;
         if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
           $helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
           $admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','helpers','admins'))->with(['userIsLanAdmin'=>true]);
+          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','helpers','admins','games'))->with(['userIsLanAdmin'=>true]);
         }else{
-          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country'))->with(['userIsLanAdmin'=>false]);
+          return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country','games'))->with(['userIsLanAdmin'=>false]);
         }
       }
 
@@ -362,9 +364,17 @@ class LansController extends Controller
 
     public function participate($id){
       if(Auth::check()){
-        $lan=Lan::findOrFail($id);
+        $lan=Lan::find($id);
+        if($lan!=null){
+          if($lan->waiting_lan==config('waiting.ACCEPTED')){
+            return view('lan.participate',compact('lan'));
+          }else{
+            return redirect('/home')->with('error','You can\'t join this LAN because it isn\'t accepted yet.');
+          }
+        }else{
+          return redirect('/home')->with('error','This LAN doesn\'t exist.');
+        }
 
-        return view('lan.participate',compact('lan'));
       }else{
         return redirect('/login')->with('error','You must be logged in to join a LAN.');
       }
@@ -372,19 +382,27 @@ class LansController extends Controller
 
     public function postParticipate($id,Request $request){
       if(Auth::check()){
-        $lan=Lan::findOrFail($id);
-        $user=Auth::user();
-        $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
-        if($lan_user_player==null){
-          $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
-          if(count($place_taken)==0){
-            $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
-            return response()->json(['success'=>'You have been successfully registered to this LAN.']);
+        $lan=Lan::find($id);
+        if($lan!=null){
+          if($lan->waiting_lan==config('waiting.ACCEPTED')){
+            $user=Auth::user();
+            $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
+            if($lan_user_player==null){
+              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
+              if(count($place_taken)==0){
+                $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
+                return response()->json(['success'=>'You have been successfully registered to this LAN.']);
+              }else{
+                return response()->json(['error'=>'This place has already been taken, please choose another one.']);
+              }
+            }else{
+              return response()->json(['error'=>'You are already participating to this LAN.']);
+            }
           }else{
-            return response()->json(['error'=>'This place has already been taken, please choose another one.']);
+            return response()->json(['error'=>'You can\'t join this LAN because it isn\'t accepted yet.']);
           }
         }else{
-          return response()->json(['error'=>'You are already participating to this LAN.']);
+          return response()->json(['error'=>'This LAN doesn\'t exist.']);
         }
       }else{
         return response()->json(['error'=>'Please login to perform this action.']);
@@ -462,7 +480,7 @@ class LansController extends Controller
       if(Auth::check()){
         $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
         if($lan==null){
-          return back()->with('error','You have to be an admin of this LAN to add helpers to it.');
+          return back()->with('error','You have to be an admin of this LAN to add admins to it.');
         }else{
           return view('lan.add_admin',compact('lan'));
         }
@@ -512,6 +530,62 @@ class LansController extends Controller
           }
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to remove admins from it.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
+
+    public function addGame($id){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan==null){
+          return back()->with('error','You have to be an admin of this LAN to add games to it.');
+        }else{
+          return view('lan.add_game',compact('lan'));
+        }
+      }else{
+        return redirect('/login')->with('error','Please login to perform this action.');
+      }
+    }
+
+    public function postAddGame($id,Request $request){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null){
+          $game=Game::where('games.id','=',$request->game_id)->select('games.id','games.name_game')->first();
+          if($game!=null){
+            $lan_game=$lan->games()->where('can_play.id_game','=',$game->id)->first();
+            if($lan_game==null){
+              $lan->games()->attach($game);
+              return response()->json(['success'=>'The game "'.$game->name_game.'" has been added to this LAN\'s game list.']);
+            }else{
+              return response()->json(['error'=>'The game "'.$game->name_game.'" is already in this LAN\'s game list.']);
+            }
+          }else{
+            return response()->json(['error'=>'This game doesn\'t exist.']);
+          }
+        }else{
+          return response()->json(['error'=>'You have to be an admin of this LAN to add games to it.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please login to perform this action.']);
+      }
+    }
+
+    public function removeGame($id,Request $request){
+      if(Auth::check()){
+        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null){
+          $game=Game::where('games.id','=',$request->game_id)->join('can_play','can_play.id_game','=','games.id')->where('can_play.id_lan','=',$lan->id)->select('games.id','games.name_game')->first();
+          if($game!=null){
+            DB::table('can_play')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
+            return response()->json(['success'=>'The game "'.$game->name_game.'" is no longer in this lan\'s game list.']);
+          }else{
+            return response()->json(['error'=>'This game doesn\'t exist or isn\'t in this lan\'s game list.']);
+          }
+        }else{
+          return response()->json(['error'=>'You have to be an admin of this LAN to remove games from it.']);
         }
       }else{
         return response()->json(['error'=>'Please login to perform this action.']);

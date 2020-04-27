@@ -1,6 +1,6 @@
               <div class="table-responsive">
                 <table class="table card-table table-bordered">
-                  <thead class="card-table text-center">
+                  <thead class="text-center">
                     <th scope="col" class="lead">#</th>
                     <th scope="col" class="lead ">Name</th>
                     <th scope="col" class="lead">Participants</th>

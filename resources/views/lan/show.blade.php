@@ -57,22 +57,51 @@
     </div>
 
 
-@if ($userIsLanAdmin)
-<div id="response-success-admin" class="container alert alert-success mt-2" style="display:none"></div>
-<div id="response-error-admin" class="container alert alert-danger mt-2" style="display:none"></div>
+    <div class="mt-5 row justify-content-center">
+      <div id="response-success-game" class="container alert alert-success mt-2" style="display:none"></div>
+      <div id="response-error-game" class="container alert alert-danger mt-2" style="display:none"></div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col mt-2">
+                <h3 class="lead-title">Games</h3>
+              </div>
+              @if ($userIsLanAdmin)
+              <div class="col">
+                <a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> Add games</a>
+              </div>
+              @endif
+            </div>
+          </div>
+        </div>
+        @include('game.list_lan')
+      </div>
+    </div>
 
-  <div class="mt-2 row justify-content-center">
+
+@if ($userIsLanAdmin)
+
+  <div class="my-5 row justify-content-center">
+      <div class="col-md-8">
+        <hr class="dark-hr"/>
+        <h3 class="text-center">Admin section</h3>
+        <hr class="dark-hr"/>
+      </div>
+    </div>
+
+  <div class="mb-5 row justify-content-center">
+    <div id="response-success-admin" class="container alert alert-success mt-2" style="display:none"></div>
+    <div id="response-error-admin" class="container alert alert-danger mt-2" style="display:none"></div>
     <div class="col-md-8">
       @include('user.admin.show_remove')
     </div>
   </div>
 
-  <div id="response-success-helper" class="container alert alert-success mt-2" style="display:none"></div>
-  <div id="response-error-helper" class="container alert alert-danger mt-2" style="display:none"></div>
 
-
-
-  <div class="mt-2 row justify-content-center">
+  <div class="mb-5 row justify-content-center">
+    <div id="response-success-helper" class="container alert alert-success mt-2" style="display:none"></div>
+    <div id="response-error-helper" class="container alert alert-danger mt-2" style="display:none"></div>
     <div class="col-md-8">
       @include('user.helper.show_remove')
     </div>
@@ -86,6 +115,7 @@
 <script src="/js/ajax/lan/ajax_add_helper.js"></script>
 <script src="/js/ajax/lan/ajax_add_admin.js"></script>
 <script src="/js/ajax/lan/ajax_delete.js"></script>
+<script src="/js/ajax/lan/ajax_remove_game.js"></script>
 @endsection
 
 @section('css_includes')

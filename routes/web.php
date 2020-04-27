@@ -28,6 +28,9 @@ Route::get('/contactus', 'PageController@contact')->name('contact');
 
 
 /*LOGGED ROUTES*/
+Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');
+Route::get('/lan/game/{id}','LansController@addGame')->name('lan.add_game');
+Route::post('/lan/game/{id}','LansController@postAddGame');
 Route::resource('lan', 'LansController');
 
 // player participation

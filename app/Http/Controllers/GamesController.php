@@ -220,8 +220,18 @@ class GamesController extends Controller
         $user=Auth::user();
         if(!isset($request->favourite) || $request->favourite==false){
           $games=Game::where('name_game','LIKE','%'.$request->name_game.'%')->get();
-          $favourite_games=Auth::user()->games;
-          return view($request->view_path,compact('games','favourite_games','user'));
+
+          if(isset($request->lan_id)){
+            $lan=Lan::find($request->lan_id);
+            if($lan!=null){
+              return view($request->view_path,compact('games','user','lan'));
+            }else{
+              return "<p>This LAN doesn\'t exist</p>";
+            }
+          }else{
+            $favourite_games=Auth::user()->games;
+            return view($request->view_path,compact('games','favourite_games','user'));
+          }
         }else{
           $games=Auth::user()->games()->where('name_game','LIKE','%'.$request->name_game.'%')->get();
           return view($request->view_path,compact('games','user'));

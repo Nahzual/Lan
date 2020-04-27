@@ -9,13 +9,15 @@
       <th scope="col" class="lead ">Game type</th>
       <th scope="col" class="lead "></th>
       <th scope="col" class="lead "></th>
-      @if(isset($user) && $user->rank_user==config('ranks.SITE_ADMIN')) <th scope="col" class="lead "></th> @endif
+      @if(isset($user) && $user->rank_user==config('ranks.SITE_ADMIN')) <th scope="col" class="lead"></th> @endif
 
     </thead>
 
     <tbody>
       @if(count($games)==0)
-        <h3 class="text-center">No games to show</h3>
+      <tr>
+        <td colspan="7"><h3 class="text-center">No games to show</h3></td>
+      </tr>
       @endif
 
       @foreach($games as $game)

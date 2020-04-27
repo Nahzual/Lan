@@ -10,7 +10,7 @@ function sendRequestAccept(e,id){
       if(data.success != undefined){
         $('#response-success').show();
         $('#response-error').hide();
-        $('#response-success').html(data.success);
+        $('#response-success').html("This LAN has been successfully accepted.");
       }else{
         $('#response-error').show();
         $('#response-success').hide();
@@ -39,7 +39,7 @@ function sendRequestReject(e,id){
       if(data.success != undefined){
         $('#response-success').show();
         $('#response-error').hide();
-        $('#response-success').html(data.success);
+        $('#response-success').html("This LAN has been successfully rejected.");
       }else{
         $('#response-error').show();
         $('#response-success').hide();

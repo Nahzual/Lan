@@ -9,11 +9,11 @@ class Lan extends Model
     protected $fillable = ['name','max_num_registrants','opening_date','duration','budget','waiting_lan'];
 
   public function real_user_count(){
-    return count($this->real_users);
+    return count($this->real_users()->select('users.id')->get());
   }
 
   public function real_users(){
-    return $this->users()->groupBy('pivot_user_id','pivot_lan_id');
+    return $this->users()->groupBy('pivot_user_id','pivot_lan_id','users.id');
   }
 
 	public function users()

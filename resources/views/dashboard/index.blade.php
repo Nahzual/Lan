@@ -156,7 +156,7 @@
       </div>
 
       <div class="table-responsive">
-        <table class="table card-table table-bordered">
+        <table class="text-center table card-table table-bordered">
           <thead class="card-table text-center">
             <th scope="col" class="lead">#</th>
             <th scope="col" class="lead ">Name</th>

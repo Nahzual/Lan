@@ -33,7 +33,7 @@
 							<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>
 						</div>
 						<div class="col">
-							<a class="btn btn-primary" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go Back to Lan List</a>
+							<a class="btn btn-primary" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go Back to Lan</a>
 						</div>
 					</div>
 				{!! Form::close() !!}

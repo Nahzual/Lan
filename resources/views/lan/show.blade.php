@@ -71,7 +71,7 @@
 					</div>
 					@if ($userIsLanAdmin)
 					<div class="col">
-						<a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> Add activities</a>
+						<a class="btn btn-primary float-right" href="{{ route('activity.create', $lan->id) }}"><i class='fa fa-plus'></i> Add activities</a>
 					</div>
 					@endif
 				</div>

@@ -17,9 +17,9 @@ class CreateActivitiesTable extends Migration
             $table->id();
             $table->string('name_activity');
 		    $table->longText('desc_activity');
-            $table->unsignedBigInteger('id_lan');
+            $table->unsignedBigInteger('lan_id');
 
-            $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
+            $table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
         });
     }
 

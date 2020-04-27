@@ -11,9 +11,11 @@ class Activity extends Model
      *
      * @var array
      */
+	public $timestamps = false;
+	 
     protected $fillable = ['name_activity', 'desc_activity', 'id_lan'];
 
     public function lan(){
-      return $this->hasOne('App\Lan');
+		return $this->belongsTo('App\Lan');
     }
 }

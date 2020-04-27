@@ -3,18 +3,16 @@
 @section('content')
 <?php $date = date_create($lan->opening_date); ?>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card">
+				<div class="card-header">
 					<div class="row">
 						<h3 class="lead-title">Viewing : {{$lan->name}}</h3>
 					</div>
 				</div>
-
-                <div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
-                <div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
-
+				<div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
+				<div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
 				<div class="card-body">
 					<div class="row d-flex justify-content-center">
 						<label class="col-md-2 col-form-label text-md-right">Max number of players</label>
@@ -45,18 +43,18 @@
 							<a class="btn btn-primary" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
 						</div>
 						@if ($userIsLanAdmin)
-						  {{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
+							{{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
 							{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
-						  {{ Form::close() }}
+							{{ Form::close() }}
 						@endif
 						<div class="col">
-								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> To Lan List</a>
+							<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> To Lan List</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-    </div>
+	</div>
 </div>
 
 <div class="mt-5 row justify-content-center">
@@ -132,6 +130,50 @@
 			</div>
 		</div>
 		@include('game.list_lan')
+	</div>
+</div>
+
+<div class="mt-5 row justify-content-center">
+	<div id="response-success-material" class="container alert alert-success mt-2" style="display:none"></div>
+	<div id="response-error-material" class="container alert alert-danger mt-2" style="display:none"></div>
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col mt-2">
+						<h3 class="lead-title">Materials</h3>
+					</div>
+					@if ($userIsLanAdmin)
+					<div class="col">
+						<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i> Add material</a>
+					</div>
+					@endif
+				</div>
+			</div>
+		</div>
+		<!--@include('game.list_lan')-->
+	</div>
+</div>
+
+<div class="mt-5 row justify-content-center">
+	<div id="response-success-shopping" class="container alert alert-success mt-2" style="display:none"></div>
+	<div id="response-error-shopping" class="container alert alert-danger mt-2" style="display:none"></div>
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col mt-2">
+						<h3 class="lead-title">Shopping</h3>
+					</div>
+					@if ($userIsLanAdmin)
+					<div class="col">
+						<a class="btn btn-primary float-right" href="{{ route('lan.add_shopping', $lan->id) }}"><i class='fa fa-plus'></i> Add shopping</a>
+					</div>
+					@endif
+				</div>
+			</div>
+		</div>
+		<!--@include('game.list_lan')-->
 	</div>
 </div>
 

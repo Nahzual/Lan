@@ -105,6 +105,8 @@
 					zip_city: $('#zip_city').val(),
 					name_department: $('#name_department').val(),
 					name_country: $('#name_country').val(),
+          room_width: $('#room_width').val(),
+          room_length: $('#room_length').val()
 				},
 				success: function(result){
 					if(result.success!=undefined){

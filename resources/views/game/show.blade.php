@@ -3,10 +3,10 @@
 @section('content')
 <?php $date=date_create($game->release_date_game); ?>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
 					<h3 class="lead-title">Viewing : {{$game->name_game}}</h3>
 				</div>
 
@@ -47,7 +47,7 @@
             </div>
             @endif
 						<div class="col">
-								<a class="btn btn-primary" href="{{ route('game.index') }}"><i class='fa fa-arrow-left'></i> Go to Game List</a>
+							<a class="btn btn-primary" href="{{ route('game.index') }}"><i class='fa fa-arrow-left'></i> Go to Game List</a>
 						</div>
 					</div>
         </div>

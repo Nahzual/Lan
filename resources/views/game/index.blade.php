@@ -12,17 +12,16 @@
               <h3 class="lead-title">Games</h3>
             </div>
             @if($user->rank_user==config('ranks.SITE_ADMIN'))
-              <div class="col mt-1">
-                <form method="GET" action="{{ route('game.create') }}">
-                @csrf
-                @method('GET')
-                  <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create a new game</button>
-                </form>
-              </div>
+            <div class="col mt-1">
+              <form method="GET" action="{{ route('game.create') }}">
+              @csrf
+              @method('GET')
+                <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create a new game</button>
+              </form>
+            </div>
             @endif
           </div>
         </div>
-
 
         <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
         <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>

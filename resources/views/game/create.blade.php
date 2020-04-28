@@ -2,17 +2,15 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
 					<h3 class="lead-title">Creating new game</h3>
 				</div>
 				<div class="card-body">
-
 					<div class ="alert alert-success" id="response-success" style="display:none"></div>
-          <div class ="alert alert-danger" id="response-error" style="display:none"></div>
-
+	        <div class ="alert alert-danger" id="response-error" style="display:none"></div>
 
 					{!! Form::open(['method' => 'put', 'id' => 'CreateNewGameForm']) !!}
 						<div class="bg-light">
@@ -20,19 +18,19 @@
 								{!! Form::label('name_game', 'Name', ['class' => 'lead']) !!}
 								{!! Form::text('name_game', null, ['class' => 'form-control']) !!}
 							</div>
-              <div class="form-group">
+	            <div class="form-group">
 								{!! Form::label('desc_game', 'Description of the Game', ['class' => 'lead']) !!}
 								{!! Form::textarea('desc_game', null, ['class' => 'form-control','size'=>'30x5']) !!}
 							</div>
-              <div class="form-group">
+	            <div class="form-group">
 								{!! Form::label('release_date_game', 'Release Date', ['class' => 'lead']) !!}
 								{!! Form::date('release_date_game', null, ['class' => 'form-control']) !!}
 							</div>
-              <div class="form-group">
+	            <div class="form-group">
 								{!! Form::label('cost_game', 'Price (in €) ', ['class' => 'lead']) !!}
 								{!! Form::number('cost_game', null, ['min'=>'0', 'class' => 'form-control']) !!}
 							</div>
-              <div class="form-group">
+	            <div class="form-group">
 								{!! Form::label('is_multiplayer_game', 'Game Type : ', ['class' => 'lead']) !!}
 								{!! Form::select('is_multiplayer_game', [config('game.SOLO') => '1 player', config('game.MULTI_LOCAL') => 'Local multiplayer', config('game.MULTI_ONL')=>'Online multiplayer'], null, ['class' => 'form-control']) !!}
 							</div>
@@ -48,10 +46,10 @@
 							</div>
 						</div>
 					{!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
+      	</div>
+    	</div>
+  	</div>
+  </div>
 </div>
 
 <script src=" http://code.jquery.com/jquery-3.3.1.min.js"

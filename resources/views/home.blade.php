@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
+	<div class="row justify-content-center">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">List Lans</h3>
+							<h3 class="lead-title">List of available LANs</h3>
 						</div>
 					</div>
 				</div>

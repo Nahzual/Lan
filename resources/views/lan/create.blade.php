@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+    	<div class="card">
+        <div class="card-header">
 					<h3 class="lead-title">Creating a new Lan</h3>
 				</div>
 				<div class="card-body">
@@ -65,16 +65,15 @@
 							<div class="col">
 								<button type="submit" class="btn btn-primary" id="AddNewLanSubmit"><i class='fa fa-plus-square'></i> Add</button>
 							</div>
-
 							<div class="col">
 								<a class="btn btn-primary" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> Go Back to Lan List</a>
 							</div>
 						</div>
 					{!! Form::close() !!}
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <script src=" http://code.jquery.com/jquery-3.3.1.min.js"

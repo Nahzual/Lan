@@ -7,7 +7,6 @@
       <th scope="col" class="lead">Release date</th>
       <th scope="col" class="lead ">Game type</th>
       @if($userIsLanAdmin) <th scope="col" class="lead "></th> @endif
-
     </thead>
 
     <tbody>
@@ -33,15 +32,15 @@
         </td>
 
         @if($userIsLanAdmin)
-          <td scope="col" class="lead-text">
-            {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
-              <div class="form-group row text-center">
-                <div class="col">
-                  <button type="submit" class="btn btn-warning"><i class='fa fa-times'></i> Remove</button>
-                </div>
+        <td scope="col" class="lead-text">
+          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
+            <div class="form-group row text-center">
+              <div class="col">
+                <button type="submit" class="btn btn-warning"><i class='fa fa-times'></i> Remove</button>
               </div>
-            {!! Form::close() !!}
-          </td>
+            </div>
+          {!! Form::close() !!}
+        </td>
         @endif
       </tr>
       @endforeach

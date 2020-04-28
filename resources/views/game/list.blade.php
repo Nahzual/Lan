@@ -10,7 +10,6 @@
       <th scope="col" class="lead "></th>
       <th scope="col" class="lead "></th>
       @if(isset($user) && $user->rank_user==config('ranks.SITE_ADMIN')) <th scope="col" class="lead"></th> @endif
-
     </thead>
 
     <tbody>
@@ -42,38 +41,38 @@
 
         <!-- if there may be games that are not in the user's favourite list, and $game is not in this list, display a form to mark the game as favourite -->
         <?php if(isset($favourite_games) && !$favourite_games->contains($game)){ ?>
-          <td scope="col" class="lead-text">
-            {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addGameToFavourite(event,'.$game->id.')']) !!}
-              <div class="form-group row text-center">
-                <div class="col">
-                  <button type="submit" class="btn btn-primary"><i class='fa fa-star'></i> Mark</button>
-                </div>
+        <td scope="col" class="lead-text">
+          {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addGameToFavourite(event,'.$game->id.')']) !!}
+          	<div class="form-group row text-center">
+              <div class="col">
+                <button type="submit" class="btn btn-primary"><i class='fa fa-star'></i> Mark</button>
               </div>
-            {!! Form::close() !!}
-          </td>
-          <!-- else display a form to remove the game from the favourite list -->
+            </div>
+          {!! Form::close() !!}
+        </td>
+        <!-- else display a form to remove the game from the favourite list -->
         <?php }else{ ?>
-          <td scope="col" class="lead-text">
-            {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGameFromFavourite(event,'.$game->id.')']) !!}
-              <div class="form-group row text-center">
-                <div class="col">
-                  <button type="submit" class="btn btn-warning"><i class='fa fa-star-o'></i> Unmark</button>
-                </div>
+        <td scope="col" class="lead-text">
+          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGameFromFavourite(event,'.$game->id.')']) !!}
+            <div class="form-group row text-center">
+              <div class="col">
+                <button type="submit" class="btn btn-warning"><i class='fa fa-star-o'></i> Unmark</button>
               </div>
-            {!! Form::close() !!}
-          </td>
+            </div>
+          {!! Form::close() !!}
+        </td>
         <?php } ?>
 
         @if(isset($user) && $user->rank_user==config('ranks.SITE_ADMIN'))
-          <td scope="col" class="lead-text">
-            {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteGame(event,'.$game->id.')']) !!}
-              <div class="form-group row text-center">
-                <div class="col">
-                  <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
-                </div>
+        <td scope="col" class="lead-text">
+          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteGame(event,'.$game->id.')']) !!}
+            <div class="form-group row text-center">
+              <div class="col">
+                <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
               </div>
-            {!! Form::close() !!}
-          </td>
+            </div>
+          {!! Form::close() !!}
+        </td>
         @endif
       </tr>
       @endforeach

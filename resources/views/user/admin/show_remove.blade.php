@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header">
+	<div class="card-header">
     <div class="row">
       <div class="col mt-2">
         <h3 class="lead-title">Admins</h3>
@@ -26,7 +26,6 @@
       <tr>
         <th class="lead-text">{{$admin->id}}</th>
         <td class="lead-text">{{$admin->pseudo}}</td>
-
         <td>
           <a class="btn btn-success" href="{{ route('user.show', $admin->id) }}"><i class='fa fa-eye'></i> View</a>
         </td>

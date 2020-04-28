@@ -58,6 +58,8 @@
 </div>
 
 <div class="mt-5 row justify-content-center">
+	<div id="response-success-activity" class="container alert alert-success mt-2" style="display:none"></div>
+	<div id="response-error-activity" class="container alert alert-danger mt-2" style="display:none"></div>
 	<div class="col-md-8">
 		<div class="card">
 			<div class="card-header">
@@ -86,7 +88,7 @@
 
 				<tbody>
 					@foreach($activities as $activity)
-					<tr>
+					<tr id="row-activity-lan-{{$activity->id}}">
 						<th scope="row" class="lead-text">{{$activity->id}}</th>
 						<td scope="col" class="lead-text">{{$activity->name_activity}}</td>
 						<td scope="col" >
@@ -95,7 +97,7 @@
 						<td scope="col" class="">
 							<a class="btn btn-warning" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
 						</td>
-						<td scope="col" class="">							
+						<td scope="col" class="">
 							{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeActivity(event, '.$lan->id.', '.$activity->id.')']) !!}
 								<div class="form-group row text-center">
 									<div class="col">

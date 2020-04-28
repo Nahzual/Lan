@@ -9,19 +9,20 @@ function removeActivity(e, lanId, activityId){
           +'&_method='+$("[name='_method']").val(),
     success: function(data){
       if(data.success != undefined){
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
+				$('#row-activity-lan-'+activityId).html('');
+        $('#response-success-activity').show();
+        $('#response-error-activity').hide();
+        $('#response-success-activity').html(data.success);
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        $('#response-error-activity').show();
+        $('#response-success-activity').hide();
+        $('#response-error-activity').html(data.error);
       }
     },
     error: function(data){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+      $('#response-error-activity').show();
+      $('#response-success-activity').hide();
+      $('#response-error-activity').html("An error occured on the server, please try again later.");
     }
   });
 

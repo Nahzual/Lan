@@ -140,7 +140,7 @@ class ActivitiesController extends Controller
 				}else{
 					$activity->update($request->all());
 					$activity->save();
-					return view('activity.edit', compact('lan', 'activity'));
+					return response()->json(['success'=>'The activity "'.$activity->name_activity.'" has been successfully edited.']);
 				}
   			}
   		}else{
@@ -167,6 +167,7 @@ class ActivitiesController extends Controller
 					return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
 				}else{
 					$activity->delete();
+					return response()->json(['success'=>'This activity has been successfully deleted.']);
 				}
   			}
   		}else{

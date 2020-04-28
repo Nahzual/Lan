@@ -73,7 +73,7 @@ Route::post('lan/{lan}/activity/store', 'ActivitiesController@store')->name('act
 Route::get('lan/{lan}/activity/{activity}/show', 'ActivitiesController@show')->name('activity.show');
 Route::get('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@edit')->name('activity.edit');
 Route::delete('lan/{lan}/activity/{activity}/destroy', 'ActivitiesController@destroy')->name('activity.destroy');
-Route::post('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')->name('activity.update');
+Route::put('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')->name('activity.update');
 
 
 /*LAN ADMIN ROUTES*/

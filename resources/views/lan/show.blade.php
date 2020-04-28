@@ -97,10 +97,14 @@
 						<td scope="col" class="">
 							<a class="btn btn-warning" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
 						</td>
-						<td scope="col" class="">
-							{{ Form::open([ 'method'  => 'delete', 'route' => [ 'activity.destroy', $lan, $activity ] ]) }}
-							{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
-							{{ Form::close() }}
+						<td scope="col" class="">							
+							{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeActivity(event, '.$lan->id.', '.$activity->id.')']) !!}
+								<div class="form-group row text-center">
+									<div class="col">
+										<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+									</div>
+								</div>
+							{!! Form::close() !!}
 						</td>
 					</tr>
 					@endforeach
@@ -212,6 +216,8 @@
 <script src="/js/ajax/lan/ajax_add_admin.js"></script>
 <script src="/js/ajax/lan/ajax_delete.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
+
+<script src="/js/ajax/activity/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

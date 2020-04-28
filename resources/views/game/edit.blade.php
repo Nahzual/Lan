@@ -17,7 +17,7 @@
 				<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
         <div class="card-body">
-					{!! Form::model($game, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$game->id.')']) !!}
+				{!! Form::model($game, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$game->id.')']) !!}
             <div class="bg-light">
               <div class="form-group">
                 {!! Form::label('name_game', 'Name', ['class' => 'lead']) !!}

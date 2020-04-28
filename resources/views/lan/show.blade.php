@@ -145,7 +145,6 @@
 					</div>
 					@if ($userIsLanAdmin)
 					<div class="col">
-						<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i> Add material</a>
 					</div>
 					@endif
 				</div>
@@ -167,7 +166,6 @@
 					</div>
 					@if ($userIsLanAdmin)
 					<div class="col">
-						<a class="btn btn-primary float-right" href="{{ route('lan.add_shopping', $lan->id) }}"><i class='fa fa-plus'></i> Add shopping</a>
 					</div>
 					@endif
 				</div>

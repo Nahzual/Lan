@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\Lan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class ActivitiesController extends Controller
 		if(Auth::check()){
   			$user=Auth::user();
   			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
+  				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
 				$lan = $user->lans()->find($lanId);
   				return view('activity.create', compact('lan'));
@@ -49,7 +50,7 @@ class ActivitiesController extends Controller
 		if(Auth::check()){
   			$user=Auth::user();
   			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
+  				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
 				$lan = $user->lans()->find($lanId);
   				$activity = new Activity();
@@ -74,23 +75,23 @@ class ActivitiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($lanId, $activityId)
-    {	
-		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
-  			}else{
-				$lan = $user->lans()->find($lanId);
-				$activity = $lan->activities()->find($activityId);
-				if($activity == null){
-					return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
+    {
+			$lan=Lan::find($lanId);
+			if($lan!=null){
+				$activity=$lan->activities()->find($activityId);
+				if($activity!=null){
+					if(Auth::check()){
+						$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+						return view('activity.show', compact('lan', 'activity','userIsLanAdmin'));
+					}else{
+						return view('activity.show', compact('lan', 'activity'));
+					}
 				}else{
-					return view('activity.show', compact('lan', 'activity'));
+					return back()->with('error','This activity doesn\'t exist.');
 				}
-  			}
-  		}else{
-  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
-  		}
+			}else{
+				return back()->with('error','This LAN doesn\'t exist.');
+			}
     }
 
     /**
@@ -100,22 +101,26 @@ class ActivitiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($lanId, $activityId)
-    {	
+    {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t edit an activity if you are not an admin of its LAN.');
   			}else{
-				$lan = $user->lans()->find($lanId);
-				$activity = $lan->activities()->find($activityId);
-				if($activity == null){
-					return back()->with('error','You can\'t edit a Activity for which you are not an admin.');
-				}else{
-					return view('activity.edit', compact('lan', 'activity'));
-				}
+					$lan = Lan::find($lanId);
+					if($lan!=null){
+						$activity = $lan->activities()->find($activityId);
+						if($activity == null){
+							return back()->with('error','This activity doesn\'t exist.');
+						}else{
+							return view('activity.edit', compact('lan', 'activity'));
+						}
+					}else{
+						return back()->with('error','This LAN doesn\'t exist.');
+					}
   			}
   		}else{
-  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s activity.');
   		}
     }
 
@@ -127,7 +132,7 @@ class ActivitiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $lanId, $activityId)
-    {	
+    {
 		if(Auth::check()){
   			$user=Auth::user();
   			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){

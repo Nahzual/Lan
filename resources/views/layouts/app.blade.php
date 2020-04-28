@@ -76,7 +76,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/') }}" >
+                                    <a class="dropdown-item" href="{{ url('/lans') }}" >
                                         My LANs
                                     </a> <!-- Insérer lien vers page listant les LANs en lien avec l'utilisateur-->
                                     <a class="dropdown-item" href="{{ route('game.favourite') }}" >

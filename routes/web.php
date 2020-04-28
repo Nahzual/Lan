@@ -32,6 +32,7 @@ Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_ga
 Route::get('/lan/game/{id}','LansController@addGame')->name('lan.add_game');
 Route::post('/lan/game/{id}','LansController@postAddGame');
 Route::resource('lan', 'LansController');
+Route::get('/lans','LansController@index')->name('my_lans');
 
 // player participation
 Route::get('lan/participate/{id}', 'LansController@participate')->name('lan.participate');
@@ -48,7 +49,7 @@ Route::get('lan/admin/{id}', 'LansController@addAdmin')->name('lan.add_admin');
 Route::post('lan/admin/{id}', 'LansController@postAddAdmin');
 Route::delete('lan/admin/{id}', 'LansController@removeAdmin');
 
-Route::get('/dashboard', 'LansController@index')->name('dashboard');
+Route::get('/dashboard', 'PageController@dashboard')->name('dashboard');
 
 // game routes
 Route::get('/game/favourite/','GamesController@showFavouriteGames')->name('game.favourite');

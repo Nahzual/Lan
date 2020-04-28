@@ -30,10 +30,7 @@ class LansController extends Controller
         $helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
         $player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
 
-        if($user->rank_user==config('ranks.SITE_ADMIN')){
-			       $waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
-			       return view('dashboard.admin.index', compact('admin_lans','helper_lans','player_lans', 'user','waiting_lans'));
-        }else return view('dashboard.index', compact('admin_lans','helper_lans','player_lans', 'user'));
+				return view('lan.index',compact('user','admin_lans','helper_lans','player_lans'));
       }else{
         return redirect('/login')->with('error','Please log in to have access to this page.');
       }

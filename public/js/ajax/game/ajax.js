@@ -66,6 +66,7 @@ function deleteGame(e,gameID){
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
+				$('#row-game-'+gameID).html('');
         $('#response-success').show();
         $('#response-error').hide();
         $('#response-success').html(data.success);

@@ -63,6 +63,7 @@ function removeHelper(e,lanID,helperID){
           +'&id_user='+helperID,
     success: function(data){
       if(data.success != undefined){
+				$('#row-helper-lan-'+helperID).html('');
         $('#response-success-helper').show();
         $('#response-error-helper').hide();
         $('#response-success-helper').html(data.success);

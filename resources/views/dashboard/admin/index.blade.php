@@ -31,7 +31,7 @@
 
           <tbody class="text-center">
           @foreach($waiting_lans as $lan)
-            <tr>
+            <tr id="row-waiting-lan-{{$lan->id}}">
               <td class="lead-text">{{$lan->id}}</td>
               <td class="col mt-2 lead-text">{{$lan->name}}</td>
 

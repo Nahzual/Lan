@@ -10,6 +10,7 @@ function removeGame(e,idLan,idGame){
           +'&game_id='+idGame,
     success: function(data){
       if(data.success != undefined){
+				$('#row-game-lan-'+idGame).html('');
         $('#response-success-game').show();
         $('#response-error-game').hide();
         $('#response-success-game').html(data.success);

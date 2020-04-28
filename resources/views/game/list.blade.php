@@ -21,7 +21,7 @@
 
       @foreach($games as $game)
       <?php $date=date_create($game->release_date_game); ?>
-      <tr>
+      <tr id="row-game-{{$game->id}}">
         <th scope="row" class="lead-text">{{$game->id}}</th>
         <td scope="col" class="lead-text">{{$game->name_game}}</td>
         <td scope="col" class="lead-text">{{date_format($date, config("display.DATE_FORMAT"))}}</td>

@@ -1,4 +1,4 @@
-<tr>
+<tr id="row-helper-lan-{{$lan->id}}">
   <th scope="row" class="text-center lead-text">{{$lan->id}}</th>
   <td scope="col" class="text-center lead-text">{{$lan->name}}</td>
   <td scope="col" class="text-center lead-text">{{ $lan->real_user_count() }}/{{$lan->max_num_registrants}}</td>

@@ -9,6 +9,7 @@ function deleteLan(e,id){
           +'&_method='+'DELETE',
     success: function(data){
       if(data.success != undefined){
+				$('#row-my-lan-'+id).html('');
         $('#response-success-delete').show();
         $('#response-error-delete').hide();
         $('#response-success-delete').html(data.success);

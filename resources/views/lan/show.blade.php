@@ -58,8 +58,6 @@
 </div>
 
 <div class="mt-5 row justify-content-center">
-	<div id="response-success-game" class="container alert alert-success mt-2" style="display:none"></div>
-	<div id="response-error-game" class="container alert alert-danger mt-2" style="display:none"></div>
 	<div class="col-md-8">
 		<div class="card">
 			<div class="card-header">
@@ -75,7 +73,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="table-responsive">
 			<table class="text-center table card-table table-bordered">
 				<thead class="card-table text-center">
@@ -111,7 +109,7 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 	</div>
 </div>
 

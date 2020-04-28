@@ -8,6 +8,7 @@ function sendRequestAccept(e,id){
     data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_accept").val(),
     success: function(data){
       if(data.success != undefined){
+				$('#row-waiting-lan-'+id).html('');
         $('#response-success').show();
         $('#response-error').hide();
         $('#response-success').html("This LAN has been successfully accepted.");

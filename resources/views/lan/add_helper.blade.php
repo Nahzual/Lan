@@ -35,15 +35,15 @@
       </div>
     </div>
 	</div>
+</div>
 
-	<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <div id="requestResult">
-        </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div id="requestResult">
       </div>
-  	</div>
-	</div>
+    </div>
+  </div>
 </div>
 @endsection
 

@@ -38,6 +38,7 @@ function removePlayer(e,id){
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
+				$('#row-player-lan-'+id).html('');
         $('#response-success-player').show();
         $('#response-error-player').hide();
         $('#response-success-player').html(data.success);

@@ -23,7 +23,7 @@
     <tbody>
     @if (isset($helpers))
       @foreach($helpers as $helper)
-      <tr>
+      <tr id="row-helper-lan-{{$helper->id}}">
         <th class="lead-text">{{$helper->id}}</th>
         <td class="lead-text">{{$helper->pseudo}}</td>
       	<td>

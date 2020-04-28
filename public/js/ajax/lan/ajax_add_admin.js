@@ -63,6 +63,7 @@ function removeAdmin(e,lanID,adminID){
           +'&id_user='+adminID,
     success: function(data){
       if(data.success != undefined){
+				$('#row-admin-lan-'+adminID).html('');
         $('#response-success-admin').show();
         $('#response-error-admin').hide();
         $('#response-success-admin').html(data.success);

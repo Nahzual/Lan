@@ -24,16 +24,16 @@ class LansController extends Controller
      */
     public function index()
     {
-      if(Auth::check()){
-        $user = Auth::user();
-        $admin_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-        $helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-        $player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
+		if(Auth::check()){
+			$user = Auth::user();
+			$admin_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+			$helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+			$player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
 
-				return view('lan.index',compact('user','admin_lans','helper_lans','player_lans'));
-      }else{
-        return redirect('/login')->with('error','Please log in to have access to this page.');
-      }
+			return view('lan.index',compact('user','admin_lans','helper_lans','player_lans'));
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
     }
 
     /**

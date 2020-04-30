@@ -46,7 +46,7 @@
                                 <a class="nav-link" href="{{ url('/') }}">LANs</a><!-- Insérer lien vers page listant les LANs-->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/') }}">Contact</a><!-- Insérer lien vers page de contact-->
+                                <a class="nav-link" href="{{ route('contact.index') }}">Contact</a><!-- Insérer lien vers page de contact-->
                             </li>
                         @guest
                             <li class="nav-item">

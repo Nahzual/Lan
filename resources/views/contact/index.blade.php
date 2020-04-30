@@ -13,17 +13,34 @@
 			<p class="text-muted">If you having trouble with this service, please <a href="">ask for help</a></p>
 			{!! Form::open(['method' => 'put', 'id' => 'CreateNewContactForm']) !!}
 				<div class="bg-light">
-					<div class="form-group">
+					<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 						{!! Form::label('name', 'Name', ['class' => 'lead']) !!}
 						{!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
+						@error('name')
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $message }}</strong>
+							</span>
+						@enderror
 					</div>
-					<div class="form-group">
+					<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+						{!! Form::label('lastname', 'Last Name', ['class' => 'lead']) !!}
+						{!! Form::text('lastname', $user->lastname, ['class' => 'form-control']) !!}
+						{!! $errors->first('lastname', '<span class="help-block">:message</span>') !!}
+					</div>
+					<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 						{!! Form::label('email', 'Email', ['class' => 'lead']) !!}
 						{!! Form::text('email', $user->email, ['class' => 'form-control']) !!}
+						{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 					</div>
-					<div class="form-group">
+					<div class="form-group {{ $errors->has('object') ? 'has-error' : '' }}">
+						{!! Form::label('object', 'Object', ['class' => 'lead']) !!}
+						{!! Form::text('object', null, ['class' => 'form-control']) !!}
+						{!! $errors->first('object', '<span class="help-block">:message</span>') !!}
+					</div>
+					<div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
 						{!! Form::label('description', 'Description', ['class' => 'lead']) !!}
 						{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+						{!! $errors->first('description', '<span class="help-block">:message</span>') !!}
 					</div>
 				</div>
 				<div class="form-group row text-center">
@@ -60,7 +77,9 @@
 				method: 'post',
 				data: {
 					name: $('#name').val(),
-					mail: $('#email').val(),
+					lastname: $('#lastname').val(),
+					email: $('#email').val(),
+					object: $('#object').val(),
 					description: $('#description').val()
 				},
 				success: function(result){

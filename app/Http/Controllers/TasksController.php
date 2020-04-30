@@ -24,10 +24,10 @@ class TasksController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_HELPER')){
-  				return back()->with('error','You can\'t add a task to a LAN you are not an admin of.');
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->orWhere('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t add a task to a LAN if you are not an admin or helper on this LAN.');
   			}else{
-				$lan = $user->lans()->find($lanId);
+					$lan = $user->lans()->find($lanId);
   				return view('task.create', compact('lan'));
   			}
   		}else{
@@ -46,23 +46,23 @@ class TasksController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You can\'t add a task to a LAN you are not an admin of.');
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->orWhere('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t add a task to a LAN if you are not an admin or helper on this LAN.');
   			}else{
-				$lan = $user->lans()->find($lanId);
+					$lan = $user->lans()->find($lanId);
   				$task = new Task();
-				$activity->name_task = $request->name_task;
-				$activity->desc_task = $request->desc_task;
-				$activity->deadline_task = $request->deadline_task;
-				$activity->lan()->associate($lan->id);
-				$activity->save();
+					$activity->name_task = htmlentities($request->name_task);
+					$activity->desc_task = htmlentities($request->desc_task);
+					$activity->deadline_task = htmlentities($request->deadline_task);
+					$activity->lan()->associate($lan->id);
+					$activity->save();
 
-				return response()->json([
-					'success'=>'Your Task has been saved successfully.'
-				]);
+					return response()->json([
+						'success'=>'Your Task has been saved successfully.'
+					]);
   			}
   		}else{
-  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+  			return redirect('/login')->with('error','You must be logged in to add a task to a LAN.');
   		}
     }
 
@@ -103,8 +103,8 @@ class TasksController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You can\'t edit a task if you are not an admin of its LAN.');
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->orWhere('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You can\'t edit a task if you are not an admin or helper of its LAN.');
   			}else{
 					$lan = Lan::find($lanId);
 					if($lan!=null){
@@ -135,8 +135,8 @@ class TasksController extends Controller
     {
 			if(Auth::check()){
 	  		$user=Auth::user();
-	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-	  			return response()->json(['error'=>'You can\'t edit a task if you are not an admin of its LAN.']);
+	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->orWhere('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+	  			return response()->json(['error'=>'You can\'t edit a task if you are not an admin or helper of its LAN.']);
 	  		}else{
 					$lan = Lan::find($lanId);
 					if($lan!=null){
@@ -167,8 +167,8 @@ class TasksController extends Controller
     {
       if(Auth::check()){
   			$user=Auth::user();
-				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-	  			return response()->json(['error'=>'You can\'t delete a task if you are not an admin of its LAN.']);
+				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->orWhere('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+	  			return response()->json(['error'=>'You can\'t delete a task if you are not an admin or helper of its LAN.']);
   			}else{
 					$lan = Lan::find($lanId);
 					if($lan!=null){

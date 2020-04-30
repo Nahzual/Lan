@@ -124,7 +124,7 @@ class UsersController extends Controller
             if($countries != null){$country = $countries->first();}
             if(!isset($country)){
               $country = new Country();
-              $country->name_country = $request->name_country;
+              $country->name_country = htmlentities($request->name_country);
               $country->save();
             }
           }
@@ -146,7 +146,7 @@ class UsersController extends Controller
 
       		if(!isset($department) || $country!=$user_country){
       			$department = new Department();
-      			$department->name_department = $request->name_department;
+      			$department->name_department = htmlentities($request->name_department);
       			$department->country()->associate($country);
       			$department->save();
       		}
@@ -168,8 +168,8 @@ class UsersController extends Controller
 
           if(!isset($city) || $department!=$user_department){
       			$city = new City();
-      			$city->name_city = $request->name_city;
-      			$city->zip_city = $request->zip_city;
+      			$city->name_city = htmlentities($request->name_city);
+      			$city->zip_city = htmlentities($request->zip_city);
       			$city->department()->associate($department);
       			$city->save();
       		}
@@ -191,7 +191,7 @@ class UsersController extends Controller
 
       		if(!isset($street) || $city!=$user_city){
       			$street = new Street();
-      			$street->name_street = $request->name_street;
+      			$street->name_street = htmlentities($request->name_street);
       			$street->city()->associate($city);
       			$street->save();
       		}
@@ -213,20 +213,20 @@ class UsersController extends Controller
 
       		if(!isset($location) || $street!=$user_street){
       			$location = new Location();
-      			$location->num_street = $request->num_street;
+      			$location->num_street = htmlentities($request->num_street);
       			$location->street()->associate($street);
       			$location->save();
       		}
 
           if($location!=$user_location) $user->location()->associate($location);
 
-          $user->name=$request->name;
-          $user->lastname=$request->lastname;
-          $user->pseudo=$request->pseudo;
+          $user->name=htmlentities($request->name);
+          $user->lastname=htmlentities($request->lastname);
+          $user->pseudo=htmlentities($request->pseudo);
           if(isset($request->password) && isset($request->password_confirmation) && !Hash::check($user->password,$request->password))
             $user->password=Hash::make($request->password);
-          $user->email=$request->email;
-          $user->tel_user=$request->tel_user;
+          $user->email=htmlentities($request->email);
+          $user->tel_user=htmlentities($request->tel_user);
 
   				$user->save();
 

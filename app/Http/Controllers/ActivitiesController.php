@@ -22,7 +22,7 @@ class ActivitiesController extends Controller
   			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
   				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
-				$lan = $user->lans()->find($lanId);
+					$lan = $user->lans()->find($lanId);
   				return view('activity.create', compact('lan'));
   			}
   		}else{
@@ -43,16 +43,16 @@ class ActivitiesController extends Controller
   			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
   				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
-				$lan = $user->lans()->find($lanId);
+					$lan = $user->lans()->find($lanId);
   				$activity = new Activity();
-				$activity->name_activity = $request->name_activity;
-				$activity->desc_activity = $request->desc_activity;
-				$activity->lan()->associate($lan->id);
-				$activity->save();
+					$activity->name_activity = htmlentities($request->name_activity);
+					$activity->desc_activity = htmlentities($request->desc_activity);
+					$activity->lan()->associate($lan->id);
+					$activity->save();
 
-				return response()->json([
-					'success'=>'Your Activity has been saved successfully.'
-				]);
+					return response()->json([
+						'success'=>'Your Activity has been saved successfully.'
+					]);
   			}
   		}else{
   			return redirect('/login')->with('error','You must be logged in to edit a LAN.');

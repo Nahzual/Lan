@@ -69,12 +69,12 @@ class GamesController extends Controller
              if($request->is_multiplayer_game!=config('game.SOLO') && $request->is_multiplayer_game!=config('game.MULTI_LOCAL') &&  $request->is_multiplayer_game!=config('game.MULTI_ONL')){
                return response()->json(['error'=>'Please select "Local Multiplayer", "Online Multiplayer" or "1 player" for the game type.']);
              }else{
-               $game->is_multiplayer_game=$request->is_multiplayer_game;
+               $game->is_multiplayer_game=htmlentities($request->is_multiplayer_game);
              }
 
-             $game->name_game=$request->name_game;
-             $game->desc_game=$request->desc_game;
-             $game->release_date_game=$request->release_date_game;
+             $game->name_game=htmlentities($request->name_game);
+             $game->desc_game=htmlentities($request->desc_game);
+             $game->release_date_game=htmlentities($request->release_date_game);
              $game->save();
 
              return response()->json(['success'=>'The game "'.$game->name_game.'" has been successfully created.']);
@@ -153,12 +153,12 @@ class GamesController extends Controller
               if($request->is_multiplayer_game!=config('game.SOLO') && $request->is_multiplayer_game!=config('game.MULTI_LOCAL') &&  $request->is_multiplayer_game!=config('game.MULTI_ONL')){
                 return response()->json(['error'=>'Please select "Local Multiplayer", "Online Multiplayer" or "1 player" for the game type.']);
               }else{
-                $game->is_multiplayer_game=$request->is_multiplayer_game;
+                $game->is_multiplayer_game=htmlentities($request->is_multiplayer_game);
               }
 
-              $game->name_game=$request->name_game;
-              $game->desc_game=$request->desc_game;
-              $game->release_date_game=$request->release_date_game;
+              $game->name_game=htmlentities($request->name_game);
+              $game->desc_game=htmlentities($request->desc_game);
+              $game->release_date_game=htmlentities($request->release_date_game);
               $game->save();
 
               return response()->json(['success'=>'The game "'.$game->name_game.'" has been successfully edited.']);

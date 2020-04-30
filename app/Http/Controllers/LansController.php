@@ -65,7 +65,7 @@ class LansController extends Controller
      		if($countries != null){$country = $countries->first();}
      		if(!isset($country)){
      			$country = new Country();
-     			$country->name_country = $request->name_country;
+     			$country->name_country = htmlentities($request->name_country);
      			$country->save();
      			//$country = Country::findOrFail($country->id);
      		}else{
@@ -82,7 +82,7 @@ class LansController extends Controller
      		}
      		if(!isset($department)){
      			$department = new Department();
-     			$department->name_department = $request->name_department;
+     			$department->name_department = htmlentities($request->name_department);
      			$department->country()->associate($country);
      			$department->save();
      			//$department = Department::findOrFail($department->id);
@@ -101,8 +101,8 @@ class LansController extends Controller
      		}
      		if(!isset($city)){
      			$city = new City();
-     			$city->name_city = $request->name_city;
-     			$city->zip_city = $request->zip_city;
+     			$city->name_city = htmlentities($request->name_city);
+     			$city->zip_city = htmlentities($request->zip_city);
      			$city->department()->associate($department);
      			$city->save();
      			//$city = City::findOrFail($city->id);
@@ -121,7 +121,7 @@ class LansController extends Controller
      		}
      		if(!isset($street)){
      			$street = new Street();
-     			$street->name_street = $request->name_street;
+     			$street->name_street = htmlentities($request->name_street);
      			$street->city()->associate($city);
      			$street->save();
      			//$street = Street::findOrFail($street->id);
@@ -140,20 +140,20 @@ class LansController extends Controller
      		}
      		if(!isset($location)){
      			$location = new Location();
-     			$location->num_street = $request->num_location;
+     			$location->num_street = htmlentities($request->num_location);
      			$location->street()->associate($street);
      			$location->save();
      			//$location = Location::findOrFail($location->id);
      		}
 
      		$lan = new Lan();
-     		$lan->name = $request->name;
-     		$lan->max_num_registrants = $request->max_num_registrants;
-     		$lan->opening_date = $request->opening_date;
-     		$lan->duration = $request->duration;
-     		$lan->budget = $request->budget;
-			$lan->room_width = $request->room_width;
-			$lan->room_length = $request->room_length;
+     		$lan->name = htmlentities($request->name);
+     		$lan->max_num_registrants = htmlentities($request->max_num_registrants);
+     		$lan->opening_date = htmlentities($request->opening_date);
+     		$lan->duration = htmlentities($request->duration);
+     		$lan->budget = htmlentities($request->budget);
+				$lan->room_width = htmlentities($request->room_width);
+				$lan->room_length = htmlentities($request->room_length);
      		$lan->location()->associate($location);
      		$lan->save();
 
@@ -178,21 +178,21 @@ class LansController extends Controller
        */
       public function show($id)
       {
-		$lan = Lan::findOrFail($id);
-		$location = $lan->location;
-		$street = $location->street;
-		$city = $street->city;
-		$department = $city->department;
-		$country = $department->country;
-		$games=$lan->games;
-		$activities = $lan->activities;
-		if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
-			$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-			$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'activities'))->with(['userIsLanAdmin'=>true]);
-		}else{
-			return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false]);
-		}
+				$lan = Lan::findOrFail($id);
+				$location = $lan->location;
+				$street = $location->street;
+				$city = $street->city;
+				$department = $city->department;
+				$country = $department->country;
+				$games=$lan->games;
+				$activities = $lan->activities;
+				if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
+					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'activities'))->with(['userIsLanAdmin'=>true]);
+				}else{
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false]);
+				}
       }
 
     /**
@@ -209,7 +209,7 @@ class LansController extends Controller
   				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
   			}else{
   				$lan = Lan::findOrFail($id);
-				$location = $lan->location;
+					$location = $lan->location;
     			$street = $location->street;
     			$city = $street->city;
     			$department = $city->department;
@@ -256,7 +256,7 @@ class LansController extends Controller
             if($countries != null){$country = $countries->first();}
             if(!isset($country)){
               $country = new Country();
-              $country->name_country = $request->name_country;
+              $country->name_country = htmlentities($request->name_country);
               $country->save();
             }
           }
@@ -278,7 +278,7 @@ class LansController extends Controller
 
       		if(!isset($department) || $country!=$lan_country){
       			$department = new Department();
-      			$department->name_department = $request->name_department;
+      			$department->name_department = htmlentities($request->name_department);
       			$department->country()->associate($country);
       			$department->save();
       		}
@@ -300,8 +300,8 @@ class LansController extends Controller
 
           if(!isset($city) || $department!=$lan_department){
       			$city = new City();
-      			$city->name_city = $request->name_city;
-      			$city->zip_city = $request->zip_city;
+      			$city->name_city = htmlentities($request->name_city);
+      			$city->zip_city = htmlentities($request->zip_city);
       			$city->department()->associate($department);
       			$city->save();
       		}
@@ -323,7 +323,7 @@ class LansController extends Controller
 
       		if(!isset($street) || $city!=$lan_city){
       			$street = new Street();
-      			$street->name_street = $request->name_street;
+      			$street->name_street = htmlentities($request->name_street);
       			$street->city()->associate($city);
       			$street->save();
       		}
@@ -345,7 +345,7 @@ class LansController extends Controller
 
       		if(!isset($location) || $street!=$lan_street){
       			$location = new Location();
-      			$location->num_street = $request->num_street;
+      			$location->num_street = htmlentities($request->num_street);
       			$location->street()->associate($street);
       			$location->save();
       		}

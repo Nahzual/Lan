@@ -35,45 +35,41 @@ class ContactsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-		
-		$this->validate($request, [
-			'name' => ['required', 'string', 'max:24'],
-			'lastname' => ['required', 'string', 'max:24'],
-			'email' => ['required', 'string', 'email', 'max:255'],
-			'object' => ['required', 'string', 'max:500'],
-			'description' => ['required']
-		]);
-		
-		$messagebody  = 'MIME-Version: 1.0' . "\r\n";
-		$messagebody .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-		$messagebody .= 'De: ' . htmlentities($request->name) . "\r\n";
-		$objet = 'Message depuis le site Lan Creator';
+    public function store(Request $request){
+			$this->validate($request, [
+				'name' => ['required', 'string', 'max:24'],
+				'lastname' => ['required', 'string', 'max:24'],
+				'email' => ['required', 'string', 'email', 'max:255'],
+				'object' => ['required', 'string', 'max:500'],
+				'description' => ['required']
+			]);
 
-		$mail_cleaning = array("content-type","bcc:","to:","cc:","href");
-		$msg = str_replace($mail_cleaning,"",htmlentities($request->description));
+			$messagebody  = 'MIME-Version: 1.0' . "\r\n";
+			$messagebody .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+			$messagebody .= 'De: ' . htmlentities($request->name) . "\r\n";
+			$objet = 'Message depuis le site Lan Creator';
+
+			$mail_cleaning = array("content-type","bcc:","to:","cc:","href");
+			$msg = str_replace($mail_cleaning,"",htmlentities($request->description));
 
 
-		$messagebody .= '<h1>'.$objet.'</h1>
-		<p><strong>' . htmlentities($request->lastname) .' '. htmlentities($request->name) .'</strong> a écrit :</p>
-		<p><strong>Message : </strong>' . $msg . '</p>';
-		
-		
+			$messagebody .= '<h1>'.$objet.'</h1>
+			<p><strong>' . htmlentities($request->lastname) .' '. htmlentities($request->name) .'</strong> a écrit :</p>
+			<p><strong>Message : </strong>' . $msg . '</p>';
 
-		$sender = $request->email;
-		$object = $request->object;
-		
-		Mail::send([], [], function ($message) use ($sender, $object, $messagebody) {
-		  $message->to('lancreator.noreply@gmail.com')
-				->from($sender)
-				->subject($object)
-				->setBody($messagebody); // assuming text/plain
-		});
-		
-		return response()->json([
-			'success'=>'Your mail has been saved successfully.'
-		]);
+			$sender = $request->email;
+			$object = $request->object;
+
+			Mail::send([], [], function ($message) use ($sender, $object, $messagebody) {
+			  $message->to('lancreator.noreply@gmail.com')
+					->from($sender)
+					->subject($object)
+					->setBody($messagebody,'text/html');
+			});
+
+			return response()->json([
+				'success'=>'Your mail has been saved successfully.'
+			]);
     }
 
     /**

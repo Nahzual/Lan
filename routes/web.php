@@ -66,7 +66,14 @@ Route::resource('tournament/round/match', 'MatchesController');
 /*LAN HELPER ROUTES*/
 Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
-Route::resource('task', 'TasksController');
+
+// Activities routes
+Route::get('lan/{lan}/task/create', 'TaskController@create')->name('task.create');
+Route::post('lan/{lan}/task/store', 'TaskController@store')->name('task.store');
+Route::get('lan/{lan}/task/{task}/show', 'TaskController@show')->name('task.show');
+Route::get('lan/{lan}/task/{task}/edit', 'TaskController@edit')->name('task.edit');
+Route::delete('lan/{lan}/task/{task}/destroy', 'TaskController@destroy')->name('task.destroy');
+Route::put('lan/{lan}/task/{task}/edit', 'TaskController@update')->name('task.update');
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');

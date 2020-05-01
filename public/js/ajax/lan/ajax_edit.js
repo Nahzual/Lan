@@ -1,6 +1,12 @@
 function sendRequest(e,id){
   if(e!=null) e.preventDefault();
 
+	// in a copy of the room, rebuild the places array in case some were added/deleted
+	// room_copy will replace the content of the json file on the server
+	// and room will be used to delete lan_user entries whose place_number has been deleted by the resizing of the room
+	var room_copy=JSON.parse(JSON.stringify(room));
+	fillRoomPlaces(room_copy);
+
   $.ajax({
     type: "PUT",
     url: '/lan/'+id,
@@ -20,7 +26,8 @@ function sendRequest(e,id){
           +'&name_country='+$("[name='name_country']").val()
           +'&room_length='+$("[name='room_length']").val()
           +'&room_width='+$("[name='room_width']").val()
-					+'&room='+JSON.stringify(room),
+					+'&room_with_places='+JSON.stringify(room)
+					+'&room='+JSON.stringify(room_copy),
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();

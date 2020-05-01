@@ -65,33 +65,32 @@
 
 						{!! Form::label('room_plan', 'Room plan :', ['class' => 'lead']) !!}
 						{!! Form::hidden('room_plan', $room, ['class' => 'form-control']) !!}
-						<p>Legend :</p>
+						<p class="lead-text">Legend :</p>
 						<table>
 							<tbody>
 								<tr>
-									<td scope="col">Wall :</td>
-									<table class="border border-dark field"><td class="cell wall"></td></table>
-								</tr>
-								<tr>
-									<td scope="col">Empty chair :</td>
-									<table class="border border-dark field"><td class="mr-2 cell chairNull"></td></table>
-								</tr>
-								<tr>
-									<td scope="col">Taken chair :</td>
-									<table class="border border-dark field"><td class="mr-2 cell chair"></td></table>
+									<table style="display: inline-table;" class="border border-dark field">Wall : <td class="cell wall"></td></table>
 								</tr>
 								<tr>
 									<td scope="col">Table :</td>
-									<table class="border border-dark field"><td class="mr-2 cell table"></td></table>
+									<table style="display: inline-table;" class="border border-dark field"><td class="mr-2 cell table"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Empty chair :</td>
+									<table style="display: inline-table;" class="border border-dark field"><td class="cell chairNull"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Taken chair :</td>
+									<table style="display: inline-table;" class="border border-dark field"><td class=" cell chair"></td></table>
 								</tr>
 								<tr>
 									<td scope="col">Empty space :</td>
-									<table class="border border-dark field"><td class="mr-2 cell null"></td></table>
+									<table style="display: inline-table;" class="border border-dark field"><td class="mr-2 cell null"></td></table>
 								</tr>
 							</tbody>
 						</table>
 
-						<div id="plateau" class="form-group row text-center justify-content-center">
+						<div id="plateau" class="form-group row text-center justify-content-center mt-5">
 							<div id="result">
 
 							</div>

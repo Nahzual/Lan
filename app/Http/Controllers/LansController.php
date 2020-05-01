@@ -261,17 +261,45 @@ class LansController extends Controller
   			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
           return response()->json(['error'=>'You have to be an admin of this LAN to edit it.']);
   			}else{
+
   				$lan = Lan::findOrFail($id);
+
+					// handle room width and height requirements
 					if(isset($request->room_width) && $request->room_width<=0){
 						return response()->json(['error','Your room width has to be positive.']);
 					}else if(isset($request->room_length) && $request->room_length<=0){
 						return response()->json(['error','Your room length has to be positive.']);
 					}else{
+						// sets the room_length and room_width values
+						$prev_room_width=$lan->room_width;
+						$prev_room_length=$lan->room_length;
 						if(isset($request->room_length)) $lan->room_length=$request->room_length;
 						if(isset($request->room_width)) $lan->room_width=$request->room_width;
+
+						// if room_length or room_width is smaller than its previous values, then there are places that are unreachable (out of the plan)
+						// so let's delete all user participations that are bound to unreachable places
+						if($lan->room_length<$prev_room_length || $lan->room_width<$prev_room_width){
+							$room_json=json_decode($request->room_with_places);
+							$main_room_json=json_decode($request->room);
+
+							for($i=1 ; $i<count($room_json->places) ; ++$i){
+								if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width){
+									$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number','=',$i)->delete();
+
+									// reset place to empty place
+									$main_room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]=3;
+								}
+							}
+
+							// replace main room's field with the one on which we replaced taken places by empty places
+							$request->room=json_encode($main_room_json);
+						}
 					}
+
   				$lan->update($request->all());
-          $location = $lan->location;
+
+					// get all location relative information
+					$location = $lan->location;
           $lan_location=$location;
     			$street = $location->street;
           $lan_street=$street;
@@ -282,7 +310,7 @@ class LansController extends Controller
     			$country = $department->country;
           $lan_country=$country;
 
-          //Country
+          // Edit LAN's country if needed (might create an entry in the countries table)
           if(isset($request->name_country) && $request->name_country!=$country->name_country){
 
             $countries = Country::where('name_country','=',$request->name_country)->get();
@@ -294,7 +322,7 @@ class LansController extends Controller
             }
           }
 
-      		//Department
+      		// Edit LAN's department if needed (might create an entry in the departments table)
           if(isset($request->name_department) && $request->name_department!=$department->name_department){
 
             $departments=$country->departments;
@@ -316,7 +344,7 @@ class LansController extends Controller
       			$department->save();
       		}
 
-      		//City
+      		// Edit LAN's city if needed (might create an entry in the cities table)
           if(isset($request->name_city) && ($request->name_city!=$city->name_city || $request->zip_city!=$city->zip_city)){
             $cities=$department->cities;
             $city=null;
@@ -339,7 +367,7 @@ class LansController extends Controller
       			$city->save();
       		}
 
-      		//Street
+      		// Edit LAN's street if needed (might create an entry in the streets table)
           if(isset($request->name_street) && $request->name_street!=$street->name_street){
             $streets=$city->streets;
             $street=null;
@@ -361,6 +389,7 @@ class LansController extends Controller
       			$street->save();
       		}
 
+					// Edit LAN's location if needed (might create an entry in the locations table)
           if(isset($request->num_street) && $request->num_street!=$location->num_street){
             $locations=$street->locations;
             $location=null;
@@ -386,6 +415,7 @@ class LansController extends Controller
           if($location!=$lan_location) $lan->location()->associate($location);
   				$lan->save();
 
+					// updates the json file containing the LAN's room plan
 					$file_name="../storage/lans/room_plan_".$lan->id.".json";
 					if(file_exists($file_name) && isset($request->room)){
 						file_put_contents($file_name, $request->room);
@@ -403,7 +433,8 @@ class LansController extends Controller
         $lan=Lan::find($id);
         if($lan!=null){
           if($lan->waiting_lan==config('waiting.ACCEPTED')){
-            return view('lan.participate',compact('lan'));
+						$room=file_get_contents("../storage/lans/room_plan_".$lan->id.".json");
+            return view('lan.participate',compact('lan','room'));
           }else{
             return redirect('/home')->with('error','You can\'t join this LAN because it isn\'t accepted yet.');
           }
@@ -426,6 +457,14 @@ class LansController extends Controller
             if($lan_user_player==null){
               $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
               if(count($place_taken)==0){
+
+								// update json file
+								if(isset($request->new_room)){
+									$file_name="../storage/lans/room_plan_".$id.".json";
+									file_put_contents($file_name,$request->new_room);
+								}
+
+
                 $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
                 return response()->json(['success'=>'You have been successfully registered to this LAN.']);
               }else{

@@ -12,3 +12,5 @@
 .field .cell.chair:hover {background:#EF5350;}
 .field .cell.null {background:#FDFEFE; cursor:default; color:black; font-weight:bold; text-align:center;}
 .field .cell.null:hover {background:#D0D3D4;}
+.field .cell.user {background:#5cb85c; cursor:default; color:black; font-weight:bold; text-align:center;}
+.field .cell.user:hover {background:#3d7d3d;}

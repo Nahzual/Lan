@@ -31,7 +31,7 @@ function drawRoom(room_plan){
 						case 5: cell.className = 'cell null'; break;
 					}
 
-					cell.setAttribute('onclick','changeColor('+room_plan.name+', '+i+', '+j+', true);');
+					cell.setAttribute('onclick','changeColor('+room_plan.name+', '+i+', '+j+');');
 					cell.setAttribute('oncontextmenu','changeAutherColor('+room_plan.name+', '+i+', '+j+'); return false;');
 					line.appendChild(cell);
 			}
@@ -66,7 +66,7 @@ function updateRoom(room_plan){
 	}
 }
 
-function changeColor(room_plan,x,y,check){
+function changeColor(room_plan,y,x){
 	/* determiner le numero d'etat de la cellule
 	1 : wall
 	2 : table
@@ -74,39 +74,43 @@ function changeColor(room_plan,x,y,check){
 	4 : chair
 	5 : null*/
 
-	if(room_plan.room.field[x][y]==4){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell null';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 5;
+	// if(room_plan.room.field[x][y]==4){
+	// 	document.getElementById('cell-'+x+'-'+y).className = 'cell null';
+	// 	document.getElementById('cell-'+x+'-'+y).innerHTML = '';
+	// 	room_plan.room.field[x][y] = 5;
+	// 	return;
+	// }
+
+	if(room_plan.room.field[y][x]==3){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 5;
 		return;
 	}
-	if(room_plan.room.field[x][y]==3){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell chair';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 4;
+
+	if(room_plan.room.field[y][x]==2){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell chairNull';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 3;
 		return;
 	}
-	if(room_plan.room.field[x][y]==2){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell chairNull';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 3;
+
+	if(room_plan.room.field[y][x]==1){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 2;
 		return;
 	}
-	if(room_plan.room.field[x][y]==1){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell table';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 2;
-		return;
-	}
-	else {
-			document.getElementById('cell-'+x+'-'+y).className = 'cell wall';
-			document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-			room_plan.room.field[x][y] = 1;
+
+	if(room_plan.room.field[y][x]==5){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell wall';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 1;
 			return;
 	}
 }
 
-function changeAutherColor(room_plan,x,y,check){
+function changeAutherColor(room_plan,y,x){
 		/* determiner le numero d'etat de la cellule
 		1 : wall
 		2 : table
@@ -115,35 +119,36 @@ function changeAutherColor(room_plan,x,y,check){
 		5 : null*/
 
 
-	if(room_plan.room.field[x][y]==4){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell chairNull';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 3;
+	// if(room_plan.room.field[x][y]==4){
+	// 	document.getElementById('cell-'+x+'-'+y).className = 'cell chairNull';
+	// 	document.getElementById('cell-'+x+'-'+y).innerHTML = '';
+	// 	room_plan.room.field[x][y] = 3;
+	// 	return;
+	// }
+	if(room_plan.room.field[y][x]==3){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 2;
 		return;
 	}
-	if(room_plan.room.field[x][y]==3){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell table';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 2;
+	if(room_plan.room.field[y][x]==2){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell wall';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 1;
 		return;
 	}
-	if(room_plan.room.field[x][y]==2){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell wall';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 1;
+	if(room_plan.room.field[y][x]==1){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 5;
 		return;
 	}
-	if(room_plan.room.field[x][y]==1){
-		document.getElementById('cell-'+x+'-'+y).className = 'cell null';
-		document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-		room_plan.room.field[x][y] = 5;
+
+	if(room_plan.room.field[y][x]==5){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell chairNull';
+		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+		room_plan.room.field[y][x] = 3;
 		return;
-	}
-	else {
-			document.getElementById('cell-'+x+'-'+y).className = 'cell chair';
-			document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-			room_plan.room.field[x][y] = 4;
-			return;
 	}
 }
 
@@ -157,4 +162,22 @@ function changeDimensions(room_plan){
 		updateRoom(room_plan);
 		drawRoom(room_plan);
 	}
+}
+
+// build the list of the room's chairs
+function fillRoomPlaces(room){
+	room.places=new Array();
+	var i=1;
+	for(var y = 1; y <= room.settings.lines; ++y){
+		for(var x = 1; x <= room.settings.columns; ++x){
+			if(room.room.field[y][x]==3 || room.room.field[y][x]==4){
+				console.log('('+y+','+x+') push on '+i);
+				room.places[i]=new Array();
+				room.places[i].push(y);
+				room.places[i].push(x);
+				++i;
+			}
+		}
+	}
+
 }

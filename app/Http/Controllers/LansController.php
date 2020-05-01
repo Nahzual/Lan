@@ -60,6 +60,7 @@ class LansController extends Controller
 	   public function store(Request $request){
 
        if(Auth::check()){
+
          //Country
      		$countries = Country::where('name_country','=',$request->name_country)->get();
      		if($countries != null){$country = $countries->first();}
@@ -157,11 +158,25 @@ class LansController extends Controller
      		$lan->location()->associate($location);
      		$lan->save();
 
-     		$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
+				// json file for lan's seating plan
+				$file_name="../storage/lans/room_plan_".$lan->id.".json";
+				if(!file_exists($file_name)){
+					file_put_contents($file_name,"{...}");
 
-     		return response()->json([
-     		    'success'=>'Your LAN has been saved successfully.'
-     		]);
+					$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
+
+					return response()->json([
+							'success'=>'Your LAN has been saved successfully.'
+					]);
+				}else{
+					$lan->delete();
+					return response()->json([
+							'error'=>'Your LAN couldn\'t be created because of a file name conflict on the server, please contact an administrator if this problem persists.'
+					]);
+				}
+
+
+
       }else{
         return response()->json([
      		    'error'=>'Please log in to perform this action.'
@@ -352,6 +367,11 @@ class LansController extends Controller
 
           if($location!=$lan_location) $lan->location()->associate($location);
   				$lan->save();
+
+					$file_name="../storage/lans/room_plan_".$lan->id.".json";
+					if(file_exists($file_name)){
+						// perform changes ( file_put_contents($file_name, $request->json_data) )
+					}
 
   				return response()->json(['success'=>'Your LAN has been successfully edited.']);
   			}
@@ -604,6 +624,13 @@ class LansController extends Controller
           $user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
           if($user!=null){
             $lan->delete();
+
+						// delete the json file of this LAN
+						$file_name="../storage/lans/room_plan_".$lan->id.".json";
+						if(file_exists($file_name)){
+							unlink($file_name);
+						}
+
             return response()->json(['success'=>'Your LAN has been successfully deleted.']);
           }else{
             return response()->json(['error'=>'You are not admin on this LAN.']);

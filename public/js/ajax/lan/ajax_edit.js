@@ -19,7 +19,8 @@ function sendRequest(e,id){
           +'&name_department='+$("[name='name_department']").val()
           +'&name_country='+$("[name='name_country']").val()
           +'&room_length='+$("[name='room_length']").val()
-          +'&room_width='+$("[name='room_width']").val(),
+          +'&room_width='+$("[name='room_width']").val()
+					+'&room='+JSON.stringify(room),
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();

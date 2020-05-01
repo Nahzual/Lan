@@ -37,11 +37,11 @@
 							</div>
               <div class="form-group">
                 {!! Form::label('room_length', 'Room length (in meters)', ['class' => 'lead']) !!}
-                {!! Form::number('room_length', null, ['id'=>'room_length','min'=>'1', 'class' => 'form-control']) !!}
+                {!! Form::number('room_length', null, ['id'=>'room_length','min'=>'1', 'class' => 'form-control', 'onchange'=>'changeDimensions()']) !!}
               </div>
               <div class="form-group">
                 {!! Form::label('room_width', 'Room width (in meters)', ['class' => 'lead']) !!}
-                {!! Form::number('room_width', null, ['id'=>'room_width','min'=>'1', 'class' => 'form-control']) !!}
+                {!! Form::number('room_width', null, ['id'=>'room_width','min'=>'1', 'class' => 'form-control', 'onchange'=>'changeDimensions()']) !!}
               </div>
 						</div>
 						<div class="bg-light">
@@ -61,6 +61,15 @@
                 {!! Form::text('name_country', null, ['id'=>'name_country','placeholder'=>'Country Name', 'class' => 'form-control']) !!}
 							</div>
 						</div>
+
+						<hr/>
+						{!! Form::label('room_plan', 'Room plan :', ['class' => 'lead']) !!}
+						<div id="plateau" class="form-group row text-center justify-content-center">
+							<div id="result">
+
+							</div>
+						</div>
+
 						<div class="form-group row text-center">
 							<div class="col">
 								<button type="submit" class="btn btn-primary" id="AddNewLanSubmit"><i class='fa fa-plus-square'></i> Add</button>
@@ -105,7 +114,8 @@
 					name_department: $('#name_department').val(),
 					name_country: $('#name_country').val(),
           room_width: $('#room_width').val(),
-          room_length: $('#room_length').val()
+          room_length: $('#room_length').val(),
+					room: JSON.stringify(room)
 				},
 				success: function(result){
 					if(result.success!=undefined){
@@ -120,4 +130,13 @@
 		});
 	});
 </script>
+@endsection
+
+@section('js_includes')
+<script type="text/javascript" src="../js/room_plan/salle.js"></script>
+<script type="text/javascript" src="../js/room_plan/create.js"></script>
+@endsection
+
+@section('css_includes')
+<link rel="stylesheet" href="../css/room_plan/salle.css"></link>
 @endsection

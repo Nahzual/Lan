@@ -22,7 +22,7 @@
       				</div>
       				<div class="form-group">
       					{!! Form::label('max_num_registrants', 'Maximum numbers of registrants', ['class' => 'lead']) !!}
-      					{!! Form::text('max_num_registrants', null, ['class' => 'form-control']) !!}
+      					{!! Form::number('max_num_registrants', null, ['class' => 'form-control']) !!}
       				</div>
       				<div class="form-group">
       					{!! Form::label('opening_date', 'Date', ['class' => 'lead']) !!}
@@ -30,19 +30,19 @@
       				</div>
       				<div class="form-group">
       					{!! Form::label('duration', 'Duration', ['class' => 'lead']) !!}
-      					{!! Form::text('duration', null, ['class' => 'form-control']) !!}
+      					{!! Form::number('duration', null, ['class' => 'form-control']) !!}
       				</div>
       				<div class="form-group">
       					{!! Form::label('budget', 'Budget', ['class' => 'lead']) !!}
-      					{!! Form::text('budget', null, ['class' => 'form-control']) !!}
+      					{!! Form::number('budget', null, ['class' => 'form-control']) !!}
       				</div>
               <div class="form-group">
       					{!! Form::label('room_length', 'Room length', ['class' => 'lead']) !!}
-      					{!! Form::text('room_length', null, ['class' => 'form-control']) !!}
+      					{!! Form::number('room_length', null, ['class' => 'form-control', 'onchange'=>'changeDimensions(room)']) !!}
       				</div>
               <div class="form-group">
       					{!! Form::label('room_width', 'Room width', ['class' => 'lead']) !!}
-      					{!! Form::text('room_width', null, ['class' => 'form-control']) !!}
+      					{!! Form::number('room_width', null, ['class' => 'form-control', 'onchange'=>'changeDimensions(room)']) !!}
       				</div>
       			</div>
             <div class="bg-light">
@@ -62,6 +62,41 @@
                 {!! Form::text('name_country', $country->name_country, ['id'=>'name_country','placeholder'=>'Country Name', 'class' => 'form-control']) !!}
       				</div>
       			</div>
+
+						{!! Form::label('room_plan', 'Room plan :', ['class' => 'lead']) !!}
+						{!! Form::hidden('room_plan', $room, ['class' => 'form-control']) !!}
+						<p>Legend :</p>
+						<table>
+							<tbody>
+								<tr>
+									<td scope="col">Wall :</td>
+									<table class="border border-dark field"><td class="cell wall"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Empty chair :</td>
+									<table class="border border-dark field"><td class="mr-2 cell chairNull"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Taken chair :</td>
+									<table class="border border-dark field"><td class="mr-2 cell chair"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Table :</td>
+									<table class="border border-dark field"><td class="mr-2 cell table"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Empty space :</td>
+									<table class="border border-dark field"><td class="mr-2 cell null"></td></table>
+								</tr>
+							</tbody>
+						</table>
+
+						<div id="plateau" class="form-group row text-center justify-content-center">
+							<div id="result">
+
+							</div>
+						</div>
+
       			<div class="form-group row text-center">
       				<div class="col">
       					<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>
@@ -83,5 +118,11 @@
 @endsection
 
 @section('js_includes')
-<script src="/js/ajax/lan/ajax_edit.js"></script>
+<script defer="defer" src="/js/ajax/lan/ajax_edit.js"></script>
+<script defer="defer" src="/js/room_plan/salle.js"></script>
+<script defer="defer" src="/js/room_plan/edit.js"></script>
+@endsection
+
+@section('css_includes')
+<link rel="stylesheet" href="/css/room_plan/salle.css"></link>
 @endsection

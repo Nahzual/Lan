@@ -1,0 +1,14 @@
+/* case field */
+.field {background: #17202A; }
+.field .cell {width:30px; height:30px; background:#FDFEFE; cursor:pointer; border-width: thin;}
+.field .cell:hover { background:#D0D3D4;}
+.field .cell.wall {background:#000000; cursor:default; color:black; font-weight:bold; text-align:center;}
+.field .cell.wall:hover {background:#1C2833;}
+.field .cell.table {background:#1976D2; cursor:default; color:black; font-weight:bold; text-align:center;}
+.field .cell.table:hover {background:#1E88E5;}
+.field .cell.chairNull {background:#4FC3F7; cursor:default; color:black; font-weight:bold; text-align:center;}
+.field .cell.chairNull:hover {background:#81D4FA;}
+.field .cell.chair {background:#F44336; cursor:default; color:black; font-weight:bold; text-align:center;}
+.field .cell.chair:hover {background:#EF5350;}
+.field .cell.null {background:#FDFEFE; cursor:default; color:black; font-weight:bold; text-align:center;}
+.field .cell.null:hover {background:#D0D3D4;}

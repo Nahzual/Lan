@@ -158,25 +158,34 @@ class LansController extends Controller
      		$lan->location()->associate($location);
      		$lan->save();
 
-				// json file for lan's seating plan
+				// directory for lan's room plan
+				$dir_name="../storage/lans";
+				if(!file_exists($dir_name)){
+					mkdir($dir_name,0777,true);
+				}
+
+				// json file for lan's room plan
 				$file_name="../storage/lans/room_plan_".$lan->id.".json";
 				if(!file_exists($file_name)){
-					file_put_contents($file_name,"{...}");
+					if(isset($request->room)){
+						file_put_contents($file_name,$request->room);
 
-					$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
+						$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
 
-					return response()->json([
-							'success'=>'Your LAN has been saved successfully.'
-					]);
+						return response()->json([
+								'success'=>'Your LAN has been saved successfully.'
+						]);
+					}else{
+						return response()->json([
+								'error'=>'Please provide a room plan to create your LAN.'
+						]);
+					}
 				}else{
 					$lan->delete();
 					return response()->json([
 							'error'=>'Your LAN couldn\'t be created because of a file name conflict on the server, please contact an administrator if this problem persists.'
 					]);
 				}
-
-
-
       }else{
         return response()->json([
      		    'error'=>'Please log in to perform this action.'
@@ -229,7 +238,8 @@ class LansController extends Controller
     			$city = $street->city;
     			$department = $city->department;
     			$country = $department->country;
-  				return view('lan.edit', compact('lan', 'location', 'street', 'city', 'department', 'country'));
+					$room = file_get_contents('../storage/lans/room_plan_'.$id.'.json');
+  				return view('lan.edit', compact('lan', 'location', 'street', 'city', 'department', 'country','room'));
   			}
   		}else{
   			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
@@ -252,6 +262,14 @@ class LansController extends Controller
           return response()->json(['error'=>'You have to be an admin of this LAN to edit it.']);
   			}else{
   				$lan = Lan::findOrFail($id);
+					if(isset($request->room_width) && $request->room_width<=0){
+						return response()->json(['error','Your room width has to be positive.']);
+					}else if(isset($request->room_length) && $request->room_length<=0){
+						return response()->json(['error','Your room length has to be positive.']);
+					}else{
+						if(isset($request->room_length)) $lan->room_length=$request->room_length;
+						if(isset($request->room_width)) $lan->room_width=$request->room_width;
+					}
   				$lan->update($request->all());
           $location = $lan->location;
           $lan_location=$location;
@@ -369,8 +387,8 @@ class LansController extends Controller
   				$lan->save();
 
 					$file_name="../storage/lans/room_plan_".$lan->id.".json";
-					if(file_exists($file_name)){
-						// perform changes ( file_put_contents($file_name, $request->json_data) )
+					if(file_exists($file_name) && isset($request->room)){
+						file_put_contents($file_name, $request->room);
 					}
 
   				return response()->json(['success'=>'Your LAN has been successfully edited.']);

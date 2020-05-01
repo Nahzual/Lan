@@ -227,6 +227,7 @@ class UsersController extends Controller
             $user->password=Hash::make($request->password);
           $user->email=htmlentities($request->email);
           $user->tel_user=htmlentities($request->tel_user);
+            $user->theme=0;
 
   				$user->save();
 

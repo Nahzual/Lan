@@ -30,7 +30,8 @@ function addMaterial(e,lanID,materialID){
     url: '/lan/material/'+lanID,
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()
-          +'&material_id='+materialID,
+          +'&material_id='+materialID
+					+'&quantity='+$("[name='quantity-"+materialID+"']").val(),
     success: function(data){
       if(data.success != undefined){
         $('#response-success').show();

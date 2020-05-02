@@ -145,12 +145,12 @@ public function index()
 			return response()->json(['error','Please log in to perform this action.']);
 		}
 	}
-	
-	
+
+
 	public function search(Request $request){
 		if(Auth::check()){
 			$user=Auth::user();
-			$materials=Material::where('name_material','LIKE','%'.$request->name_material.'%')->get();
+			$materials=Material::where('name_material','LIKE','%'.$request->name_material.'%')->orWhere('category_material','LIKE','%'.$request->name_material.'%')->get();
 			if(isset($request->lan_id)){
 				$lan=Lan::find($request->lan_id);
 				if($lan!=null){

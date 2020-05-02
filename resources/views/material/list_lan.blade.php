@@ -4,8 +4,8 @@
     <thead class="card-table text-center">
       <th scope="col" class="lead">#</th>
       <th scope="col" class="lead">Name</th>
-      <th scope="col" class="lead">Description of the material</th>
-      <th scope="col" class="lead">Price</th>
+      <th scope="col" class="lead">Description</th>
+      <th scope="col" class="lead">Quantity</th>
       @if($userIsLanAdmin) <th scope="col" class="lead "></th> @endif
 
     </thead>
@@ -18,11 +18,11 @@
       @endif
 
       @foreach($materials as $material)
-      <tr>
+      <tr id="row-material-lan-{{$material->id}}">
         <th scope="row" class="text-center lead-text">{{$material->id}}</th>
         <td scope="col" class="text-center lead-text"><a href="{{ route('material.show', $material->id) }}">{{$material->name_material}}</a></td>
-        <td scope="col" class="text-center lead-text">  </td>
-        <td scope="col" class="text-center lead-text">  </td>
+        <td scope="col" class="text-center lead-text">{{$material->desc_material}}</td>
+        <td scope="col" class="text-center lead-text">{{$material->quantity}}</td>
 
         @if($userIsLanAdmin)
           <td scope="col" class="lead-text">

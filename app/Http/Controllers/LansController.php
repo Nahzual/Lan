@@ -211,7 +211,7 @@ class LansController extends Controller
 				$department = $city->department;
 				$country = $department->country;
 				$games=$lan->games;
-				$materials=$lan->materials;
+				$materials=$lan->materials()->select('materials.*','quantity')->get();
 				$activities = $lan->activities;
 				if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
 					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
@@ -727,8 +727,8 @@ class LansController extends Controller
         return response()->json(['error'=>'Please login to perform this action.']);
       }
     }
-    
-    
+
+
 	public function addMaterial($id){
 		if(Auth::check()){
 			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
@@ -748,12 +748,21 @@ class LansController extends Controller
 			if($lan!=null){
 				$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
 				if($material!=null){
-					$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->first();
+					$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->select('materials.*','needs.id as id_needs','quantity')->first();
 					if($lan_material==null){
-						$lan->materials()->attach($material);
-						return response()->json(['success'=>'The material "'.$material->name_material.'" has been added to this LAN\'s material list.']);
+						if(is_numeric($request->quantity) && $request->quantity>0){
+							$lan->materials()->attach($material,['quantity'=>$request->quantity]);
+							return response()->json(['success'=>'The material "'.$material->name_material.'" has been added to this LAN\'s material list.']);
+						}else{
+							return response()->json(['error'=>'The quantity must be a positive number.']);
+						}
 					}else{
-						return response()->json(['error'=>'The material "'.$material->name_material.'" is already in this LAN\'s material list.']);
+						if(is_numeric($request->quantity) && $request->quantity>0){
+							DB::table('needs')->where('id','=',$lan_material->id_needs)->update(['quantity'=>$lan_material->quantity+$request->quantity]);
+							return response()->json(['success'=>$request->quantity.' "'.$material->name_material.'" have been added to this LAN\'s material list.']);
+						}else{
+							return response()->json(['error'=>'The quantity must be a positive number.']);
+						}
 					}
 				}else{
 					return response()->json(['error'=>'This material doesn\'t exist.']);
@@ -843,38 +852,36 @@ class LansController extends Controller
 	}
 
 
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	public function destroy($id)
-	{
-		if(Auth::check()){
-			$lan=Lan::find($id);
-			if($lan!=null){
-				$user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-				if($user!=null){
-					$lan->delete();
+		 public function destroy($id)
+	 	{
+	 		if(Auth::check()){
+	 			$lan=Lan::find($id);
+	 			if($lan!=null){
+	 				$user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+	 				if($user!=null){
+	 					$lan->delete();
 
-					// delete the json file of this LAN
-					$file_name="../storage/lans/room_plan_".$lan->id.".json";
-					if(file_exists($file_name)){
-						unlink($file_name);
-					}
+	 					// delete the json file of this LAN
+	 					$file_name="../storage/lans/room_plan_".$lan->id.".json";
+	 					if(file_exists($file_name)){
+	 						unlink($file_name);
+	 					}
 
-					return response()->json(['success'=>'Your LAN has been successfully deleted.']);
-				}else{
-					return response()->json(['error'=>'You are not admin on this LAN.']);
-				}
-			}else{
-				return response()->json(['error'=>'This LAN doesn\'t exist.']);
-			}
-		}else{
-			return response()->json(['error'=>'Please log in to perform this action.']);
-		}
-	}
-	
+	 					return response()->json(['success'=>'Your LAN has been successfully deleted.']);
+	 				}else{
+	 					return response()->json(['error'=>'You are not admin on this LAN.']);
+	 				}
+	 			}else{
+	 				return response()->json(['error'=>'This LAN doesn\'t exist.']);
+	 			}
+	 		}else{
+	 			return response()->json(['error'=>'Please log in to perform this action.']);
+	 		}
+	 	}
 }

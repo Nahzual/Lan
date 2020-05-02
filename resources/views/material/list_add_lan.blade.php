@@ -5,8 +5,8 @@
       <th scope="col" class="lead">#</th>
       <th scope="col" class="lead">Name</th>
       <th scope="col" class="lead">Description of the material</th>
-      <th scope="col" class="lead">Price</th>
-      <th scope="col" class="lead "></th>
+			<th scope="col" class="lead ">Quantity</th>
+			<th></th>
     </thead>
 
     <tbody>
@@ -20,19 +20,22 @@
       <tr>
         <th scope="row" class="text-center lead-text">{{$material->id}}</th>
         <td scope="col" class="text-center lead-text"><a href="{{ route('material.show', $material->id) }}">{{$material->name_material}}</a></td>
-        <td scope="col" class="text-center lead-text">  </td>
-        <td scope="col" class="text-center lead-text">  </td>
+        <td scope="col" class="text-center lead-text">{{$material->desc_material}}</td>
+
+				<td scope="col" class="lead-text">
+					{!! Form::number('quantity-'.$material->id,null, ['min'=>1, 'class'=>'form-control'])!!}
+				</td>
 
         <td scope="col" class="lead-text">
-          {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addMaterial(event,'.$lan->id.','.$material->id.')']) !!}
-            <div class="form-group row text-center">
-              <div class="col">
-                <button type="submit" class="btn btn-success"><i class='fa fa-plus-square'></i> Add material</button>
-              </div>
-            </div>
-          {!! Form::close() !!}
+					{!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addMaterial(event,'.$lan->id.','.$material->id.')']) !!}
+	          <div class="form-group row text-center">
+	            <div class="col">
+	              <button type="submit" class="btn btn-success"><i class='fa fa-plus-square'></i> Add material</button>
+	            </div>
+	          </div>
+					{!! Form::close() !!}
         </td>
-      </tr>
+			</tr>
       @endforeach
     </tbody>
   </table>

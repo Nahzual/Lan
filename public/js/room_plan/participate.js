@@ -74,7 +74,6 @@ function changeColor(room_plan,y,x){
 	if(!changeColor.is_player_placed && room_plan.room.field[y][x]==3){
 		changeColor.x=x;
 		changeColor.y=y;
-		console.log('placed at ('+y+','+x+')');
 		changeColor.is_player_placed=true;
 
 		document.getElementById('cell-'+y+'-'+x).className = 'cell user';

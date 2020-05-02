@@ -12,6 +12,7 @@ use App\User;
 use App\Game;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
 
@@ -284,7 +285,15 @@ class LansController extends Controller
 
 							for($i=1 ; $i<count($room_json->places) ; ++$i){
 								if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width){
-									$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number','=',$i)->delete();
+									$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number','=',$i)->join('users','users.id','=','lan_user.user_id')->select('email')->first();
+									DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number','=',$i)->delete();
+									if($user_to_remove!=null){
+										Mail::send('mails.notification_player_removed', ['lan' => $lan], function ($message) use ($user_to_remove) {
+											$message->from('lancreator.noreply@gmail.com','LAN Creator')
+												->to($user_to_remove->email)
+												->subject('You are no longer registered to a LAN');
+										});
+									}
 
 									// reset place to empty place
 									$main_room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]=3;
@@ -296,6 +305,8 @@ class LansController extends Controller
 						}
 					}
 
+					// save lan's previous state
+					$prev_state=$lan->waiting_lan;
   				$lan->update($request->all());
 
 					// get all location relative information
@@ -421,6 +432,28 @@ class LansController extends Controller
 						file_put_contents($file_name, $request->room);
 					}
 
+					// if the LAN's state has changed, send an email to all of its admins to notify them
+					if(isset($request->waiting_lan) && $lan->waiting_lan!=$prev_state){
+						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+						if($lan->waiting_lan==config('waiting.ACCEPTED')){
+							foreach($admins as $admin){
+								Mail::send('mails.notification_lan_accepted', ['lan' => $lan], function ($message) use ($admin) {
+									$message->from('lancreator.noreply@gmail.com','LAN Creator')
+										->to($admin->email)
+										->subject('LAN accepted');
+								});
+							}
+						}else if($lan->waiting_lan==config('waiting.REJECTED')){
+							foreach($admins as $admin){
+								Mail::send('mails.notification_lan_rejected', ['lan' => $lan], function ($message) use ($admin) {
+									$message->from('lancreator.noreply@gmail.com','LAN Creator')
+										->to($admin->email)
+										->subject('LAN rejected');
+								});
+							}
+						}
+					}
+
   				return response()->json(['success'=>'Your LAN has been successfully edited.']);
   			}
   		}else{
@@ -510,12 +543,21 @@ class LansController extends Controller
 
     public function postAddHelper($id,Request $request){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+				$admin=Auth::user();
+				$lan=$admin->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
         if($lan!=null){
-          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          $user=User::where('id','=',$request->id_user)->select('id','pseudo','email')->first();
           if($user!=null){
             $lan_user_helper=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first();
             if($lan_user_helper==null){
+
+							// send a mail to notify the user that he has been added as an helper on this LAN
+							Mail::send('mails.notification_helper_added', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
+								$message->from('lancreator.noreply@gmail.com','LAN Creator')
+									->to($user->email)
+									->subject('You have been added as helper on a LAN');
+							});
+
               $lan->users()->attach($user,['rank_lan'=>config('ranks.HELPER'),'score_lan'=>'0','place_number'=>'0']);
               return response()->json(['success'=>'The user "'.$user->pseudo.'" is now helper on this LAN.']);
             }else{
@@ -534,10 +576,19 @@ class LansController extends Controller
 
     public function removeHelper($id,Request $request){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+				$admin=Auth::user();
+        $lan=$admin->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
         if($lan!=null){
-          $user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->select('users.id','pseudo')->first();
+          $user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->select('users.id','pseudo','email')->first();
           if($user!=null){
+
+						// send a mail to notify the user that he has been removed from the helper list
+						Mail::send('mails.notification_helper_removed', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
+							$message->from('lancreator.noreply@gmail.com','LAN Creator')
+								->to($user->email)
+								->subject('You have been removed from the helper list of a LAN');
+						});
+
             DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.HELPER'))->delete();
             return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer helper on this LAN.']);
           }else{
@@ -566,12 +617,20 @@ class LansController extends Controller
 
     public function postAddAdmin($id,Request $request){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+				$admin=Auth::user();
+				$lan=$admin->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
         if($lan!=null){
-          $user=User::where('id','=',$request->id_user)->select('id','pseudo')->first();
+          $user=User::where('id','=',$request->id_user)->select('id','pseudo','email')->first();
           if($user!=null){
             $lan_user_admin=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first();
             if($lan_user_admin==null){
+							// send a mail to notify the user that he has been added as an helper on this LAN
+							Mail::send('mails.notification_admin_added', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
+								$message->from('lancreator.noreply@gmail.com','LAN Creator')
+									->to($user->email)
+									->subject('You have been added as admin on a LAN');
+							});
+
               $lan->users()->attach($user,['rank_lan'=>config('ranks.ADMIN'),'score_lan'=>'0','place_number'=>'0']);
               return response()->json(['success'=>'The user "'.$user->pseudo.'" is now admin on this LAN.']);
             }else{

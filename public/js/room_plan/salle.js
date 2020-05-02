@@ -171,7 +171,6 @@ function fillRoomPlaces(room){
 	for(var y = 1; y <= room.settings.lines; ++y){
 		for(var x = 1; x <= room.settings.columns; ++x){
 			if(room.room.field[y][x]==3 || room.room.field[y][x]==4){
-				console.log('('+y+','+x+') push on '+i);
 				room.places[i]=new Array();
 				room.places[i].push(y);
 				room.places[i].push(x);

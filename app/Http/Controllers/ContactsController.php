@@ -37,36 +37,35 @@ class ContactsController extends Controller
      */
     public function store(Request $request)
     {
-		
-		$this->validate($request, [
-			'name' => ['required', 'string', 'max:24'],
-			'lastname' => ['required', 'string', 'max:24'],
-			'email' => ['required', 'string', 'email', 'max:255'],
-			'object' => ['required', 'string', 'max:500'],
-			'description' => ['required']
-		]);
-		
-		$mail_cleaning = array("content-type","bcc:","to:","cc:","href");
-		
-		$sender = htmlentities($request->email);
-		
-		$object = htmlentities($request->object);
-		$name = htmlentities($request->name);
-		$lastname = htmlentities($request->lastname);
-		$email = htmlentities($request->email);
-		$title = 'Message depuis le site Lan Creator';
-		$content = str_replace($mail_cleaning,"",htmlentities($request->description));
-		
-		Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object) {
-		  $message->to('lancreator.noreply@gmail.com')
-				->from($sender, 'Lan Creator')
-				->cc($sender)
-				->subject($object);
-		});
-		
-		return response()->json([
-			'success'=>'Your mail has been saved successfully.'
-		]);
+			$this->validate($request, [
+				'name' => ['required', 'string', 'max:24'],
+				'lastname' => ['required', 'string', 'max:24'],
+				'email' => ['required', 'string', 'email', 'max:255'],
+				'object' => ['required', 'string', 'max:500'],
+				'description' => ['required']
+			]);
+
+			$mail_cleaning = array("content-type","bcc:","to:","cc:","href");
+
+			$sender = htmlentities($request->email);
+
+			$object = htmlentities($request->object);
+			$name = htmlentities($request->name);
+			$lastname = htmlentities($request->lastname);
+			$email = htmlentities($request->email);
+			$title = 'Message depuis le site Lan Creator';
+			$content = str_replace($mail_cleaning,"",htmlentities($request->description));
+
+			Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object) {
+			  $message->to('lancreator.noreply@gmail.com')
+					->from($sender, 'Lan Creator')
+					->cc($sender)
+					->subject($object);
+			});
+
+			return response()->json([
+				'success'=>'Your mail has been saved successfully.'
+			]);
     }
 
     /**

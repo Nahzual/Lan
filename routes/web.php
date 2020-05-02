@@ -33,10 +33,17 @@ Route::post('/lan/game/{id}','LansController@postAddGame');
 Route::resource('lan', 'LansController');
 Route::get('/lans','LansController@index')->name('my_lans');
 
-
+// material
 Route::delete('/lan/material/{id}','LansController@removeMaterial')->name('lan.remove_material');
 Route::get('/lan/material/{id}','LansController@addMaterial')->name('lan.add_material');
 Route::post('/lan/material/{id}','LansController@postAddMaterial');
+Route::resource('lan', 'LansController');
+Route::get('/lans','LansController@index')->name('my_lans');
+
+// shopping
+Route::delete('/lan/shopping/{id}','LansController@removeShopping')->name('lan.remove_shopping');
+Route::get('/lan/shopping/{id}','LansController@addShopping')->name('lan.add_shopping');
+Route::post('/lan/shopping/{id}','LansController@postAddShopping');
 Route::resource('lan', 'LansController');
 Route::get('/lans','LansController@index')->name('my_lans');
 
@@ -69,7 +76,11 @@ Route::resource('tournament', 'TournamentsController');
 Route::resource('tournament/round', 'RoundsController');
 Route::resource('tournament/round/match', 'MatchesController');
 
+// material search
 Route::get('/search/material','MaterialsController@search');
+
+// shopping search
+Route::get('/search/shopping','ShoppingsController@search');
 
 /*LAN HELPER ROUTES*/
 Route::resource('shopping', 'ShoppingsController');

@@ -19,11 +19,15 @@ class ShoppingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-
-        return view('shopping.index');
-    }
+public function index()
+	{
+		if(Auth::check()){
+			$user=Auth::user();
+			return view('shopping.index',compact('user'));
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
 
     /**
      * Show the form for creating a new resource.
@@ -41,12 +45,30 @@ class ShoppingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	   public function store(Request $request){
+	public function store(Request $request){
 
-    		return response()->json([
-    		    'success'=>'Votre Lan a été correctement enregistrée'
-    		]);
-      }
+		if(Auth::check()){
+			$user=Auth::user();
+			if($user->rank_user==config('ranks.ADMIN')){
+				/*$material = new Material();
+
+				if($request->price_material >= 0) $material->price_material=$request->price_material;
+				else return response()->json(['error'=>'The price has to be positive or zero.']);
+
+				$material->name_material=htmlentities($request->name_material);
+				$material->desc_material=htmlentities($request->desc_material);
+				$material->save();*/
+
+				//return response()->json(['success'=>'The shopping "'.$material->name_material.'" has been successfully created.']);
+
+			}else{
+				return response()->json(['error'=>'You do not have enough rights to do this.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+
 
       /**
        * Display the specified resource.
@@ -54,15 +76,20 @@ class ShoppingsController extends Controller
        * @param  int  $id
        * @return \Illuminate\Http\Response
        */
-      public function show($id)
-      {
-  		if(Auth::check()){
-
-  			return view('shopping.show');
-  		}else{
-  			return redirect('/home');
-  		}
-    }
+	public function show($id)
+		{
+		if(Auth::check()){
+			$shopping=Shopping::find($id);
+			if($shopping!=null){
+				$user=Auth::user();
+				return view('shopping.show',compact('shopping','user'));
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
 
     /**
      * Show the form for editing the specified resource.
@@ -70,14 +97,24 @@ class ShoppingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-  		if(Auth::check()){
-  				return view('shopping.edit');
-  		}else{
-  			return redirect('/home');
-  		}
-    }
+	public function edit($id)
+	{
+		if(Auth::check()){
+			$user=Auth::user();
+			if($user->rank_user==config('ranks.ADMIN')){
+				$shopping=Shopping::find($id);
+				if($shopping!=null){
+					return view('shopping.edit',compact('shopping'));
+				}else{
+					return redirect('/home')->with('error','This shopping does not exist.');
+				}
+			}else{
+				return redirect('/home')->with('error','You do not have enough rights to do this.');
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to perform this action.');
+		}
+	}
 
     /**
      * Update the specified resource in storage.
@@ -86,12 +123,49 @@ class ShoppingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+	public function update(Request $request, $id)
+	{
+		if(Auth::check()){
+			$user=Auth::user();
+			if($user->rank_user==config('ranks.ADMIN')){
+				$material = Material::find($id);
+				if($material!=null){
+					if($request->price_material >= 0) $material->price_material=$request->price_material;
+					else return response()->json(['error'=>'The price has to be positive or zero.']);
+					$material->name_material=htmlentities($request->name_material);
+					$material->desc_material=htmlentities($request->desc_material);
+					$material->save();
 
-        return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
+					return response()->json(['success'=>'The material "'.$material->name_material.'" has been successfully edited.']);
+				}else{
+					return response()->json(['error'=>'This material does not exist.']);
+				}
+			}else{
+				return response()->json(['error','You do not have enough rights to do this.']);
+			}
+		}else{
+			return response()->json(['error','Please log in to perform this action.']);
+		}
+	}
 
-    }
+
+	public function search(Request $request){
+		if(Auth::check()){
+			$user=Auth::user();
+			$shoppings=Shopping::where('name_material','LIKE','%'.$request->name_material.'%')->get();
+			if(isset($request->lan_id)){
+				$lan=Lan::find($request->lan_id);
+				if($lan!=null){
+					return view($request->view_path,compact('materials','user','lan'));
+				}else{
+					return "<p>This LAN doesn\'t exist</p>";
+				}
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
+
 
     /**
      * Remove the specified resource from storage.
@@ -99,8 +173,25 @@ class ShoppingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-		return redirect(route('shopping.index'));
-    }
+	public function destroy($id){
+		if(Auth::check()){
+			if(Auth::user()->rank_user==config('ranks.SITE_ADMIN')){
+				$shopping=Shopping::find($id);
+				
+				// todo destroy material, then shopping
+				
+				/*if($material!=null){
+					$material->delete();
+					return response()->json(['success'=>'This material has been successfully deleted.']);
+				}else{
+					return response()->json(['error'=>'This material does not exist.']);
+				}*/
+			}else{
+				return response()->json(['error','You do not have enough rights to do this.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+
 }

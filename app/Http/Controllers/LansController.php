@@ -786,6 +786,63 @@ class LansController extends Controller
 	}
 
 
+	public function addShopping($id){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			if($lan==null){
+				return back()->with('error','You have to be an admin of this LAN to add shoppings to it.');
+			}else{
+				return view('lan.add_shopping',compact('lan'));
+			}
+		}else{
+			return redirect('/login')->with('error','Please login to perform this action.');
+		}
+	}
+
+	public function postAddShopping($id,Request $request){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			if($lan!=null){
+				$shopping=Shopping::where('shoppings.id','=',$request->shopping_id)->select('shoppings.id','shoppings.name_shopping')->first();
+				if($shopping!=null){
+					$lan_shopping=$lan->shoppings()->where('needs.id_shopping','=',$shopping->id)->first();
+					if($lan_shopping==null){
+						$lan->shoppings()->attach($shopping);
+						return response()->json(['success'=>'The shopping "'.$shopping->name_shopping.'" has been added to this LAN\'s shopping list.']);
+					}else{
+						return response()->json(['error'=>'The shopping "'.$shopping->name_shopping.'" is already in this LAN\'s shopping list.']);
+					}
+				}else{
+					return response()->json(['error'=>'This shopping doesn\'t exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'You have to be an admin of this LAN to add shoppings to it.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please login to perform this action.']);
+		}
+	}
+
+	public function removeShopping($id,Request $request){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			if($lan!=null){
+				$shopping=Shopping::where('shoppings.id','=',$request->shopping_id)->join('needs','needs.id_shopping','=','shoppings.id')->where('needs.id_lan','=',$lan->id)->select('shoppings.id','shoppings.name_shopping')->first();
+				if($shopping!=null){
+					DB::table('needs')->where('id_lan','=',$lan->id)->where('id_shopping','=',$shopping->id)->delete();
+					return response()->json(['success'=>'The shopping "'.$shopping->name_shopping.'" is no longer in this lan\'s shopping list.']);
+				}else{
+					return response()->json(['error'=>'This shopping doesn\'t exist or isn\'t in this lan\'s shopping list.']);
+				}
+			}else{
+				return response()->json(['error'=>'You have to be an admin of this LAN to remove shoppings from it.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please login to perform this action.']);
+		}
+	}
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -793,31 +850,31 @@ class LansController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-      if(Auth::check()){
-        $lan=Lan::find($id);
-        if($lan!=null){
-          $user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-          if($user!=null){
-            $lan->delete();
+	public function destroy($id)
+	{
+		if(Auth::check()){
+			$lan=Lan::find($id);
+			if($lan!=null){
+				$user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+				if($user!=null){
+					$lan->delete();
 
-						// delete the json file of this LAN
-						$file_name="../storage/lans/room_plan_".$lan->id.".json";
-						if(file_exists($file_name)){
-							unlink($file_name);
-						}
+					// delete the json file of this LAN
+					$file_name="../storage/lans/room_plan_".$lan->id.".json";
+					if(file_exists($file_name)){
+						unlink($file_name);
+					}
 
-            return response()->json(['success'=>'Your LAN has been successfully deleted.']);
-          }else{
-            return response()->json(['error'=>'You are not admin on this LAN.']);
-          }
-        }else{
-          return response()->json(['error'=>'This LAN doesn\'t exist.']);
-        }
-      }else{
-        return response()->json(['error'=>'Please log in to perform this action.']);
-      }
-
-    }
+					return response()->json(['success'=>'Your LAN has been successfully deleted.']);
+				}else{
+					return response()->json(['error'=>'You are not admin on this LAN.']);
+				}
+			}else{
+				return response()->json(['error'=>'This LAN doesn\'t exist.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+	
 }

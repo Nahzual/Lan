@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Lan;
-use App\Location;
-use App\City;
-use App\Street;
-use App\Department;
-use App\Country;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -19,11 +14,15 @@ class MaterialsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-
-        return view('material.index');
-    }
+public function index()
+	{
+		if(Auth::check()){
+			$user=Auth::user();
+			return view('material.index',compact('user'));
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
 
     /**
      * Show the form for creating a new resource.
@@ -41,12 +40,30 @@ class MaterialsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	   public function store(Request $request){
+	public function store(Request $request){
 
-    		return response()->json([
-    		    'success'=>'Votre Lan a été correctement enregistrée'
-    		]);
-      }
+		if(Auth::check()){
+			$user=Auth::user();
+			if($user->rank_user==config('ranks.ADMIN')){
+				$material = new Material();
+
+				if($request->price_material >= 0) $material->price_material=$request->price_material;
+				else return response()->json(['error'=>'The price has to be positive or zero.']);
+
+				$material->name_material=htmlentities($request->name_material);
+				$material->desc_material=htmlentities($request->desc_material);
+				$material->save();
+
+				return response()->json(['success'=>'The material "'.$material->name_material.'" has been successfully created.']);
+
+			}else{
+				return response()->json(['error'=>'You do not have enough rights to do this.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+
 
       /**
        * Display the specified resource.
@@ -54,15 +71,21 @@ class MaterialsController extends Controller
        * @param  int  $id
        * @return \Illuminate\Http\Response
        */
-      public function show($id)
-      {
-  		if(Auth::check()){
+	public function show($id)
+		{
+		if(Auth::check()){
+			$material=Material::find($id);
+			if($material!=null){
+				$user=Auth::user();
+				return view('material.show',compact('material','user'));
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
 
-  			return view('material.show');
-  		}else{
-  			return redirect('/home');
-  		}
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -70,14 +93,25 @@ class MaterialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-  		if(Auth::check()){
-  				return view('material.edit');
-  		}else{
-  			return redirect('/home');
-  		}
-    }
+	public function edit($id)
+	{
+		if(Auth::check()){
+			$user=Auth::user();
+			if($user->rank_user==config('ranks.ADMIN')){
+				$material=Material::find($id);
+				if($material!=null){
+					return view('material.edit',compact('material'));
+				}else{
+					return redirect('/home')->with('error','This material does not exist.');
+				}
+			}else{
+				return redirect('/home')->with('error','You do not have enough rights to do this.');
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to perform this action.');
+		}
+	}
+
 
     /**
      * Update the specified resource in storage.
@@ -86,12 +120,30 @@ class MaterialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+	public function update(Request $request, $id)
+	{
+		if(Auth::check()){
+			$user=Auth::user();
+			if($user->rank_user==config('ranks.ADMIN')){
+				$material = Material::find($id);
+				if($material!=null){
+					if($request->price_material >= 0) $material->price_material=$request->price_material;
+					else return response()->json(['error'=>'The price has to be positive or zero.']);
+					$material->name_material=htmlentities($request->name_material);
+					$material->desc_material=htmlentities($request->desc_material);
+					$material->save();
 
-        return response()->json(['error'=>'Veuillez vous connecter pour réaliser cette action']);
-
-    }
+					return response()->json(['success'=>'The material "'.$material->name_material.'" has been successfully edited.']);
+				}else{
+					return response()->json(['error'=>'This material does not exist.']);
+				}
+			}else{
+				return response()->json(['error','You do not have enough rights to do this.']);
+			}
+		}else{
+			return response()->json(['error','Please log in to perform this action.']);
+		}
+	}
 
     /**
      * Remove the specified resource from storage.
@@ -99,8 +151,22 @@ class MaterialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-		return redirect(route('material.index'));
-    }
+	public function destroy($id){
+		if(Auth::check()){
+			if(Auth::user()->rank_user==config('ranks.SITE_ADMIN')){
+				$material=Material::find($id);
+				if($material!=null){
+					$material->delete();
+					return response()->json(['success'=>'This material has been successfully deleted.']);
+				}else{
+					return response()->json(['error'=>'This material does not exist.']);
+				}
+			}else{
+				return response()->json(['error','You do not have enough rights to do this.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+
 }

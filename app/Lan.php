@@ -33,7 +33,7 @@ class Lan extends Model
 
   public function materials()
   {
-    return $this->belongsToMany('App\Material','needs');
+    return $this->belongsToMany('App\Material','needs','id_lan','id_material');
   }
 
   public function activities()

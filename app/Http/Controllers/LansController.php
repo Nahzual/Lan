@@ -10,6 +10,7 @@ use App\Department;
 use App\Country;
 use App\User;
 use App\Game;
+use App\Material;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -209,13 +210,14 @@ class LansController extends Controller
 				$department = $city->department;
 				$country = $department->country;
 				$games=$lan->games;
+				$materials=$lan->materials;
 				$activities = $lan->activities;
 				if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
 					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
 					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'activities'))->with(['userIsLanAdmin'=>true]);
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities'))->with(['userIsLanAdmin'=>true]);
 				}else{
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false]);
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities'))->with(['userIsLanAdmin'=>false]);
 				}
       }
 
@@ -666,6 +668,65 @@ class LansController extends Controller
         return response()->json(['error'=>'Please login to perform this action.']);
       }
     }
+    
+    
+	public function addMaterial($id){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			if($lan==null){
+				return back()->with('error','You have to be an admin of this LAN to add materials to it.');
+			}else{
+				return view('lan.add_material',compact('lan'));
+			}
+		}else{
+			return redirect('/login')->with('error','Please login to perform this action.');
+		}
+	}
+
+	public function postAddMaterial($id,Request $request){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			if($lan!=null){
+				$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
+				if($material!=null){
+					$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->first();
+					if($lan_material==null){
+						$lan->materials()->attach($material);
+						return response()->json(['success'=>'The material "'.$material->name_material.'" has been added to this LAN\'s material list.']);
+					}else{
+						return response()->json(['error'=>'The material "'.$material->name_material.'" is already in this LAN\'s material list.']);
+					}
+				}else{
+					return response()->json(['error'=>'This material doesn\'t exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'You have to be an admin of this LAN to add materials to it.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please login to perform this action.']);
+		}
+	}
+
+	public function removeMaterial($id,Request $request){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			if($lan!=null){
+				$material=Material::where('materials.id','=',$request->material_id)->join('needs','needs.id_material','=','materials.id')->where('needs.id_lan','=',$lan->id)->select('materials.id','materials.name_material')->first();
+				if($material!=null){
+					DB::table('needs')->where('id_lan','=',$lan->id)->where('id_material','=',$material->id)->delete();
+					return response()->json(['success'=>'The material "'.$material->name_material.'" is no longer in this lan\'s material list.']);
+				}else{
+					return response()->json(['error'=>'This material doesn\'t exist or isn\'t in this lan\'s material list.']);
+				}
+			}else{
+				return response()->json(['error'=>'You have to be an admin of this LAN to remove materials from it.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please login to perform this action.']);
+		}
+	}
+
+
 
     /**
      * Remove the specified resource from storage.

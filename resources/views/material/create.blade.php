@@ -22,7 +22,7 @@
 							</div>
 							<div class="form-group">
 								{!! Form::label('price_material', 'Price', ['class' => 'lead']) !!}
-								{!! Form::text('price_material', null, ['class' => 'form-control']) !!}
+								{!! Form::number('price_material', null, ['id'=>'price_material','min'=>'0', 'class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row text-center">

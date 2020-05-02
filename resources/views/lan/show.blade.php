@@ -149,12 +149,13 @@
 					</div>
 					@if ($userIsLanAdmin)
 					<div class="col">
+						<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i> Add materials</a>
 					</div>
 					@endif
 				</div>
 			</div>
 		</div>
-		<!--@include('game.list_lan')-->
+		@include('material.list_lan')
 	</div>
 </div>
 
@@ -216,6 +217,7 @@
 <script src="/js/ajax/lan/ajax_add_admin.js"></script>
 <script src="/js/ajax/lan/ajax_delete.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
+<script src="/js/ajax/lan/ajax_remove_material.js"></script>
 
 <script src="/js/ajax/activity/ajax_delete.js"></script>
 @endsection

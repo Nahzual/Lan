@@ -33,6 +33,14 @@ Route::post('/lan/game/{id}','LansController@postAddGame');
 Route::resource('lan', 'LansController');
 Route::get('/lans','LansController@index')->name('my_lans');
 
+
+Route::delete('/lan/material/{id}','LansController@removeMaterial')->name('lan.remove_material');
+Route::get('/lan/material/{id}','LansController@addMaterial')->name('lan.add_material');
+Route::post('/lan/material/{id}','LansController@postAddMaterial');
+Route::resource('lan', 'LansController');
+Route::get('/lans','LansController@index')->name('my_lans');
+
+
 // player participation
 Route::get('lan/participate/{id}', 'LansController@participate')->name('lan.participate');
 Route::post('lan/participate/{id}', 'LansController@postParticipate');

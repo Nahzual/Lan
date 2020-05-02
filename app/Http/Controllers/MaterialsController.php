@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lan;
+use App\Material;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -144,6 +145,25 @@ public function index()
 			return response()->json(['error','Please log in to perform this action.']);
 		}
 	}
+	
+	
+	public function search(Request $request){
+		if(Auth::check()){
+			$user=Auth::user();
+			$materials=Material::where('name_material','LIKE','%'.$request->name_material.'%')->get();
+			if(isset($request->lan_id)){
+				$lan=Lan::find($request->lan_id);
+				if($lan!=null){
+					return view($request->view_path,compact('materials','user','lan'));
+				}else{
+					return "<p>This LAN doesn\'t exist</p>";
+				}
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
+
 
     /**
      * Remove the specified resource from storage.

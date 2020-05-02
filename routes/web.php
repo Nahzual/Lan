@@ -69,6 +69,7 @@ Route::resource('tournament', 'TournamentsController');
 Route::resource('tournament/round', 'RoundsController');
 Route::resource('tournament/round/match', 'MatchesController');
 
+Route::get('/search/material','MaterialsController@search');
 
 /*LAN HELPER ROUTES*/
 Route::resource('shopping', 'ShoppingsController');

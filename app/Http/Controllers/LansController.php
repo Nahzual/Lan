@@ -211,14 +211,26 @@ class LansController extends Controller
 				$department = $city->department;
 				$country = $department->country;
 				$games=$lan->games;
-				$materials=$lan->materials()->select('materials.*','quantity')->get();
 				$activities = $lan->activities;
-				if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
-					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities'))->with(['userIsLanAdmin'=>true]);
+				if(Auth::check()){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					if($userIsLanAdmin){
+						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+						$materials=$lan->materials()->select('materials.*','quantity')->get();
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+					}else{
+						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+						if($userIsLanHelper){
+							$materials=$lan->materials()->select('materials.*','quantity')->get();
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+						}else{
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
+						}
+					}
 				}else{
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities'))->with(['userIsLanAdmin'=>false]);
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 				}
       }
 
@@ -731,9 +743,12 @@ class LansController extends Controller
 
 	public function addMaterial($id){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
+
 			if($lan==null){
-				return back()->with('error','You have to be an admin of this LAN to add materials to it.');
+				return back()->with('error','You have to be an admin or helper of this LAN to add materials to it.');
 			}else{
 				return view('lan.add_material',compact('lan'));
 			}
@@ -744,7 +759,10 @@ class LansController extends Controller
 
 	public function postAddMaterial($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
+
 			if($lan!=null){
 				$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
 				if($material!=null){
@@ -768,7 +786,38 @@ class LansController extends Controller
 					return response()->json(['error'=>'This material doesn\'t exist.']);
 				}
 			}else{
-				return response()->json(['error'=>'You have to be an admin of this LAN to add materials to it.']);
+				return response()->json(['error'=>'You have to be an admin or helper of this LAN to add materials to it.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please login to perform this action.']);
+		}
+	}
+
+	public function editQuantity($id,Request $request){
+		if(Auth::check()){
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
+
+			if($lan!=null){
+				$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
+				if($material!=null){
+					$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->select('materials.*','needs.id as id_needs','quantity');
+					if($lan_material->first()!=null){
+						if(is_numeric($request->quantity) && $request->quantity>0){
+							$lan_material->update(['quantity'=>$request->quantity]);
+							return response()->json(['success'=>'This material\'s quantity has been set to '.htmlentities($request->quantity).'.']);
+						}else{
+							return response()->json(['error'=>'The quantity must be a positive number.']);
+						}
+					}else{
+						return response()->json(['error'=>'This material isn\'t in this LAN\'s material list.']);
+					}
+				}else{
+					return response()->json(['error'=>'This material doesn\'t exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'You have to be an admin or helper of this LAN to edit its material list.']);
 			}
 		}else{
 			return response()->json(['error'=>'Please login to perform this action.']);
@@ -777,7 +826,9 @@ class LansController extends Controller
 
 	public function removeMaterial($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
 			if($lan!=null){
 				$material=Material::where('materials.id','=',$request->material_id)->join('needs','needs.id_material','=','materials.id')->where('needs.id_lan','=',$lan->id)->select('materials.id','materials.name_material')->first();
 				if($material!=null){
@@ -787,7 +838,7 @@ class LansController extends Controller
 					return response()->json(['error'=>'This material doesn\'t exist or isn\'t in this lan\'s material list.']);
 				}
 			}else{
-				return response()->json(['error'=>'You have to be an admin of this LAN to remove materials from it.']);
+				return response()->json(['error'=>'You have to be an admin or helper of this LAN to remove materials from it.']);
 			}
 		}else{
 			return response()->json(['error'=>'Please login to perform this action.']);
@@ -797,7 +848,9 @@ class LansController extends Controller
 
 	public function addShopping($id){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
 			if($lan==null){
 				return back()->with('error','You have to be an admin of this LAN to add shoppings to it.');
 			}else{
@@ -810,7 +863,9 @@ class LansController extends Controller
 
 	public function postAddShopping($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
 			if($lan!=null){
 				$shopping=Shopping::where('shoppings.id','=',$request->shopping_id)->select('shoppings.id','shoppings.name_shopping')->first();
 				if($shopping!=null){
@@ -834,7 +889,9 @@ class LansController extends Controller
 
 	public function removeShopping($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+			$lan=Auth::user()->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($id);
 			if($lan!=null){
 				$shopping=Shopping::where('shoppings.id','=',$request->shopping_id)->join('needs','needs.id_shopping','=','shoppings.id')->where('needs.id_lan','=',$lan->id)->select('shoppings.id','shoppings.name_shopping')->first();
 				if($shopping!=null){

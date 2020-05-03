@@ -27,18 +27,21 @@ Route::resource('contact', 'ContactsController');
 
 
 /*LOGGED ROUTES*/
+
+// lan
+Route::resource('lan', 'LansController');
+Route::get('/lans','LansController@index')->name('my_lans');
+
+// game-lan
 Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');
 Route::get('/lan/game/{id}','LansController@addGame')->name('lan.add_game');
 Route::post('/lan/game/{id}','LansController@postAddGame');
-Route::resource('lan', 'LansController');
-Route::get('/lans','LansController@index')->name('my_lans');
 
 // material
 Route::delete('/lan/material/{id}','LansController@removeMaterial')->name('lan.remove_material');
 Route::get('/lan/material/{id}','LansController@addMaterial')->name('lan.add_material');
 Route::post('/lan/material/{id}','LansController@postAddMaterial');
-Route::resource('lan', 'LansController');
-Route::get('/lans','LansController@index')->name('my_lans');
+Route::put('/lan/material/{id}','LansController@editQuantity');
 
 // shopping
 Route::delete('/lan/shopping/{id}','LansController@removeShopping')->name('lan.remove_shopping');

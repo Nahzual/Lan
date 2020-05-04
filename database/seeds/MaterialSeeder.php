@@ -99,11 +99,32 @@ class MaterialSeeder extends Seeder
 						'desc_material'=>'An 20m ethernet cable',
 						'category_material'=>'internet'
 					],
+					//sound
+					[
+						'name_material'=>'Microphone',
+						'desc_material'=>'Microphone',
+						'category_material'=>'gaming sound'
+					],
+					[
+						'name_material'=>'Headset',
+						'desc_material'=>'A headset without microphone',
+						'category_material'=>'gaming sound'
+					],
+					[
+						'name_material'=>'Headset with microphone',
+						'desc_material'=>'A headset with a microphone',
+						'category_material'=>'gaming sound'
+					],
+					[
+						'name_material'=>'Speaker',
+						'desc_material'=>'Speaker',
+						'category_material'=>'gaming sound'
+					],
 					// computers
 					[
 						'name_material'=>'Computer screen',
 						'desc_material'=>'A screen that can be plugged into a desktop computer',
-						'category_material'=>'gaming,computer'
+						'category_material'=>'gaming computer'
 					],
 					[
 						'name_material'=>'Keyboard',
@@ -408,11 +429,6 @@ class MaterialSeeder extends Seeder
 						'category_material'=>'screen'
 					],
 					// food
-					[
-						'name_material'=>'Crisps',
-						'desc_material'=>'Crisps',
-						'category_material'=>'food'
-					],
 					[
 						'name_material'=>'Crisps',
 						'desc_material'=>'Crisps',

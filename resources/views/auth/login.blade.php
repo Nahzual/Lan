@@ -4,7 +4,7 @@
 <div class="container esp">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card ">
+            <div class="card besp">
 					
                 <div class="card-header  bg-dark">
 					<div class="row">

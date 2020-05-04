@@ -75,12 +75,16 @@
 									<table style="display: inline-table;" class="border border-dark field"><td class="mr-2 cell table"></td></table>
 								</tr>
 								<tr>
-									<td scope="col">Empty chair :</td>
-									<table style="display: inline-table;" class="border border-dark field"><td class="cell chairNull"></td></table>
+									<td scope="col">Computer :</td>
+									<table style="display: inline-table;" class="border border-dark field"><td class="cell computer"></td></table>
 								</tr>
 								<tr>
-									<td scope="col">Taken chair :</td>
-									<table style="display: inline-table;" class="border border-dark field"><td class=" cell chair"></td></table>
+									<td scope="col">Console :</td>
+									<table style="display: inline-table;" class="border border-dark field"><td class="cell console"></td></table>
+								</tr>
+								<tr>
+									<td scope="col">Empty chair :</td>
+									<table style="display: inline-table;" class="border border-dark field"><td class="cell chairNull"></td></table>
 								</tr>
 								<tr>
 									<td scope="col">Empty space :</td>

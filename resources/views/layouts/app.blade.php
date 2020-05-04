@@ -58,36 +58,14 @@
                                 </li>
                             @endif
                         @else
-				<li class="nav-item">
-								<a class="nav-link" href="{{ route('dashboard') }}"><i class='fa fa-wrench'></i> {{ __('Dashboard') }}</a>
-                            </li>
-			    @if(Auth::user()->rank_user==config('ranks.SITE_ADMIN'))
-
-		 		<li class="nav-item">
-					<a class="nav-link" href="{{ url('/') }}"><i class='fa fa-user'></i> Users</a>
-                            </li>
-		 		<li class="nav-item">
-					<a class="nav-link" href="{{ route('game.index') }}"><i class='fa fa-gamepad'></i> Games</a>
-                            </li>
-			    @endif
+			
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/lans') }}" >
-                                        My LANs
-                                    </a> <!-- Insérer lien vers page listant les LANs en lien avec l'utilisateur-->
-                                    <a class="dropdown-item" href="{{ route('game.favourite') }}" >
-                                        <i class='fa fa-gamepad'></i> My Games
-                                    </a> <!-- Insérer lien vers page listant les jeux en lien avec l'utilisateur-->
-
-                                    <a class="dropdown-item" href="{{ route('user.edit',Auth::id()) }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('edit-profile-form').submit();">
-                                        {{ __('Edit your profile') }}
-                                    </a>
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}"><i class='fa fa-wrench'></i> {{ __('Dashboard') }}</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -100,8 +78,6 @@
                                     </form>
 
                                     <form id="edit-profile-form" action="{{ route('user.edit',Auth::id()) }}" method="GET" style="display: none;">
-                                        @csrf
-                                    </form>
                                 </div>
                             </li>
                         @endguest

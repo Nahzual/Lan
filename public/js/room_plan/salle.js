@@ -1,3 +1,12 @@
+/* Etats des cellules :
+1 : wall
+2 : table
+3 : chairNull ->chaise libre
+4 : chair
+5 : computer
+6 : console
+7 : null*/
+
 function startRoom(room_plan){
 	drawRoom(room_plan);
 	resetRoom(room_plan);
@@ -28,7 +37,10 @@ function drawRoom(room_plan){
 						case 2: cell.className = 'cell table'; break;
 						case 3: cell.className = 'cell chairNull'; break;
 						case 4: cell.className = 'cell chair'; break;
-						case 5: cell.className = 'cell null'; break;
+						case 5: cell.className = 'cell computer'; break;
+						case 6: cell.className = 'cell console'; break;
+						case 7: cell.className = 'cell null'; break;
+						default: break;
 					}
 
 					cell.setAttribute('onclick','changeColor('+room_plan.name+', '+i+', '+j+');');
@@ -45,7 +57,7 @@ function resetRoom(room_plan){
 	for (i = 1; i <= room_plan.settings['lines']; i++) {
 			room_plan.room.field[i] = new Array();
 			for (j = 1; j <= room_plan.settings['columns']; j++) {
-					room_plan.room.field[i][j] = 5;
+					room_plan.room.field[i][j] = 7;
 			}
 	}
 
@@ -60,31 +72,25 @@ function updateRoom(room_plan){
 			}
 			for (j = 1; j <= room_plan.settings['columns']; j++) {
 				if(room_plan.room.field[i][j]==undefined){
-					room_plan.room.field[i][j] = 5;
+					room_plan.room.field[i][j] = 7;
 				}
 			}
 	}
 }
 
 function changeColor(room_plan,y,x){
-	/* determiner le numero d'etat de la cellule
-	1 : wall
-	2 : table
-	3 : chairNull ->chaise libre
-	4 : chair
-	5 : null*/
+	/* Passage d'un état vers autre par clic gauche :
+	1 (wall) => 2 (table)
+	2 (table) => 3 (chaise libre)
+	3 (chair libre) => 5 (computer)
+	5 (computer) => 6 (console)
+	6 (console) => 7 (null)
+	7 (null) => 1 (wall) */
 
-	// if(room_plan.room.field[x][y]==4){
-	// 	document.getElementById('cell-'+x+'-'+y).className = 'cell null';
-	// 	document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-	// 	room_plan.room.field[x][y] = 5;
-	// 	return;
-	// }
-
-	if(room_plan.room.field[y][x]==3){
-		document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+	if(room_plan.room.field[y][x]==1){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
-		room_plan.room.field[y][x] = 5;
+		room_plan.room.field[y][x] = 2;
 		return;
 	}
 
@@ -95,14 +101,28 @@ function changeColor(room_plan,y,x){
 		return;
 	}
 
-	if(room_plan.room.field[y][x]==1){
-		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
+	if(room_plan.room.field[y][x]==3){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell computer';
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
-		room_plan.room.field[y][x] = 2;
+		room_plan.room.field[y][x] = 5;
 		return;
 	}
 
 	if(room_plan.room.field[y][x]==5){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell console';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 6;
+			return;
+	}
+
+	if(room_plan.room.field[y][x]==6){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 7;
+			return;
+	}
+
+	if(room_plan.room.field[y][x]==7){
 			document.getElementById('cell-'+y+'-'+x).className = 'cell wall';
 			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
 			room_plan.room.field[y][x] = 1;
@@ -111,44 +131,55 @@ function changeColor(room_plan,y,x){
 }
 
 function changeAutherColor(room_plan,y,x){
-		/* determiner le numero d'etat de la cellule
-		1 : wall
-		2 : table
-		3 : chairNull ->chaise libre
-		4 : chair
-		5 : null*/
+	/* Passage d'un état vers autre par clic droit :
+	1 (wall) => 7 (null)
+	2 (table) => 1 (wall)
+	3 (chaise libre) => 2 (table)
+	5 (computer) => 3 (chaise libre)
+	6 (console) => 5 (computer)
+	7 (null) => 6 (console) */
 
 
-	// if(room_plan.room.field[x][y]==4){
-	// 	document.getElementById('cell-'+x+'-'+y).className = 'cell chairNull';
-	// 	document.getElementById('cell-'+x+'-'+y).innerHTML = '';
-	// 	room_plan.room.field[x][y] = 3;
-	// 	return;
-	// }
-	if(room_plan.room.field[y][x]==3){
-		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
+	if(room_plan.room.field[y][x]==1){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell null';
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
-		room_plan.room.field[y][x] = 2;
+		room_plan.room.field[y][x] = 7;
 		return;
 	}
+
 	if(room_plan.room.field[y][x]==2){
 		document.getElementById('cell-'+y+'-'+x).className = 'cell wall';
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
 		room_plan.room.field[y][x] = 1;
 		return;
 	}
-	if(room_plan.room.field[y][x]==1){
-		document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+
+	if(room_plan.room.field[y][x]==3){
+		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
-		room_plan.room.field[y][x] = 5;
+		room_plan.room.field[y][x] = 2;
 		return;
 	}
 
 	if(room_plan.room.field[y][x]==5){
-		document.getElementById('cell-'+y+'-'+x).className = 'cell chairNull';
-		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
-		room_plan.room.field[y][x] = 3;
-		return;
+			document.getElementById('cell-'+y+'-'+x).className = 'cell chairNull';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 3;
+			return;
+	}
+
+	if(room_plan.room.field[y][x]==6){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell computer';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 5;
+			return;
+	}
+
+	if(room_plan.room.field[y][x]==7){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell console';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 6;
+			return;
 	}
 }
 

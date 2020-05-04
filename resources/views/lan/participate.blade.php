@@ -43,8 +43,16 @@
 								<table style="display: inline-table;" class="border border-dark field"><td class="cell user"></td></table>
 							</tr>
 							<tr>
+								<td scope="col">Computer :</td>
+								<table style="display: inline-table;" class="border border-dark field"><td class="cell computer"></td></table>
+							</tr>
+							<tr>
+								<td scope="col">Console :</td>
+								<table style="display: inline-table;" class="border border-dark field"><td class="cell console"></td></table>
+							</tr>
+							<tr>
 								<td scope="col">Empty space :</td>
-								<table style="display: inline-table;" class="border border-dark field"><td class="cell null"></td></table>
+								<table style="display: inline-table;" class="border border-dark field"><td class="mr-2 cell null"></td></table>
 							</tr>
 						</tbody>
 					</table>

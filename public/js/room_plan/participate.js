@@ -35,21 +35,12 @@ function drawRoom(room_plan){
 							case 2: cell.className = 'cell table'; break;
 							case 3: cell.className = 'cell chairNull'; break;
 							case 4: cell.className = 'cell chair'; break;
-							case 5: cell.className = 'cell null'; break;
+							case 5: cell.className = 'cell computer'; break;
+							case 6: cell.className = 'cell console'; break;
+							case 7: cell.className = 'cell null'; break;
 							default: break;
 						}
 					}
-
-					// if(room_plan.room.field[i][j]==3 || room_plan.room.field[i][j]==4){
-					// 	for(var k=1 ; k <= room_plan.places.length; ++k){
-					// 		if(room_plan.places[k][1]==i && room_plan.places[k][2]==j){
-					// 			cell.innerHTML=k;
-					// 			break;
-					// 		}
-					// 	}
-					// }
-
-
 
 					cell.setAttribute('onclick','changeColor('+room_plan.name+', '+i+', '+j+');');
 					cell.setAttribute('oncontextmenu','changeAutherColor('+room_plan.name+', '+i+', '+j+'); return false;');

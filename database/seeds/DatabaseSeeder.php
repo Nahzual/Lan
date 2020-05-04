@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(MaterialSeeder::class);
+      $this->call(MaterialSeeder::class);
+      factory(App\Game::class, 10)->create();
     }
 }

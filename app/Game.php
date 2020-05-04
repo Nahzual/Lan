@@ -31,7 +31,7 @@ class Game extends Model
 
   public function tournaments()
   {
-    return $this->belongsTo('App\Tournament');
+    return $this->belongsToMany('App\Tournament');
   }
 
 

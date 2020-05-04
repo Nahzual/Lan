@@ -72,7 +72,12 @@ Route::post('/game/favourite/{id}','GamesController@addToFavourite')->name('game
 Route::delete('/game/favourite/{id}','GamesController@removeFromFavourite')->name('game.remove_favourite');
 Route::get('/search/game','GamesController@search');
 
-Route::resource('tournament', 'TournamentsController');
+Route::get('lan/{lan}/tournament/create', 'TournamentsController@create')->name('tournament.create_tournament');
+Route::post('lan/{lan}/tournament/store', 'TournamentsController@store')->name('tournament.store');
+Route::get('lan/{lan}/tournament/{tournament}/show', 'TournamentsController@show')->name('tournament.show_tournament');
+Route::get('lan/{lan}/tournament/{tournament}/edit', 'TournamentsController@edit')->name('tournament.edit_tournament');
+Route::put('lan/{lan}/tournament/{tournament}/edit', 'TournamentsController@update')->name('tournament.update');
+Route::delete('lan/{lan}/tournament/{tournament}/destroy', 'TournamentsController@destroy')->name('tournament.destroy');
 Route::resource('tournament/round', 'RoundsController');
 Route::resource('tournament/round/match', 'MatchesController');
 

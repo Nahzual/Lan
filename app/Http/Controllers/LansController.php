@@ -11,6 +11,7 @@ use App\Country;
 use App\User;
 use App\Game;
 use App\Material;
+use App\Tournament;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -213,12 +214,13 @@ class LansController extends Controller
 				$games=$lan->games;
 				$materials=$lan->materials()->select('materials.*','quantity')->get();
 				$activities = $lan->activities;
+        $tournaments = $lan->tournaments;
 				if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
 					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
 					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities'))->with(['userIsLanAdmin'=>true]);
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities', 'tournaments'))->with(['userIsLanAdmin'=>true]);
 				}else{
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities'))->with(['userIsLanAdmin'=>false]);
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities', 'tournaments'))->with(['userIsLanAdmin'=>false]);
 				}
       }
 

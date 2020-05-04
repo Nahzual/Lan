@@ -1,58 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">
-					<div class="row">
-						<div class="col mt-2">
-							<h3 class="lead-title">List of available LANs</h3>
-						</div>
+	
+		
+		<section id="jumbotron">
+			<div class="jumbotron" >
+				<div class="container">
+					<h1 class="display-3 text-right">Create your LAN now !</h1>
+					todopage : remplacer img et le noir
+				</div>
+			</div>
+		</section>
+
+		
+		<section id="features" style="background-color:black">
+
+			<div class="container" style="background-color:white">
+				<div class="row">
+					<div class="col-md-6 text-center home_txt_block">
+						<h2>Select your Games</h2>
+						<p>Link your Games to your LAN, review the connexion ports and choose your must-haves with our "fav" system ! You might even find some new ones... </p>
+					</div>
+					<div class="col-md-6 home_img_block home_img_block_1">
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-6 home_img_block home_img_block_2">
+					</div>
+					<div class="col-md-6 text-center home_txt_block">
+						<h2>Host unique Activities</h2>
+						<p>Create heavily-customised tournaments, define what your own LAN is and more ! With our room mapping application, you also can see how everyone can fit !</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 text-center home_txt_block">
+						<h2>Organization is key</h2>
+						<p>Don't do it alone ! Add helpers, news admins, deploy tasks, define a shopping list and a to-do list to avoid some last-minute expenses !</p>
+					</div>
+					<div class="col-md-6 home_img_block home_img_block_3">
+						
+					</div>
+				</div>
+			</div>
 
-        <div class="card-body">
-          {!! Form::open(['method' => 'post','onsubmit'=>'sendRequest(event)']) !!}
-            <div class="bg-light">
-              <?php if(Auth::check()){ ?>
-              <h4 class='lead'>Display lans from :</h4>
-              <div class="form-group">
-                {!! Form::label('location', 'Everywhere', ['for'=>'everywhere']) !!}
-                {!! Form::radio('location', 'everywhere', (isset($location) && $location=='everywhere') ? true : false) !!}
-
-                {!! Form::label('location', 'Your country', ['for'=>'country']) !!}
-                {!! Form::radio('location', 'country', (isset($location) && $location=='country') ? true : false) !!}
-
-                {!! Form::label('location', 'Your region', ['for'=>'department']) !!}
-                {!! Form::radio('location', 'department', (isset($location) && $location=='department') ? true : false) !!}
-
-                {!! Form::label('location', 'Your city', ['for'=>'city']) !!}
-                {!! Form::radio('location', 'city', (isset($location) && $location=='city') ? true : false) !!}
-              </div>
-            <?php } ?>
-              <h4 class='lead'>Display lans where opening date is between :</h4>
-              <div class="form-group">
-                {!! Form::date('date1', (isset($date1)) ? $date1 : null, ['class' => 'form-control']) !!}
-                <h4 class="mt-2"> and </h4>
-                {!! Form::date('date2', (isset($date2)) ? $date2 : null, ['class' => 'form-control']) !!}
-              </div>
-            </div>
-            <div class="form-group row text-center">
-              <div class="col">
-                <button type="submit" class="btn btn-primary"><i class='fa fa-search'></i> Rechercher</button>
-              </div>
-            </div>
-          {!! Form::close() !!}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="lanList">
-    @include('home_list_lans',$lans)
-  </div>
+		</section>
+		@if($lan)
+		<section id="discover" >
+			<div class="jumbotron home_div" >
+				<div class="container">
+					
+					<p>The latest LAN was created on<?php $date = date_create($lan->opening_date); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</p>
+					<p>Sign-in now to create your first LAN !</p>
+					
+				</div>
+			</div>
+		</section>
+		@endif
 </div>
+
+	
 @endsection
 
 @section('js_includes')

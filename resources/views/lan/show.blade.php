@@ -137,6 +137,16 @@
 	</div>
 </div>
 
+@if($userIsLanAdminOrHelper)
+
+<div class="my-5 row justify-content-center">
+		<div class="col-md-8">
+			<hr class="dark-hr"/>
+			<h3 class="text-center">Helper section</h3>
+			<hr class="dark-hr"/>
+		</div>
+	</div>
+
 <div class="mt-5 row justify-content-center">
 	<div id="response-success-material" class="container alert alert-success mt-2" style="display:none"></div>
 	<div id="response-error-material" class="container alert alert-danger mt-2" style="display:none"></div>
@@ -147,11 +157,9 @@
 					<div class="col mt-2">
 						<h3 class="lead-title">Materials</h3>
 					</div>
-					@if ($userIsLanAdmin)
 					<div class="col">
 						<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i> Add materials</a>
 					</div>
-					@endif
 				</div>
 			</div>
 		</div>
@@ -169,16 +177,15 @@
 					<div class="col mt-2">
 						<h3 class="lead-title">Shopping</h3>
 					</div>
-					@if ($userIsLanAdmin)
 					<div class="col">
 					</div>
-					@endif
 				</div>
 			</div>
 		</div>
 		<!--@include('game.list_lan')-->
 	</div>
 </div>
+@endif
 
 
 @if ($userIsLanAdmin)
@@ -218,6 +225,7 @@
 <script src="/js/ajax/lan/ajax_delete.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
 <script src="/js/ajax/lan/ajax_remove_material.js"></script>
+<script src="/js/ajax/material/ajax_edit.js"></script>
 
 <script src="/js/ajax/activity/ajax_delete.js"></script>
 @endsection

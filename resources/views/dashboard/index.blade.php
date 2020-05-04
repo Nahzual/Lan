@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 
 <div class="card">
 	<div class="card-header">
-		<h3 class="lead-title">Dashboard</h3>
+		<h2>Dashboard</h2>
 	</div>
 	<div class="card-body">
 		<div class="container col">
@@ -13,63 +13,29 @@
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
-								<div class="col mt-1">
-									<h4 class="lead-title">Welcome {{$user->name}} {{$user->lastname}}</h4>
-								</div>
-								<div class="col mt-1">
-									<form method="GET" action="{{ route('user.edit',$user->id) }}">
-										@csrf
-										@method('GET')
-										<button type="submit" class="btn btn-primary float-right"><i class='fa fa-edit'></i> Edit My Profile</button>
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="card-body">
-							<div class="row d-flex justify-content-center">
-								<label class="col-md-2 col-form-label text-md-right">Pseudo</label>
-								<label class="mx-2 form-control col-8">{{$user->pseudo}}</label>
-							</div>
-
-							<div class="row d-flex justify-content-center">
-								<label class="col-md-2 col-form-label text-md-right">Email</label>
-								<label class="mx-2 form-control col-8">{{$user->email}}</label>
-							</div>
-
-							<div class="row d-flex justify-content-center">
-								<label class="col-md-2 col-form-label text-md-right">Tel</label>
-								<label class="mx-2 form-control col-8">{{$user->tel_user}}</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="row">
 								<div class="col mt-2">
-									<h3 class="lead-title">My LANs</h3>
+									<h3>My LANs</h3>
 								</div>
 								<div class="col mt-1">
 									<form method="GET" action="{{ route('lan.create') }}">
 										@csrf
 										@method('GET')
-										<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
+										<button type="submit" class="btn  btn-outline-dark shadow-sm float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
 									</form>
 								</div>
 							</div>
 						</div>
-						<div class="card-body">
+					</div>
 							<div class="table-responsive">
 								<table class="table card-table table-bordered">
 									<thead class="card-table text-center">
-									<th scope="col" class="lead">#</th>
-									<th scope="col" class="lead ">Name</th>
-									<th scope="col" class="lead">Participants</th>
-									<th scope="col" class="lead ">State</th>
-									<th scope="col" class="lead ">View</th>
-									<th scope="col" class="lead">Edit</th>
-									<th scope="col" class="lead">Delete</th>
+									<th scope="col" >#</th>
+									<th scope="col" >Name</th>
+									<th scope="col" >Participants</th>
+									<th scope="col" >State</th>
+									<th scope="col" >View</th>
+									<th scope="col">Edit</th>
+									<th scope="col">Delete</th>
 									</thead>
 
 									<tbody>
@@ -77,17 +43,16 @@
 									</tbody>
 								</table>
 							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+
 
 @yield('admin_section')
 
-<br><br>
+
 
 <!-- Admin LANs -->
 <div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
@@ -101,7 +66,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col mt-2">
-              <h3 class="lead-title">LANs on which I am helper</h3>
+              <h3>LANs on which I am helper</h3>
             </div>
           </div>
         </div>
@@ -110,11 +75,11 @@
       <div class="table-responsive">
         <table class="table card-table table-bordered">
           <thead class="card-table text-center">
-            <th scope="col" class="lead">#</th>
-            <th scope="col" class="lead ">Name</th>
-            <th scope="col" class="lead">Participants</th>
-            <th scope="col" class="lead ">State</th>
-            <th scope="col" class="lead ">View</th>
+            <th scope="col" >#</th>
+            <th scope="col" >Name</th>
+            <th scope="col" >Participants</th>
+            <th scope="col">State</th>
+            <th scope="col">View</th>
           </thead>
 
           <tbody>
@@ -140,7 +105,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col mt-2">
-              <h3 class="lead-title">LANs on which I am player</h3>
+              <h3>LANs on which I am player</h3>
             </div>
           </div>
         </div>
@@ -149,11 +114,11 @@
       <div class="table-responsive">
         <table class="text-center table card-table table-bordered">
           <thead class="card-table text-center">
-            <th scope="col" class="lead">#</th>
-            <th scope="col" class="lead ">Name</th>
-            <th scope="col" class="lead">Participants</th>
-            <th scope="col" class="lead ">View</th>
-            <th scope="col" class="lead ">Quit</th>
+            <th scope="col" >#</th>
+            <th scope="col" >Name</th>
+            <th scope="col" >Participants</th>
+            <th scope="col" >View</th>
+            <th scope="col">Quit</th>
           </thead>
 
           <tbody>
@@ -164,7 +129,7 @@
     </div>
   </div>
 </div>
-
+</div>
 @endsection
 
 @section('js_includes')

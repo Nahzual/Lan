@@ -25,13 +25,13 @@ class PageController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function home(Request $request){
-        $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'))->get();
+        $lan = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->get()->first();
 
-        return view('home', compact('lans'));
+        return view('home', compact('lan'));
     }
 
     public function homeLanList(Request $request){
-      $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'));
+      $lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'));
 
       // lan research based on location
       if(Auth::check() && isset($request->location)){
@@ -70,7 +70,7 @@ class PageController extends Controller
         $lans=$lans->where('lans.opening_date','>=',$request->date1)->where('lans.opening_date','<=',$request->date2);
       }
 
-      $lans=$lans->get();
+       $lans=$lans->select('lans.*')->get();
 
       return view('home_list_lans',compact('lans'));
     }

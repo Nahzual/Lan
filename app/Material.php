@@ -9,6 +9,8 @@ class Material extends Model
 
   protected $fillable = ['name_material', 'desc_material'];
 
+	public $timestamps=false;
+
   public function lans()
   {
     return $this->belongsToMany('App\Lan','needs');

@@ -203,7 +203,7 @@ class LansController extends Controller
        * @param  int  $id
        * @return \Illuminate\Http\Response
        */
-      public function show($id)
+			public function show($id)
       {
 				$lan = Lan::findOrFail($id);
 				$location = $lan->location;
@@ -212,15 +212,27 @@ class LansController extends Controller
 				$department = $city->department;
 				$country = $department->country;
 				$games=$lan->games;
-				$materials=$lan->materials()->select('materials.*','quantity')->get();
 				$activities = $lan->activities;
 				$tournaments = $lan->tournaments;
-				if(Auth::check() && ($user=Auth::user())->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null){
-					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities', 'tournaments'))->with(['userIsLanAdmin'=>true]);
+				if(Auth::check()){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					if($userIsLanAdmin){
+						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+						$materials=$lan->materials()->select('materials.*','quantity')->get();
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+					}else{
+						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+						if($userIsLanHelper){
+							$materials=$lan->materials()->select('materials.*','quantity')->get();
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+						}else{
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
+						}
+					}
 				}else{
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities', 'tournaments'))->with(['userIsLanAdmin'=>false]);
+					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 				}
       }
 

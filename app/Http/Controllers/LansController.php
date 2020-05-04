@@ -947,7 +947,7 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_all(Request $request){
-        $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'))->get();
+        $lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->get();
 
         return view('lan.list_all', compact('lans'));
     }

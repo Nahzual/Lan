@@ -1,11 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container esp">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+            <div class="card bsp">
+                <div class="card-header bg-dark">
+					<div class="row">
+						<div class="col mt-2">
+							<h3 class="text-light">{{ __('Confirm Password') }}</h3>
+						</div>
+					</div>
+		</div>
 
                 <div class="card-body">
                     {{ __('Please confirm your password before continuing.') }}
@@ -29,7 +35,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn  btn-outline-dark shadow-sm">
                                     {{ __('Confirm Password') }}
                                 </button>
 

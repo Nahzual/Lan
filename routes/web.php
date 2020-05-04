@@ -47,8 +47,6 @@ Route::put('/lan/material/{id}','LansController@editQuantity');
 Route::delete('/lan/shopping/{id}','LansController@removeShopping')->name('lan.remove_shopping');
 Route::get('/lan/shopping/{id}','LansController@addShopping')->name('lan.add_shopping');
 Route::post('/lan/shopping/{id}','LansController@postAddShopping');
-Route::resource('lan', 'LansController');
-Route::get('/lans','LansController@index')->name('my_lans');
 
 
 // player participation
@@ -73,7 +71,7 @@ Route::get('/game/favourite/','GamesController@showFavouriteGames')->name('game.
 Route::resource('game', 'GamesController');
 Route::post('/game/favourite/{id}','GamesController@addToFavourite')->name('game.add_favourite');
 Route::delete('/game/favourite/{id}','GamesController@removeFromFavourite')->name('game.remove_favourite');
-Route::get('/search/game','GamesController@search');
+Route::get('/search/game','GamesController@search')->name('game.search');
 
 Route::resource('tournament', 'TournamentsController');
 Route::resource('tournament/round', 'RoundsController');
@@ -89,7 +87,9 @@ Route::get('/search/shopping','ShoppingsController@search');
 Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 
-// Activities routes
+// Task routes
+Route::get('lan/tasks', 'TaskController@all')->name('task.all');
+Route::get('lan/{lan}/tasks', 'TaskController@perLan')->name('task.perLan');
 Route::get('lan/{lan}/task/create', 'TaskController@create')->name('task.create');
 Route::post('lan/{lan}/task/store', 'TaskController@store')->name('task.store');
 Route::get('lan/{lan}/task/{task}/show', 'TaskController@show')->name('task.show');

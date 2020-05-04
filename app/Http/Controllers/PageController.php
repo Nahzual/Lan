@@ -25,9 +25,9 @@ class PageController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function home(Request $request){
-        $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'))->get();
+        $lan = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'))->get()->first();
 
-        return view('home', compact('lans'));
+        return view('home', compact('lan'));
     }
 
     public function homeLanList(Request $request){

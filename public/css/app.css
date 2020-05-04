@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Roboto);@charset "UTF-8";
+
 
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
@@ -34,9 +35,10 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Nunito", sans-serif;
+  --font-family-sans-serif: "Roboto", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
 
 *,
 *::before,
@@ -50,6 +52,8 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+
 
 article,
 aside,
@@ -66,7 +70,7 @@ section {
 
 body {
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -5574,7 +5578,7 @@ a.badge-dark.focus {
 
 .jumbotron {
   padding: 2rem 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0rem;
   background-color: #e9ecef;
   border-radius: 0.3rem;
 }
@@ -6477,7 +6481,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -11128,5 +11132,54 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+
+
+
+
 }
 
+/*CUSTOM CSS*/
+
+main{
+	margin-bottom:3.5em;
+}
+.footer{
+	background-color: #e9ecef;
+	  width: 100%;
+	  height: 3.5em;
+	margin-bottom:0;
+	position: fixed;
+	   left: 0;
+	   bottom: 0;
+}
+.footer > .informations {
+	padding-top:1em;
+	padding-bottom:1em;
+}
+.footer a{
+	color: #6c757d !important;
+}
+
+/*HOME*/
+.home_div{
+	padding:0;
+	margin:0;
+}
+.home_txt_block{
+	padding:5rem;
+}
+
+.home_img_block{
+	background-position:center center;
+	background-repeat:no-repeat
+}
+.home_img_block_1{
+	background-image: url('/img/front/home_img_1.jpg');
+}
+.home_img_block_2{
+	background-image: url('/img/front/home_img_2.jpg');
+}
+.home_img_block_3{
+	background-image: url('/img/front/home_img_3.jpg');
+}
+/*END CUSTOM*/

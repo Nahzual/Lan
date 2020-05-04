@@ -941,4 +941,14 @@ class LansController extends Controller
 	 			return response()->json(['error'=>'Please log in to perform this action.']);
 	 		}
 	 	}
+    /**
+     * List all the LANs
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_all(Request $request){
+        $lans = Lan::where('waiting_lan','=',0)->where('opening_date','>',date('Y-m-d'))->get();
+
+        return view('lan.list_all', compact('lans'));
+    }
 }

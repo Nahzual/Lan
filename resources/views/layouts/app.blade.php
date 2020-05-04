@@ -43,7 +43,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/') }}">LANs</a><!-- Insérer lien vers page listant les LANs-->
+                                <a class="nav-link" href="{{ route('all_lans') }}">Find a LAN</a><!-- Insérer lien vers page listant les LANs-->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contact.index') }}">Contact</a><!-- Insérer lien vers page de contact-->
@@ -110,7 +110,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="">
 
           <!-- Success message -->
           <div class="container alert alert-dismissible alert-success show mt-2" style="<?php  echo (!session('success')) ? 'display:none' : ''; ?>" role="alert">
@@ -130,6 +130,9 @@
 
           @yield('content')
         </main>
+<footer class="container-fluid text-center footer">
+		<p class="informations"><span class="text-muted">Copyright &copy; LAN Creator 2020</span> - <a href="#">Privacy Policy</a> - <a href="#">Terms &amp; Conditions</a> </p>
+    </footer>
     </div>
     @yield('js_includes')
 </body>

@@ -11,18 +11,18 @@ class Tournament extends Model
    *
    * @var array
    */
-  protected $fillable = ['name_tournament','desc_tournament','opening_date_tournament', 'is_finished_tournament', 'player_count', 'match_mod', 'max_player_count', 'id_game', 'id_lan'];
+  protected $fillable = ['name_tournament','desc_tournament','opening_date_tournament', 'is_finished_tournament', 'player_count', 'match_mod', 'max_player_count', 'lan_id'];
 
   public function rounds()
   {
-    return $this->belongsTo('App\Round');
+    return $this->hasMany('App\Round');
   }
 
-  public function game(){
+  public function games(){
     return $this->hasOne('App\Game');
   }
 
   public function lan(){
-    return $this->hasOne('App\Lan');
+    return $this->belongsTo('App\Lan');
   }
 }

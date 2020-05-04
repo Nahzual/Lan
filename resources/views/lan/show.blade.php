@@ -157,9 +157,11 @@
 					<div class="col mt-2">
 						<h3 class="lead-title">Materials</h3>
 					</div>
+					@if ($userIsLanAdmin)
 					<div class="col">
 						<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i> Add materials</a>
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>
@@ -186,6 +188,28 @@
 	</div>
 </div>
 @endif
+
+<div class="mt-5 row justify-content-center">
+	<div id="response-success-tournament" class="container alert alert-success mt-2" style="display:none"></div>
+	<div id="response-error-tournament" class="container alert alert-danger mt-2" style="display:none"></div>
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col mt-2">
+						<h3 class="lead-title">Tournaments</h3>
+					</div>
+					@if ($userIsLanAdmin)
+					<div class="col">
+						<a class="btn btn-primary float-right" href="{{ route('tournament.create_tournament', $lan->id) }}"><i class='fa fa-plus'></i> Add tournaments</a>
+					</div>
+					@endif
+				</div>
+			</div>
+		</div>
+		@include('tournament.list_lan')
+	</div>
+</div>
 
 
 @if ($userIsLanAdmin)
@@ -228,6 +252,7 @@
 <script src="/js/ajax/material/ajax_edit.js"></script>
 
 <script src="/js/ajax/activity/ajax_delete.js"></script>
+<script src="/js/ajax/tournament/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

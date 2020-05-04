@@ -13,22 +13,22 @@ class CreateTournamentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournaments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name_tournament');
-            $table->longText('desc_tournament');
-            $table->date('opening_date_tournament');
-            $table->boolean('is_finished_tournament')->default(false);
-            $table->unsignedInteger('player_count_tournament');
-            $table->string('match_mod_tournament');
-            $table->unsignedInteger('max_player_count_tournament');
-            $table->unsignedBigInteger('id_game');
-            $table->unsignedBigInteger('id_lan');
-            $table->timestamps();
+      Schema::create('tournaments', function (Blueprint $table) {
+          $table->id();
+          $table->string('name_tournament');
+          $table->longText('desc_tournament');
+          $table->time('opening_date_tournament');
+          $table->boolean('is_finished_tournament')->default(false);
+          $table->unsignedInteger('player_count_tournament')->default(0);
+          $table->boolean('match_mod_tournament')->default(false);
+          $table->unsignedInteger('max_player_count_tournament');
+          $table->unsignedBigInteger('id_game');
+          $table->unsignedBigInteger('lan_id');
+          $table->timestamps();
 
-            $table->foreign('id_game')->references('id')->on('games')->onDelete('cascade');
-            $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
-        });
+          $table->foreign('id_game')->references('id')->on('games')->onDelete('cascade');
+          $table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
+      });
     }
 
     /**

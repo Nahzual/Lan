@@ -9,7 +9,7 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">Adding materials to : {{$lan->name}}<small>#{{$lan->id}}</small></h3>
+							<h3 class="lead-title">Adding shopping to : {{$lan->name}}<small>#{{$lan->id}}</small></h3>
 						</div>
 					</div>
 				</div>
@@ -18,12 +18,12 @@
 				<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
 				<div class="card-body">
-					{!! Form::open(['method' => 'post','onsubmit'=>'return searchMaterials(event,'.$lan->id.')']) !!}
+					{!! Form::open(['method' => 'post','onsubmit'=>'return searchShoppings(event,'.$lan->id.')']) !!}
 					<div class="bg-light">
-						<h4 class='lead'>Material's name :</h4>
+						<h4 class='lead'>Shopping's name :</h4>
 						<div class="form-group">
-							{!! Form::hidden('view_path', 'material.list_add_lan') !!}
-							{!! Form::text('name_material', null, ['required'=>'', 'class' => 'form-control']) !!}
+							{!! Form::hidden('view_path', 'shopping.list_add_lan') !!}
+							{!! Form::text('name_shopping', null, ['required'=>'', 'class' => 'form-control']) !!}
 						</div>
 					</div>
 					<div class="form-group row text-center">
@@ -38,7 +38,7 @@
 					<?php if(!isset($materials)){
 						$materials=[];
 					}?>
-					@include('material.list_add_lan')
+					@include('shopping.list_add_lan')
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/material/ajax_lan.js"></script>
+<script type="text/javascript" src="/js/ajax/shopping/ajax_lan.js"></script>
 @endsection
 
 @section('css_includes')

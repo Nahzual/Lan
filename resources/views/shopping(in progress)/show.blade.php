@@ -9,10 +9,6 @@
 					<h3 class="lead-title">Viewing : shopping</h3>
 				</div>
 
-				$shoppingmat = DB::table('contains')->where('shopping_id', '=', $shopping->id)->join('shoppings', 'shoppings.id', '=', 'contains.shopping_id')
-					->join('materials', 'contains.material_id', '=', 'materials.id')
-					->select('shoppings.*', 'contains.quantity', 'materials.name_material', 'materials.price_material')
-					->get();
 
 				<div class="card-body">
 					<div class="row">

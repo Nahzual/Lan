@@ -10,7 +10,7 @@
 				</div>
 				<div class="card-body">
 					<div class ="alert alert-success" style="display:none"></div>
-					{!! Form::open(['method' => 'put', 'id' => 'CreateNewMaterialForm']) !!}
+					{!! Form::open(['method' => 'put', 'id' => 'CreateNewShoppingForm']) !!}
 						<div class="bg-light">
 							<div class="form-group">
 								{!! Form::label('name_material', 'Name', ['class' => 'lead']) !!}
@@ -21,8 +21,12 @@
 								{!! Form::text('desc_material', null, ['class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
-								{!! Form::label('price_material', 'Price', ['class' => 'lead']) !!}
-								{!! Form::text('price_material', null, ['class' => 'form-control']) !!}
+								{!! Form::label('cost_shopping', 'Price', ['class' => 'lead']) !!}
+								{!! Form::number('cost_shopping', null, ['class' => 'form-control']) !!}
+							</div>
+							<div class="form-group">
+								{!! Form::label('quantity', 'Quantity', ['class' => 'lead']) !!}
+								{!! Form::number('quantity', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 						<div class="form-group row text-center">

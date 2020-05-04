@@ -50,10 +50,10 @@ public function index()
 		if(Auth::check()){
 			$user=Auth::user();
 			if($user->rank_user==config('ranks.ADMIN')){
-				/*$material = new Material();
-
-				if($request->price_material >= 0) $material->price_material=$request->price_material;
+				$shopping = new Shopping();
+				if($request->cost_shopping >= 0) $shopping-cost_shopping=$request->cost_shopping;
 				else return response()->json(['error'=>'The price has to be positive or zero.']);
+				/*$material = new Material();
 
 				$material->name_material=htmlentities($request->name_material);
 				$material->desc_material=htmlentities($request->desc_material);

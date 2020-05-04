@@ -1,23 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container esp ">
 	<div class="row justify-content-center">
-		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">
+		<div class="col-md-12 ">
+			<div class="card ">
+				<div class="card-header bg-dark">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">List of available LANs</h3>
+							<h3 class="text-light">List of available LANs</h3>
 						</div>
 					</div>
 				</div>
 
         <div class="card-body">
           {!! Form::open(['method' => 'post','onsubmit'=>'sendRequest(event)']) !!}
-            <div class="bg-light">
+            <div class="bg-light esp">
               <?php if(Auth::check()){ ?>
-              <h4 class='lead'>Display lans from :</h4>
+              <h4>I want to see LANs from :</h4>
               <div class="form-group">
                 {!! Form::label('location', 'Everywhere', ['for'=>'everywhere']) !!}
                 {!! Form::radio('location', 'everywhere', (isset($location) && $location=='everywhere') ? true : false) !!}
@@ -32,7 +32,7 @@
                 {!! Form::radio('location', 'city', (isset($location) && $location=='city') ? true : false) !!}
               </div>
             <?php } ?>
-              <h4 class='lead'>Display lans where opening date is between :</h4>
+              <h4>I want to see LANS available between ... </h4>
               <div class="form-group">
                 {!! Form::date('date1', (isset($date1)) ? $date1 : null, ['class' => 'form-control']) !!}
                 <h4 class="mt-2"> and </h4>
@@ -40,8 +40,8 @@
               </div>
             </div>
             <div class="form-group row text-center">
-              <div class="col">
-                <button type="submit" class="btn btn-primary"><i class='fa fa-search'></i> Rechercher</button>
+              <div class="col esp">
+                <button type="submit" class="btn  btn-outline-dark shadow-sm"><i class='fa fa-search'></i> Rechercher</button>
               </div>
             </div>
           {!! Form::close() !!}
@@ -50,15 +50,15 @@
     </div>
   </div>
   <div id="lanList">
-   <div class="table-responsive">
-	<table class="table card-table table-bordered">
-		<thead class="text-center">
-			<th scope="col" class="lead">#</th>
-			<th scope="col" class="lead ">Name</th>
-			<th scope="col" class="lead">Participants</th>
-			<th scope="col" class="lead ">Date</th>
-			<th scope="col" class="lead "></th>
-			<th scope="col" class="lead "></th>
+   <div class="table-responsive esp">
+	<table class="table card-table table-bordered  box_shadow ">
+		<thead class="text-center ">
+			<th scope="col">#</th>
+			<th scope="col" >Name</th>
+			<th scope="col" >Participants</th>
+			<th scope="col" >Date</th>
+			<th scope="col" ></th>
+			<th scope="col"></th>
 		</thead>
 
 		<tbody>

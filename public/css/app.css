@@ -474,6 +474,18 @@ h6,
   line-height: 1.2;
 }
 
+.display-5 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-6 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
 hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -11158,6 +11170,18 @@ main{
 }
 .footer a{
 	color: #6c757d !important;
+}
+
+.esp {
+	margin-top:1em;
+}
+
+.besp {
+	margin-bottom:1em;
+}
+
+.box_shadow{
+	box-shadow:0px 0px 1px black;
 }
 
 /*HOME*/

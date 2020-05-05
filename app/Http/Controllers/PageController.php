@@ -30,7 +30,7 @@ class PageController extends Controller
         return view('home', compact('lan'));
     }
 
-    public function homeLanList(Request $request){
+    public function allLansList(Request $request){
       $lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'));
 
       // lan research based on location
@@ -72,7 +72,7 @@ class PageController extends Controller
 
        $lans=$lans->select('lans.*')->get();
 
-      return view('home_list_lans',compact('lans'));
+      return view('lan.all_lans_list',compact('lans'));
     }
 
     public function contact(){

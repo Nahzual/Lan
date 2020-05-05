@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', 'PageController@home')->name('home');
 Route::get('/home', 'PageController@home')->name('home');
-Route::post('/home', 'PageController@homeLanList');
+
 
 Route::resource('contact', 'ContactsController');
 
@@ -31,6 +31,7 @@ Route::resource('contact', 'ContactsController');
 Route::resource('lan', 'LansController');
 Route::get('/lans','LansController@index')->name('my_lans');
 Route::get('/all_lans','LansController@list_all')->name('all_lans');
+Route::post('/all_lans', 'PageController@allLansList');
 
 // game-lan
 Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');

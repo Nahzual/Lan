@@ -86,7 +86,7 @@
 @endsection
 
 @section('js_includes')
-<script src="/js/ajax/home/ajax_lan_list.js"></script>
+<script src="/js/ajax/lan/ajax_all_lans_list.js"></script>
 @endsection
 
 @section('css_includes')

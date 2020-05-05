@@ -3,7 +3,7 @@ function sendRequest(e){
 
   $.ajax({
     type: "POST",
-    url: '/home',
+    url: '/all_lans',
     dataType: 'html',
     data: "_token="+$("[name='_token']").val()
           +'&location='+$("input[name=location]:checked").val()

@@ -113,7 +113,7 @@
                         <div class="form-group row">
                           {!! Form::label('num_street', 'Street number', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
                           <div class="col-md-6">
-                            {!! Form::text('num_street', null, ['class' => 'form-control']) !!}
+                            {!! Form::number('num_street', null, ['min'=>'1', 'class' => 'form-control']) !!}
                           </div>
                         </div>
                         <div class="form-group row">
@@ -131,7 +131,7 @@
                         <div class="form-group row">
                           {!! Form::label('zip_city', 'Zip', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
                           <div class="col-md-6">
-                            {!! Form::text('zip_city', null, ['class' => 'form-control']) !!}
+                            {!! Form::number('zip_city', null, ['class' => 'form-control']) !!}
                           </div>
                         </div>
                         <div class="form-group row">

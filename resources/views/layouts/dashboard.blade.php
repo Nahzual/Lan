@@ -34,7 +34,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="{{ route('user.edit',Auth::id()) }}" onclick="event.preventDefault();
                                                      document.getElementById('edit-profile-form').submit();"><i class="fa fa-wrench"></i> Settings</a>
-			<a class="dropdown-item" href="{{ url('/') }}"> Home</a>
+			
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> Logout</a>
@@ -54,10 +54,14 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Dashboard</div>
+                            <div class="sb-sidenav-menu-heading">Navigation</div>
                             <a class="nav-link" href="{{ route('dashboard') }}"
                                 ><div class="sb-nav-link-icon"><i class="fa fa-tachometer"></i></div>
-                                Dashboard</a
+                               Dashboard</a
+                            >
+                            <a class="nav-link" href="{{ route('home') }}"
+                                ><div class="sb-nav-link-icon"><i class="fa fa-home"></i></div>
+                               Home</a
                             >
                             <div class="sb-sidenav-menu-heading">LAN</div>
                             <a class="nav-link" href="{{ url('/lans') }}">My LANs</a>
@@ -68,7 +72,7 @@
 			    @if(Auth::user()->rank_user > 0)
 			    <div class="sb-sidenav-menu-heading">ADM</div>
                             <a class="nav-link" href="{{ url('/users') }}">All Users</a>
-                            <a class="nav-link" href="{{ route('task.all') }}">All LANs</a>
+                            <a class="nav-link" href="{{ route('all_lans') }}">All LANs</a>
 			    <a class="nav-link" href="{{ route('task.all') }}">All Tournaments</a>
 			    @endif
                         </div>

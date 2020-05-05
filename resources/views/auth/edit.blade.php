@@ -1,13 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Edit your profile') }}</div>
-
-                <div class="card-body">
+<div class="card">
+	<div class="card-header">
+		<h2>{{ __('Edit your profile') }}</h2>
+	</div>
+	<div class="card-body">
                     <form method="POST" action="{{ route('user.update',$user->id) }}">
                         @csrf
                         @method('PUT')
@@ -108,7 +106,7 @@
                         <div class="form-group row">
                           {!! Form::label('num_street', 'Street number', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
                           <div class="col-md-6">
-                            {!! Form::text('num_street', $location->num_street, ['class' => 'form-control']) !!}
+                            {!! Form::number('num_street', $location->num_street, ['class' => 'form-control']) !!}
                           </div>
                         </div>
                         <div class="form-group row">
@@ -126,7 +124,7 @@
                         <div class="form-group row">
                           {!! Form::label('zip_city', 'Zip', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
                           <div class="col-md-6">
-                            {!! Form::text('zip_city', $city->zip_city, ['class' => 'form-control']) !!}
+                            {!! Form::number('zip_city', $city->zip_city, ['class' => 'form-control']) !!}
                           </div>
                         </div>
                         <div class="form-group row">
@@ -144,15 +142,13 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn  btn-outline-success shadow-sm">
                                     {{ __('Save changes') }}
                                 </button>
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 @endsection

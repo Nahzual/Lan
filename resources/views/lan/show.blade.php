@@ -9,10 +9,22 @@
 				<div class="card-header">
 					<div class="row">
 						<h3 class="lead-title">Viewing : {{$lan->name}}</h3>
+						@if($userIsLanAdmin && $lan->waiting_lan==config('waiting.REJECTED'))
+						<div class="col mt-1">
+							@csrf
+							<button type="submit" onclick="submit(event,{{$lan->id}})" class="btn btn-outline-dark shadow-sm float-right"><i class='fa fa-send'></i> Resubmit</button>
+						</div>
+						@endif
 					</div>
 				</div>
+
 				<div id="response-success-delete" class="container alert alert-success mt-2" style="display:none"></div>
 				<div id="response-error-delete" class="container alert alert-danger mt-2" style="display:none"></div>
+
+				@if($userIsLanAdmin && $lan->waiting_lan==config('waiting.REJECTED'))
+				<small class="text-center">Your LAN has been rejected, you can resubmit it above after some modifications.</small>
+				@endif
+
 				<div class="card-body">
 					<div class="row d-flex justify-content-center">
 						<label class="col-md-2 col-form-label text-md-right">Max number of players</label>
@@ -39,12 +51,13 @@
 						<label class="form-control col-8 h-100">{{$location->num_street.' '.$street->name_street.' '.$city->zip_city.' '.$city->name_city.', '.$department->name_department.', '.$country->name_country}}</label>
 					</div>
 					<div class="form-group row text-center">
-						<div class="col">
-							<a class="btn btn-primary" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
-						</div>
+
 						@if ($userIsLanAdmin)
+							<div class="col">
+								<a class="btn btn-primary" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
+							</div>
 							{{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
-							{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+								{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
 							{{ Form::close() }}
 						@endif
 						<div class="col">
@@ -247,6 +260,7 @@
 <script src="/js/ajax/lan/ajax_add_helper.js"></script>
 <script src="/js/ajax/lan/ajax_add_admin.js"></script>
 <script src="/js/ajax/lan/ajax_delete.js"></script>
+<script src="/js/ajax/lan/ajax_submit.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
 <script src="/js/ajax/lan/ajax_remove_material.js"></script>
 <script src="/js/ajax/material/ajax_edit.js"></script>

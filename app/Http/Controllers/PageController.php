@@ -78,7 +78,7 @@ class PageController extends Controller
     public function contact(){
 	    return view('contact');
     }
-	
+
 	public function dashboard(){
 		if(Auth::check()){
 			$user = Auth::user();
@@ -87,6 +87,20 @@ class PageController extends Controller
 			$player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
 
 			return view('dashboard.index',compact('user','admin_lans','helper_lans','player_lans'));
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
+	}
+
+	public function adminDashboard(){
+		if(Auth::check()){
+			$user = Auth::user();
+			if($user->rank_user==config('ranks.SITE_ADMIN')){
+				$waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
+				return view('dashboard.admin.index',compact('user','waiting_lans'));
+			}else{
+				return redirect('/dashboard')->with('error','You don\'t have enough rights to access this page.');
+			}
 		}else{
 			return redirect('/login')->with('error','Please log in to have access to this page.');
 		}

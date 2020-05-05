@@ -477,6 +477,30 @@ class LansController extends Controller
   		}
     }
 
+		public function submit($id){
+			if(Auth::check()){
+				$lan=Lan::find($id);
+				if($lan!=null){
+					$lan_user=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+					if($lan_user!=null){
+						if($lan->waiting_lan==config('waiting.REJECTED')){
+							$lan->waiting_lan=config('waiting.WAITING');
+							$lan->save();
+							return response()->json(['success'=>'You LAN has been successfully submitted.']);
+						}else{
+							return response()->json(['error'=>'You LAN is already submitted or has been accepted.']);
+						}
+					}else{
+						return response()->json(['error'=>'You must be an admin of this LAN to do this.']);
+					}
+				}else{
+					return response()->json(['error'=>'This LAN doesn\'t exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'Please login to perform this action.']);
+			}
+		}
+
     public function participate($id){
       if(Auth::check()){
         $lan=Lan::find($id);

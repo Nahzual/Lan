@@ -1,6 +1,6 @@
-@extends('dashboard.index')
+@extends('layouts.dashboard')
 
-@section('admin_section')
+@section('content')
 <br><br>
 
 <div id="response-success" class="container alert alert-success mt-2" style="display:none"></div>
@@ -13,7 +13,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col">
-              <h3 class="lead-title">LANs waiting to be confirmed</h3>
+              <h3>LANs waiting to be confirmed</h3>
             </div>
           </div>
         </div>
@@ -22,11 +22,11 @@
       <div class="table-responsive">
         <table class="table card-table table-bordered">
           <thead class="card-table text-center">
-            <th scope="col" class="lead">#</th>
-            <th scope="col" class="lead ">Name</th>
-            <th scope="col" class="lead ">View</th>
-            <th scope="col" class="lead">Accept</th>
-            <th scope="col" class="lead ">Reject</th>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">View</th>
+            <th scope="col">Accept</th>
+            <th scope="col">Reject</th>
           </thead>
 
           <tbody class="text-center">

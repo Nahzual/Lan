@@ -51,7 +51,7 @@ public function index()
 			$user=Auth::user();
 			if($user->rank_user==config('ranks.ADMIN')){
 				$shopping = new Shopping();
-				if($request->cost_shopping >= 0) $shopping-cost_shopping=$request->cost_shopping;
+				if($request->cost_shopping >= 0) $shopping->cost_shopping=$request->cost_shopping;
 				else return response()->json(['error'=>'The price has to be positive or zero.']);
 				/*$material = new Material();
 
@@ -177,9 +177,9 @@ public function index()
 		if(Auth::check()){
 			if(Auth::user()->rank_user==config('ranks.SITE_ADMIN')){
 				$shopping=Shopping::find($id);
-				
+
 				// todo destroy material, then shopping
-				
+
 				/*if($material!=null){
 					$material->delete();
 					return response()->json(['success'=>'This material has been successfully deleted.']);

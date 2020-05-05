@@ -14,68 +14,51 @@
 		</div>
 		<div class="card-body">
 			<div id="response-success" class ="alert alert-success" style="display:none"></div>
-			{!! Form::open(['method' => 'put', 'id' => 'CreateNewContactForm']) !!}
+			{!! Form::open(['method' => 'post', 'id' => 'CreateNewContactForm']) !!}
+				@csrf
 				<div class="bg-light">
-					@if($user)
-					<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-						{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
-						{!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
-						@error('name')
-							<span class="invalid-feedback" role="alert">
-								<strong>{{ $message }}</strong>
-							</span>
-						@enderror
-					</div>
-					<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-						{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
-						{!! Form::text('lastname', $user->lastname, ['class' => 'form-control']) !!}
-						{!! $errors->first('lastname', '<span class="help-block">:message</span>') !!}
-					</div>
-					<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-						{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
-						{!! Form::text('email', $user->email, ['class' => 'form-control']) !!}
-						{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
-					</div>
-					<div class="form-group {{ $errors->has('object') ? 'has-error' : '' }}">
-						{!! Form::label('object', 'Object',['class' => 'display-6']) !!}
-						{!! Form::text('object', null, ['class' => 'form-control']) !!}
-						{!! $errors->first('object', '<span class="help-block">:message</span>') !!}
-					</div>
-					<div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-						{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
-						{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-						{!! $errors->first('description', '<span class="help-block">:message</span>') !!}
-					</div>
+					@if(isset($user))
+						<div class="form-group">
+							{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
+							{!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
+							{!! Form::text('lastname', $user->lastname, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
+							{!! Form::text('email', $user->email, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('object', 'Object',['class' => 'display-6']) !!}
+							{!! Form::text('object', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
+							{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+						</div>
 					@else
-					<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-						{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
-						{!! Form::text('name',null, ['class' => 'form-control']) !!}
-						@error('name')
-							<span class="invalid-feedback" role="alert">
-								<strong>{{ $message }}</strong>
-							</span>
-						@enderror
-					</div>
-					<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-						{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
-						{!! Form::text('lastname',null, ['class' => 'form-control']) !!}
-						{!! $errors->first('lastname', '<span class="help-block">:message</span>') !!}
-					</div>
-					<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-						{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
-						{!! Form::text('email',null, ['class' => 'form-control']) !!}
-						{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
-					</div>
-					<div class="form-group {{ $errors->has('object') ? 'has-error' : '' }}">
-						{!! Form::label('object', 'Object',['class' => 'display-6']) !!}
-						{!! Form::text('object', null, ['class' => 'form-control']) !!}
-						{!! $errors->first('object', '<span class="help-block">:message</span>') !!}
-					</div>
-					<div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-						{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
-						{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-						{!! $errors->first('description', '<span class="help-block">:message</span>') !!}
-					</div>
+						<div class="form-group">
+							{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
+							{!! Form::text('name', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
+							{!! Form::text('lastname', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
+							{!! Form::text('email', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('object', 'Object',['class' => 'display-6']) !!}
+							{!! Form::text('object', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
+							{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+						</div>
 					@endif
 				</div>
 				<div class="form-group row text-center">

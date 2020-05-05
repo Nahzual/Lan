@@ -20,7 +20,7 @@
     @yield('css_includes')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">	
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="css/dashboard-styles.css" rel="stylesheet" />
+    <link href="{{ url('/') }}/css/dashboard-styles.css" rel="stylesheet" />
 
 </head>
 
@@ -65,7 +65,7 @@
 			    <div class="sb-sidenav-menu-heading">Games</div>
                             <a class="nav-link" href="{{ url('/game') }}">All games</a>
                             <a class="nav-link" href="{{ route('game.favourite') }}">My games</a>
-			    @if($user['rank_user'] > 0)
+			    @if(Auth::user()->rank_user > 0)
 			    <div class="sb-sidenav-menu-heading">ADM</div>
                             <a class="nav-link" href="{{ url('/users') }}">All Users</a>
                             <a class="nav-link" href="{{ route('task.all') }}">All LANs</a>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        {{$user->name}} {{$user->lastname}}
+                        {{Auth::user()->name}} {{Auth::user()->lastname}}
                     </div>
                 </nav>
             </div>

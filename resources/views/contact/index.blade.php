@@ -71,6 +71,7 @@
 						</div>
 					@endif
 				</div>
+				
 				<div class="form-group row text-center">
 					<div class="col text-right">
 						<a class="btn  btn-outline-info shadow-sm" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> Go Back to home</a>

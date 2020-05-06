@@ -7,9 +7,9 @@
 		<h2>Dashboard</h2>
 	</div>
 	<div class="card-body">
-		<div class="container col">
-			<div class="row justify-content-center">
-				<div class="col-xl-6">
+		<div class="container">
+		  <div class="row justify-content-center">
+		    <div class="col-md-10">
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
@@ -20,7 +20,7 @@
 									<form method="GET" action="{{ route('lan.create') }}">
 										@csrf
 										@method('GET')
-										<button type="submit" class="btn  btn-outline-dark shadow-sm float-center"><i class='fa fa-plus-square'></i> Create New Lan</button>
+										<button type="submit" class="btn  btn-outline-dark shadow-sm float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
 									</form>
 								</div>
 								<div class="col mt-1">
@@ -59,7 +59,7 @@
 	<div class="container">
 	  <div class="row justify-content-center">
 	    <div class="col-md-10">
-	      <div class="card">
+	      <div class="card besp">
 	        <div class="card-header">
 	          <div class="row">
 	            <div class="col mt-2">
@@ -101,7 +101,7 @@
 	<div class="container">
 	  <div class="row justify-content-center">
 	    <div class="col-md-10">
-	      <div class="card">
+	      <div class="card besp">
 	        <div class="card-header">
 	          <div class="row">
 	            <div class="col mt-2">

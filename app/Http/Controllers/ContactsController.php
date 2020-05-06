@@ -58,13 +58,25 @@ class ContactsController extends Controller
 				$email = htmlentities($request->email);
 				$title = 'Message depuis le site Lan Creator';
 				$content = str_replace($mail_cleaning,"",htmlentities($request->description));
-
-				Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object) {
-				  $message->to('lancreator.noreply@gmail.com')
-						->from($sender, 'Lan Creator')
-						->cc($sender)
-						->subject($object);
-				});
+				
+				if($request->has('fichier')){
+					$path = $request->fichier;
+					Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object, $path) {
+					  $message->to('lancreator.noreply@gmail.com')
+							->from($sender, 'Lan Creator')
+							->cc($sender)
+							->subject($object)
+							->attachData($path, 'fichierjoint');
+					});
+				}
+				else{
+					Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object) {
+					  $message->to('lancreator.noreply@gmail.com')
+							->from($sender, 'Lan Creator')
+							->cc($sender)
+							->subject($object);
+					});
+				}
 
 				return response()->json([
 					'success'=>'Your mail has been saved successfully.'

@@ -1,13 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 <?php $date=date_create($game->release_date_game); ?>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-					<h3 class="lead-title">Viewing : {{$game->name_game}}</h3>
+					<h3>Viewing : {{$game->name_game}}</h3>
 				</div>
 
 				<div class="card-body">
@@ -38,23 +35,20 @@
 					<div class="mt-5 form-group row text-center">
             @if($user->rank_user==config('ranks.SITE_ADMIN'))
 						<div class="col">
-							<a class="btn btn-primary" href="{{ route('game.edit', $game->id) }}"><i class='fa fa-edit'></i> Edit</a>
+							<a class="btn btn-outline-warning shadow-sm" href="{{ route('game.edit', $game->id) }}"><i class='fa fa-edit'></i> Edit</a>
 						</div>
             <div class="col">
               {{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return sendRequest(event,'.$game->id.')' ]) }}
-                {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+                {{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-outline-danger shadow-sm', 'type' => 'submit']) }}
               {{ Form::close() }}
             </div>
             @endif
 						<div class="col">
-							<a class="btn btn-primary" href="{{ route('game.index') }}"><i class='fa fa-arrow-left'></i> Go to Game List</a>
+							<a class="btn  btn-outline-info shadow-sm" href="{{ route('game.index') }}"><i class='fa fa-arrow-left'></i> Return to the game list</a>
 						</div>
 					</div>
         </div>
 			</div>
-    </div>
-  </div>
-</div>
 @endsection
 
 @section('js_includes')

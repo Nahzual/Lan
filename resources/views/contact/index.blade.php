@@ -14,7 +14,7 @@
 		</div>
 		<div class="card-body">
 			<div id="response-success" class ="alert alert-success" style="display:none"></div>
-			{!! Form::open(['method' => 'post', 'id' => 'CreateNewContactForm']) !!}
+			{!! Form::open(['method' => 'post', 'id' => 'CreateNewContactForm', 'enctype' => 'multipart/form-data']) !!}
 				@csrf
 				<div class="bg-light">
 					@if(isset($user))
@@ -38,6 +38,11 @@
 							{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
 							{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
 						</div>
+						<div class="form-group">
+							{!! Form::label('fichier', 'Attachment', ['class' => 'display-6']) !!}
+							<br>
+							{!! Form::file('fichier', null, ['class' => 'form-control', 'name' => 'fichier', 'id' => 'fichier']) !!}
+						</div>
 					@else
 						<div class="form-group">
 							{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
@@ -58,6 +63,11 @@
 						<div class="form-group">
 							{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
 							{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('fichier', 'Attachment', ['class' => 'display-6']) !!}
+							<br>
+							{!! Form::file('fichier', null, ['class' => 'form-control', 'name' => 'fichier', 'id' => 'fichier']) !!}
 						</div>
 					@endif
 				</div>
@@ -95,7 +105,8 @@
 					lastname: $('#lastname').val(),
 					email: $('#email').val(),
 					object: $('#object').val(),
-					description: $('#description').val()
+					description: $('#description').val(),
+					fichier: $('#fichier').val()
 				},
 				success: function(result){
 					if(result.success!=undefined){

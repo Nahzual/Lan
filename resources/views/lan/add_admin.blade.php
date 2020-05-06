@@ -1,14 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
-  <div class="row justify-content-center">
-  	<div class="col-md-12">
       <div class="card">
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">Adding admin to Lan : {{$lan->name}}</h3>
+							<h3>Adding admin to Lan : {{$lan->name}}</h3>
 						</div>
 					</div>
 				</div>
@@ -18,8 +15,8 @@
 
 				<div class="card-body">
 					{!! Form::open(['method' => 'post','onsubmit'=>'searchAdmin(event,'.$lan->id.')']) !!}
-						<div class="bg-light">
-          		<h4 class='lead'>Admin's name :</h4>
+						<div>
+          		<h4>Admin's name :</h4>
             	<div class="form-group">
             		{!! Form::hidden('view_path', 'user.admin.show_add') !!}
               	{!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}
@@ -27,24 +24,19 @@
           	</div>
           	<div class="form-group row text-center">
             	<div class="col">
-              	<button type="submit" class="btn btn-primary"><i class='fa fa-search'></i> Search</button>
+              	<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i> Search</button>
             	</div>
           	</div>
         	{!! Form::close() !!}
-      	</div>
-  		</div>
-  	</div>
-	</div>
-</div>
-
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
     	<div id="requestResult">
     	</div>
-  	</div>
-  </div>
-</div>
+			<div class="col text-right">
+							<a class="btn btn-outline-info shadow-sm" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go back to Lan</a>
+						</div>
+      	</div>
+  		</div>
+
+
 @endsection
 
 @section('js_includes')

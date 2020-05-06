@@ -59,7 +59,7 @@
 	<div class="container">
 	  <div class="row justify-content-center">
 	    <div class="col-md-10">
-	      <div class="card besp">
+	      <div class="card ">
 	        <div class="card-header">
 	          <div class="row">
 	            <div class="col mt-2">
@@ -98,10 +98,10 @@
 	<div id="response-success-player" class="container alert alert-success mt-2" style="display:none"></div>
 	<div id="response-error-player" class="container alert alert-danger mt-2" style="display:none"></div>
 
-	<div class="container">
+	<div class="container esp besp">
 	  <div class="row justify-content-center">
 	    <div class="col-md-10">
-	      <div class="card besp">
+	      <div class="card">
 	        <div class="card-header">
 	          <div class="row">
 	            <div class="col mt-2">

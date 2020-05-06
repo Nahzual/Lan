@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class ContactsController extends Controller
 {
     /**
+	* bug de git à supprimer
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

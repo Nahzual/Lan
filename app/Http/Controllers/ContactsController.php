@@ -70,7 +70,8 @@ class ContactsController extends Controller
 							->attachData($path, 'fichierjoint');
 					});
 				}
-				else{
+				else
+				{
 					Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object) {
 					  $message->to('lancreator.noreply@gmail.com')
 							->from($sender, 'Lan Creator')

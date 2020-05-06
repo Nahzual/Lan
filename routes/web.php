@@ -27,6 +27,16 @@ Route::resource('contact', 'ContactsController');
 
 /*LOGGED ROUTES*/
 
+// Task routes
+Route::get('lan/tasks', 'TasksController@all')->name('task.all');
+Route::get('lan/{lan}/tasks', 'TasksController@perLan')->name('task.perLan');
+Route::get('lan/{lan}/task/create', 'TasksController@create')->name('task.create');
+Route::post('lan/{lan}/task/store', 'TasksController@store')->name('task.store');
+Route::get('lan/{lan}/task/{task}/show', 'TasksController@show')->name('task.show');
+Route::get('lan/{lan}/task/{task}/edit', 'TasksController@edit')->name('task.edit');
+Route::delete('lan/{lan}/task/{task}/destroy', 'TasksController@destroy')->name('task.destroy');
+Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.update');
+
 // lan
 Route::resource('lan', 'LansController');
 Route::get('/lans','LansController@index')->name('my_lans');
@@ -96,15 +106,7 @@ Route::get('/search/shopping','ShoppingsController@search');
 Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 
-// Task routes
-Route::get('lan/tasks', 'TaskController@all')->name('task.all');
-Route::get('lan/{lan}/tasks', 'TaskController@perLan')->name('task.perLan');
-Route::get('lan/{lan}/task/create', 'TaskController@create')->name('task.create');
-Route::post('lan/{lan}/task/store', 'TaskController@store')->name('task.store');
-Route::get('lan/{lan}/task/{task}/show', 'TaskController@show')->name('task.show');
-Route::get('lan/{lan}/task/{task}/edit', 'TaskController@edit')->name('task.edit');
-Route::delete('lan/{lan}/task/{task}/destroy', 'TaskController@destroy')->name('task.destroy');
-Route::put('lan/{lan}/task/{task}/edit', 'TaskController@update')->name('task.update');
+
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');

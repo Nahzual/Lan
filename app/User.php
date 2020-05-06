@@ -40,6 +40,11 @@ class User extends Authenticatable
 		return $this->belongsToMany('App\Lan');
 	}
 
+	public function tasks()
+	{
+		return $this->belongsToMany('App\Task','assigned_to');
+	}
+
   public function games()
   {
     return $this->belongsToMany('App\Game','favorite_games');

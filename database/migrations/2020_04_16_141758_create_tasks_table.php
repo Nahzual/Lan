@@ -18,9 +18,9 @@ public function up()
 			$table->string('name_task');
 			$table->longText('desc_task');
 			$table->date('deadline_task');
-			$table->unsignedBigInteger('id_lan');
+			$table->unsignedBigInteger('lan_id');
 
-			$table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
+			$table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
 		});
 	}
 

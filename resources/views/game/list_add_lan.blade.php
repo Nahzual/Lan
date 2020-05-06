@@ -1,5 +1,5 @@
 
-<div class="table-responsive">
+<div class="table-responsive col">
   <table class="table card-table">
     <thead class="card-table text-center">
       <th scope="col">#</th>

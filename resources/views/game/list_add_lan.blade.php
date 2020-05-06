@@ -2,12 +2,12 @@
 <div class="table-responsive">
   <table class="table card-table">
     <thead class="card-table text-center">
-      <th scope="col" class="lead">#</th>
-      <th scope="col" class="lead ">Name</th>
-      <th scope="col" class="lead">Release date</th>
-      <th scope="col" class="lead">Cost</th>
-      <th scope="col" class="lead ">Game type</th>
-      <th scope="col" class="lead "></th>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Release date</th>
+      <th scope="col">Cost</th>
+      <th scope="col">Game type</th>
+      <th scope="col">Actions</th>
     </thead>
 
     <tbody>
@@ -20,11 +20,11 @@
       @foreach($games as $game)
       <?php $date=date_create($game->release_date_game); ?>
       <tr>
-        <th scope="row" class="text-center lead-text">{{$game->id}}</th>
-        <td scope="col" class="text-center lead-text"><a href="{{ route('game.show', $game->id) }}">{{$game->name_game}}</a></td>
-        <td scope="col" class="text-center lead-text">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
-        <td scope="col" class="text-center lead-text">{{$game->cost_game}}</td>
-        <td scope="col" class="text-center lead-text">
+        <th scope="row" class="text-center">{{$game->id}}</th>
+        <td scope="col" class="text-center"><a href="{{ route('game.show', $game->id) }}">{{$game->name_game}}</a></td>
+        <td scope="col" class="text-center">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
+        <td scope="col" class="text-center">{{$game->cost_game}}</td>
+        <td scope="col" class="text-center">
           <?php switch($game->is_multiplayer_game){
             case config('game.SOLO') : echo '1 player'; break;
             case config('game.MULTI_LOCAL') : echo 'Multiplayer local'; break;
@@ -33,7 +33,7 @@
           } ?>
         </td>
 
-        <td scope="col" class="lead-text">
+        <td scope="col">
           {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addGame(event,'.$lan->id.','.$game->id.')']) !!}
             <div class="form-group row text-center">
               <div class="col">

@@ -34,6 +34,8 @@ Route::get('lan/{lan}/task/create', 'TasksController@create')->name('task.create
 Route::post('lan/{lan}/task/store', 'TasksController@store')->name('task.store');
 Route::get('lan/{lan}/task/{task}/show', 'TasksController@show')->name('task.show');
 Route::get('lan/{lan}/task/{task}/edit', 'TasksController@edit')->name('task.edit');
+Route::get('lan/{lan}/task/{task}/assign', 'TasksController@assign')->name('task.assign');
+Route::get('lan/{lan}/task/{task}/unassign', 'TasksController@unassign')->name('task.unassign');
 Route::delete('lan/{lan}/task/{task}/destroy', 'TasksController@destroy')->name('task.destroy');
 Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.update');
 

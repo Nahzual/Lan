@@ -1,14 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
       <div class="card">
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">Editing Task : {{$task->name_task}}</h3>
+							<h3>Editing Task : {{$task->name_task}}</h3>
 						</div>
 					</div>
 				</div>
@@ -20,15 +17,15 @@
 					{!! Form::model($task, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$lan->id.','.$task->id.')']) !!}
 						<div class="bg-light">
 							<div class="form-group">
-								{!! Form::label('name_task', 'Name', ['class' => 'lead']) !!}
+								{!! Form::label('name_task', 'Name', ['class' => '']) !!}
 								{!! Form::text('name_task', null, ['class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
-								{!! Form::label('desc_task', 'Description of the task', ['class' => 'lead']) !!}
+								{!! Form::label('desc_task', 'Description of the task', ['class' => '']) !!}
 								{!! Form::text('desc_task', null, ['class' => 'form-control']) !!}
 							</div>
 							<div class="form-group">
-								{!! Form::label('deadline_task', 'Deadline of the task', ['class' => 'lead']) !!}
+								{!! Form::label('deadline_task', 'Deadline of the task', ['class' => '']) !!}
 								{!! Form::date('deadline_task', null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
@@ -43,9 +40,6 @@
 					{!! Form::close() !!}
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
 @endsection
 
 @section('js_includes')

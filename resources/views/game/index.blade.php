@@ -1,22 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
           <div class="row">
             <div class="col mt-2">
-              <h3 class="lead-title">Games</h3>
+              <h3>Games</h3>
             </div>
             @if($user->rank_user==config('ranks.SITE_ADMIN'))
             <div class="col mt-1">
               <form method="GET" action="{{ route('game.create') }}">
               @csrf
               @method('GET')
-                <button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create a new game</button>
+                <button type="submit" class="btn  btn-outline-success shadow-sm float-right"><i class='fa fa-plus-square'></i> Create a new game</button>
               </form>
             </div>
             @endif
@@ -28,8 +25,8 @@
 
         <div class="card-body">
           {!! Form::open(['method' => 'post','onsubmit'=>'return searchGames(event)']) !!}
-            <div class="bg-light">
-              <h4 class='lead'>Game's name :</h4>
+            <div >
+              <h4 >What's gaming, doc ?</h4>
               <div class="form-group">
                 {!! Form::hidden('view_path', 'game.list') !!}
                 {!! Form::text('name_game', null, ['required'=>'', 'class' => 'form-control']) !!}
@@ -37,7 +34,7 @@
             </div>
             <div class="form-group row text-center">
               <div class="col">
-                <button type="submit" class="btn btn-primary"><i class='fa fa-search'></i> Search</button>
+                <button type="submit" class="btn  btn-outline-info shadow-sm"><i class='fa fa-search'></i> Search</button>
               </div>
             </div>
           {!! Form::close() !!}
@@ -53,9 +50,6 @@
           @include('game.list')
         </div>
       </div>
-    </div>
-  </div>
-</div>
 @endsection
 
 @section('js_includes')

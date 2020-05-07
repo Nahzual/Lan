@@ -36,7 +36,7 @@
           {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
             <div class="form-group row text-center">
               <div class="col">
-                <button type="submit" class="btn btn-warning"><i class='fa fa-times'></i> Remove</button>
+                <button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
               </div>
             </div>
           {!! Form::close() !!}

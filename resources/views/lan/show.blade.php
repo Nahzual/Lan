@@ -66,48 +66,15 @@
 				<div class="col-md-6">
 					<div id="response-success-material" class="container alert alert-success mt-2" style="display:none"></div>
 					<div id="response-error-material" class="container alert alert-danger mt-2" style="display:none"></div>
-					<div class="card">
-						<div class="card-header">
-							<div class="row">
-								<div class="col mt-2">
-									<h4>Materials</h4>
-								</div>
-								@if ($userIsLanAdmin)
-								<div class="col">
-									<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#lan_materials" aria-expanded="false" aria-controls="lan_materials">Show/hide</button>
-									<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i></a>
-									<a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> All</a>
-								</div>
-								@endif
-							</div>
-						</div>
-						<div class="card-body collapse" id="lan_materials">
-							@include('material.list_lan')
-						</div>
-					</div>
+
+					@include('lan.show_parts.materials_card')	
 					
 				</div>
 			
 				<div class="col-md-6">
 					<div id="response-success-shopping" class="container alert alert-success mt-2" style="display:none"></div>
 					<div id="response-error-shopping" class="container alert alert-danger mt-2" style="display:none"></div>
-					<div class="card">
-						<div class="card-header">
-							<div class="row">
-								<div class="col mt-2">
-									<h4>Shopping</h4>
-								</div>
-								@if ($userIsLanAdmin)
-								<div class="col">
-									<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#lan_shopping" aria-expanded="false" aria-controls="lan_shopping">Show/hide</button>
-									<a class="btn btn-primary float-right" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i></a>
-									<a class="btn btn-primary float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i> All</a>
-								</div>
-								@endif
-							</div>
-						</div>
-						<!--@include('game.list_lan')-->
-					</div>
+					@include('lan.show_parts.shopping_card')	
 
 				</div>
 		</div>
@@ -139,9 +106,9 @@
 				  </div>
 			</div>
 	@endif
-	<div class="row">
+	<div class="row esp">
 		<div class="col-md-12">
-			<a class="btn btn-outline-info shadow-sm float-right" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go back to Lan</a>
+			<a class="btn btn-outline-info shadow-sm float-right" href="{{ route('my_lans') }}"><i class='fa fa-arrow-left'></i> Go back to my LANs</a>
 		</div>
 	</div>
 	</div><!-- card body -->

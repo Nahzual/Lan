@@ -11,24 +11,23 @@ class CreateLansTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('lans', function (Blueprint $table) {
-            $table->id();
-			      $table->string('name');
-			      $table->integer('max_num_registrants');
-			      $table->date('opening_date');
-            $table->integer('duration');
-            $table->integer('budget');
-            $table->unsignedInteger('room_width');
-            $table->unsignedInteger('room_length');
-            $table->tinyInteger('waiting_lan')->default(1);
-            $table->unsignedBigInteger('location_id');
-            $table->timestamps();
-
-            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
-        });
-    }
+	public function up()
+	{
+		Schema::create('lans', function (Blueprint $table) {
+			$table->id();
+			$table->string('name');
+			$table->integer('max_num_registrants');
+			$table->date('opening_date');
+			$table->integer('duration');
+			$table->integer('budget');
+			$table->unsignedInteger('room_width');
+			$table->unsignedInteger('room_length');
+			$table->tinyInteger('waiting_lan')->default(1);
+			$table->unsignedBigInteger('location_id');
+			$table->timestamps();
+			$table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
+		});
+	}
 
     /**
      * Reverse the migrations.

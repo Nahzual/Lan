@@ -226,7 +226,8 @@ class LansController extends Controller
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 						if($userIsLanHelper){
 							$materials=$lan->materials()->select('materials.*','quantity')->get();
-							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+							$shoppings=$lan->shoppings()->materials()->select('materials.*','quantity', 'shopping.*')->get();
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 						}

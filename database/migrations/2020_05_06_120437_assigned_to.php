@@ -29,6 +29,6 @@ class AssignedTo extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('assigned_to');
     }
 }

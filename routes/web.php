@@ -34,10 +34,14 @@ Route::get('lan/{lan}/task/create', 'TasksController@create')->name('task.create
 Route::post('lan/{lan}/task/store', 'TasksController@store')->name('task.store');
 Route::get('lan/{lan}/task/{task}/show', 'TasksController@show')->name('task.show');
 Route::get('lan/{lan}/task/{task}/edit', 'TasksController@edit')->name('task.edit');
-Route::get('lan/{lan}/task/{task}/assign', 'TasksController@assign')->name('task.assign');
-Route::get('lan/{lan}/task/{task}/unassign', 'TasksController@unassign')->name('task.unassign');
+
+Route::get('lan/{lan}/task/{task}/assign', 'TasksController@addHelper')->name('task.add_helper');
+Route::post('lan/{lan}/task/{task}/assign', 'TasksController@assign')->name('task.assign');
+Route::delete('lan/{lan}/task/{task}/unassign', 'TasksController@unassign')->name('task.unassign');
+
 Route::delete('lan/{lan}/task/{task}/destroy', 'TasksController@destroy')->name('task.destroy');
 Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.update');
+
 
 // lan
 Route::resource('lan', 'LansController');
@@ -125,6 +129,7 @@ Route::put('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')-
 
 Route::resource('user', 'UsersController');
 Route::get('search/user/', 'UsersController@search');
+Route::get('search/helper/{task}', 'UsersController@searchHelper');
 
 Route::get('/az', function(){
 	$t = App\Lan::all()->first();

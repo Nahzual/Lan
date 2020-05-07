@@ -25,12 +25,23 @@
 						<div class="col">
 							<a class="btn btn-primary" href="{{ route('task.edit',[$lan->id,$task->id]) }}"><i class='fa fa-edit'></i> Edit</a>
 						</div>
+						@if($userIsLanAdmin)
+						<div class="col">
+							<form method="GET" action="{{ route('task.add_helper',[$lan->id,$task->id]) }}">
+								@csrf
+								<button type="submit" class="btn btn-primary"><i class='fa fa-plus-square'></i> Assign to an helper</button>
+							</form>
+						</div>
+						@endif
 						<div class="col">
 								<a class="btn btn-primary" href="{{ route('task.all') }}"><i class='fa fa-arrow-left'></i> Go to your tasklist</a>
 						</div>
 					</div>
         </div>
 			</div>
+
+			<div id="response-success" class="container alert alert-success mt-2" style="display:none"></div>
+			<div id="response-error" class="container alert alert-danger mt-2" style="display:none"></div>
 
       <div class="card mt-5">
         <div class="card-header">
@@ -51,17 +62,22 @@
 									<th scope="col">#</th>
 									<th scope="col">Name</th>
 									<th scope="col">Username</th>
-									<th scope="col">Actions</th>
+									@if($userIsLanAdmin) <th scope="col">Actions</th> @endif
 								</thead>
 
 								<tbody>
 									@foreach($users as $user)
-									<tr>
+									<tr id="task-helper-{{$user->id}}">
 										<th class="text-center">{{$user->id}}</th>
 										<td class="text-center">{{$user->name.' '.$user->lastname}}</td>
 										<td class="text-center">{{$user->pseudo}}</td>
+										@if($userIsLanAdmin)
 										<td class="text-center">
+											{!! Form::open(['method' => 'delete', 'onsubmit' => 'return unassign(event,'.$lan->id.','.$task->id.','.$user->id.')']) !!}
+												{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> Unassign', ['class' => 'btn btn-warning', 'type' => 'submit']) }}
+											{{ Form::close() }}
 										</td>
+										@endif
 									</tr>
 									@endforeach
 								</tbody>
@@ -70,6 +86,10 @@
 					</div>
 				</div>
 			</div>
+@endsection
+
+@section('js_includes')
+<script src="/js/ajax/task/ajax_add_helper.js"></script>
 @endsection
 
 @section('css_includes')

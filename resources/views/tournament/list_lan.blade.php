@@ -2,46 +2,39 @@
 <div class="table-responsive">
   <table class="table card-table">
     <thead class="card-table text-center">
-      <th scope="col" class="lead">#</th>
-      <th scope="col" class="lead ">Name</th>
-      <th scope="col" class="lead">Game</th>
-      <th scope="col" class="lead ">Hour</th>
-      <th scope="col" class="lead ">View</th>
-      <th scope="col" class="lead ">Edit</th>
-      <th scope="col" class="lead ">Delete</th>
-      @if($userIsLanAdmin) <th scope="col" class="lead "></th> @endif
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col" >Game</th>
+      <th scope="col">Hour</th>
+      <th scope="col" >Actions</th>
     </thead>
 
     <tbody>
       @if(count($tournaments)==0)
       <tr>
-        <td colspan="5"><h3 class="text-center">No tournaments for the moment</h3></td>
+        <td colspan="5"><h3 class="text-center">No tournaments to show</h3></td>
       </tr>
       @endif
 
       @foreach($tournaments as $tournament)
 
       <tr id="row-tournament-lan-{{$tournament->id}}">
-        <th scope="row" class="text-center lead-text">{{$tournament->id}}</th>
-        <td scope="col" class="text-center lead-text">{{$tournament->name_tournament}}</a></td>
-        <td scope="col" class="text-center lead-text">{{ substr(($tournament->desc_tournament), 0, 50) }}</td>
-        <td scope="col" class="text-center lead-text">{{ $tournament->opening_date_tournament }}</td>
+        <th scope="row" class="text-center">{{$tournament->id}}</th>
+        <td scope="col" class="text-center ">{{$tournament->name_tournament}}</a></td>
+        <td scope="col" class="text-center ">{{ substr(($tournament->desc_tournament), 0, 50) }}</td>
+        <td scope="col" class="text-center">{{ $tournament->opening_date_tournament }}</td>
 
-     
-        <td scope="col" >
-              <a class="btn btn-success" href="{{ route('tournament.show_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-eye'></i> View</a>
-        </td>
+ 
+        <td scope="col" class=" text-center">
+            <div class="btn-group">
+              <a class="btn btn-success" href="{{ route('tournament.show_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-eye'></i></a>
 
         @if($userIsLanAdmin)
-        <td scope="col" class="">
-            <a class="btn btn-warning" href="{{ route('tournament.edit_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-edit'></i> Edit</a>
-         </td>
-        <td scope="col" class="lead-text">
+            <a class="btn btn-warning" href="{{ route('tournament.edit_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-edit'></i></a>
+
           {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTournament(event,'.$lan->id.','.$tournament->id.')']) !!}
-            <div class="form-group row text-center">
-              <div class="col">
-                <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
-              </div>
+
+                <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
             </div>
           {!! Form::close() !!}
         </td>

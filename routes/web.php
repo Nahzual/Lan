@@ -29,7 +29,6 @@ Route::resource('contact', 'ContactsController');
 
 // Task routes
 Route::get('lan/tasks', 'TasksController@all')->name('task.all');
-Route::get('lan/{lan}/tasks', 'TasksController@perLan')->name('task.perLan');
 Route::get('lan/{lan}/task/create', 'TasksController@create')->name('task.create');
 Route::post('lan/{lan}/task/store', 'TasksController@store')->name('task.store');
 Route::get('lan/{lan}/task/{task}/show', 'TasksController@show')->name('task.show');
@@ -49,6 +48,16 @@ Route::get('/lans','LansController@index')->name('my_lans');
 Route::get('/all_lans','LansController@list_all')->name('all_lans');
 Route::post('/all_lans', 'PageController@allLansList');
 Route::put('/lan/submit/{id}', 'LansController@submit');
+
+Route::get('/lan/{lan}/games/','LansController@list_games')->name('lan.game_list');
+Route::get('/lan/{lan}/tasks/','LansController@list_tasks')->name('lan.task_list');
+Route::get('/lan/{lan}/materials/','LansController@list_materials')->name('lan.material_list');
+Route::get('/lan/{lan}/shoppings/','LansController@list_shoppings')->name('lan.shopping_list');
+Route::get('/lan/{lan}/users/','LansController@list_users')->name('lan.user_list');
+Route::get('/lan/{lan}/admins/','LansController@list_admins')->name('lan.admin_list');
+Route::get('/lan/{lan}/helpers/','LansController@list_helpers')->name('lan.helper_list');
+Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
+Route::get('/lan/{lan}/activities/','LansController@list_activities')->name('lan.act_list');
 
 // game-lan
 Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');
@@ -116,6 +125,7 @@ Route::resource('material', 'MaterialsController');
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');
+Route::get('lan/{lan}/activities', 'ActivitiesController@perLan')->name('activity.perLan');
 Route::post('lan/{lan}/activity/store', 'ActivitiesController@store')->name('activity.store');
 Route::get('lan/{lan}/activity/{activity}/show', 'ActivitiesController@show')->name('activity.show');
 Route::get('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@edit')->name('activity.edit');

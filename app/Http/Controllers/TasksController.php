@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lan;
 use App\Task;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -92,11 +93,11 @@ class TasksController extends Controller
 					$lan=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where(function($query){
 						$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
 									->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-					})->first();
+					})->select('lans.*','lan_user.rank_lan')->first();
 					if($lan!=null){
 						$task=$lan->tasks()->find($taskId);
 						if($task!=null){
-							$userIsLanAdmin=$lan->lan_user==config('ranks.ADMIN');
+							$userIsLanAdmin=$lan->rank_lan==config('ranks.ADMIN');
 							$users=$task->users;
 							return view('task.show', compact('lan', 'task','users','userIsLanAdmin'));
 						}else{
@@ -177,6 +178,24 @@ class TasksController extends Controller
 	  		return redirect('/login')->with('error','You must be logged in to edit a LAN\'s task.');
 	  	}
     }
+
+		public function addHelper($lanID,$taskID){
+			if(Auth::check()){
+				$lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanID);
+				if($lan==null){
+					return back()->with('error','You have to be an admin of this LAN to add helpers to it.');
+				}else{
+					$task=$lan->tasks()->find($taskID);
+					if($task!=null){
+						return view('task.add_helper',compact('lan','task'));
+					}else{
+						return back()->with('error','This task does not exist.');
+					}
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
+			}
+		}
 
 		/**
 		 * Assigns the specified task to the specified user
@@ -259,7 +278,7 @@ class TasksController extends Controller
 									return response()->json(['error'=>'This user doesn\'t exist.']);
 								}
 							}else{
-								return response()->json(['error'=>'Please provide the user to which you want to assign this task.']);
+								return response()->json(['error'=>'Please provide the user you want to remove from this tasks\' helper list.']);
 							}
 						}else{
 							return response()->json(['error'=>'This task doesn\'t exist.']);

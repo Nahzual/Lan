@@ -114,7 +114,7 @@
   </div>
 
 	@yield('js_includes')
-	<script src="js/dashboard-scripts.js"></script>
+	<script src="{{ asset('js/dashboard-scripts.js') }}" defer></script>
 
 </body>
 </html>

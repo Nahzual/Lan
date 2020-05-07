@@ -9,6 +9,7 @@ use App\Street;
 use App\Department;
 use App\Country;
 use App\User;
+use App\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -251,6 +252,18 @@ class UsersController extends Controller
       $lan=Lan::where('id','=',$request->lan_id)->first();
       return view($request->view_path,compact('users','lan'));
     }
+
+		public function searchHelper($taskID,Request $request)
+		{
+			$task=Task::find($taskID);
+			if($task!=null){
+				$lan=$task->lan;
+				$users=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->where('pseudo','LIKE','%'.$request->pseudo.'%')->get();
+				return view('user.helper.show_add_task',compact('users','lan','task'));
+			}else{
+				return view('errors.404_include');
+			}
+		}
 
     /**
      * Remove the specified resource from storage.

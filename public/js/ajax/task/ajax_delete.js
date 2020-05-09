@@ -9,21 +9,25 @@ function deleteTask(e,idLan,idTask){
 	    data: "_token="+$("[name='_token']").val()
 	          +'&_method='+'DELETE',
 	    success: function(data){
+				var success=$('#response-success-delete-task');
+				var error=$('#response-error-delete-task');
 	      if(data.success != undefined){
 					$('#row-task-'+id).html('');
-	        $('#response-success-delete-task').show();
-	        $('#response-error-delete-task').hide();
-	        $('#response-success-delete-task').html(data.success);
+	        success.show();
+	        error.hide();
+	        success.html(data.success);
 	      }else{
-	        $('#response-error-delete-task').show();
-	        $('#response-success-delete-task').hide();
-	        $('#response-error-delete-task').html(data.error);
+	        error.show();
+	        success.hide();
+	        error.html(data.error);
 	      }
 	    },
 	    error: function(data){
-	      $('#response-error-delete-task').show();
-	      $('#response-success-delete-task').hide();
-	      $('#response-error-delete-task').html("An error occured on the server, please try again later.");
+				var success=$('#response-success-delete-task');
+				var error=$('#response-error-delete-task');
+	      error.show();
+	      success.hide();
+	      error.html("An error occured on the server, please try again later.");
 	    }
 	  });
 	}

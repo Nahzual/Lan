@@ -7,20 +7,24 @@ function submit(e,id){
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()+'&_method=PUT',
     success: function(data){
+			var success=$('#response-success-delete');
+			var error=$('#response-error-delete');
       if(data.success != undefined){
-        $('#response-success-delete').show();
-        $('#response-error-delete').hide();
-        $('#response-success-delete').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error-delete').show();
-        $('#response-success-delete').hide();
-        $('#response-error-delete').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(data){
-      $('#response-error-delete').show();
-      $('#response-success-delete').hide();
-      $('#response-error-delete').html("An error occured on the server, please try again later.");
+			var success=$('#response-success-delete');
+			var error=$('#response-error-delete');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

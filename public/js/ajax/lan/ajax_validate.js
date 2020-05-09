@@ -7,21 +7,25 @@ function sendRequestAccept(e,id){
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_accept").val(),
     success: function(data){
+			var success=$('#response-success');
+			var error=$('#response-error');
       if(data.success != undefined){
 				$('#row-waiting-lan-'+id).html('');
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html("This LAN has been successfully accepted.");
+        success.show();
+        error.hide();
+        success.html("This LAN has been successfully accepted.");
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(data){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 
@@ -37,20 +41,24 @@ function sendRequestReject(e,id){
     dataType: 'json',
     data: "_token="+$("[name='_token']").val()+'&_method='+$("[name='_method']").val()+'&waiting_lan='+$("#waiting_lan_reject").val(),
     success: function(data){
+			var success=$('#response-success');
+			var error=$('#response-error');
       if(data.success != undefined){
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html("This LAN has been successfully rejected.");
+        success.show();
+        error.hide();
+        success.html("This LAN has been successfully rejected.");
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(data){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

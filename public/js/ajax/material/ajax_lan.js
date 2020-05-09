@@ -13,9 +13,11 @@ function searchMaterials(e,lanID){
       $('#request-result').html(data);
     },
     error: function(xhr,status,error){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 
@@ -33,20 +35,24 @@ function addMaterial(e,lanID,materialID){
           +'&material_id='+materialID
 					+'&quantity='+$("[name='quantity-"+materialID+"']").val(),
     success: function(data){
+			var success=$('#response-success');
+			var error=$('#response-error');
       if(data.success != undefined){
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(data){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

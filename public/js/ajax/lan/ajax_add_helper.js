@@ -13,9 +13,11 @@ function searchHelper(e,lanID){
       $('#requestResult').html(data);
     },
     error: function(xhr,status,error){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 
@@ -32,20 +34,24 @@ function addHelper(e,lanID,helperID){
     data: "_token="+$("[name='_token']").val()
           +'&id_user='+helperID,
     success: function(data){
+			var success=$('#response-success');
+			var error=$('#response-error');
       if(data.success != undefined){
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(xhr,status,error){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 
@@ -62,21 +68,25 @@ function removeHelper(e,lanID,helperID){
     data: "_token="+$("[name='_token']").val()
           +'&id_user='+helperID,
     success: function(data){
+			var success=$('#response-success-helper');
+			var error=$('#response-error-helper');
       if(data.success != undefined){
 				$('#row-helper-lan-'+helperID).html('');
-        $('#response-success-helper').show();
-        $('#response-error-helper').hide();
-        $('#response-success-helper').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error-helper').show();
-        $('#response-success-helper').hide();
-        $('#response-error-helper').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(xhr,status,error){
-      $('#response-error-helper').show();
-      $('#response-success-helper').hide();
-      $('#response-error-helper').html("An error occured on the server, please try again later.");
+			var success=$('#response-success-helper');
+			var error=$('#response-error-helper');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

@@ -9,21 +9,25 @@ function removeMaterial(e,idLan,idMaterial){
           +'&_method='+'DELETE'
           +'&material_id='+idMaterial,
     success: function(data){
+			var success=$('#response-success-material');
+			var error=$('#response-error-material');
       if(data.success != undefined){
 				$('#row-material-lan-'+idMaterial).html('');
-        $('#response-success-material').show();
-        $('#response-error-material').hide();
-        $('#response-success-material').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error-material').show();
-        $('#response-success-material').hide();
-        $('#response-error-material').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(data){
-      $('#response-error-material').show();
-      $('#response-success-material').hide();
-      $('#response-error-material').html("An error occured on the server, please try again later.");
+			var success=$('#response-success-material');
+			var error=$('#response-error-material');
+			error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

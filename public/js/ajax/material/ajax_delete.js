@@ -9,20 +9,24 @@ function sendRequest(e,id){
 	    data: "_token="+$("[name='_token']").val()
 	          +'&_method='+$("[name='_method']").val(),
 	    success: function(data){
+				var success=$('#response-success');
+				var error=$('#response-error');
 	      if(data.success != undefined){
-	        $('#response-success').show();
-	        $('#response-error').hide();
-	        $('#response-success').html(data.success);
+	        success.show();
+	        error.hide();
+	        success.html(data.success);
 	      }else{
-	        $('#response-error').show();
-	        $('#response-success').hide();
-	        $('#response-error').html(data.error);
+	        error.show();
+	        success.hide();
+	        error.html(data.error);
 	      }
 	    },
 	    error: function(data){
-	      $('#response-error').show();
-	      $('#response-success').hide();
-	      $('#response-error').html("An error occured on the server, please try again later.");
+				var success=$('#response-success');
+				var error=$('#response-error');
+	      error.show();
+	      success.hide();
+	      error.html("An error occured on the server, please try again later.");
 	    }
 	  });
 

@@ -9,21 +9,25 @@ function removeGame(e,idLan,idGame){
           +'&_method='+'DELETE'
           +'&game_id='+idGame,
     success: function(data){
+			var success=$('#response-success-game');
+			var error=$('#response-error-game');
       if(data.success != undefined){
 				$('#row-game-lan-'+idGame).html('');
-        $('#response-success-game').show();
-        $('#response-error-game').hide();
-        $('#response-success-game').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error-game').show();
-        $('#response-success-game').hide();
-        $('#response-error-game').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(data){
-      $('#response-error-game').show();
-      $('#response-success-game').hide();
-      $('#response-error-game').html("An error occured on the server, please try again later.");
+			var success=$('#response-success-game');
+			var error=$('#response-error-game');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

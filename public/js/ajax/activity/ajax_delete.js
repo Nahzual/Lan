@@ -9,21 +9,25 @@ function removeActivity(e, lanId, activityId){
 	    data: "_token="+$("[name='_token']").val()
 	          +'&_method='+$("[name='_method']").val(),
 	    success: function(data){
+				var success=$('#response-success-activity');
+				var error=$('#response-error-activity');
 	      if(data.success != undefined){
 					$('#row-activity-lan-'+activityId).html('');
-	        $('#response-success-activity').show();
-	        $('#response-error-activity').hide();
-	        $('#response-success-activity').html(data.success);
+	        success.show();
+	        error.hide();
+	        success.html(data.success);
 	      }else{
-	        $('#response-error-activity').show();
-	        $('#response-success-activity').hide();
-	        $('#response-error-activity').html(data.error);
+	        error.show();
+	        success.hide();
+	        error.html(data.error);
 	      }
 	    },
 	    error: function(data){
-	      $('#response-error-activity').show();
-	      $('#response-success-activity').hide();
-	      $('#response-error-activity').html("An error occured on the server, please try again later.");
+				var success=$('#response-success-activity');
+				var error=$('#response-error-activity');
+	      error.show();
+	      success.hide();
+	      error.html("An error occured on the server, please try again later.");
 	    }
 	  });
 	}

@@ -28,20 +28,24 @@ function sendRequest(e){
 			room: JSON.stringify(room)
 		},
 		success: function(result){
+			var success=$('#response-success');
+			var error=$('#response-error');
 			if(result.success!=undefined){
-				$('#response-success').show();
-				$('#response-error').hide();
-				$('#response-success').html(result.success);
+				success.show();
+				error.hide();
+				success.html(result.success);
 			}else{
-				$('#response-error').show();
-				$('#response-success').hide();
-				$('#response-error').html(result.error);
+				error.show();
+				success.hide();
+				error.html(result.error);
 			}
 		},
 		error: function(xhr,error,status){
-			$('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+			error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
 		}
 	});
 }

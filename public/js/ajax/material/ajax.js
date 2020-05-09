@@ -8,21 +8,25 @@ function deleteMaterial(e,materialID){
 	    dataType: 'json',
 	    data: "_token="+$("[name='_token']").val(),
 	    success: function(data){
+				var success=$('#response-success');
+				var error=$('#response-error');
 	      if(data.success != undefined){
 					$('#row-material-'+materialID).html('');
-	        $('#response-success').show();
-	        $('#response-error').hide();
-	        $('#response-success').html(data.success);
+	        success.show();
+	        error.hide();
+	        success.html(data.success);
 	      }else{
-	        $('#response-error').show();
-	        $('#response-success').hide();
-	        $('#response-error').html(data.error);
+	        error.show();
+	        success.hide();
+	        error.html(data.error);
 	      }
 	    },
 	    error: function(xhr,status,error){
-	      $('#response-error').show();
-	      $('#response-success').hide();
-	      $('#response-error').html("An error occured on the server, please try again later.");
+				var success=$('#response-success');
+				var error=$('#response-error');
+	      error.show();
+	      success.hide();
+	      error.html("An error occured on the server, please try again later.");
 	    }
 	  });
 	}
@@ -44,9 +48,11 @@ function searchMaterials(e){
       $('#request-result').html(data);
     },
     error: function(xhr,status,error){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+			var success=$('#response-success');
+			var error=$('#response-error');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

@@ -18,20 +18,24 @@ function addPlayer(e,id){
 						+'&place_number='+place_number
 						+'&new_room='+JSON.stringify(room),
 			success: function(data){
+				var success=$('#response-success');
+				var error=$('#response-error');
 				if(data.success != undefined){
-					$('#response-success').show();
-					$('#response-error').hide();
-					$('#response-success').html(data.success);
+					success.show();
+					error.hide();
+					success.html(data.success);
 				}else{
-					$('#response-error').show();
-					$('#response-success').hide();
-					$('#response-error').html(data.error);
+					error.show();
+					success.hide();
+					error.html(data.error);
 				}
 			},
 			error: function(xhr,status,error){
-				$('#response-error').show();
-				$('#response-success').hide();
-				$('#response-error').html("An error occured on the server, please try again later.");
+				var success=$('#response-success');
+				var error=$('#response-error');
+				error.show();
+				success.hide();
+				error.html("An error occured on the server, please try again later.");
 			}
 		});
 	}
@@ -50,21 +54,25 @@ function removePlayer(e,id){
     dataType: 'json',
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
+			var success=$('#response-success-player');
+			var error=$('#response-error-player');
       if(data.success != undefined){
 				$('#row-player-lan-'+id).html('');
-        $('#response-success-player').show();
-        $('#response-error-player').hide();
-        $('#response-success-player').html(data.success);
+        success.show();
+        error.hide();
+        success.html(data.success);
       }else{
-        $('#response-error-player').show();
-        $('#response-success-player').hide();
-        $('#response-error-player').html(data.error);
+        error.show();
+        success.hide();
+        error.html(data.error);
       }
     },
     error: function(xhr,status,error){
-      $('#response-error-player').show();
-      $('#response-success-player').hide();
-      $('#response-error-player').html("An error occured on the server, please try again later.");
+			var success=$('#response-success-player');
+			var error=$('#response-error-player');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
     }
   });
 

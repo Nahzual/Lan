@@ -7,7 +7,7 @@
 				</div>
 				<div class="card-body">
 					<div id="response-success" class="alert alert-success" style="display:none"></div>
-					{!! Form::open(['method' => 'post', 'id' => 'CreateNewTaskForm']) !!}
+					{!! Form::open(['method' => 'post', 'onsubmit'=>'return sendRequest(event,'.$lan->id.')']) !!}
 						<div class="bg-light">
 							<div class="form-group">
 								{!! Form::label('name_task', 'Name', ['class' => '']) !!}
@@ -24,7 +24,7 @@
 						</div>
 						<div class="form-group row text-center">
 							<div class="col">
-								<button type="submit" class="btn btn-primary" id="AddNewTaskSubmit"><i class='fa fa-plus-square'></i>Add</button>
+								<button type="submit" class="btn btn-primary"><i class='fa fa-plus-square'></i>Add</button>
 							</div>
 
 							<div class="col">
@@ -34,34 +34,8 @@
 					{!! Form::close() !!}
         </div>
       </div>
+@endsection
 
-<script src=" http://code.jquery.com/jquery-3.3.1.min.js"
-					integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-					crossorigin="anonymous">
-</script>
-<script>
-	$(document).ready(function(){
-		$('#AddNewTaskSubmit').click(function(e){
-			e.preventDefault();
-			$.ajaxSetup({
-				headers:{
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-			$.ajax({
-				url: "{{ route('task.store',$lan->id)}}",
-				method: 'post',
-				data: {
-					name_task: $('#name_task').val(),
-					desc_task: $('#desc_task').val(),
-					deadline_task: $('#deadline_task').val(),
-				},
-				success: function(result){
-					$('#response-success').show();
-					$('#response-success').html(result.success);
-				}
-			});
-		});
-	});
-</script>
+@section('js_includes')
+<script src="/js/ajax/task/ajax_create.js" defer></script>
 @endsection

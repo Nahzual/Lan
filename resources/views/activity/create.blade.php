@@ -7,7 +7,7 @@
 				</div>
 				<div class="card-body">
 					<div id="response-success" class ="alert alert-success" style="display:none"></div>
-					{!! Form::open(['method' => 'put', 'id' => 'CreateNewActivityForm']) !!}
+					{!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event,'.$lan->id.')']) !!}
 						<div>
 							<div class="form-group">
 								{!! Form::label('name_activity', 'Name', ['class' => 'display-6']) !!}
@@ -20,7 +20,7 @@
 						</div>
 						<div class="form-group row text-center">
 							<div class="col">
-								<button type="submit" class="btn btn-outline-success shadow-sm" id="AddNewActivitySubmit"><i class='fa fa-plus-square'></i> Add</button>
+								<button type="submit" class="btn btn-outline-success shadow-sm"><i class='fa fa-plus-square'></i> Add</button>
 							</div>
 
 							<div class="col">
@@ -30,38 +30,8 @@
 					{!! Form::close() !!}
         </div>
       </div>
+@endsection
 
-<script src=" http://code.jquery.com/jquery-3.3.1.min.js"
-					integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-					crossorigin="anonymous">
-</script>
-<script>
-	$(document).ready(function(){
-		$('#AddNewActivitySubmit').click(function(e){
-			e.preventDefault();
-			$.ajaxSetup({
-				headers:{
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-			$.ajax({
-				url: "{{ route('activity.store', $lan) }}",
-				method: 'post',
-				data: {
-					name_activity: $('#name_activity').val(),
-					desc_activity: $('#desc_activity').val()
-				},
-				success: function(result){
-					if(result.success!=undefined){
-						$('#response-success').show();
-						$('#response-success').html(result.success);
-					}else{
-						$('#response-error').show();
-						$('#response-error').html(result.error);
-					}
-				}
-			});
-		});
-	});
-</script>
+@section('js_includes')
+<script type="text/javascript" src="/js/ajax/activity/ajax_create.js" defer></script>
 @endsection

@@ -1,6 +1,3 @@
-@extends('layouts.dashboard')
-
-@section('content')
       <div class="card">
         <div class="card-header">
 					<h3 >Viewing : {{$activity->name_activity}}</h3>
@@ -20,10 +17,6 @@
 							<a class="btn btn-outline-warning shadow-sm" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
 						</div>
 						@endif
-						<div class="col">
-							<a class="btn btn-outline-info shadow-sm" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go back to Lan</a>
-						</div>
 					</div>
         </div>
 			</div>
-@endsection

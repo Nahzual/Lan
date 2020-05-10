@@ -4,18 +4,13 @@ function addPlayer(e,id){
 	if(changeColor.is_player_placed==undefined || changeColor.is_player_placed==false){
 		alert('Please choose a place to participate to this LAN.');
 	}else{
-		var place_number=1;
-		while(room.places[place_number][0]!=changeColor.y || room.places[place_number][1]!=changeColor.x){
-			console.log('('+changeColor.y+','+changeColor.x+') != ('+room.places[place_number][0]+','+room.places[place_number][1]+')');
-			++place_number;
-		}
-
 		$.ajax({
 			type: "POST",
 			url: '/lan/participate/'+id,
 			dataType: 'json',
 			data: "_token="+$("[name='_token']").val()
-						+'&place_number='+place_number
+						+'&place_number_x='+changeColor.x
+						+'&place_number_y='+changeColor.y
 						+'&new_room='+JSON.stringify(room),
 			success: function(data){
 				var success=$('#response-success');

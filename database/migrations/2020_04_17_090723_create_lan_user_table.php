@@ -19,11 +19,12 @@ class CreateLanUserTable extends Migration
         $table->unsignedBigInteger('lan_id')->unsigned();
         $table->unsignedInteger('rank_lan')->unsigned();
         $table->unsignedInteger('score_lan')->unsigned();
-        $table->unsignedInteger('place_number')->unsigned();
+        $table->unsignedInteger('place_number_x')->unsigned()->default(0);
+				$table->unsignedInteger('place_number_y')->unsigned()->default(0);
 
         $table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+      });
     }
 
     /**

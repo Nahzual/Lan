@@ -173,7 +173,7 @@ class LansController extends Controller
 					if(isset($request->room)){
 						file_put_contents($file_name,$request->room);
 
-						$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0, 'place_number' => 0]);
+						$lan->users()->attach(Auth::user()->id, ['rank_lan' => config('ranks.ADMIN'), 'score_lan' => 0]);
 
 						return response()->json([
 								'success'=>'Your LAN has been saved successfully.'
@@ -287,23 +287,24 @@ class LansController extends Controller
 						return response()->json(['error','Your room width has to be positive.']);
 					}else if(isset($request->room_length) && $request->room_length<=0){
 						return response()->json(['error','Your room length has to be positive.']);
-					}else{
+					}else if(isset($request->room_width) && isset($request->room_length)){
 						// sets the room_length and room_width values
-						$prev_room_width=$lan->room_width;
-						$prev_room_length=$lan->room_length;
 						if(isset($request->room_length)) $lan->room_length=$request->room_length;
 						if(isset($request->room_width)) $lan->room_width=$request->room_width;
 
-						// if room_length or room_width is smaller than its previous values, then there are places that are unreachable (out of the plan)
-						// so let's delete all user participations that are bound to unreachable places
-						if($lan->room_length<$prev_room_length || $lan->room_width<$prev_room_width){
+
+						if(isset($request->room_with_places) && isset($request->room)){
 							$room_json=json_decode($request->room_with_places);
 							$main_room_json=json_decode($request->room);
 
 							for($i=1 ; $i<count($room_json->places) ; ++$i){
-								if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width){
-									$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number','=',$i)->join('users','users.id','=','lan_user.user_id')->select('email')->first();
-									DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number','=',$i)->delete();
+								//  if there are places where x > room_length or y > room_width, or if there are places that are now bound to something else than a taken chair, then there are places that are deleted
+								// so let's delete all user participations that are bound to deleted places
+								if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width || $room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]!=config('room.TAKEN_CHAIR')){
+
+									$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number_x','=',$room_json->places[$i][1])->where('lan_user.place_number_y','=',$room_json->places[$i][0])->join('users','users.id','=','lan_user.user_id')->select('email')->first();
+									DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number_x','=',$room_json->places[$i][1])->where('lan_user.place_number_y','=',$room_json->places[$i][0])->delete();
+
 									if($user_to_remove!=null){
 										Mail::send('mails.notification_player_removed', ['lan' => $lan], function ($message) use ($user_to_remove) {
 											$message->from('lancreator.noreply@gmail.com','LAN Creator')
@@ -312,8 +313,11 @@ class LansController extends Controller
 										});
 									}
 
-									// reset place to empty place
-									$main_room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]=3;
+									// reset place to empty place if out of bounds
+									if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width){
+										$main_room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]=config('room.EMPTY_CHAIR');
+									}
+
 								}
 							}
 
@@ -471,7 +475,7 @@ class LansController extends Controller
 						}
 					}
 
-  				return response()->json(['success'=>'Your LAN has been successfully edited.']);
+  				return response()->json(['success'=>'Your LAN has been successfully edited.('.$request->room_width.', '.$request->room_length.')']);
   			}
   		}else{
         return response()->json(['error'=>'Please login to perform this action.']);
@@ -529,9 +533,8 @@ class LansController extends Controller
             $user=Auth::user();
             $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
             if($lan_user_player==null){
-              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number','=',$request->place_number)->select('id')->get();
+              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number_x','=',$request->place_number_x)->where('place_number_y','=',$request->place_number_y)->select('id')->get();
               if(count($place_taken)==0){
-
 								// update json file
 								if(isset($request->new_room)){
 									$file_name="../storage/lans/room_plan_".$id.".json";
@@ -539,7 +542,7 @@ class LansController extends Controller
 								}
 
 
-                $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number'=>$request->place_number]);
+                $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number_x'=>$request->place_number_x,'place_number_y'=>$request->place_number_y]);
                 return response()->json(['success'=>'You have been successfully registered to this LAN.']);
               }else{
                 return response()->json(['error'=>'This place has already been taken, please choose another one.']);
@@ -599,7 +602,7 @@ class LansController extends Controller
 									->subject('You have been added as helper on a LAN');
 							});
 
-              $lan->users()->attach($user,['rank_lan'=>config('ranks.HELPER'),'score_lan'=>'0','place_number'=>'0']);
+              $lan->users()->attach($user,['rank_lan'=>config('ranks.HELPER'),'score_lan'=>'0']);
               return response()->json(['success'=>'The user "'.$user->pseudo.'" is now helper on this LAN.']);
             }else{
               return response()->json(['error'=>'The user "'.$user->pseudo.'" is already helper on this LAN.']);
@@ -672,7 +675,7 @@ class LansController extends Controller
 									->subject('You have been added as admin on a LAN');
 							});
 
-              $lan->users()->attach($user,['rank_lan'=>config('ranks.ADMIN'),'score_lan'=>'0','place_number'=>'0']);
+              $lan->users()->attach($user,['rank_lan'=>config('ranks.ADMIN'),'score_lan'=>'0']);
               return response()->json(['success'=>'The user "'.$user->pseudo.'" is now admin on this LAN.']);
             }else{
               return response()->json(['error'=>'The user "'.$user->pseudo.'" is already admin on this LAN.']);

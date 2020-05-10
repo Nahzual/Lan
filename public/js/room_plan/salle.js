@@ -85,7 +85,8 @@ function changeColor(room_plan,y,x){
 	3 (chair libre) => 5 (computer)
 	5 (computer) => 6 (console)
 	6 (console) => 7 (null)
-	7 (null) => 1 (wall) */
+	7 (null) => 1 (wall)
+	4 (taken chair) => 7 (null, with confirmation) */
 
 	if(room_plan.room.field[y][x]==1){
 		document.getElementById('cell-'+y+'-'+x).className = 'cell table';
@@ -106,6 +107,13 @@ function changeColor(room_plan,y,x){
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
 		room_plan.room.field[y][x] = 5;
 		return;
+	}
+
+	if(room_plan.room.field[y][x]==4 && confirm('If you do that, the user who chose this place will be removed from your LAN. Proceed ?')){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 7;
+			return;
 	}
 
 	if(room_plan.room.field[y][x]==5){
@@ -137,7 +145,9 @@ function changeAutherColor(room_plan,y,x){
 	3 (chaise libre) => 2 (table)
 	5 (computer) => 3 (chaise libre)
 	6 (console) => 5 (computer)
-	7 (null) => 6 (console) */
+	7 (null) => 6 (console)
+	4 (taken chair) => 7 (null, with confirmation) */
+
 
 
 	if(room_plan.room.field[y][x]==1){
@@ -159,6 +169,13 @@ function changeAutherColor(room_plan,y,x){
 		document.getElementById('cell-'+y+'-'+x).innerHTML = '';
 		room_plan.room.field[y][x] = 2;
 		return;
+	}
+
+	if(room_plan.room.field[y][x]==4 && confirm('If you do that, the user who chose this place will be removed from your LAN. Proceed ?')){
+			document.getElementById('cell-'+y+'-'+x).className = 'cell null';
+			document.getElementById('cell-'+y+'-'+x).innerHTML = '';
+			room_plan.room.field[y][x] = 7;
+			return;
 	}
 
 	if(room_plan.room.field[y][x]==5){

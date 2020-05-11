@@ -173,7 +173,7 @@ public function index()
      */
 	public function destroy($id){
 		if(Auth::check()){
-			if(Auth::user()->rank_user==config('ranks.SITE_ADMIN')){
+			if(Auth::user()->isSiteAdmin()){
 				$material=Material::find($id);
 				if($material!=null){
 					$material->delete();

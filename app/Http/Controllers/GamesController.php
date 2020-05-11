@@ -249,7 +249,7 @@ class GamesController extends Controller
      */
     public function destroy($id){
       if(Auth::check()){
-        if(Auth::user()->rank_user==config('ranks.SITE_ADMIN')){
+        if(Auth::user()->isSiteAdmin()){
           $game=Game::find($id);
           if($game!=null){
             $game->delete();

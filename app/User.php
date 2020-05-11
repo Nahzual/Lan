@@ -59,5 +59,9 @@ class User extends Authenticatable
     return $this->belongsTo('App\Location');
   }
 
+	public function isSiteAdmin(){
+		return $this->rank_user=config('ranks.SITE_ADMIN');
+	}
+
 
 }

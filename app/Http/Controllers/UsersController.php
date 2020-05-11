@@ -228,7 +228,7 @@ class UsersController extends Controller
             $user->password=Hash::make($request->password);
           $user->email=htmlentities($request->email);
           $user->tel_user=htmlentities($request->tel_user);
-            $user->theme=0;
+          $user->theme=0;
 
   				$user->save();
 
@@ -240,6 +240,29 @@ class UsersController extends Controller
         return redirect('/login')->with('error','Please log in to perform this action.');
       }
     }
+
+		/**
+		 * Displays the provided resource
+		 * @param  int  $id
+		 */
+		public function show($id){
+			if(Auth::check()){
+				$user=User::find($id);
+				if($user!=null){
+					$loggedUserIsAdmin=Auth::user()->isSiteAdmin();
+					$location = $user->location;
+    			$street = $location->street;
+    			$city = $street->city;
+    			$department = $city->department;
+    			$country = $department->country;
+					return view('user.show',compact('user','loggedUserIsAdmin','location','street','city','department','country'));
+				}else{
+					return back()->with('error','This user does not exist.');
+				}
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
+		}
 
     /**
      * Display a listing of the resource fitting the Request

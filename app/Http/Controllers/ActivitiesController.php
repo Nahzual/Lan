@@ -19,7 +19,7 @@ class ActivitiesController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
 					$lan = $user->lans()->find($lanId);
@@ -40,7 +40,7 @@ class ActivitiesController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
 					$lan = $user->lans()->find($lanId);
@@ -95,7 +95,7 @@ class ActivitiesController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t edit an activity if you are not an admin of its LAN.');
   			}else{
 					$lan = Lan::find($lanId);
@@ -126,7 +126,7 @@ class ActivitiesController extends Controller
     {
 			if(Auth::check()){
 	  		$user=Auth::user();
-	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
 	  			return response()->json(['error'=>'You can\'t edit an activity if you are not an admin of its LAN.']);
 	  		}else{
 					$lan = Lan::find($lanId);
@@ -158,7 +158,7 @@ class ActivitiesController extends Controller
     {
       if(Auth::check()){
   			$user=Auth::user();
-				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
 	  			return response()->json(['error'=>'You can\'t delete an activity if you are not an admin of its LAN.']);
   			}else{
 					$lan = Lan::find($lanId);

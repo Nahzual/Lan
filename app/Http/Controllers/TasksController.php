@@ -37,7 +37,7 @@ class TasksController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add a task to a LAN if you are not an admin of this LAN.');
   			}else{
 					$lan = $user->lans()->find($lanId);
@@ -59,7 +59,7 @@ class TasksController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add a task to a LAN if you are not an admin of this LAN.');
   			}else{
 					$lan = $user->lans()->find($lanId);
@@ -125,7 +125,7 @@ class TasksController extends Controller
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t edit a task if you are not an admin of its LAN.');
   			}else{
 					$lan = Lan::find($lanId);
@@ -157,7 +157,7 @@ class TasksController extends Controller
     {
 			if(Auth::check()){
 	  		$user=Auth::user();
-	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
 	  			return response()->json(['error'=>'You can\'t edit a task if you are not an admin of its LAN.']);
 	  		}else{
 					$lan = Lan::find($lanId);
@@ -207,7 +207,7 @@ class TasksController extends Controller
 		public function assign(Request $request, $lanId, $taskId)
 		{
 			if(Auth::check()){
-				if(Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+				if(Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
 					return response()->json(['error'=>'You can\'t assign a user to a task if you are not an admin of its LAN.']);
 				}else{
 					$lan = Lan::find($lanId);
@@ -261,7 +261,7 @@ class TasksController extends Controller
 		public function unassign(Request $request, $lanId, $taskId)
 		{
 			if(Auth::check()){
-				if(Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+				if(Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
 					return response()->json(['error'=>'You can\'t remove a user from a task if you are not an admin of its LAN.']);
 				}else{
 					$lan = Lan::find($lanId);
@@ -306,7 +306,7 @@ class TasksController extends Controller
     {
       if(Auth::check()){
   			$user=Auth::user();
-				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
 	  			return response()->json(['error'=>'You can\'t delete a task if you are not an admin of its LAN.']);
   			}else{
 					$lan = Lan::find($lanId);

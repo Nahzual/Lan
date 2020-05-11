@@ -95,7 +95,7 @@ class PageController extends Controller
 	public function adminDashboard(){
 		if(Auth::check()){
 			$user = Auth::user();
-			if($user->rank_user==config('ranks.SITE_ADMIN')){
+			if($user->isSiteAdmin()){
 				$waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
 				return view('dashboard.admin.index',compact('user','waiting_lans'));
 			}else{

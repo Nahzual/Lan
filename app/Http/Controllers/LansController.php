@@ -1021,18 +1021,299 @@ class LansController extends Controller
        
     }
 
-	/*list view todo			
+    /**
+     * List all the tasks
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_tasks($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$ttasks=$lan->tasks;
+	$nlan = $lan->name;
+	$tasks=$lan->tasks->forPage($page, 10);
+
+	$max = ceil(count($ttasks)/10);
 
 
-Route::get('/lan/{lan}/tasks/','LansController@list_tasks')->name('lan.task_list');
-Route::get('/lan/{lan}/materials/','LansController@list_materials')->name('lan.material_list');
-Route::get('/lan/{lan}/shoppings/','LansController@list_shoppings')->name('lan.shopping_list');
-Route::get('/lan/{lan}/users/','LansController@list_users')->name('lan.user_list');
-Route::get('/lan/{lan}/admins/','LansController@list_admins')->name('lan.admin_list');
-Route::get('/lan/{lan}/helpers/','LansController@list_helpers')->name('lan.helper_list');
-Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
-Route::get('/lan/{lan}/activities/','LansController@list_activities')->name('lan.act_list');
-*/
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+
+	return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
+
+    /**
+     * List all the materials
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_materials($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$tmat=$lan->materials;
+	$nlan = $lan->name;
+	$materials=$lan->materials->forPage($page, 10);
+
+	$max = ceil(count($tmat)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+
+	return view('lan.complete_lists.materials', compact('materials', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
+    /**
+     * Shopping List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_shoppings($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$tshop=$lan->shoppings;
+	$nlan = $lan->name;
+	$shoppings=$lan->shoppings->forPage($page, 10);
+
+	$max = ceil(count($tshop)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+
+	return view('lan.complete_lists.shoppings', compact('shoppings', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }				
+    /**
+     * Player List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_users($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$tu=$lan->real_users;
+	$nlan = $lan->name;
+	$users=$lan->real_users->forPage($page, 10);
+
+	$max = ceil(count($tu)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+	//reduce users before compacting (limit the amount of information like emails)
+
+	return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
+    /**
+     * Admin List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_admins($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	//todo
+	$nlan = $lan->name;
+	/*admins$admins=$lan->->forPage($page, 10);*/
+
+	$max = ceil(count($tu)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+	//reduce users before compacting (limit the amount of information like emails)
+
+	return view('lan.complete_lists.admins', compact('admins', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
+
+    /**
+     * Helper List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_helpers($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	//todo
+	$nlan = $lan->name;
+	/*helpers$helpers=$lan->->forPage($page, 10);*/
+
+	$max = ceil(count($tu)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+	//reduce users before compacting (limit the amount of information like emails)
+
+	return view('lan.complete_lists.helpers', compact('helpers', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
+    /**
+     * Tournament List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_tours($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$tt=$lan->tournaments;
+	$nlan = $lan->name;
+	$tournaments=$lan->tournaments->forPage($page, 10);
+
+	$max = ceil(count($tt)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+
+	return view('lan.complete_lists.tournaments', compact('tournaments', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }	
+    /**
+     * Activities List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_act($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$ta=$lan->activities;
+	$nlan = $lan->name;
+	$activities=$lan->activities->forPage($page, 10);
+
+	$max = ceil(count($ta)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+
+	return view('lan.complete_lists.activities', compact('activities', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
 
 
 }

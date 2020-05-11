@@ -16,8 +16,26 @@ class Game extends Model
   public $timestamps=false;
 
   public function ports(){
-    $this->belongsToMany('App\Connexionport','uses_port');
+    return $this->belongsToMany('App\Lan','uses_port','id_game','id_lan')->select('uses_port.port');
   }
+
+	public function ports_string($ports_collection=null){
+		if(!isset($ports_collection)) $ports_collection=$this->ports;
+		$list='';
+		$size=count($ports_collection);
+		$toEnd=$size;
+		foreach($ports_collection as $port){
+			--$toEnd;
+			if($toEnd==0){
+				$list.=$port->port;
+			}else if($toEnd==$size){
+				$list.=' '.$port->port.' , ';
+			}else{
+				$list.=$port->port.' , ';
+			}
+		}
+		return $list;
+	}
 
   public function lans()
   {

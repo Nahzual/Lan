@@ -127,16 +127,19 @@
 <script src="/js/ajax/lan/ajax_submit.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
 <script src="/js/ajax/lan/ajax_remove_material.js"></script>
+
 <script src="/js/ajax/material/ajax_edit.js"></script>
 
 <script src="/js/ajax/activity/ajax_delete.js"></script>
 <script src="/js/ajax/tournament/ajax_delete.js"></script>
 <script src="/js/ajax/task/ajax_delete.js"></script>
 
+<script src="/js/ajax/game/ajax_port.js"></script>
 
 <!-- pop-up windows scripts -->
 <script src="/js/windows/activity/display_window.js"></script>
 <script src="/js/windows/material/display_window.js"></script>
+<script src="/js/windows/game/add_port_window.js"></script>
 @endsection
 
 @section('css_includes')

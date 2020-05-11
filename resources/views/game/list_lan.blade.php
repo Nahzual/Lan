@@ -6,7 +6,10 @@
       <th scope="col">Name</th>
       <th scope="col">Release date</th>
       <th scope="col">Game type</th>
-      @if(isset($userIsLanAdmin) && $userIsLanAdmin) <th scope="col">Actions</th> @endif
+			@if(isset($userIsLanAdmin) && $userIsLanAdmin)
+			<th scope="col">Used ports</th>
+      <th scope="col">Actions</th>
+			@endif
     </thead>
 
     <tbody>
@@ -16,7 +19,7 @@
       </tr>
       @endif
 
-      @foreach($games as $game)
+      @foreach($games as $index=>$game)
       <?php $date=date_create($game->release_date_game); ?>
       <tr id="row-game-lan-{{$game->id}}">
         <th scope="row" class="text-center ">{{$game->id}}</th>
@@ -32,7 +35,15 @@
         </td>
 
         @if(isset($userIsLanAdmin) && $userIsLanAdmin)
+				<td scope="col" id="game-ports-{{$game->id}}">
+					{{$game->ports_string($ports[$index])}}
+				</td>
         <td scope="col">
+					<div class="form-group row text-center">
+						<div class="col">
+							<button class="btn btn-primary" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Add/remove ports</button>
+						</div>
+					</div>
           {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
             <div class="form-group row text-center">
               <div class="col">

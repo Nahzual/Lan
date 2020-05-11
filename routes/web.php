@@ -82,6 +82,10 @@ Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->nam
 Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');
 Route::get('/lan/game/{id}','LansController@addGame')->name('lan.add_game');
 Route::post('/lan/game/{id}','LansController@postAddGame');
+Route::get('/lan/{lan}/game/{game}/port','GamesController@addPort')->name('game.add_ports');
+Route::post('/lan/{lan}/game/{game}/port','GamesController@postAddPort');
+Route::delete('/lan/{lan}/game/{game}/port','GamesController@removePort');
+
 
 // material
 Route::delete('/lan/material/{id}','LansController@removeMaterial')->name('lan.remove_material');

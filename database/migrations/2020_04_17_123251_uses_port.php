@@ -15,10 +15,9 @@ class UsesPort extends Migration
     {
       Schema::create('uses_port', function (Blueprint $table) {
 		  $table->id();
-          $table->unsignedBigInteger('id_port');
+          $table->unsignedInteger('port');
           $table->unsignedBigInteger('id_game');
           $table->unsignedBigInteger('id_lan');
-          $table->foreign('id_port')->references('id')->on('connexionports')->onDelete('cascade');
           $table->foreign('id_game')->references('id')->on('games')->onDelete('cascade');
           $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
       });

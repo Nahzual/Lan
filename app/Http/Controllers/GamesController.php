@@ -9,6 +9,7 @@ use App\Street;
 use App\Department;
 use App\Country;
 use App\Game;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -209,11 +210,117 @@ class GamesController extends Controller
         }else{
           return response()->json(['error'=>'This game does not exist.']);
         }
-
       }else{
         return response()->json(['error'=>'Please log in to perform this action.']);
       }
     }
+
+		public function addPort($lanID,$gameID){
+			if(Auth::check()){
+				$user=Auth::user();
+				$lan=Lan::find($lanID);
+				if($lan!=null){
+					$lan_user=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lan_user.user_id','=',$user->id)->first();
+					if($lan_user!=null){
+						$game=Game::find($gameID);
+						if($game!=null){
+							$game_lan=$lan->games()->where('can_play.id_game','=',$game->id)->first();
+							if($game_lan!=null){
+								return view('game.add_port',compact('game'));
+							}else{
+								return back()->with('error','This game is not is this LAN\'s game list.');
+							}
+						}else{
+							return back()->with('error','This game does not exist.');
+						}
+					}else{
+						return back()->with('error','You must be admin of this LAN to change its port configuration.');
+					}
+				}else{
+					return back()->with('error','This LAN does not exist.');
+				}
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
+		}
+
+		public function postAddPort(Request $request,$lanID,$gameID){
+			if(Auth::check()){
+				$user=Auth::user();
+				$lan=Lan::find($lanID);
+				if($lan!=null){
+					$lan_user=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lan_user.user_id','=',$user->id)->first();
+					if($lan_user!=null){
+						$game=Game::find($gameID);
+						if($game!=null){
+							$game_lan=$lan->games()->where('can_play.id_game','=',$game->id)->first();
+							if($game_lan!=null){
+								if(is_numeric($request->port) && $request->port>0){
+									$port_game=DB::table('uses_port')->where('id_lan','=',$lan->id)->where('port','=',$request->port)->first();
+									if($port_game==null){
+										DB::table('uses_port')->insert(['id_game'=>$game->id,'id_lan'=>$lan->id,'port'=>htmlentities($request->port)]);
+										return response()->json(['success'=>'The port '.htmlentities($request->port).' is now used by the game '.$game->name_game.' for this LAN.']);
+									}else{
+										return response()->json(['error'=>'This port is already used by a game.']);
+									}
+								}else{
+									return response()->json(['error'=>'The port number must be a positive number.']);
+								}
+							}else{
+								return response()->json(['error'=>'This game is not is this LAN\'s game list.']);
+							}
+						}else{
+							return response()->json(['error'=>'This game does not exist.']);
+						}
+					}else{
+						return response()->json(['error'=>'You must be admin of this LAN to change its port configuration.']);
+					}
+				}else{
+					return response()->json(['error'=>'This LAN does not exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'Please log in to perform this action.']);
+			}
+		}
+
+		public function removePort(Request $request,$lanID,$gameID){
+			if(Auth::check()){
+				$user=Auth::user();
+				$lan=Lan::find($lanID);
+				if($lan!=null){
+					$lan_user=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lan_user.user_id','=',$user->id)->first();
+					if($lan_user!=null){
+						$game=Game::find($gameID);
+						if($game!=null){
+							$game_lan=$lan->games()->where('can_play.id_game','=',$game->id)->first();
+							if($game_lan!=null){
+								if(is_numeric($request->port) && $request->port>0){
+									$port_game=$game->ports()->where('id_lan','=',$lan->id)->where('port','=',$request->port)->first();
+									if($port_game!=null){
+										DB::table('uses_port')->where('id_game','=',$game->id)->where('id_lan','=',$lan->id)->where('port','=',$request->port)->delete();;
+										return response()->json(['new_port_list'=>$game->ports_string(),'success'=>'The port '.htmlentities($request->port).' is no longer used by the game '.$game->name_game.' for this LAN.']);
+									}else{
+										return response()->json(['error'=>'This port is not used by this game.']);
+									}
+								}else{
+									return response()->json(['error'=>'The port number must be a positive number.']);
+								}
+							}else{
+								return response()->json(['error'=>'This game is not is this LAN\'s game list.']);
+							}
+						}else{
+							return response()->json(['error'=>'This game does not exist.']);
+						}
+					}else{
+						return response()->json(['error'=>'You must be admin of this LAN to change its port configuration.']);
+					}
+				}else{
+					return response()->json(['error'=>'This LAN does not exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'Please log in to perform this action.']);
+			}
+		}
 
     public function search(Request $request){
       if(Auth::check()){

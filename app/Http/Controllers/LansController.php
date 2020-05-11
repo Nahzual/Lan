@@ -222,8 +222,11 @@ class LansController extends Controller
 						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
 						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 						$tasks = $lan->tasks->take(-5);
-
-						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities','tournaments','tasks','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+						$ports=$games->toBase();
+						foreach($ports as $index=>$game){
+							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
+						}
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 					}else{
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 						if($userIsLanHelper){
@@ -781,6 +784,7 @@ class LansController extends Controller
           $game=Game::where('games.id','=',$request->game_id)->join('can_play','can_play.id_game','=','games.id')->where('can_play.id_lan','=',$lan->id)->select('games.id','games.name_game')->first();
           if($game!=null){
             DB::table('can_play')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
+						DB::table('uses_port')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
             return response()->json(['success'=>'The game "'.$game->name_game.'" is no longer in this lan\'s game list.']);
           }else{
             return response()->json(['error'=>'This game doesn\'t exist or isn\'t in this lan\'s game list.']);

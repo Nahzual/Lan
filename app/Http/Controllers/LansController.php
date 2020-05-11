@@ -982,4 +982,56 @@ class LansController extends Controller
 
         return view('lan.list_all', compact('lans'));
     }
+
+    /**
+     * List all the Games
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_games($id, $page = 1){
+	$user=Auth::user();
+	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+        $lan = Lan::findOrFail($id);
+	$tgames=$lan->games;
+	$nlan = $lan->name;
+	$games=$lan->games->forPage($page, 10);
+
+	$max = ceil(count($tgames)/10);
+
+
+	if(($page+1)*10>($max*10)){
+		$next = 0;
+	}
+	else{
+		$next = $page + 1;
+	}
+
+	if($page == 1){
+
+		$previous = 0;
+	}
+	else{
+		$previous = $page-1;
+	}
+
+	return view('lan.complete_lists.games', compact('games', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+	
+       
+    }
+
+	/*list view todo			
+
+
+Route::get('/lan/{lan}/tasks/','LansController@list_tasks')->name('lan.task_list');
+Route::get('/lan/{lan}/materials/','LansController@list_materials')->name('lan.material_list');
+Route::get('/lan/{lan}/shoppings/','LansController@list_shoppings')->name('lan.shopping_list');
+Route::get('/lan/{lan}/users/','LansController@list_users')->name('lan.user_list');
+Route::get('/lan/{lan}/admins/','LansController@list_admins')->name('lan.admin_list');
+Route::get('/lan/{lan}/helpers/','LansController@list_helpers')->name('lan.helper_list');
+Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
+Route::get('/lan/{lan}/activities/','LansController@list_activities')->name('lan.act_list');
+*/
+
+
 }

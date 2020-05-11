@@ -591,6 +591,15 @@ class LansController extends Controller
       if(Auth::check()){
         $lan=Lan::findOrFail($id);
         $user=Auth::user();
+				$lan_user=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->select('place_number_x','place_number_y')->first();
+
+				$file_name="../storage/lans/room_plan_".$lan->id.".json";
+				if(file_exists($file_name)){
+					$room=json_decode(file_get_contents($file_name));
+					$room->room->field[$lan_user->place_number_x][$lan_user->place_number_y]=config('room.EMPTY_CHAIR');
+					file_put_contents($file_name, json_encode($room));
+				}
+
         DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
         return response()->json(['success'=>'You are no longer registered to this LAN.']);
       }else{

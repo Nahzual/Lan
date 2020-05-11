@@ -1,17 +1,44 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<?php $date = date_create($lan->opening_date); ?>
+<?php
+$date = date_create($lan->opening_date);
+$today = date_create(date('Y-m-d'));
+$time_left = $today->diff($date);
+$places_left=count($lan->real_users); ?>
+
 <div class="card">
 	<div class="card-header">
 		<div class="row">
-			<h3>Viewing : {{$lan->name}}</h3>
-			<div class="col">
-				<a class="btn btn-success float-right" href="{{ route('lan.participate', $lan->id) }}"><i class="fa fa-sign-in"></i> Participate</a>
+			<div class="col float-left">
+				<h3>Viewing : {{$lan->name}}</h3>
 			</div>
+			@if($time_left->invert || $time_left->days==0)
+			<div class="col text-center">
+				<h2><i class="text-danger fa fa-times"></i> Lan closed</h2>
+			</div>
+			<div class="col"></div>
+			@else
+			<div class="col">
+				<a class="btn btn-success float-right" href="{{ route('lan.participate', $lan->id) }}"><i class="fa fa-sign-in"></i> Join</a>
+			</div>
+			@endif
 		</div>
 	</div>
 	<div class="card-body">
+		<div class="row text-center">
+			@if(!$time_left->invert)
+			<div class="col">
+				<h2><i class="text-warning fa fa-clock-o"></i> {{$time_left->days}} days left to join !</h2>
+				@if($places_left<$lan->max_num_registrants)
+				<h2><i class="text-warning fa fa-warning"></i> {{$lan->max_num_registrants-count($lan->real_users)}}/{{$lan->max_num_registrants}} places left !</h2>
+				@else
+				<h2><i class="text-danger fa fa-warning"></i> No places left !</h2>
+				@endif
+			</div>
+			@endif
+
+		</div>
 		<div class="row">
 			<div class="col-md-8">
 

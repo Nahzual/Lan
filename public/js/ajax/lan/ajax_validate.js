@@ -44,6 +44,7 @@ function sendRequestReject(e,id){
 			var success=$('#response-success');
 			var error=$('#response-error');
       if(data.success != undefined){
+				$('#row-waiting-lan-'+id).html('');
         success.show();
         error.hide();
         success.html("This LAN has been successfully rejected.");

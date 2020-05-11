@@ -8,6 +8,8 @@ function addGameToFavourite(e,gameID){
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
+				$('#game-mark-'+gameID).hide();
+				$('#game-unmark-'+gameID).show();
         $('#response-success').show();
         $('#response-error').hide();
         $('#response-success').html(data.success);
@@ -37,6 +39,8 @@ function removeGameFromFavourite(e,gameID){
     data: "_token="+$("[name='_token']").val(),
     success: function(data){
       if(data.success != undefined){
+				$('#game-mark-'+gameID).show();
+				$('#game-unmark-'+gameID).hide();
         $('#response-success').show();
         $('#response-error').hide();
         $('#response-success').html(data.success);

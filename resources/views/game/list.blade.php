@@ -34,35 +34,21 @@
         </td>
 
         <td scope="col" class="text-center">
+          <a class="mb-2 btn btn-success" href="{{ route('game.show', $game->id) }}"><i class='fa fa-eye'></i> View</a>
 
-
-          <a class="btn btn-success" href="{{ route('game.show', $game->id) }}"><i class='fa fa-eye'></i> View</a>
-
-        <?php if(isset($favourite_games) && !$favourite_games->contains($game)){ ?>
-
-          {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addGameToFavourite(event,'.$game->id.')']) !!}
-                <button type="submit" class="btn btn-primary"><i class='fa fa-star'></i> Mark</button>
-
+        <?php $game_isnt_favourite=isset($favourite_games) && !$favourite_games->contains($game); ?>
+          {!! Form::open(['method' => 'post','url'=>'', 'id'=>'game-mark-'.$game->id, 'style'=>(!$game_isnt_favourite) ? 'display: none;' : 'display: block;','onsubmit'=>'return addGameToFavourite(event,'.$game->id.')']) !!}
+          	<button type="submit" class="btn btn-primary mb-2"><i class='fa fa-star'></i> Mark</button>
           {!! Form::close() !!}
-        
-        <?php }else{ ?>
 
-
-          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGameFromFavourite(event,'.$game->id.')']) !!}
-
-                <button type="submit" class="btn btn-warning"><i class='fa fa-star-o'></i> Unmark</button>
-
-
+          {!! Form::open(['method' => 'delete','url'=>'', 'id'=>'game-unmark-'.$game->id,'style'=>($game_isnt_favourite) ? 'display: none;' : 'display: block;', 'onsubmit'=>'return removeGameFromFavourite(event,'.$game->id.')']) !!}
+            <button type="submit" class="btn btn-warning mb-2"><i class='fa fa-star-o'></i> Unmark</button>
           {!! Form::close() !!}
-      
-        <?php } ?>
 
         @if(isset($user) && $user->rank_user==config('ranks.SITE_ADMIN'))
-       
-          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteGame(event,'.$game->id.')']) !!}
-                <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
-          {!! Form::close() !!}
-        
+        {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteGame(event,'.$game->id.')']) !!}
+          <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+        {!! Form::close() !!}
         @endif
 	</td>
       </tr>

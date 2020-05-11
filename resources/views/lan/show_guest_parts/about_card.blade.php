@@ -22,10 +22,6 @@
 								<label class="form-control col-8 h-100">{{$lan->budget}} €</label>
 							</div>
 							<div class="row d-flex justify-content-center">
-								<label class="col-md-2 col-form-label text-md-right">Room dimensions</label>
-								<label class="form-control col-8 h-100">{{$lan->room_width}}*{{$lan->room_length}} m</label>
-							</div>
-							<div class="row d-flex justify-content-center">
 								<label class="col-md-2 col-form-label text-md-right">Location</label>
 								<label class="form-control col-8 h-100">{{$location->num_street.' '.$street->name_street.' '.$city->zip_city.' '.$city->name_city.', '.$department->name_department.', '.$country->name_country}}</label>
 							</div>

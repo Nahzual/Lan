@@ -29,7 +29,9 @@
 							<td>{{$admin->pseudo}}</td>
 							<td scope="col" class="text-center">
 								<div class="btn-group text-center">
-							  	<a class="btn btn-success mr-2" href="{{ route('user.show', $admin->id) }}"><i class='fa fa-eye'></i></a>
+									{!! Form::open(['method' => 'get','url'=>route('user.show', $admin->id)]) !!}
+										<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
+									{!! Form::close() !!}
 							  	{!! Form::open(['method' => 'delete','onsubmit'=>'return removeAdmin(event,'.$lan->id.','.$admin->id.')']) !!}
 										<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
 									{!! Form::close() !!}

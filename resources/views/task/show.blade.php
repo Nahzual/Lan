@@ -32,6 +32,12 @@
 								<button type="submit" class="btn btn-primary"><i class='fa fa-plus-square'></i> Assign to an helper</button>
 							</form>
 						</div>
+						<div class="col">
+							{!! Form::open(['method'=>'DELETE','onsubmit'=>'return deleteShow(event,'.$lan->id.','.$task->id.')']) !!}
+								@csrf
+								<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+							{{ Form::close() }}
+						</div>
 						@endif
 						<div class="col">
 								<a class="btn btn-primary" href="{{ route('task.all') }}"><i class='fa fa-arrow-left'></i> Go to your tasklist</a>
@@ -95,6 +101,7 @@
 
 @section('js_includes')
 <script src="/js/ajax/task/ajax_add_helper.js"></script>
+<script src="/js/ajax/task/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

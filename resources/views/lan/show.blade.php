@@ -75,6 +75,15 @@
 
 			</div>
 		</div>
+		<div class="row esp">
+			<div class="col-md-6">
+				<div id="response-success-task" class="container alert alert-success mt-2" style="display:none"></div>
+				<div id="response-error-task" class="container alert alert-danger mt-2" style="display:none"></div>
+
+				@include('lan.show_parts.tasks_card')
+			</div>
+
+		</div>
 		@endif
 		@if ($userIsLanAdmin)
 		<div class="row justify-content-center esp my-5">
@@ -120,12 +129,14 @@
 <script src="/js/ajax/lan/ajax_remove_material.js"></script>
 <script src="/js/ajax/material/ajax_edit.js"></script>
 
+<script src="/js/ajax/activity/ajax_delete.js"></script>
+<script src="/js/ajax/tournament/ajax_delete.js"></script>
+<script src="/js/ajax/task/ajax_delete.js"></script>
+
+
 <!-- pop-up windows scripts -->
 <script src="/js/windows/activity/display_window.js"></script>
 <script src="/js/windows/material/display_window.js"></script>
-
-<script src="/js/ajax/activity/ajax_delete.js"></script>
-<script src="/js/ajax/tournament/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

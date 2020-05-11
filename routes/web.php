@@ -50,14 +50,32 @@ Route::post('/all_lans', 'PageController@allLansList');
 Route::put('/lan/submit/{id}', 'LansController@submit');
 
 Route::get('/lan/{lan}/games/','LansController@list_games')->name('lan.game_list');
+Route::get('/lan/{lan}/games/{page}','LansController@list_games')->name('lan.game_list.page');
+
 Route::get('/lan/{lan}/tasks/','LansController@list_tasks')->name('lan.task_list');
+Route::get('/lan/{lan}/tasks/{page}','LansController@list_tasks')->name('lan.task_list.page');
+
 Route::get('/lan/{lan}/materials/','LansController@list_materials')->name('lan.material_list');
+Route::get('/lan/{lan}/materials/{page}','LansController@list_materials')->name('lan.material_list.page');
+
+
 Route::get('/lan/{lan}/shoppings/','LansController@list_shoppings')->name('lan.shopping_list');
+Route::get('/lan/{lan}/shoppings/{page}','LansController@list_shoppings')->name('lan.shopping_list.page');
+
 Route::get('/lan/{lan}/users/','LansController@list_users')->name('lan.user_list');
+Route::get('/lan/{lan}/users/{page}','LansController@list_users')->name('lan.user_list.page');
+
 Route::get('/lan/{lan}/admins/','LansController@list_admins')->name('lan.admin_list');
+Route::get('/lan/{lan}/admins/{page}','LansController@list_admins')->name('lan.admin_list.page');
+
 Route::get('/lan/{lan}/helpers/','LansController@list_helpers')->name('lan.helper_list');
+Route::get('/lan/{lan}/helpers/{page}','LansController@list_helpers')->name('lan.helper_list.page');
+
 Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
+Route::get('/lan/{lan}/tournaments/{page}','LansController@list_tournaments')->name('lan.tour_list.page');
+
 Route::get('/lan/{lan}/activities/','LansController@list_activities')->name('lan.act_list');
+Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->name('lan.act_list.page');
 
 // game-lan
 Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');
@@ -144,4 +162,7 @@ Route::get('search/helper/{task}', 'UsersController@searchHelper');
 Route::get('/az', function(){
 	$t = App\Lan::all()->first();
 	dd($t->location());
+});
+Route::get('/m', function(){
+	return(view('errors.m'));
 });

@@ -6,7 +6,7 @@
       <th scope="col">Name</th>
       <th scope="col">Release date</th>
       <th scope="col">Game type</th>
-      @if($userIsLanAdmin) <th scope="col">Actions</th> @endif
+      @if(isset($userIsLanAdmin) && $userIsLanAdmin) <th scope="col">Actions</th> @endif
     </thead>
 
     <tbody>
@@ -31,7 +31,7 @@
           } ?>
         </td>
 
-        @if($userIsLanAdmin)
+        @if(isset($userIsLanAdmin) && $userIsLanAdmin)
         <td scope="col">
           {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
             <div class="form-group row text-center">

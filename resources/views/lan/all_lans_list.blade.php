@@ -19,7 +19,7 @@
 				<td class="text-center">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
 
 				<td class="text-center">
-					<a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
+					<a class="btn btn-success" href="{{ route('lan.guest_show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
 				</td>
 				<td class="text-center">
 					<a class="btn btn-success" href="{{ route('lan.participate', $lan->id) }}"><i class="fa fa-sign-in"></i> Participate</a>

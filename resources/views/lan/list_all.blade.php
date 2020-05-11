@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="container esp ">
@@ -22,13 +22,13 @@
                 {!! Form::label('location', 'Everywhere', ['for'=>'everywhere']) !!}
                 {!! Form::radio('location', 'everywhere', (isset($location) && $location=='everywhere') ? true : false) !!}
 
-                {!! Form::label('location', 'Your country', ['for'=>'country']) !!}
+                {!! Form::label('location', 'My country', ['for'=>'country']) !!}
                 {!! Form::radio('location', 'country', (isset($location) && $location=='country') ? true : false) !!}
 
-                {!! Form::label('location', 'Your region', ['for'=>'department']) !!}
+                {!! Form::label('location', 'My region', ['for'=>'department']) !!}
                 {!! Form::radio('location', 'department', (isset($location) && $location=='department') ? true : false) !!}
 
-                {!! Form::label('location', 'Your city', ['for'=>'city']) !!}
+                {!! Form::label('location', 'My city', ['for'=>'city']) !!}
                 {!! Form::radio('location', 'city', (isset($location) && $location=='city') ? true : false) !!}
               </div>
             <?php } ?>

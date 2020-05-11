@@ -239,6 +239,27 @@ class LansController extends Controller
 				}
       }
 
+			/**
+			 * Display the specified resource.
+			 *
+			 * @param  int  $id
+			 * @return \Illuminate\Http\Response
+			 */
+			public function guestShow($id)
+			{
+				$lan = Lan::findOrFail($id);
+				$location = $lan->location;
+				$street = $location->street;
+				$city = $street->city;
+				$department = $city->department;
+				$country = $department->country;
+				$games=$lan->games->take(-5);
+				$activities = $lan->activities->take(-5);
+				$tournaments = $lan->tournaments->take(-5);
+
+				return view('lan.show_guest', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+			}
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -1017,11 +1038,11 @@ class LansController extends Controller
 	}
 
 	return view('lan.complete_lists.games', compact('games', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
 
-    /**
+		/**
      * List all the tasks
      *
      * @return \Illuminate\Contracts\Support\Renderable
@@ -1054,8 +1075,8 @@ class LansController extends Controller
 	}
 
 	return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
 
     /**
@@ -1091,8 +1112,8 @@ class LansController extends Controller
 	}
 
 	return view('lan.complete_lists.materials', compact('materials', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
     /**
      * Shopping List
@@ -1127,9 +1148,9 @@ class LansController extends Controller
 	}
 
 	return view('lan.complete_lists.shoppings', compact('shoppings', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
-    }				
+
+
+    }
     /**
      * Player List
      *
@@ -1164,8 +1185,8 @@ class LansController extends Controller
 	//reduce users before compacting (limit the amount of information like emails)
 
 	return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
     /**
      * Admin List
@@ -1201,8 +1222,8 @@ class LansController extends Controller
 	//reduce users before compacting (limit the amount of information like emails)
 
 	return view('lan.complete_lists.admins', compact('admins', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
 
     /**
@@ -1239,8 +1260,8 @@ class LansController extends Controller
 	//reduce users before compacting (limit the amount of information like emails)
 
 	return view('lan.complete_lists.helpers', compact('helpers', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
     /**
      * Tournament List
@@ -1275,9 +1296,9 @@ class LansController extends Controller
 	}
 
 	return view('lan.complete_lists.tournaments', compact('tournaments', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
-    }	
+
+
+    }
     /**
      * Activities List
      *
@@ -1311,8 +1332,8 @@ class LansController extends Controller
 	}
 
 	return view('lan.complete_lists.activities', compact('activities', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-	
-       
+
+
     }
 
 

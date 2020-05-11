@@ -44,6 +44,7 @@ Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.u
 
 // lan
 Route::resource('lan', 'LansController');
+Route::get('/lans/{id}/guest/show','LansController@guestShow')->name('lan.guest_show');
 Route::get('/lans','LansController@index')->name('my_lans');
 Route::get('/all_lans','LansController@list_all')->name('all_lans');
 Route::post('/all_lans', 'PageController@allLansList');

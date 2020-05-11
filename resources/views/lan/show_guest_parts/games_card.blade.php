@@ -7,9 +7,6 @@
 								<div class="col mt-2">
 									<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_games" aria-expanded="false" aria-controls="lan_games">Show/hide</button>
 									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.game_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
-									@if ($userIsLanAdmin)
-									<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-plus'></i></a>
-									@endif
 								</div>
 							</div>
 						</div>

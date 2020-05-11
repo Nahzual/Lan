@@ -7,9 +7,6 @@
 								<div class="col">
 									<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_activities" aria-expanded="false" aria-controls="lan_activities">Show/hide</button>
 									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-list'></i> All</a>
-									@if ($userIsLanAdmin)
-									<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('activity.create', $lan->id) }}"><i class='fa fa-plus'></i></a>
-									@endif
 								</div>
 							</div>
 						</div>
@@ -38,12 +35,6 @@
 													{!! Form::open(['onsubmit'=>'return false;']) !!}
 														<button class="btn btn-success mr-2" id="activity-view-{{$activity->id}}" onclick="openActivity({{$activity->id}})"><i class='fa fa-eye'></i> View</button>
 													{{ Form::close() }}
-													{!! Form::open(['method'=>'get','url'=>route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id))]) !!}
-														<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> Edit</button>
-													{{ Form::close() }}
-													{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeActivity(event, '.$lan->id.', '.$activity->id.')']) !!}
-														<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
-													{!! Form::close() !!}
 												</div>
 											</td>
 										</tr>

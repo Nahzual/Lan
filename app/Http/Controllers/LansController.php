@@ -218,15 +218,16 @@ class LansController extends Controller
 					$user=Auth::user();
 					$userIsLanAdmin=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 					if($userIsLanAdmin){
-						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->take(-5);
-						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->take(-5);
-						$materials=$lan->materials()->select('materials.*','quantity')->take(-5);
+						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get()->take(-5);
+						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
+						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
+			
 						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'materials', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 					}else{
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 						if($userIsLanHelper){
-							$materials=$lan->materials()->select('materials.*','quantity')->take(-5);
-							$shoppings=$lan->shoppings()->materials()->select('materials.*','quantity', 'shopping.*')->take(-5);
+							$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
+							$shoppings=$lan->shoppings()->materials()->select('materials.*','quantity', 'shopping.*')->get()->take(-5);
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);

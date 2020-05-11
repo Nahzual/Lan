@@ -217,15 +217,19 @@ class TasksController extends Controller
 							if(isset($request->user_id)){
 								$user=User::find($request->user_id);
 								if($user!=null){
-
 									$user_helper=$lan->users()->where(function($query){
 										$query->where('lan_user.rank_lan','=',config('ranks.HELPER'))
 													->orWhere('lan_user.rank_lan','=',config('ranks.ADMIN'));
 									})->find($user->id);
 
 									if($user_helper!=null){
-										$task->users()->attach($user->id);
-										return response()->json(['success'=>'The task "'.$task->name_task.'" has been successfully assigned to the user "'.$user->name.' '.$user->lastname.'".']);
+										$user_task=$task->users()->where('assigned_to.user_id','=',$user->id)->first();
+										if($user_task==null){
+											$task->users()->attach($user->id);
+											return response()->json(['success'=>'The task "'.$task->name_task.'" has been successfully assigned to the user "'.$user->name.' '.$user->lastname.'".']);
+										}else{
+											return response()->json(['error'=>'This task has already been assigned to this user.']);
+										}
 									}else{
 										return response()->json(['error'=>'You can\'t assign a task to user that is not admin or helper on its LAN.']);
 									}

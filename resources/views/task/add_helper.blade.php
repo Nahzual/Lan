@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">Adding helper to Task : {{$task->name_task}}</h3>
+							<h3 class="">Adding helper to Task : {{$task->name_task}}</h3>
 						</div>
 					</div>
 
@@ -18,7 +18,7 @@
           <div class="card-body">
             {!! Form::open(['method' => 'post','onsubmit'=>'searchHelper(event,'.$task->id.')']) !!}
             	<div class="bg-light">
-                <h4 class='lead'>Helper's name :</h4>
+                <h4 class=''>Helper's name :</h4>
                 <div class="form-group">
                   {!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}
                 </div>
@@ -30,19 +30,13 @@
               </div>
             {!! Form::close() !!}
           </div>
+
+					<div id="requestResult">
+		      </div>
         </div>
       </div>
     </div>
 	</div>
-</div>
-
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-      <div id="requestResult">
-      </div>
-    </div>
-  </div>
 </div>
 @endsection
 

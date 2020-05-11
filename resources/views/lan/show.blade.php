@@ -42,7 +42,7 @@
 
 			</div>
 		</div><!-- row -->
-		<div class="row esp">
+		<div class="row esp mt-5">
 			<div class="col-md-6">
 				<div id="response-success-activity" class="container alert alert-success mt-2" style="display:none"></div>
 				<div id="response-error-activity" class="container alert alert-danger mt-2" style="display:none"></div>
@@ -52,7 +52,7 @@
 
 		</div><!-- row -->
 		@if($userIsLanAdminOrHelper)
-		<div class="row justify-content-center esp">
+		<div class="row justify-content-center esp my-5">
 			<div class="col-md-12">
 				<hr class="dark-hr"/>
 				<h3 class="text-center">Helper section</h3>
@@ -77,7 +77,7 @@
 		</div>
 		@endif
 		@if ($userIsLanAdmin)
-		<div class="row justify-content-center esp">
+		<div class="row justify-content-center esp my-5">
 			<div class="col-md-12">
 				<hr class="dark-hr"/>
 				<h3 class="text-center">Admin section</h3>

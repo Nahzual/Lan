@@ -60,6 +60,10 @@
 </div>
 @endsection
 
+@section('css_includes')
+<link rel="stylesheet" href="/css/table-style.css"></link>
+@endsection
+
 @section('js_includes')
 @parent
 <script src="/js/ajax/lan/ajax_validate.js"></script>

@@ -8,6 +8,11 @@
 		</thead>
 
 		<tbody>
+		@if(count($users)==0)
+		<tr>
+			<td colspan="3"><h3>No helpers to show</h3></td>
+		</tr>
+		@endif
 		@foreach($users as $helper)
 			<tr>
 				<th>{{$helper->id}}</th>

@@ -24,13 +24,18 @@
 									</thead>
 
 									<tbody>
+									@if(count($games)==0)
+										<tr>
+											<td colspan="5"><h3 class="text-center">No activities to show</h3></td>
+										</tr>
+									@endif
 									@foreach($activities as $activity)
 										<tr id="row-activity-lan-{{$activity->id}}">
 											<th scope="row">{{$activity->id}}</th>
 											<td scope="col">{{$activity->name_activity}}</td>
 											<td scope="col" class=" text-center">
 		           					<div class="btn-group">
-													<a class="btn btn-success mr-2" onclick="openActivity({{$activity->id}})"><i class='fa fa-eye'></i> View</a>
+													<a class="btn btn-success mr-2" id="activity-view-{{$activity->id}}" onclick="openActivity({{$activity->id}})"><i class='fa fa-eye'></i> View</a>
 													<a class="btn btn-warning mr-2" href="{{ route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id)) }}"><i class='fa fa-edit'></i> Edit</a>
 													{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeActivity(event, '.$lan->id.', '.$activity->id.')']) !!}
 														<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>

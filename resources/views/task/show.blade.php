@@ -57,8 +57,8 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="table-responsive esp collapse" id="task-helpers">
-							<table class="table card-table table-bordered box_shadow">
-								<thead class="text-center">
+							<table class="table card-table table-bordered box_shadow text-center">
+								<thead>
 									<th scope="col">#</th>
 									<th scope="col">Name</th>
 									<th scope="col">Username</th>
@@ -66,6 +66,11 @@
 								</thead>
 
 								<tbody>
+									@if(count($users)==0)
+									<tr>
+										<td colspan="{{ $userIsLanAdmin ? 4 : 3 }}"><h3>No helpers to show</h3></td>
+									</tr>
+									@endif
 									@foreach($users as $user)
 									<tr id="task-helper-{{$user->id}}">
 										<th class="text-center">{{$user->id}}</th>

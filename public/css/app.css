@@ -11184,26 +11184,5 @@ main{
 	box-shadow:0px 0px 1px black;
 }
 
-/*HOME*/
-.home_div{
-	padding:0;
-	margin:0;
-}
-.home_txt_block{
-	padding:5rem;
-}
 
-.home_img_block{
-	background-position:center center;
-	background-repeat:no-repeat
-}
-.home_img_block_1{
-	background-image: url('/img/front/home_img_1.jpg');
-}
-.home_img_block_2{
-	background-image: url('/img/front/home_img_2.jpg');
-}
-.home_img_block_3{
-	background-image: url('/img/front/home_img_3.jpg');
-}
 /*END CUSTOM*/

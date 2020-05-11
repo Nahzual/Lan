@@ -15,10 +15,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue" rel="stylesheet">
 
     <!-- Styles -->
     @yield('css_includes')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ url('/') }}/css/dashboard-styles.css" rel="stylesheet" />
 
@@ -26,7 +28,7 @@
 
 <body class="sb-nav-fixed">
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{ route('dashboard') }}">LAN Creator</a>
+    <a class="navbar-brand title-bebas bebas-size-1" href="{{ route('dashboard') }}">LAN Creator</a>
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>

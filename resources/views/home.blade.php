@@ -18,7 +18,7 @@
 			<div class="container" style="background-color:white">
 				<div class="row">
 					<div class="col-md-6 text-center home_txt_block">
-						<h2>Select your Games</h2>
+						<h2  class="title-bebas">Select your Games</h2>
 						<p>Link your Games to your LAN, review the connexion ports and choose your must-haves with our "fav" system ! You might even find some new ones... </p>
 					</div>
 					<div class="col-md-6 home_img_block home_img_block_1">
@@ -28,13 +28,13 @@
 					<div class="col-md-6 home_img_block home_img_block_2">
 					</div>
 					<div class="col-md-6 text-center home_txt_block">
-						<h2>Host unique Activities</h2>
+						<h2 class="title-bebas">Host unique Activities</h2>
 						<p>Create heavily-customised tournaments, define what your own LAN is and more ! With our room mapping application, you also can see how everyone can fit !</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6 text-center home_txt_block">
-						<h2>Organization is key</h2>
+						<h2  class="title-bebas">Organization is key</h2>
 						<p>Don't do it alone ! Add helpers, news admins, deploy tasks, define a shopping list and a to-do list to avoid some last-minute expenses !</p>
 					</div>
 					<div class="col-md-6 home_img_block home_img_block_3">

@@ -1,0 +1,57 @@
+body{
+font-family: 'Roboto', cursive;
+}
+
+.navbar { background-color: #ffffff; font-family: 'Bebas Neue', cursive;}
+.navbar .navbar-nav .nav-link { color: #6c757d; }
+.navbar .navbar-nav .nav-link:hover { color: black; }
+.navbar .navbar-nav .active > .nav-link { color: black; }
+
+.navbar-brand{font-size:3em;}
+.nav-item {font-size:1.5em;}
+.dropdown-item {font-size:1.33em;}
+
+.dropdown .dropdown-menu {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    max-height: 100;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.dropdown.show .dropdown-menu { 
+    max-height: 300px;
+    opacity: 1;
+}
+
+/*HOME*/
+.home_div{
+	padding:0;
+	margin:0;
+}
+.home_txt_block{
+	padding:5rem;
+}
+
+.home_img_block{
+	background-position:center center;
+	background-repeat:no-repeat
+}
+.home_img_block_1{
+	background-image: url('/img/front/home_img_1.jpg');
+}
+.home_img_block_2{
+	background-image: url('/img/front/home_img_2.jpg');
+}
+.home_img_block_3{
+	background-image: url('/img/front/home_img_3.jpg');
+}
+
+.title-bebas{
+	font-family: 'Bebas Neue', cursive;
+}

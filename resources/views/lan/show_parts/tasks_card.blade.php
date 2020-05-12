@@ -8,7 +8,7 @@
 									<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_tasks" aria-expanded="false" aria-controls="lan_tasks">Show/hide</button>
 									@if ($userIsLanAdminOrHelper)
 									<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('task.create', $lan->id) }}"><i class='fa fa-plus'></i></a>@endif
-									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-list'></i> All</a>
+									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.task_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
 
 								</div>
 							</div>

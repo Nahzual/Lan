@@ -59,6 +59,10 @@ Route::get('/lan/{lan}/tasks/{page}','LansController@list_tasks')->name('lan.tas
 Route::get('/lan/{lan}/materials/','LansController@list_materials')->name('lan.material_list');
 Route::get('/lan/{lan}/materials/{page}','LansController@list_materials')->name('lan.material_list.page');
 
+Route::get('/lan/{lan}/activities/','LansController@list_activities')->name('lan.activity_list');
+Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->name('lan.activity_list.page');
+
+
 
 Route::get('/lan/{lan}/shoppings/','LansController@list_shoppings')->name('lan.shopping_list');
 Route::get('/lan/{lan}/shoppings/{page}','LansController@list_shoppings')->name('lan.shopping_list.page');
@@ -75,8 +79,7 @@ Route::get('/lan/{lan}/helpers/{page}','LansController@list_helpers')->name('lan
 Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
 Route::get('/lan/{lan}/tournaments/{page}','LansController@list_tournaments')->name('lan.tour_list.page');
 
-Route::get('/lan/{lan}/activities/','LansController@list_activities')->name('lan.act_list');
-Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->name('lan.act_list.page');
+
 
 // game-lan
 Route::delete('/lan/game/{id}','LansController@removeGame')->name('lan.remove_game');
@@ -154,7 +157,6 @@ Route::put('lan/{lan}/shopping/{shopping}/edit', 'ShoppingsController@update')->
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');
-Route::get('lan/{lan}/activities', 'ActivitiesController@perLan')->name('activity.perLan');
 Route::post('lan/{lan}/activity/store', 'ActivitiesController@store')->name('activity.store');
 Route::get('lan/{lan}/activity/{activity}/show', 'ActivitiesController@show')->name('activity.show');
 Route::get('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@edit')->name('activity.edit');

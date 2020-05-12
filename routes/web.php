@@ -141,13 +141,12 @@ Route::get('/search/material','MaterialsController@search');
 Route::get('/search/shopping','ShoppingsController@search');
 
 /*LAN HELPER ROUTES*/
-Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 
 
 // Shoppings routes
 Route::get('lan/{lan}/shopping/create', 'ShoppingsController@create')->name('shopping.create');
-
+Route::post('lan/{lan}/shopping/store', 'ShoppingsController@store')->name('shopping.store');
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');

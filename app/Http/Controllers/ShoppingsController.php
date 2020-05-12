@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Lan;
-use App\Location;
-use App\City;
-use App\Street;
-use App\Department;
-use App\Country;
+use App\Shopping;
+use App\Material;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -60,28 +57,37 @@ public function index()
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	public function store(Request $request){
+	public function store(Request $request, $lanId){
 
 		if(Auth::check()){
-			$user=Auth::user();
-			if($user->rank_user==config('ranks.ADMIN')){
+  			$user=Auth::user();
+  			if($user->lans()->find($lanId)==null && !$user->isSiteAdmin()){
+  				return back()->with('error','You can\'t add an shopping to a LAN you are not an admin of.');
+  			}else{
+				$lan = $user->lans()->find($lanId);
+				if($request->has('name_material') && $request->has('desc_material') && $request->has('category_material')){
+					$material = new Material();
+					$material->name_material = htmlentities($request->name_material);
+					$material->desc_material = htmlentities($request->desc_material);
+					$material->category_material = htmlentities($request->category_material);
+					$material->save();
+				}else{
+					$material = Material::Find($request->material_id);
+				}
 				$shopping = new Shopping();
-				if($request->cost_shopping >= 0) $shopping->cost_shopping=$request->cost_shopping;
-				else return response()->json(['error'=>'The price has to be positive or zero.']);
-				/*$material = new Material();
+				$shopping->cost_shopping = htmlentities($request->cost_shopping);
+				$shopping->quantity_shopping = htmlentities($request->quantity_shopping);
+				$shopping->save();
+				$shopping->materials()->attach($material->id);
+				$shopping->lans()->attach($lanId);
 
-				$material->name_material=htmlentities($request->name_material);
-				$material->desc_material=htmlentities($request->desc_material);
-				$material->save();*/
-
-				//return response()->json(['success'=>'The shopping "'.$material->name_material.'" has been successfully created.']);
-
-			}else{
-				return response()->json(['error'=>'You do not have enough rights to do this.']);
-			}
-		}else{
-			return response()->json(['error'=>'Please log in to perform this action.']);
-		}
+				return response()->json([
+					'success'=>'Your shopping has been saved successfully.'
+				]);
+  			}
+  		}else{
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+  		}
 	}
 
 

@@ -6,20 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shopping extends Model
 {
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
-  protected $fillable = ['cost_shopping'];
+	/**
+	* The attributes that are mass assignable.
+	*
+	* @var array
+	*/
+	public $timestamps = false;
 
-  public function lans()
-  {
-    return $this->belongsToMany('App\Lan','requires');
-  }
+	protected $fillable = ['cost_shopping', 'quantity_shopping'];
 
-  public function materials()
-  {
-    return $this->belongsToMany('App\Material','contains');
-  }
+	public function lans()
+	{
+	return $this->belongsToMany('App\Lan','requires');
+	}
+
+	public function materials()
+	{
+	return $this->belongsToMany('App\Material','contains');
+	}
 }

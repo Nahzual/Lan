@@ -41,8 +41,13 @@ public function index()
   			if($user->lans()->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add an shopping to a LAN you are not an admin of.');
   			}else{
-					$lan = $user->lans()->find($lanId);
-  				return view('shopping.create', compact('lan'));
+				$lan = $user->lans()->find($lanId);
+				$materials = $lan->materials;
+				$materials_array = array();
+				foreach($materials as $material){
+					$materials_array[$material->id]= ''.$material->name_material.'';
+				}
+  				return view('shopping.create', compact('lan','materials_array'));
   			}
   		}else{
   			return redirect('/login')->with('error','You must be logged in to edit a LAN.');

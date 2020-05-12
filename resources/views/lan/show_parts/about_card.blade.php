@@ -1,10 +1,11 @@
-			      	<div class="card">
-						@if($userIsLanAdmin && $lan->waiting_lan==config('waiting.REJECTED'))
-						<small class="text-center">Your LAN has been rejected, you can resubmit it above after some modifications.</small>
-						@endif
+			    <div class="card">
+
 						<div class="card-header">
 							<div class="row">
-								<h4 class="mt-2">About</h4>
+								<div class="col"><h4 class="float-left mt-2">About</h4></div>
+								@if($userIsLanAdmin && $lan->waiting_lan==config('waiting.REJECTED'))
+								<div class="col"><small class="float-right text-center">Your LAN has been rejected, you can resubmit it above after some modifications.</small></div>
+								@endif
 							</div>
 						</div>
 						<div class="card-body">
@@ -36,7 +37,7 @@
 								@if ($userIsLanAdmin)
 									<div class="row">
 										<div class="col-md-11 text-right">
-										
+
 											{{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
 											{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-outline-danger shadow-sm float-right', 'type' => 'submit']) }}
 										{{ Form::close() }}
@@ -44,6 +45,6 @@
 										</div>
 									</div>
 @endif
-								
+
 			   			</div>
 					</div>

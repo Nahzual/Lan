@@ -22,9 +22,16 @@
 			    </thead>
 
 			    <tbody>
+
 			    @if (isset($helpers))
+						@if(count($helpers)==0)
+						<tr>
+							<td colspan="3"><h3>No helpers to show</h3></td>
+						</tr>
+						@endif
+
 			      @foreach($helpers as $helper)
-			      <tr id="row-admin-lan-{{$helper->id}}">
+			      <tr id="row-helper-lan-{{$helper->id}}">
 							<th>{{$helper->id}}</th>
 							<td>{{$helper->pseudo}}</td>
 							<td scope="col" class="text-center">

@@ -60,7 +60,7 @@ class User extends Authenticatable
   }
 
 	public function isSiteAdmin(){
-		return $this->rank_user=config('ranks.SITE_ADMIN');
+		return $this->rank_user==config('ranks.SITE_ADMIN');
 	}
 
 

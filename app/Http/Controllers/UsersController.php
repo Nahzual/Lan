@@ -13,6 +13,7 @@ use App\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
 
@@ -249,13 +250,28 @@ class UsersController extends Controller
 			if(Auth::check()){
 				$user=User::find($id);
 				if($user!=null){
-					$loggedUserIsAdmin=Auth::user()->isSiteAdmin();
 					$location = $user->location;
     			$street = $location->street;
     			$city = $street->city;
     			$department = $city->department;
     			$country = $department->country;
-					return view('user.show',compact('user','loggedUserIsAdmin','location','street','city','department','country'));
+
+					//statistics
+					$lans_admin_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lans.opening_date','<',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
+					$lans_former_admin_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lans.opening_date','>=',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
+					$lans_helper_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->where('lans.opening_date','<',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
+					$lans_former_helper_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->where('lans.opening_date','>=',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
+					$lans_player_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->where('lans.opening_date','<',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
+					$lans_former_player_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->where('lans.opening_date','>=',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
+
+					$lans_admin_count=($lans_admin_count!=null) ? $lans_admin_count->count : 0;
+					$lans_former_admin_count=($lans_former_admin_count!=null) ? $lans_former_admin_count->count : 0;
+					$lans_helper_count=($lans_helper_count!=null) ? $lans_helper_count->count : 0;
+					$lans_former_helper_count=($lans_former_helper_count!=null) ? $lans_former_helper_count->count : 0;
+					$lans_player_count=($lans_player_count!=null) ? $lans_player_count->count : 0;
+					$lans_former_player_count=($lans_former_player_count!=null) ? $lans_former_player_count->count : 0;
+
+					return view('user.show',compact('user','location','street','city','department','country','lans_admin_count','lans_helper_count','lans_player_count','lans_former_admin_count','lans_former_helper_count','lans_former_player_count'));
 				}else{
 					return back()->with('error','This user does not exist.');
 				}
@@ -285,6 +301,29 @@ class UsersController extends Controller
 				return view('user.helper.show_add_task',compact('users','lan','task'));
 			}else{
 				return view('errors.404_include');
+			}
+		}
+
+		public function contact($userID){
+			if(Auth::check()){
+				$from=Auth::user();
+				$to=User::find($userID);
+				if($to!=null){
+					try{
+						Mail::send('mails.notification_contact', ['from' => $from,'to'=>$to], function ($message) use ($to) {
+							$message->from('lancreator.noreply@gmail.com','LAN Creator')
+								->to($to->email)
+								->subject('A user tried to contact you');
+						});
+						return response()->json(['success'=>'Your message has been successfully sent.']);
+					}catch(\Exception $e){
+						return response()->json(['error'=>'Your message couldn\'t be sent due to an internal server error. If the problem persists, please contact an administrator.']);
+					}
+				}else{
+					return response()->json(['error'=>'This user does not exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'Please log in to perform this action.']);
 			}
 		}
 

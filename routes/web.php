@@ -23,7 +23,7 @@ Route::get('/home', 'PageController@home')->name('home');
 
 
 Route::resource('contact', 'ContactsController');
-
+Route::post('/contact/{user}','UsersController@contact');
 
 /*LOGGED ROUTES*/
 

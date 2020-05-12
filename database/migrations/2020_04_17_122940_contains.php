@@ -15,10 +15,10 @@ class Contains extends Migration
     {
       Schema::create('contains', function (Blueprint $table) {
 		  $table->id();
-          $table->unsignedBigInteger('id_shopping');
-          $table->unsignedBigInteger('id_material');
-          $table->foreign('id_shopping')->references('id')->on('shoppings')->onDelete('cascade');
-          $table->foreign('id_material')->references('id')->on('materials')->onDelete('cascade');
+          $table->unsignedBigInteger('shopping_id');
+          $table->unsignedBigInteger('material_id');
+          $table->foreign('shopping_id')->references('id')->on('shoppings')->onDelete('cascade');
+          $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
       });
     }
 

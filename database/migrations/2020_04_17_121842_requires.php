@@ -15,10 +15,10 @@ class Requires extends Migration
     {
       Schema::create('requires', function (Blueprint $table) {
 		  $table->id();
-          $table->unsignedBigInteger('id_lan');
-          $table->unsignedBigInteger('id_shopping');
-          $table->foreign('id_lan')->references('id')->on('lans')->onDelete('cascade');
-          $table->foreign('id_shopping')->references('id')->on('shoppings')->onDelete('cascade');
+          $table->unsignedBigInteger('lan_id');
+          $table->unsignedBigInteger('shopping_id');
+          $table->foreign('lan_id')->references('id')->on('lans')->onDelete('cascade');
+          $table->foreign('shopping_id')->references('id')->on('shoppings')->onDelete('cascade');
       });
     }
 

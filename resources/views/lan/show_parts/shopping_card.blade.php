@@ -21,6 +21,7 @@
 											<th scope="col" >#</th>
 											<th scope="col" >Name</th>
 											<th scope="col" >Cost</th>
+											<th scope="col" >Quantity</th>
 										</thead>
 
 										<tbody>
@@ -32,7 +33,9 @@
 											@foreach($shoppings as $shopping)
 												<tr id="row-shopping-lan-{{$shopping->id}}">
 													<th scope="row">{{$shopping->id}}</th>
-													<td scope="col">{{$shopping->name_shopping}}</td>
+													<td scope="col">{{$shopping->materials()->first()->name_material}}</td>
+													<th scope="row">{{$shopping->cost_shopping}} €</th>
+													<th scope="row">{{$shopping->quantity_shopping}}</th>
 													<td scope="col" class=" text-center">
 														<div class="btn-group">
 															{!! Form::open(['onsubmit'=>'return false;']) !!}

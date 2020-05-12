@@ -9,7 +9,7 @@
 					<h3>{{$lan->name}} : Creating new Shopping</h3>
 				</div>
 				<div class="card-body">
-					<div class ="alert alert-success" style="display:none"></div>
+					<div id="response-success" class ="alert alert-success" style="display:none"></div>
 					{!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event,'.$lan->id.')']) !!}
 						<div class="form-group">
 							{!! Form::label('cost_shopping', 'Price', ['class' => 'display-6']) !!}

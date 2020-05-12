@@ -29,7 +29,11 @@
 
 <body class="sb-nav-fixed">
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+		<button type="button" id="sidebarToggle" class="btn btn-info ml-2">
+			<i class="fa fa-align-left"></i>
+		</button>
     <a class="navbar-brand title-bebas bebas-size-1" href="{{ route('dashboard') }}">LAN Creator</a>
+
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
@@ -52,6 +56,13 @@
 	<div id="layoutSidenav">
     <div id="layoutSidenav_nav">
       <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+				<!-- <div class="row">
+					<div class="col">
+						<button type="button" id="sidebarClose" class="btn float-right">
+							<i class="fa fa-times text-white"></i>
+						</button>
+					</div>
+				</div> -->
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading">Navigation</div>

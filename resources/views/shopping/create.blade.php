@@ -6,28 +6,33 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-					<h3 class="lead-title">Creating new Shopping</h3>
+					<h3>Creating new Shopping</h3>
 				</div>
 				<div class="card-body">
 					<div class ="alert alert-success" style="display:none"></div>
 					{!! Form::open(['method' => 'put', 'id' => 'CreateNewShoppingForm']) !!}
-						<div class="bg-light">
-							<div class="form-group">
-								{!! Form::label('name_material', 'Name', ['class' => 'lead']) !!}
-								{!! Form::text('name_material', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('desc_material', 'Description of the material', ['class' => 'lead']) !!}
-								{!! Form::text('desc_material', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('cost_shopping', 'Price', ['class' => 'lead']) !!}
-								{!! Form::number('cost_shopping', null, ['class' => 'form-control']) !!}
-							</div>
-							<div class="form-group">
-								{!! Form::label('quantity_shopping', 'Quantity', ['class' => 'lead']) !!}
-								{!! Form::number('quantity_shopping', null, ['class' => 'form-control']) !!}
-							</div>
+						<div class="form-group">
+							{!! Form::label('cost_shopping', 'Price', ['class' => 'lead']) !!}
+							{!! Form::number('cost_shopping', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('quantity_shopping', 'Quantity', ['class' => 'lead']) !!}
+							{!! Form::number('quantity_shopping', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('material_id', ' Choose Material', ['class' => 'lead']) !!}
+							{!! Form::select('material_id', $materials_array, null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							<p>Or create Material</p>
+						</div>
+						<div class="form-group">
+							{!! Form::label('name_material', 'Name', ['class' => 'lead']) !!}
+							{!! Form::text('name_material', null, ['class' => 'form-control']) !!}
+						</div>
+						<div class="form-group">
+							{!! Form::label('desc_material', 'Description of the material', ['class' => 'lead']) !!}
+							{!! Form::text('desc_material', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group row text-center">
 							<div class="col">

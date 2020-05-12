@@ -15,6 +15,42 @@
 						</div>
 						<div class="collapse" id="lan_shopping" aria-labelledby="heading-shopping">
 							<div class="card-body">
+								<div class="table-responsive">
+									<table class="text-center table card-table table-bordered">
+										<thead class="card-table text-center">
+											<th scope="col" >#</th>
+											<th scope="col" >Name</th>
+											<th scope="col" >Cost</th>
+										</thead>
+
+										<tbody>
+											@if(count($shoppings)==0)
+												<tr>
+													<td colspan="5"><h3 class="text-center">No shoppings to show</h3></td>
+												</tr>
+											@endif
+											@foreach($shoppings as $shopping)
+												<tr id="row-shopping-lan-{{$shopping->id}}">
+													<th scope="row">{{$shopping->id}}</th>
+													<td scope="col">{{$shopping->name_shopping}}</td>
+													<td scope="col" class=" text-center">
+														<div class="btn-group">
+															{!! Form::open(['onsubmit'=>'return false;']) !!}
+																<button class="btn btn-success mr-2" id="shopping-view-{{$shopping->id}}" onclick="openActivity({{$shopping->id}})"><i class='fa fa-eye'></i> View</button>
+															{{ Form::close() }}
+															{!! Form::open(['method'=>'get','url'=>route('shopping.edit', array('lan' => $lan->id, 'shopping' => $shopping->id))]) !!}
+																<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> Edit</button>
+															{{ Form::close() }}
+															{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeShopping(event, '.$lan->id.', '.$shopping->id.')']) !!}
+																<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+															{!! Form::close() !!}
+														</div>
+													</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 

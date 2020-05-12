@@ -222,16 +222,17 @@ class LansController extends Controller
 						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
 						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 						$tasks = $lan->tasks->take(-5);
+						$shoppings = $lan->shoppings->take(-5);
 						$ports=$games->toBase();
 						foreach($ports as $index=>$game){
 							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
 						}
-						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings'))->with(['userIsLanAdminOrHelper'=>true]);
 					}else{
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 						if($userIsLanHelper){
 							$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
-							$shoppings=$lan->shoppings()->materials()->select('materials.*','quantity', 'shopping.*')->get()->take(-5);
+							$shoppings = $lan->shoppings->take(-5);
 							$tasks = $lan->tasks->take(-5);
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{

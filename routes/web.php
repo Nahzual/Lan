@@ -147,6 +147,10 @@ Route::resource('material', 'MaterialsController');
 // Shoppings routes
 Route::get('lan/{lan}/shopping/create', 'ShoppingsController@create')->name('shopping.create');
 Route::post('lan/{lan}/shopping/store', 'ShoppingsController@store')->name('shopping.store');
+Route::get('lan/{lan}/shopping/{shopping}/show', 'ShoppingsController@show')->name('shopping.show');
+Route::get('lan/{lan}/shopping/{shopping}/edit', 'ShoppingsController@edit')->name('shopping.edit');
+Route::delete('lan/{lan}/shopping/{shopping}/destroy', 'ShoppingsController@destroy')->name('shopping.destroy');
+Route::put('lan/{lan}/shopping/{shopping}/edit', 'ShoppingsController@update')->name('shopping.update');
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');

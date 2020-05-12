@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
       $this->call(MaterialSeeder::class);
-      factory(App\Game::class, 10)->create();
+      $this->call(LocationSeeder::class);
+      factory(App\Game::class, 50)->create();
     }
 }

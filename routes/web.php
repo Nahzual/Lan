@@ -145,6 +145,9 @@ Route::resource('shopping', 'ShoppingsController');
 Route::resource('material', 'MaterialsController');
 
 
+// Shoppings routes
+Route::get('lan/{lan}/shopping/create', 'ShoppingsController@create')->name('shopping.create');
+
 
 // Activities routes
 Route::get('lan/{lan}/activity/create', 'ActivitiesController@create')->name('activity.create');

@@ -34,9 +34,19 @@ public function index()
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($lanId)
     {
-        return view('shopping.create');
+		if(Auth::check()){
+  			$user=Auth::user();
+  			if($user->lans()->find($lanId)==null && !$user->isSiteAdmin()){
+  				return back()->with('error','You can\'t add an shopping to a LAN you are not an admin of.');
+  			}else{
+					$lan = $user->lans()->find($lanId);
+  				return view('shopping.create', compact('lan'));
+  			}
+  		}else{
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+  		}
     }
 
     /**

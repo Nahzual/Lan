@@ -16,6 +16,7 @@ class CreateShoppingsTable extends Migration
         Schema::create('shoppings', function (Blueprint $table) {
           $table->id();
 					$table->unsignedFloat('cost_shopping');
+					$table->unsignedInteger('quantity_shopping');
 			  });
     }
 

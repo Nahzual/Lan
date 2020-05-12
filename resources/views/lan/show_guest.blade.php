@@ -11,7 +11,7 @@ $places_left=count($lan->real_users); ?>
 	<div class="card-header">
 		<div class="row">
 			<div class="col float-left">
-				<h3>Viewing : {{$lan->name}}</h3>
+				<h3>Viewing : {!!$lan->name!!}</h3>
 			</div>
 			@if($time_left->invert || $time_left->days==0)
 			<div class="col text-center">

@@ -1,15 +1,11 @@
       <div class="card">
         <div class="card-header">
-					<h3 >Viewing : {{$activity->name_activity}}</h3>
+					<h3 >Viewing : {!!$activity->name_activity!!}</h3>
 				</div>
 				<div class="card-body">
 					<div class="form-group">
-						<label class="display-6">Name</label>
-						<label class="form-control">{{$activity->name_activity}}</label>
-					</div>
-					<div class="form-group">
 						<label class="display-6">Description</label>
-						<textarea class="form-control">{{$activity->desc_activity}}</textarea>
+						<textarea class="form-control">{!!$activity->desc_activity!!}</textarea>
 					</div>
 					<div class="form-group row text-center">
 						@if(isset($userIsLanAdmin) && $userIsLanAdmin)

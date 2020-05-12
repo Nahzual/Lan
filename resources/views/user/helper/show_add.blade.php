@@ -11,7 +11,7 @@
 		@foreach($users as $helper)
 			<tr>
 				<th>{{$helper->id}}</th>
-				<td>{{$helper->pseudo}}</td>
+				<td>{!!$helper->pseudo!!}</td>
 				<td>
 					{!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'addHelper(event,'.$lan->id.','.$helper->id.')']) !!}
 					<div class="form-group row text-center">

@@ -19,8 +19,8 @@
       @foreach($materials as $material)
       <tr>
         <th scope="row" class="text-center">{{$material->id}}</th>
-        <td scope="col" class="text-center"><a href="{{ route('material.show', $material->id) }}">{{$material->name_material}}</a></td>
-        <td scope="col" class="text-center">{{$material->desc_material}}</td>
+        <td scope="col" class="text-center"><a href="{{ route('material.show', $material->id) }}">{!!$material->name_material!!}</a></td>
+        <td scope="col" class="text-center">{!!$material->desc_material!!}</td>
 
 				<td scope="col" class="lead-text">
 					{!! Form::number('quantity-'.$material->id,null, ['min'=>1, 'class'=>'form-control'])!!}

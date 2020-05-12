@@ -115,7 +115,7 @@ Route::post('lan/admin/{id}', 'LansController@postAddAdmin');
 Route::delete('lan/admin/{id}', 'LansController@removeAdmin');
 
 Route::get('/dashboard', 'PageController@dashboard')->name('dashboard');
-Route::get('/dashboard/admin', 'PageController@adminDashboard');
+Route::get('/dashboard/admin', 'PageController@adminDashboard')->name('dashboard.admin');
 
 
 // game routes

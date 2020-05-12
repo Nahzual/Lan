@@ -1,5 +1,4 @@
 			    <div class="card">
-
 						<div class="card-header">
 							<div class="row">
 								<div class="col"><h4 class="float-left mt-2">About</h4></div>
@@ -31,20 +30,18 @@
 							</div>
 							<div class="row d-flex justify-content-center">
 								<label class="col-md-2 col-form-label text-md-right">Location</label>
-								<label class="form-control col-8 h-100">{{$location->num_street.' '.$street->name_street.' '.$city->zip_city.' '.$city->name_city.', '.$department->name_department.', '.$country->name_country}}</label>
+								<label class="form-control col-8 h-100">{!!$location->num_street.' '.$street->name_street.' '.$city->zip_city.' '.$city->name_city.', '.$department->name_department.', '.$country->name_country!!}</label>
 							</div>
 
-								@if ($userIsLanAdmin)
-									<div class="row">
-										<div class="col-md-11 text-right">
-
-											{{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
-											{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-outline-danger shadow-sm float-right', 'type' => 'submit']) }}
-										{{ Form::close() }}
-											<a class="btn btn-outline-warning shadow-sm float-right" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
-										</div>
-									</div>
-@endif
-
-			   			</div>
+							@if ($userIsLanAdmin)
+							<div class="row">
+								<div class="col-md-11 text-right">
+									{{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
+										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-outline-danger shadow-sm float-right', 'type' => 'submit']) }}
+									{{ Form::close() }}
+									<a class="btn btn-outline-warning shadow-sm float-right" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
+								</div>
+							</div>
+							@endif
+			   		</div>
 					</div>

@@ -48,11 +48,9 @@ public function index()
 			if($user->rank_user==config('ranks.ADMIN')){
 				$material = new Material();
 
-				if($request->price_material >= 0) $material->price_material=$request->price_material;
-				else return response()->json(['error'=>'The price has to be positive or zero.']);
-
 				$material->name_material=htmlentities($request->name_material);
 				$material->desc_material=htmlentities($request->desc_material);
+				$material->category_material=htmlentities($request->category_material);
 				$material->save();
 
 				return response()->json(['success'=>'The material "'.$material->name_material.'" has been successfully created.']);
@@ -128,10 +126,10 @@ public function index()
 			if($user->rank_user==config('ranks.ADMIN')){
 				$material = Material::find($id);
 				if($material!=null){
-					if($request->price_material >= 0) $material->price_material=$request->price_material;
-					else return response()->json(['error'=>'The price has to be positive or zero.']);
+
 					$material->name_material=htmlentities($request->name_material);
 					$material->desc_material=htmlentities($request->desc_material);
+					$material->category_material=htmlentities($request->category_material);
 					$material->save();
 
 					return response()->json(['success'=>'The material "'.$material->name_material.'" has been successfully edited.']);

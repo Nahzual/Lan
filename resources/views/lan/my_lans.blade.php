@@ -1,6 +1,6 @@
 <tr id="row-my-lan-{{$lan->id}}">
   <th scope="row" class="text-center lead-text ">{{$lan->id}}</th>
-  <td scope="col" class="text-center lead-text">{{$lan->name}}</td>
+  <td scope="col" class="text-center lead-text">{!!$lan->name!!}</td>
   <td scope="col" class="text-center lead-text ">{{ $lan->real_user_count() }}/{{$lan->max_num_registrants}}</td>
   <?php if($lan->waiting_lan==config('waiting.WAITING')){ ?>
   <td scope="col" class="text-center lead-text"><i class="fa fa-clock-o" aria-hidden="true"></i></td>

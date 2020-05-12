@@ -26,7 +26,7 @@
 			    	@foreach($admins as $admin)
 			      <tr id="row-admin-lan-{{$admin->id}}">
 							<th>{{$admin->id}}</th>
-							<td>{{$admin->pseudo}}</td>
+							<td>{!!$admin->pseudo!!}</td>
 							<td scope="col" class="text-center">
 								<div class="btn-group text-center">
 									{!! Form::open(['method' => 'get','url'=>route('user.show', $admin->id)]) !!}

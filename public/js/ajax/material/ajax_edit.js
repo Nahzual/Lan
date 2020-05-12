@@ -8,7 +8,8 @@ function sendRequest(e,id){
     data: "_token="+$("[name='_token']").val()
           +'&_method='+$("[name='_method']").val()
           +'&name_material='+$("[name='name_material']").val()
-          +'&desc_material='+$("[name='desc_material']").val(),
+          +'&desc_material='+$("[name='desc_material']").val()
+					+'&category_material='+$("[name='category_material']").val(),
     success: function(data){
 			var success=$('#response-success');
 			var error=$('#response-error');

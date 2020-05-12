@@ -33,7 +33,7 @@
           @foreach($waiting_lans as $lan)
             <tr id="row-waiting-lan-{{$lan->id}}">
               <td class="lead-text">{{$lan->id}}</td>
-              <td class="col mt-2 lead-text">{{$lan->name}}</td>
+              <td class="col mt-2 lead-text">{!!$lan->name!!}</td>
 
               <td>
                 <a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>

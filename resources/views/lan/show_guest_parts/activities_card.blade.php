@@ -29,7 +29,7 @@
 									@foreach($activities as $activity)
 										<tr id="row-activity-lan-{{$activity->id}}">
 											<th scope="row">{{$activity->id}}</th>
-											<td scope="col">{{$activity->name_activity}}</td>
+											<td scope="col">{!!$activity->name_activity!!}</td>
 											<td scope="col" class=" text-center">
 		           					<div class="btn-group">
 													{!! Form::open(['onsubmit'=>'return false;']) !!}

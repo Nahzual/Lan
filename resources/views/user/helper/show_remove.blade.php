@@ -33,7 +33,7 @@
 			      @foreach($helpers as $helper)
 			      <tr id="row-helper-lan-{{$helper->id}}">
 							<th>{{$helper->id}}</th>
-							<td>{{$helper->pseudo}}</td>
+							<td>{!!$helper->pseudo!!}</td>
 							<td scope="col" class="text-center">
 								<div class="btn-group text-center">
 									{!! Form::open(['method' => 'get','url'=>route('user.show', $helper->id)]) !!}

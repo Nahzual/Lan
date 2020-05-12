@@ -1,3 +1,4 @@
+<?php $user=Auth::user(); ?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -33,14 +34,14 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="{{ route('user.edit',Auth::id()) }}" onclick="event.preventDefault(); document.getElementById('edit-profile-form').submit();"><i class="fa fa-wrench"></i> Settings</a>
+          <a class="dropdown-item" href="{{ route('user.edit',$user->id) }}" onclick="event.preventDefault(); document.getElementById('edit-profile-form').submit();"><i class="fa fa-wrench"></i> Settings</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> Logout</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
           </form>
 
-          <form id="edit-profile-form" action="{{ route('user.edit',Auth::id()) }}" method="GET" style="display: none;">
+          <form id="edit-profile-form" action="{{ route('user.edit',$user->id) }}" method="GET" style="display: none;">
             @csrf
           </form>
         </div>
@@ -65,7 +66,7 @@
             <a class="nav-link" href="{{ url('/game') }}">All games</a>
             <a class="nav-link" href="{{ route('game.favourite') }}">My games</a>
 
-						@if(Auth::user()->rank_user == config('ranks.SITE_ADMIN'))
+						@if($user->rank_user == config('ranks.SITE_ADMIN'))
 			    	<div class="sb-sidenav-menu-heading">ADM</div>
 						<a class="nav-link" href="{{ url('/dashboard/admin') }}">Admin dashboard</a>
 						<a class="nav-link" href="{{ url('/users') }}">All Users</a>
@@ -75,7 +76,7 @@
         </div>
       	<div class="sb-sidenav-footer">
           <div class="small">Logged in as:</div>
-          {{Auth::user()->name}} {{Auth::user()->lastname}}
+          {!!$user->name!!} {!!$user->lastname!!}
         </div>
       </nav>
     </div>
@@ -117,6 +118,5 @@
 
 	@yield('js_includes')
 	<script src="{{ asset('js/dashboard-scripts.js') }}" defer></script>
-
 </body>
 </html>

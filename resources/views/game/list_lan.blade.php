@@ -23,7 +23,7 @@
       <?php $date=date_create($game->release_date_game); ?>
       <tr id="row-game-lan-{{$game->id}}">
         <th scope="row" class="text-center ">{{$game->id}}</th>
-        <td scope="col" class="text-center "><a href="{{ route('game.show', $game->id) }}">{{$game->name_game}}</a></td>
+        <td scope="col" class="text-center "><a href="{{ route('game.show', $game->id) }}">{!!$game->name_game!!}</a></td>
         <td scope="col" class="text-center ">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
         <td scope="col" class="text-center ">
           <?php switch($game->is_multiplayer_game){

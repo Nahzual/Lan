@@ -3,17 +3,17 @@
 @section('content')
       <div class="card">
         <div class="card-header">
-					<h3 class="">Viewing task "{{$task->name_task}}" of LAN {{$lan->name}}</h3>
+					<h3 class="">Viewing task "{!!$task->name_task!!}" of LAN {!!$lan->name!!}</h3>
 				</div>
 
 				<div class="card-body">
 					<div class="row">
 						<label class=" col-3 mt-1 text-center">Task</label>
-						<label class="form-control col-8">{{$task->name_task}}</label>
+						<label class="form-control col-8">{!!$task->name_task!!}</label>
 					</div>
 					<div class="row">
 						<label class=" col-3 mt-1 text-center">Description of the task</label>
-						<label class="form-control col-8">{{$task->desc_task}}</label>
+						<label class="form-control col-8">{!!$task->desc_task!!}</label>
 					</div>
 
 					<div class="row">
@@ -80,8 +80,8 @@
 									@foreach($users as $user)
 									<tr id="task-helper-{{$user->id}}">
 										<th class="text-center">{{$user->id}}</th>
-										<td class="text-center">{{$user->name.' '.$user->lastname}}</td>
-										<td class="text-center">{{$user->pseudo}}</td>
+										<td class="text-center">{!!$user->name.' '.$user->lastname!!}</td>
+										<td class="text-center">{!!$user->pseudo!!}</td>
 										@if($userIsLanAdmin)
 										<td class="text-center">
 											{!! Form::open(['method' => 'delete', 'onsubmit' => 'return unassign(event,'.$lan->id.','.$task->id.','.$user->id.')']) !!}

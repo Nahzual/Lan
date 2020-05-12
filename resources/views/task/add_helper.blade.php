@@ -8,7 +8,7 @@
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="">Adding helper to Task : {{$task->name_task}}</h3>
+							<h3 class="">Adding helper to Task : {!!$task->name_task!!}</h3>
 						</div>
 					</div>
 

@@ -9,7 +9,7 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">Adding shopping to : {{$lan->name}}<small>#{{$lan->id}}</small></h3>
+							<h3 class="lead-title">Adding shopping to : {!!$lan->name!!}<small>#{{$lan->id}}</small></h3>
 						</div>
 					</div>
 				</div>

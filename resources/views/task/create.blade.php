@@ -3,7 +3,7 @@
 @section('content')
       <div class="card">
         <div class="card-header">
-					<h3 class="">Creating new task for {{$lan->name}}<small>#{{$lan->id}}</small></h3>
+					<h3 class="">Creating new task for {!!$lan->name!!}<small>#{{$lan->id}}</small></h3>
 				</div>
 				<div class="card-body">
 					<div id="response-success" class="alert alert-success" style="display:none"></div>

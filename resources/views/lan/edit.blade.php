@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
 	<div class="card-header">
-		<h2>Editing Lan : {{$lan->name}}</h3>
+		<h2>Editing Lan : {!!lan->name!!}</h3>
 	</div>
 	<div class="card-body">
 

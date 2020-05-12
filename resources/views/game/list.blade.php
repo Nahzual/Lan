@@ -21,7 +21,7 @@
       <?php $date=date_create($game->release_date_game); ?>
       <tr id="row-game-{{$game->id}}">
         <th scope="row " class="text-center">{{$game->id}}</th>
-        <td scope="col ">{{$game->name_game}}</td>
+        <td scope="col ">{!!$game->name_game!!}</td>
         <td scope="col " class="text-center">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
         <td scope="col" class="text-center">{{$game->cost_game}} €</td>
         <td scope="col " class="text-center">

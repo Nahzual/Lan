@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-	
-		
 		<section id="jumbotron">
 			<div class="jumbotron" >
 				<div class="container">
@@ -12,7 +10,7 @@
 			</div>
 		</section>
 
-		
+
 		<section id="features" style="background-color:black">
 
 			<div class="container" style="background-color:white">
@@ -38,7 +36,7 @@
 						<p>Don't do it alone ! Add helpers, news admins, deploy tasks, define a shopping list and a to-do list to avoid some last-minute expenses !</p>
 					</div>
 					<div class="col-md-6 home_img_block home_img_block_3">
-						
+
 					</div>
 				</div>
 			</div>
@@ -48,17 +46,17 @@
 		<section id="discover" >
 			<div class="jumbotron home_div" >
 				<div class="container">
-					
+
 					<p>The latest LAN was created on<?php $date = date_create($lan->opening_date); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</p>
 					<p>Sign-in now to create your first LAN !</p>
-					
+
 				</div>
 			</div>
 		</section>
 		@endif
 </div>
 
-	
+
 @endsection
 
 @section('js_includes')

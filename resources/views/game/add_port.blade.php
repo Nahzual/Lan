@@ -3,7 +3,7 @@
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>Adding port to game "{{$game->name_game}}" for LAN {{$lan->name}}</h3>
+							<h3>Adding port to game "{!!$game->name_game!!}" for LAN {!!$lan->name!!}</h3>
 						</div>
 					</div>
 				</div>

@@ -11,7 +11,7 @@
     @foreach($users as $admin)
       <tr>
         <th >{{$admin->id}}</th>
-        <td>{{$admin->pseudo}}</td>
+        <td>{!!$admin->pseudo!!}</td>
         <td>
           {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'addAdmin(event,'.$lan->id.','.$admin->id.')']) !!}
             <div class="form-group row text-center">

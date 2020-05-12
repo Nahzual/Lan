@@ -9,7 +9,7 @@
 									@if ($userIsLanAdminOrHelper)
 									<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('task.create', $lan->id) }}"><i class='fa fa-plus'></i></a>@endif
 									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-list'></i> All</a>
-									
+
 								</div>
 							</div>
 						</div>
@@ -32,7 +32,7 @@
 									@foreach($tasks as $task)
 										<tr id="row-task-lan-{{$task->id}}">
 											<th scope="row">{{$task->id}}</th>
-											<td scope="col">{{$task->name_task}}</td>
+											<td scope="col">{!!$task->name_task!!}</td>
 											<td scope="col" class=" text-center">
 		           					<div class="btn-group">
 													{!! Form::open(['method'=>'get','url'=>route('task.show',[$lan->id,$task->id])]) !!}

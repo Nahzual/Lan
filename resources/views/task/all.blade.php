@@ -16,7 +16,7 @@
 				<div class="card">
 					<div class="card-header" id="heading-{{$index}}">
 						<div class="col mt-2">
-							<h3>Your tasks for LAN : {{$lan_tasks[0]->name}}</h3>
+							<h3>Your tasks for LAN : {!!$lan_tasks[0]->name!!}</h3>
 						</div>
 						<div class="col mt-1">
 							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-{{$index}}" aria-expanded="true" aria-controls="collapse-{{$index}}">Show/hide</button>
@@ -38,8 +38,8 @@
 									@foreach($lan_tasks as $task)
 							 	 	<tr>
 							 	 		<th class="text-center">{{$task->id}}</th>
-							 	 		<td class="text-center">{{$task->name_task}}</td>
-							 	 		<td class="text-center">{{ $task->desc_task }}</td>
+							 	 		<td class="text-center">{!!$task->name_task!!}</td>
+							 	 		<td class="text-center">{!! $task->desc_task !!}</td>
 							 	 		<td class="text-center">{{date_format(date_create($task->deadline_task), config("display.DATE_FORMAT"))}}</td>
 										<td class="text-center">
 							 	 			<a class="btn btn-success" href="{{ route('task.show', [$task->lan_id,$task->id]) }}"><i class='fa fa-eye'></i> View</a>

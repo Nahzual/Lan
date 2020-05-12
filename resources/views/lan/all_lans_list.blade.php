@@ -14,7 +14,7 @@
 				@foreach($lans as $lan)
 				<?php $date = date_create($lan->opening_date); ?>
 				<th class="text-center">{{$lan->id}}</th>
-				<td class="text-center">{{$lan->name}}</td>
+				<td class="text-center">{!!$lan->name!!}</td>
 				<td class="text-center">{{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }}</td>
 				<td class="text-center">{{date_format($date, config("display.DATE_FORMAT"))}}</td>
 

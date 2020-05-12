@@ -18,7 +18,7 @@
       @foreach($materials as $material)
       <tr id="row-material-lan-{{$material->id}}">
         <th scope="row" class="text-center">{{$material->id}}</th>
-        <td scope="col" class="text-center">{{$material->name_material}}</td>
+        <td scope="col" class="text-center">{!!$material->name_material!!}</td>
         <td scope="col" class="text-center">
 					{!! Form::number('quantity-'.$material->id,$material->quantity,['class'=>'form-control text-center','min'=>'1']) !!}
           {!! Form::open(['method' => 'put','url'=>'', 'onsubmit'=>'return editQuantity(event,'.$lan->id.','.$material->id.')']) !!}

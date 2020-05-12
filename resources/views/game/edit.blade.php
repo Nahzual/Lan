@@ -5,7 +5,7 @@
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>Editing Game : {{$game->name_game}}</h3>
+							<h3>Editing Game : {!!$game->name_game!!}</h3>
 						</div>
 					</div>
 				</div>

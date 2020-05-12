@@ -5,7 +5,7 @@
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>Adding helper to Lan : {{$lan->name}}</h3>
+							<h3>Adding helper to Lan : {!!$lan->name!!}</h3>
 						</div>
 					</div>
 				</div>

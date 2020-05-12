@@ -5,7 +5,7 @@
 <div class="card">
 	<div class="card-header">
 		<div class="row">
-			<h3>Viewing : {{$lan->name}}</h3>
+			<h3>Viewing : {!!$lan->name!!}</h3>
 			@if($userIsLanAdmin && $lan->waiting_lan==config('waiting.REJECTED'))
 			<div class="col mt-1">
 				@csrf

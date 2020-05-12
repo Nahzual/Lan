@@ -232,7 +232,8 @@ class LansController extends Controller
 						if($userIsLanHelper){
 							$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 							$shoppings=$lan->shoppings()->materials()->select('materials.*','quantity', 'shopping.*')->get()->take(-5);
-							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+							$tasks = $lan->tasks->take(-5);
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 						}

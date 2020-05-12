@@ -15,7 +15,7 @@
 
 				<div class="card-body">
 					{!! Form::model($task, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$lan->id.','.$task->id.')']) !!}
-						<div class="bg-light">
+						<div >
 							<div class="form-group">
 								{!! Form::label('name_task', 'Name', ['class' => '']) !!}
 								{!! Form::text('name_task', null, ['class' => 'form-control']) !!}
@@ -31,10 +31,10 @@
 						</div>
 						<div class="form-group row text-center">
 							<div class="col">
-								<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>
+								<button type="submit" class="btn btn-outline-warning shadow-sm"><i class='fa fa-edit'></i> Update</button>
 							</div>
 							<div class="col">
-								<a class="btn btn-primary" href="{{ route('task.all') }}"><i class='fa fa-arrow-left'></i> To your tasklist</a>
+								<a class="btn btn-outline-info shadow-sm" href="{{ route('task.all') }}"><i class='fa fa-arrow-left'></i> To your tasklist</a>
 							</div>
 						</div>
 					{!! Form::close() !!}

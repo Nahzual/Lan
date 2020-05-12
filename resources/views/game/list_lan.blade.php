@@ -15,7 +15,7 @@
     <tbody>
       @if(count($games)==0)
       <tr>
-        <td colspan="5"><h3 class="text-center">No games to show</h3></td>
+        <td colspan="6"><h3 class="text-center">No games to show</h3></td>
       </tr>
       @endif
 
@@ -38,10 +38,10 @@
 				<td scope="col" id="game-ports-{{$game->id}}">
 					{{$game->ports_string($ports[$index])}}
 				</td>
-        <td scope="col">
+        <td scope="col" clas="text-center">
 					<div class="form-group row text-center">
 						<div class="col">
-							<button class="btn btn-primary" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Add/remove ports</button>
+							<button class="btn btn-outline-primary shadow-sm" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
 						</div>
 					</div>
           {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}

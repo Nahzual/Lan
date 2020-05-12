@@ -8,7 +8,7 @@
 				<div class="card-body">
 					<div id="response-success" class="alert alert-success" style="display:none"></div>
 					{!! Form::open(['method' => 'post', 'onsubmit'=>'return sendRequest(event,'.$lan->id.')']) !!}
-						<div class="bg-light">
+						<div >
 							<div class="form-group">
 								{!! Form::label('name_task', 'Name', ['class' => '']) !!}
 								{!! Form::text('name_task', null, ['class' => 'form-control']) !!}
@@ -24,11 +24,11 @@
 						</div>
 						<div class="form-group row text-center">
 							<div class="col">
-								<button type="submit" class="btn btn-primary"><i class='fa fa-plus-square'></i>Add</button>
+								<button type="submit" class="btn btn-outline-success shadow-sm"><i class='fa fa-plus-square'></i> Add</button>
 							</div>
 
 							<div class="col">
-								<a class="btn btn-primary" href="{{ route('task.all') }}"><i class='fa fa-arrow-left'></i> Go to your tasklist</a>
+								<a class="btn btn-outline-info shadow-sm" href="{{ route('task.all') }}"><i class='fa fa-arrow-left'></i> Go to your tasklist</a>
 							</div>
 						</div>
 					{!! Form::close() !!}

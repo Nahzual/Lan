@@ -96,12 +96,6 @@ Route::get('/lan/material/{id}','LansController@addMaterial')->name('lan.add_mat
 Route::post('/lan/material/{id}','LansController@postAddMaterial');
 Route::put('/lan/material/{id}','LansController@editQuantity');
 
-// shopping
-Route::delete('/lan/shopping/{id}','LansController@removeShopping')->name('lan.remove_shopping');
-Route::get('/lan/shopping/{id}','LansController@addShopping')->name('lan.add_shopping');
-Route::post('/lan/shopping/{id}','LansController@postAddShopping');
-
-
 // player participation
 Route::get('lan/participate/{id}', 'LansController@participate')->name('lan.participate');
 Route::post('lan/participate/{id}', 'LansController@postParticipate');

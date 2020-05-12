@@ -118,24 +118,30 @@ public function index()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	public function edit($id)
-	{
+	public function edit($lanId, $shoppingId)
+    {
 		if(Auth::check()){
-			$user=Auth::user();
-			if($user->rank_user==config('ranks.ADMIN')){
-				$shopping=Shopping::find($id);
-				if($shopping!=null){
-					return view('shopping.edit',compact('shopping'));
-				}else{
-					return redirect('/home')->with('error','This shopping does not exist.');
-				}
-			}else{
-				return redirect('/home')->with('error','You do not have enough rights to do this.');
-			}
-		}else{
-			return redirect('/login')->with('error','Please log in to perform this action.');
-		}
-	}
+  			$user=Auth::user();
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
+  				return back()->with('error','You can\'t edit an Shopping if you are not an admin of its LAN.');
+  			}else{
+					$lan = Lan::find($lanId);
+					if($lan!=null){
+						$shopping = $lan->shoppings()->find($shoppingId);
+						$material = $shopping->materials()->first();
+						if($shopping == null){
+							return back()->with('error','This Shopping doesn\'t exist.');
+						}else{
+							return view('shopping.edit', compact('lan', 'shopping', 'material'));
+						}
+					}else{
+						return back()->with('error','This LAN doesn\'t exist.');
+					}
+  			}
+  		}else{
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping.');
+  		}
+    }
 
     /**
      * Update the specified resource in storage.
@@ -144,30 +150,34 @@ public function index()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	public function update(Request $request, $id)
-	{
-		if(Auth::check()){
-			$user=Auth::user();
-			if($user->rank_user==config('ranks.ADMIN')){
-				$material = Material::find($id);
-				if($material!=null){
-					if($request->price_material >= 0) $material->price_material=$request->price_material;
-					else return response()->json(['error'=>'The price has to be positive or zero.']);
-					$material->name_material=htmlentities($request->name_material);
-					$material->desc_material=htmlentities($request->desc_material);
-					$material->save();
-
-					return response()->json(['success'=>'The material "'.$material->name_material.'" has been successfully edited.']);
-				}else{
-					return response()->json(['error'=>'This material does not exist.']);
-				}
-			}else{
-				return response()->json(['error','You do not have enough rights to do this.']);
-			}
-		}else{
-			return response()->json(['error','Please log in to perform this action.']);
-		}
-	}
+	public function update(Request $request, $lanId, $shoppingId)
+    {
+			if(Auth::check()){
+	  		$user=Auth::user();
+	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
+	  			return response()->json(['error'=>'You can\'t edit an shopping if you are not an admin of its LAN.']);
+	  		}else{
+					$lan = Lan::find($lanId);
+					if($lan!=null){
+						$shopping = $lan->shoppings()->find($shoppingId);
+						$material = $shopping->material()->first();
+						if($shopping == null || $material == null){
+							return response()->json(['error'=>'This shopping doesn\'t exist.']);
+						}else{
+							$shopping->update($request->all());
+							$shopping->save();
+							$material->update($request->all());
+							$material->save();
+							return response()->json(['success'=>'The shopping "'.$material->name_material.'" has been successfully edited.']);
+						}
+					}else{
+						return back()->with('error','This LAN doesn\'t exist.');
+					}
+	  		}
+	  	}else{
+	  		return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping.');
+	  	}
+    }
 
 
 	public function search(Request $request){

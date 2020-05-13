@@ -1304,7 +1304,7 @@ class LansController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function list_tours($id, $page = 1){
+    public function list_tournaments($id, $page = 1){
 	$user=Auth::user();
 	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
@@ -1340,7 +1340,7 @@ class LansController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function list_act($id, $page = 1){
+    public function list_activities($id, $page = 1){
 	$user=Auth::user();
 	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 

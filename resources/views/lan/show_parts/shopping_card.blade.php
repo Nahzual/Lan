@@ -56,5 +56,12 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
+				@foreach($shoppings as $shopping)
+				<div id="popup-shopping-{{$shopping->id}}" class="popup">
+					<div class="popup-content">
+						<span onclick="closeShopping({{$shopping->id}})" class="close">&times;</span>
+						@include('shopping.show', array('shopping'=>$shopping,'material'=>$shopping->material))
+					</div>
+				</div>
+				@endforeach

@@ -13,6 +13,8 @@ class LocationSeeder extends Seeder {
 		$p = factory(App\Country::class, 120)->create();
 		$d = factory(App\Department::class, 50)->create();
 		$c = factory(App\City::class, 50)->create();
+		$e = factory(App\Street::class, 50)->create();
+		$l = factory(App\Location::class, 50)->create();
 		
     }
 }

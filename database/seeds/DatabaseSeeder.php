@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
       $this->call(MaterialSeeder::class);
       $this->call(LocationSeeder::class);
-			$this->call(UserSeeder::class);
+	$this->call(UserSeeder::class);
       factory(App\Game::class, 50)->create();
     }
 }

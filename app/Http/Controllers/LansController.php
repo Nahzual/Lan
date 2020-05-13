@@ -1234,9 +1234,9 @@ class LansController extends Controller
 	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
         $lan = Lan::findOrFail($id);
-	//todo
+	$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
 	$nlan = $lan->name;
-	/*admins$admins=$lan->->forPage($page, 10);*/
+	$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->skip(abs(($page - 1)*10))->take(10)->get();
 
 	$max = ceil(count($tu)/10);
 
@@ -1341,34 +1341,41 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_activities($id, $page = 1){
-	$user=Auth::user();
-	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+	if(Auth::check()){
+  			$user=Auth::user();
+  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_HELPER')){
+  				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
+			}
+			else{
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
-        $lan = Lan::findOrFail($id);
-	$ta=$lan->activities;
-	$nlan = $lan->name;
-	$activities=$lan->activities->forPage($page, 10);
+				$lan = Lan::findOrFail($id);
+				$ta=$lan->activities;
+				$nlan = $lan->name;
+				$activities=$lan->activities->forPage($page, 10);
 
-	$max = ceil(count($ta)/10);
+				$max = ceil(count($ta)/10);
 
 
-	if(($page+1)*10>($max*10)){
-		$next = 0;
+				if(($page+1)*10>($max*10)){
+					$next = 0;
+				}
+				else{
+					$next = $page + 1;
+				}
+
+				if($page == 1){
+
+					$previous = 0;
+				}
+				else{
+					$previous = $page-1;
+				}
+
+				return view('lan.complete_lists.activities', compact('activities', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+			}
 	}
-	else{
-		$next = $page + 1;
-	}
-
-	if($page == 1){
-
-		$previous = 0;
-	}
-	else{
-		$previous = $page-1;
-	}
-
-	return view('lan.complete_lists.activities', compact('activities', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-
 
     }
 

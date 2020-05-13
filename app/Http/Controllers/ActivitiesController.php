@@ -67,22 +67,22 @@ class ActivitiesController extends Controller
      */
     public function show($lanId, $activityId)
     {
-			$lan=Lan::find($lanId);
-			if($lan!=null){
-				$activity=$lan->activities()->find($activityId);
-				if($activity!=null){
-					if(Auth::check()){
-						$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-						return view('activity.show', compact('lan', 'activity','userIsLanAdmin'));
-					}else{
-						return view('activity.show', compact('lan', 'activity'));
-					}
+		$lan=Lan::find($lanId);
+		if($lan!=null){
+			$activity=$lan->activities()->find($activityId);
+			if($activity!=null){
+				if(Auth::check()){
+					$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					return view('activity.show', compact('lan', 'activity','userIsLanAdmin'));
 				}else{
-					return back()->with('error','This activity doesn\'t exist.');
+					return view('activity.show', compact('lan', 'activity'));
 				}
 			}else{
-				return back()->with('error','This LAN doesn\'t exist.');
+				return back()->with('error','This activity doesn\'t exist.');
 			}
+		}else{
+			return back()->with('error','This LAN doesn\'t exist.');
+		}
     }
 
     /**

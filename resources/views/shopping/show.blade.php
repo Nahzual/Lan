@@ -13,7 +13,7 @@
 				<div class="card-body">
 					<div class="row">
 						<label class="lead col-3 mt-1 text-center">Name</label>
-						<label class="form-control col-8">{{$shoppingmat->name_material}}</label>
+						<label class="form-control col-8">{{$material->name_material}}</label>
 					</div>
 					<div class="row">
 						<label class="lead col-3 mt-1 text-center">Price</label>

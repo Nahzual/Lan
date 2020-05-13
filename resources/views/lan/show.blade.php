@@ -146,6 +146,7 @@
 <!-- pop-up windows scripts -->
 <script src="/js/windows/activity/display_window.js"></script>
 <script src="/js/windows/material/display_window.js"></script>
+<script src="/js/windows/shopping/display_window.js"></script>
 <script src="/js/windows/game/add_port_window.js"></script>
 @endsection
 

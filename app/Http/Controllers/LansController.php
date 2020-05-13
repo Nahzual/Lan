@@ -1087,14 +1087,13 @@ class LansController extends Controller
      */
     public function list_tasks($id, $page = 1){
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_HELPER')){
+			$user=Auth::user();
+			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+  			if(!$userIsLanHelper){
   				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
 			}
 			else{
-
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 				$lan = Lan::findOrFail($id);
 				$ttasks=$lan->tasks;
@@ -1133,14 +1132,13 @@ class LansController extends Controller
      */
     public function list_materials($id, $page = 1){
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_HELPER')){
+			$user=Auth::user();
+			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+  			if(!$userIsLanHelper){
   				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
 			}
 			else{
-
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 				$lan = Lan::findOrFail($id);
 				$tmat=$lan->materials;
@@ -1178,13 +1176,13 @@ class LansController extends Controller
      */
     public function list_shoppings($id, $page = 1){
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_HELPER')){
+			$user=Auth::user();
+			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+  			if(!$userIsLanHelper){
   				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
 			}
 			else{
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 				$lan = Lan::findOrFail($id);
 				$tshop=$lan->shoppings;
@@ -1221,13 +1219,14 @@ class LansController extends Controller
      */
     public function list_users($id, $page = 1){
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_HELPER')){
+			$user=Auth::user();
+			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+  			if(!$userIsLanHelper){
   				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
 			}
 			else{
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
 
 				$lan = Lan::findOrFail($id);
 				$tu=$lan->users;
@@ -1266,14 +1265,12 @@ class LansController extends Controller
      */
     public function list_admins($id, $page = 1){
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+			$user=Auth::user();
+			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+  			if(!$userIsLanAdmin){
   				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
 			}
 			else{
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-
 				$lan = Lan::findOrFail($id);
 				$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
 				$nlan = $lan->name;
@@ -1311,15 +1308,14 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_helpers($id, $page = 1){
+
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+			$user=Auth::user();
+			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+  			if(!$userIsLanAdmin){
   				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
 			}
 			else{
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-
 				$lan = Lan::findOrFail($id);
 				$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
 				$nlan = $lan->name;

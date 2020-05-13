@@ -337,4 +337,44 @@ class UsersController extends Controller
     {
 		return redirect(route('user.index'));
     }
+    /**
+     * User List
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function admList($page = 1){
+		if(Auth::check()){
+  			$user=Auth::user();
+  			if($user->rank_user!=config('ranks.SITE_ADMIN')){
+  				return back()->with('error','You are not an Admin');
+			}
+			else{
+				$tu = User::get();
+				$users= User::skip(abs(($page - 1)*10))->take(10)->get();
+
+				$max = ceil(count($tu)/10);
+
+
+				if(($page+1)*10>($max*10)){
+					$next = 0;
+				}
+				else{
+					$next = $page + 1;
+				}
+
+				if($page == 1){
+
+					$previous = 0;
+				}
+				else{
+					$previous = $page-1;
+				}
+				//reduce users before compacting (limit the amount of information like emails)
+
+				return view('user.list', compact('users', 'max', 'previous', 'next', 'page'));
+			}
+		}
+
+
+    }
 }

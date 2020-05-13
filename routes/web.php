@@ -164,6 +164,8 @@ Route::put('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')-
 
 Route::resource('user', 'UsersController');
 Route::get('search/user/', 'UsersController@search');
+Route::get('adm/users', 'UsersController@admList')->name('admin.users');
+Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.page');
 Route::get('search/helper/{task}', 'UsersController@searchHelper');
 
 Route::get('/az', function(){

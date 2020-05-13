@@ -97,7 +97,8 @@ class PageController extends Controller
 			$user = Auth::user();
 			if($user->isSiteAdmin()){
 				$waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
-				return view('dashboard.admin.index',compact('user','waiting_lans'));
+				$users = User::take(-5)->get();
+				return view('dashboard.admin.index',compact('user','waiting_lans', 'users'));
 			}else{
 				return redirect('/dashboard')->with('error','You don\'t have enough rights to access this page.');
 			}

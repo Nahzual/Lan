@@ -6,7 +6,7 @@
 								</div>
 								<div class="col">
 									<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_activities" aria-expanded="false" aria-controls="lan_activities">Show/hide</button>
-									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.add_game', $lan->id) }}"><i class='fa fa-list'></i> All</a>
+									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.activity_list', $lan->id)  }}"><i class='fa fa-list'></i> All</a>
 								</div>
 							</div>
 						</div>

@@ -43,7 +43,7 @@ $places_left=count($lan->real_users); ?>
 			<div class="col-md-8">
 
 				@include('lan.show_guest_parts.about_card')
-		  </div><!-- col 1-->
+		 	 </div><!-- col 1-->
 			<div class="col-md-4">
 				@include('lan.show_guest_parts.quick_links')
 			</div>

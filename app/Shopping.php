@@ -22,6 +22,6 @@ class Shopping extends Model
 
 	public function materials()
 	{
-	return $this->belongsToMany('App\Material','contains');
+		return $this->belongsToMany('App\Material','contains');
 	}
 }

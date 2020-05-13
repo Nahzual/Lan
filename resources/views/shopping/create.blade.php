@@ -10,6 +10,8 @@
 				</div>
 				<div class="card-body">
 					<div id="response-success" class ="alert alert-success" style="display:none"></div>
+					<div id="response-error" class ="alert alert-danger" style="display:none"></div>
+
 					{!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event,'.$lan->id.')']) !!}
 						<div class="form-group">
 							{!! Form::label('cost_shopping', 'Price', ['class' => 'display-6']) !!}

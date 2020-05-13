@@ -14,7 +14,8 @@ function sendRequest(e,lanID){
 			desc_material: $('#desc_material').val(),
 			category_material: $('#category_material').val(),
 			cost_shopping: $('#cost_shopping').val(),
-			quantity_shopping: $('#quantity_shopping').val()
+			quantity_shopping: $('#quantity_shopping').val(),
+			material_id: $('#material_id').val(),
 		},
 		success: function(result){
 			var success=$('#response-success');

@@ -4,13 +4,13 @@
 								<div class="col mt-2">
 									<h4>Shopping</h4>
 								</div>
-								
+
 								<div class="col">
 									<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_shopping" aria-expanded="false" aria-controls="lan_shopping">Show/hide</button>
 									@if ($userIsLanAdminOrHelper)<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('shopping.create', $lan->id) }}"><i class='fa fa-plus'></i></a>@endif
 									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.shopping_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
 								</div>
-								
+
 							</div>
 						</div>
 						<div class="collapse" id="lan_shopping" aria-labelledby="heading-shopping">
@@ -33,7 +33,7 @@
 											@foreach($shoppings as $shopping)
 												<tr id="row-shopping-lan-{{$shopping->id}}">
 													<th scope="row">{{$shopping->id}}</th>
-													<td scope="col">{{$shopping->materials()->first()->name_material}}</td>
+													<td scope="col">{{$shopping->materials()->first()['name_material']}}</td>
 													<th scope="row">{{$shopping->cost_shopping}} €</th>
 													<th scope="row">{{$shopping->quantity_shopping}}</th>
 													<td scope="col" class=" text-center">

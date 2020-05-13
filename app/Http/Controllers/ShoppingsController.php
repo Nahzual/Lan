@@ -61,29 +61,52 @@ public function index()
 
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($lanId)==null && !$user->isSiteAdmin()){
+				$lan = $user->lans()->find($lanId);
+  			if($lan==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add an shopping to a LAN you are not an admin of.');
   			}else{
-				$lan = $user->lans()->find($lanId);
-				if($request->has('name_material') && $request->has('desc_material') && $request->has('category_material')){
-					$material = new Material();
-					$material->name_material = htmlentities($request->name_material);
-					$material->desc_material = htmlentities($request->desc_material);
-					$material->category_material = htmlentities($request->category_material);
-					$material->save();
-				}else{
-					$material = Material::Find($request->material_id);
-				}
-				$shopping = new Shopping();
-				$shopping->cost_shopping = htmlentities($request->cost_shopping);
-				$shopping->quantity_shopping = htmlentities($request->quantity_shopping);
-				$shopping->save();
-				$shopping->materials()->attach($material->id);
-				$shopping->lans()->attach($lanId);
 
-				return response()->json([
-					'success'=>'Your shopping has been saved successfully.'
-				]);
+					if(!empty($request->name_material) && !empty($request->desc_material) && !empty($request->category_material)){
+						$material = new Material();
+						$material->name_material = htmlentities($request->name_material);
+						$material->desc_material = htmlentities($request->desc_material);
+						$material->category_material = htmlentities($request->category_material);
+						$material->save();
+					}else if(isset($request->material_id)){
+						$material = Material::find($request->material_id);
+						if($material==null){
+							return response()->json(['error'=>'This material does not exist.']);
+						}
+					}else{
+						return response()->json(['error'=>'Please provide a correct material.']);
+					}
+
+					if(isset($request->cost_shopping)){
+						if(is_numeric($request->cost_shopping) && $request->cost_shopping>=0){
+							if(isset($request->quantity_shopping)){
+								if(is_numeric($request->quantity_shopping) && $request->quantity_shopping>0){
+									$shopping = new Shopping();
+									$shopping->cost_shopping = htmlentities($request->cost_shopping);
+									$shopping->quantity_shopping = htmlentities($request->quantity_shopping);
+									$shopping->save();
+									$shopping->materials()->attach($material);
+									$shopping->lans()->attach($lan);
+
+									return response()->json([
+										'success'=>'Your shopping has been saved successfully.'
+									]);
+								}else{
+									return response()->json(['error'=>'The quantity of material must be a positive number.']);
+								}
+							}else{
+								return response()->json(['error'=>'Please provide the quantity of material.']);
+							}
+						}else{
+							return response()->json(['error'=>'The shopping\'s cost must be 0 or a positive number.']);
+						}
+					}else{
+						return response()->json(['error'=>'Please provide the shopping\'s cost.']);
+					}
   			}
   		}else{
   			return redirect('/login')->with('error','You must be logged in to edit a LAN.');

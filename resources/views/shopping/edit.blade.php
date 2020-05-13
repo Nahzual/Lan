@@ -18,11 +18,11 @@
 				<div>
 					<div class="form-group">
 						{!! Form::label('cost_shopping', 'Price', ['class' => 'display-6']) !!}
-						{!! Form::number('cost_shopping', null, ['class' => 'form-control']) !!}
+						{!! Form::number('cost_shopping', null, ['step'=>'0.01','min'=>'0','class' => 'form-control']) !!}
 					</div>
 					<div class="form-group">
 						{!! Form::label('quantity_shopping', 'Quantity', ['class' => 'display-6']) !!}
-						{!! Form::number('quantity_shopping', null, ['class' => 'form-control']) !!}
+						{!! Form::number('quantity_shopping', null, ['min'=>'0','class' => 'form-control']) !!}
 					</div>
 				</div>
 				<div class="form-group row text-center">

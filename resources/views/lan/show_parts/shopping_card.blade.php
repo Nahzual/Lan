@@ -22,6 +22,7 @@
 											<th scope="col" >Name</th>
 											<th scope="col" >Cost</th>
 											<th scope="col" >Quantity</th>
+											<th scope="col" ></th>
 										</thead>
 
 										<tbody>

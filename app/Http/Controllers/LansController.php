@@ -1118,7 +1118,7 @@ class LansController extends Controller
 					$previous = $page-1;
 				}
 
-				return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page','lan'));
 			}
 		}
 

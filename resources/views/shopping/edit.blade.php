@@ -24,21 +24,6 @@
 						{!! Form::label('quantity_shopping', 'Quantity', ['class' => 'display-6']) !!}
 						{!! Form::number('quantity_shopping', null, ['class' => 'form-control']) !!}
 					</div>
-					<div class="form-group">
-						<p>Material</p>
-					</div>
-					<div class="form-group">
-						{!! Form::label('name_material', 'Name', ['class' => 'display-6']) !!}
-						{!! Form::text('name_material', $material->name_material, ['class' => 'form-control']) !!}
-					</div>
-					<div class="form-group">
-						{!! Form::label('category_material', 'Category', ['class' => 'display-6']) !!}
-						{!! Form::text('category_material', $material->category_material, ['class' => 'form-control']) !!}
-					</div>
-					<div class="form-group">
-						{!! Form::label('desc_material', 'Description', ['class' => 'display-6']) !!}
-						{!! Form::textarea('desc_material', $material->desc_material, ['class' => 'form-control']) !!}
-					</div>
 				</div>
 				<div class="form-group row text-center">
 					<div class="col">

@@ -33,7 +33,7 @@
 											@foreach($shoppings as $shopping)
 												<tr id="row-shopping-lan-{{$shopping->id}}">
 													<th scope="row">{{$shopping->id}}</th>
-													<td scope="col">{{$shopping->material['name_material']}}</td>
+													<td scope="col">{{$shopping->material->name_material}}</td>
 													<th scope="row">{{$shopping->cost_shopping}} €</th>
 													<th scope="row">{{$shopping->quantity_shopping}}</th>
 													<td scope="col" class=" text-center">

@@ -4,13 +4,13 @@
 								<div class="col mt-2">
 									<h4>Materials</h4>
 								</div>
-								@if ($userIsLanAdmin)
 								<div class="col">
 									<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_materials" aria-expanded="false" aria-controls="lan_materials">Show/hide</button>
+									@if ($userIsLanAdminOrHelper)
 									<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('lan.add_material', $lan->id) }}"><i class='fa fa-plus'></i></a>
 									<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.material_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
+									@endif
 								</div>
-								@endif
 							</div>
 						</div>
 						<div class="collapse" id="lan_materials" aria-labelledby="heading-material">

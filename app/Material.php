@@ -18,6 +18,6 @@ class Material extends Model
 
 	public function shoppings()
 	{
-	return $this->belongsToMany('App\Shopping','contains');
+	return $this->hasMany('App\Shopping');
 	}
 }

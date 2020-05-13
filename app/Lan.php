@@ -28,7 +28,7 @@ class Lan extends Model
 
   public function shoppings()
   {
-    return $this->belongsToMany('App\Shopping','requires');
+    return $this->hasMany('App\Shopping');
   }
 
   public function materials()

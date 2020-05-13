@@ -77,9 +77,9 @@ public function index()
 				$shopping = new Shopping();
 				$shopping->cost_shopping = htmlentities($request->cost_shopping);
 				$shopping->quantity_shopping = htmlentities($request->quantity_shopping);
+				$shopping->material()->associate($material->id);
+				$shopping->lan()->associate($lan->id);
 				$shopping->save();
-				$shopping->materials()->attach($material->id);
-				$shopping->lans()->attach($lanId);
 
 				return response()->json([
 					'success'=>'Your shopping has been saved successfully.'
@@ -102,7 +102,7 @@ public function index()
 		$lan=Lan::find($lanId);
 		if($lan!=null){
 			$shopping=$lan->shoppings()->find($shoppingId);
-			$material = $shopping->materials()->first();
+			$material = $shopping->material;
 			if($shopping!=null && $material!=null){
 				if(Auth::check()){
 					$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
@@ -134,8 +134,8 @@ public function index()
 					$lan = Lan::find($lanId);
 					if($lan!=null){
 						$shopping = $lan->shoppings()->find($shoppingId);
-						$material = $shopping->materials()->first();
-						if($shopping == null){
+						$material = $shopping->material;
+						if($shopping == null && $material == null){
 							return back()->with('error','This Shopping doesn\'t exist.');
 						}else{
 							return view('shopping.edit', compact('lan', 'shopping', 'material'));
@@ -166,7 +166,7 @@ public function index()
 					$lan = Lan::find($lanId);
 					if($lan!=null){
 						$shopping = $lan->shoppings()->find($shoppingId);
-						$material = $shopping->material()->first();
+						$material = $shopping->material;
 						if($shopping == null || $material == null){
 							return response()->json(['error'=>'This shopping doesn\'t exist.']);
 						}else{

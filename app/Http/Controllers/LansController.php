@@ -1319,9 +1319,9 @@ class LansController extends Controller
 				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 				$lan = Lan::findOrFail($id);
-				//todo
+				$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
 				$nlan = $lan->name;
-				/*helpers$helpers=$lan->->forPage($page, 10);*/
+				$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->skip(abs(($page - 1)*10))->take(10)->get();
 
 				$max = ceil(count($tu)/10);
 

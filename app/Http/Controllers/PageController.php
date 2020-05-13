@@ -97,8 +97,9 @@ class PageController extends Controller
 			$user = Auth::user();
 			if($user->isSiteAdmin()){
 				$waiting_lans = Lan::where('waiting_lan','=',config('waiting.WAITING'))->get();
-				$users = User::take(-5)->get();
-				return view('dashboard.admin.index',compact('user','waiting_lans', 'users'));
+				$latest_users = User::orderBy('created_at','desc')->limit(5)->get();
+				$latest_deleted_users = User::onlyTrashed()->orderBy('deleted_at','desc')->limit(5)->get();
+				return view('dashboard.admin.index',compact('user','waiting_lans','latest_users','latest_deleted_users'));
 			}else{
 				return redirect('/dashboard')->with('error','You don\'t have enough rights to access this page.');
 			}

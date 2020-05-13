@@ -67,13 +67,18 @@ class UsersController extends Controller
     {
   		if(Auth::check()){
           $user=Auth::user();
-          if($user->id==$id){
-            $location = $user->location;
-      			$street = $location->street;
-      			$city = $street->city;
-      			$department = $city->department;
-      			$country = $department->country;
-            return view('auth.edit',compact('user','location','street','city','department','country'));
+          if($user->id==$id || $user->isSiteAdmin()){
+						if($user->id!=$id) $user=User::find($id);
+						if($user!=null){
+							$location = $user->location;
+							$street = $location->street;
+							$city = $street->city;
+							$department = $city->department;
+							$country = $department->country;
+							return view('auth.edit',compact('user','location','street','city','department','country'));
+						}else{
+							return back()->with('error','This user doesn\'t exist.');
+						}
           }else{
             return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
           }
@@ -335,18 +340,77 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-		return redirect(route('user.index'));
+			if(Auth::check()){
+				$logged_user=Auth::user();
+				if($logged_user->id==$id || $logged_user->isSiteAdmin()){
+					$user=User::find($id);
+					if($user!=null){
+						if($user->id==$logged_user->id){
+							Auth::logout();
+							$user->destroy();
+							return response()->json(['success'=>'Your account has been successfully deleted.']);
+						}else{
+							$user->delete();
+							try{
+								Mail::send('mails.notification_ban',[], function ($message) {
+									$message->from('lancreator.noreply@gmail.com','LAN Creator')
+										->to($user->email)
+										->subject('Your have been banned from LanCreator');
+								});
+							}catch(\Exception $e){}
+
+								return response()->json(['success'=>'This user\'s account has been successfully deleted.',
+																				 'html'=>view('user.show_restore',compact('user'))->render() ]);
+						}
+					}else{
+						return response()->json(['error'=>'This user does not exist.']);
+					}
+				}else{
+					return response()->json(['error'=>'You don\'t have enough rights to perform this action.']);
+				}
+			}else{
+				return response()->json(['error'=>'Please log in to perform this action.']);
+			}
     }
-    /**
-     * User List
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function admList($page = 1){
+
+		public function restore($id)
+		{
+			if(Auth::check()){
+				$logged_user=Auth::user();
+				if($logged_user->isSiteAdmin()){
+					$user=User::onlyTrashed()->find($id);
+					if($user!=null){
+						$user->restore();
+						try{
+							Mail::send('mails.notification_restore',[], function ($message) {
+								$message->from('lancreator.noreply@gmail.com','LAN Creator')
+									->to($user->email)
+									->subject('Your LanCreator has been restored');
+							});
+						}catch(\Exception $e){}
+						return response()->json(['success'=>'This user\'s account has been successfully restored.',
+																		 'html'=>view('user.show_delete',compact('user'))->render() ]);
+					}else{
+						return response()->json(['error'=>'This user hasn\'t been deleted.']);
+					}
+				}else{
+					return response()->json(['error'=>'You don\'t have enough rights to perform this action.']);
+				}
+			}else{
+				return response()->json(['error'=>'Please log in to perform this action.']);
+			}
+		}
+
+		/**
+		 * User List
+		 *
+		 * @return \Illuminate\Contracts\Support\Renderable
+		 */
+		public function admList($page = 1){
 		if(Auth::check()){
-  			$user=Auth::user();
-  			if($user->rank_user!=config('ranks.SITE_ADMIN')){
-  				return back()->with('error','You are not an Admin');
+				$user=Auth::user();
+				if($user->rank_user!=config('ranks.SITE_ADMIN')){
+					return back()->with('error','You are not an Admin');
 			}
 			else{
 				$tu = User::get();
@@ -374,7 +438,4 @@ class UsersController extends Controller
 				return view('user.list', compact('users', 'max', 'previous', 'next', 'page'));
 			}
 		}
-
-
-    }
 }

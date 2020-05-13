@@ -163,6 +163,7 @@ Route::put('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')-
 /*GLOBAL ADMIN ROUTES*/
 
 Route::resource('user', 'UsersController');
+Route::post('/user/{user}/restore','UsersController@restore');
 Route::get('search/user/', 'UsersController@search');
 Route::get('adm/users', 'UsersController@admList')->name('admin.users');
 Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.page');

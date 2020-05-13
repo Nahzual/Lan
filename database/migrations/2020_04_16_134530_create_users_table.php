@@ -24,10 +24,11 @@ class CreateUsersTable extends Migration
             $table->string('tel_user',10);
             $table->unsignedInteger('rank_user')->default(0);
             $table->unsignedBigInteger('location_id');
-	        $table->unsignedSmallInteger('theme')->default(0);
+	        	$table->unsignedSmallInteger('theme')->default(0);
             $table->foreign('location_id')->references('id')->on('locations');
             $table->rememberToken();
             $table->timestamps();
+						$table->softDeletes();
         });
     }
 

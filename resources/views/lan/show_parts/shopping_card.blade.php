@@ -33,13 +33,13 @@
 											@foreach($shoppings as $shopping)
 												<tr id="row-shopping-lan-{{$shopping->id}}">
 													<th scope="row">{{$shopping->id}}</th>
-													<td scope="col">{{$shopping->materials()->first()['name_material']}}</td>
+													<td scope="col">{{$shopping->material['name_material']}}</td>
 													<th scope="row">{{$shopping->cost_shopping}} €</th>
 													<th scope="row">{{$shopping->quantity_shopping}}</th>
 													<td scope="col" class=" text-center">
 														<div class="btn-group">
 															{!! Form::open(['onsubmit'=>'return false;']) !!}
-																<button class="btn btn-success mr-2" id="shopping-view-{{$shopping->id}}" onclick="openActivity({{$shopping->id}})"><i class='fa fa-eye'></i> View</button>
+																<button class="btn btn-success mr-2" id="shopping-view-{{$shopping->id}}" onclick="openShopping({{$shopping->id}})"><i class='fa fa-eye'></i> View</button>
 															{{ Form::close() }}
 															{!! Form::open(['method'=>'get','url'=>route('shopping.edit', array('lan' => $lan->id, 'shopping' => $shopping->id))]) !!}
 																<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> Edit</button>

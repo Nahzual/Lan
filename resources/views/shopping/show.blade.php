@@ -12,20 +12,28 @@
 
 				<div class="card-body">
 					<div class="row">
+						<label class="lead col-3 mt-1 text-center">Price</label>
+						<label class="form-control col-8">{{$shopping->price_shopping}}</label>
+					</div>
+					<div class="row">
+						<label class="lead col-3 mt-1 text-center">Quantity</label>
+						<label class="form-control col-8">{{$shopping->quantity_shopping}}</label>
+					</div>
+					<div class="row">
+						<label class="lead col-3 mt-1 text-center">Total price</label>
+						<label class="form-control col-8">{{}}</label>
+					</div>
+					<div class="row">
 						<label class="lead col-3 mt-1 text-center">Name</label>
 						<label class="form-control col-8">{{$material->name_material}}</label>
 					</div>
 					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Price</label>
-						<label class="form-control col-8">{{$shoppingmat->price_material}}</label>
+						<label class="lead col-3 mt-1 text-center">Category</label>
+						<label class="form-control col-8">{{$material->category_material}}</label>
 					</div>
 					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Quantity</label>
-						<label class="form-control col-8">{{$shoppingmat->quantity}}</label>
-					</div>
-					<div class="row">
-						<label class="lead col-3 mt-1 text-center">Total price</label>
-						<label class="form-control col-8">{{$shoppingmat->cost_shopping}}</label>
+						<label class="lead col-3 mt-1 text-center">Description</label>
+						<label class="form-control col-8">{{$material->desc_material}}</label>
 					</div>
 					<div class="form-group row text-center">
 						<div class="col">

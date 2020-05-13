@@ -83,6 +83,13 @@
 				@include('lan.show_parts.tasks_card')
 			</div>
 
+			<div class="col-md-6">
+				<div id="response-success-task" class="container alert alert-success mt-2" style="display:none"></div>
+				<div id="response-error-task" class="container alert alert-danger mt-2" style="display:none"></div>
+
+				@include('lan.show_parts.users_card')
+			</div>
+
 		</div>
 		@endif
 		@if ($userIsLanAdmin)

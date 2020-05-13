@@ -220,6 +220,7 @@ class LansController extends Controller
 					if($userIsLanAdmin){
 						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get()->take(-5);
 						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
+						$users=$lan->users->take(-5);
 						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 						$tasks = $lan->tasks->take(-5);
 						$shoppings = $lan->shoppings->take(-5);
@@ -227,14 +228,15 @@ class LansController extends Controller
 						foreach($ports as $index=>$game){
 							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
 						}
-						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings'))->with(['userIsLanAdminOrHelper'=>true]);
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'users', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings'))->with(['userIsLanAdminOrHelper'=>true]);
 					}else{
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 						if($userIsLanHelper){
 							$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 							$shoppings = $lan->shoppings->take(-5);
 							$tasks = $lan->tasks->take(-5);
-							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+							$users=$lan->users->take(-5);
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'users','department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 						}
@@ -1228,9 +1230,9 @@ class LansController extends Controller
 				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 				$lan = Lan::findOrFail($id);
-				$tu=$lan->real_users;
+				$tu=$lan->users;
 				$nlan = $lan->name;
-				$users=$lan->real_users->forPage($page, 10);
+				$users=$lan->users->forPage($page, 10);
 
 				$max = ceil(count($tu)/10);
 

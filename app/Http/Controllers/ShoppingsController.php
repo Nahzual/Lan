@@ -235,25 +235,29 @@ public function index()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	public function destroy($id){
-		if(Auth::check()){
-			if(Auth::user()->rank_user==config('ranks.SITE_ADMIN')){
-				$shopping=Shopping::find($id);
-
-				// todo shopping
-
-				/*if($shopping!=null){
-					$shopping->delete();
-					return response()->json(['success'=>'This shopping has been successfully deleted.']);
-				}else{
-					return response()->json(['error'=>'This shopping does not exist.']);
-				}*/
-			}else{
-				return response()->json(['error','You do not have enough rights to do this.']);
-			}
-		}else{
-			return response()->json(['error'=>'Please log in to perform this action.']);
-		}
-	}
+	public function destroy($lanId, $shoppingId)
+    {
+      if(Auth::check()){
+  			$user=Auth::user();
+				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
+	  			return response()->json(['error'=>'You can\'t delete an shopping if you are not an admin of its LAN.']);
+  			}else{
+					$lan = Lan::find($lanId);
+					if($lan!=null){
+						$shopping = $lan->shoppings()->find($shoppingId);
+						if($shopping == null){
+							return response()->json(['error'=>'This shopping doesn\'t exist.']);
+						}else{
+							$shopping->delete();
+							return response()->json(['success'=>'This shopping has been successfully deleted.']);
+						}
+					}else{
+						return response()->json(['error'=>'This LAN doesn\'t exist.']);
+					}
+	  		}
+  		}else{
+  			return redirect('/login')->with('error','You must be logged in to delete a LAN\'s shopping.');
+  		}
+    }
 
 }

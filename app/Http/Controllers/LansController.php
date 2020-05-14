@@ -228,7 +228,11 @@ class LansController extends Controller
 						foreach($ports as $index=>$game){
 							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
 						}
-						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'users', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings'))->with(['userIsLanAdminOrHelper'=>true]);
+						$totalprice_shopping = 0;
+						foreach($shoppings as $shopping){
+							$totalprice_shopping += $shopping->cost_shopping*$shopping->quantity_shopping;
+						}
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'users', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
 					}else{
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 						if($userIsLanHelper){
@@ -236,7 +240,11 @@ class LansController extends Controller
 							$shoppings = $lan->shoppings->take(-5);
 							$tasks = $lan->tasks->take(-5);
 							$users=$lan->users->take(-5);
-							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'users','department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin'))->with(['userIsLanAdminOrHelper'=>true]);
+							$totalprice_shopping = 0;
+							foreach($shoppings as $shopping){
+								$totalprice_shopping += $shopping->cost_shopping*$shopping->quantity_shopping;
+							}
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'users','department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{
 							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 						}

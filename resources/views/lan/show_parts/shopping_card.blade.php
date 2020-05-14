@@ -52,6 +52,14 @@
 													</td>
 												</tr>
 											@endforeach
+												<tr id="row-shopping-lan-totalprice_shopping">
+													<th scope="row">Total Price</th>
+													<td scope="col" class=" text-center">
+														<div class="btn-group">
+														{!!$totalprice_shopping!!} €
+														</div>
+													</td>
+												</tr>
 										</tbody>
 									</table>
 								</div>

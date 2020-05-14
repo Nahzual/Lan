@@ -7,9 +7,24 @@ function removeShopping(e, lanId, shoppingId){
 		data: "_token="+$("[name='_token']").val()
 		+'&_method='+$("[name='_method']").val(),
 		success: function(data){
-			var success=$('#response-success');
-			var error=$('#response-error');
+			var success=$('#response-success-shopping');
+			var error=$('#response-error-shopping');
 			if(data.success != undefined){
+				var budget=parseFloat($('#lan-budget').html().replace(' €',''));
+				var remaining_element=$('#lan-shopping-remaining-money');
+				var remaining=parseFloat(remaining_element.html().replace(' €',''));
+
+				var total_price_element=$('#lan-totalprice_shopping');
+				var total_price=parseFloat(total_price_element.html().replace(' €',''));
+
+				var cost=parseFloat($('#row-shopping-cost-'+shoppingId).html().replace(' €',''));
+				var quantity=parseFloat($('#row-shopping-quantity-'+shoppingId).html());
+
+				total_price=total_price-cost*quantity;
+				total_price_element.html(total_price+' €');
+				remaining_element.html(budget-total_price+' €');
+
+				$('#row-shopping-lan-'+shoppingId).remove();
 				success.show();
 				error.hide();
 				success.html(data.success);

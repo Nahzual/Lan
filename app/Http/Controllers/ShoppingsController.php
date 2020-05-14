@@ -60,9 +60,12 @@ public function index()
 		 public function store(Request $request, $lanId){
 			if(Auth::check()){
 				$user=Auth::user();
-				$lan = $user->lans()->find($lanId);
+				$lan = $user->lans()->where(function($query){
+					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+				})->find($lanId);
 				if($lan==null && !$user->isSiteAdmin()){
-					return back()->with('error','You can\'t add an shopping to a LAN you are not an admin of.');
+					return back()->with('error','You can\'t add a shopping to a LAN you are not an admin or helper of.');
 				}else{
 					if(isset($request->material_id)){
 						$material = Material::find($request->material_id);
@@ -71,19 +74,13 @@ public function index()
 								if(is_numeric($request->cost_shopping) && $request->cost_shopping>=0){
 									if(isset($request->quantity_shopping)){
 										if(is_numeric($request->quantity_shopping) && $request->quantity_shopping>0){
-											$shopping_lan=$lan->shoppings()->where('shoppings.material_id','=',$material->id)->first();
-											if($shopping_lan==null){
-												$shopping = new Shopping();
-												$shopping->cost_shopping = htmlentities($request->cost_shopping);
-												$shopping->quantity_shopping = htmlentities($request->quantity_shopping);
-												$shopping->material()->associate($material);
-												$shopping->lan()->associate($lan);
-												$shopping->save();
-											}else{
-												$shopping_lan->cost_shopping += $request->cost_shopping;
-												$shopping_lan->quantity_shopping += $request->quantity_shopping;
-												$shopping_lan->save();
-											}
+											$shopping = new Shopping();
+											$shopping->cost_shopping = htmlentities($request->cost_shopping);
+											$shopping->quantity_shopping = htmlentities($request->quantity_shopping);
+											$shopping->material()->associate($material);
+											$shopping->lan()->associate($lan);
+											$shopping->save();
+
 											return response()->json([
 												'success'=>'Your shopping has been saved successfully.'
 											]);

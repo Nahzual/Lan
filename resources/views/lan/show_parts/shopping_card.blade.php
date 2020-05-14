@@ -35,8 +35,8 @@
 												<tr id="row-shopping-lan-{{$shopping->id}}">
 													<th scope="row">{{$shopping->id}}</th>
 													<td scope="col">{{$shopping->material->name_material}}</td>
-													<th scope="row">{{$shopping->cost_shopping}} €</th>
-													<th scope="row">{{$shopping->quantity_shopping}}</th>
+													<th scope="row" id="row-shopping-cost-{{$shopping->id}}">{{$shopping->cost_shopping}} €</th>
+													<th scope="row" id="row-shopping-quantity-{{$shopping->id}}">{{$shopping->quantity_shopping}}</th>
 													<td scope="col" class=" text-center">
 														<div class="btn-group">
 															{!! Form::open(['onsubmit'=>'return false;']) !!}
@@ -58,27 +58,27 @@
 										<thead class="card-table text-center">
 											<th scope="col" >Total Price</th>
 											<th scope="col" >Budget</th>
-											<th scope="col" >remaining money</th>
+											<th scope="col" >Remaining money</th>
 										</thead>
 										<tbody>
-											<tr id="row-shopping-lan-totalprice_shopping">
+											<tr>
 												<td scope="col" class=" text-center">
-													<div class="btn-group">
+													<div class="btn-group" id="lan-totalprice_shopping">
 														{!!$totalprice_shopping!!} €
 													</div>
 												</td>
 												<td scope="col" class="text-center">
-													<div class="btn-group text-success">
+													<div class="btn-group text-success" id="lan-budget">
 														{!!$lan->budget!!} €
 													</div>
 												</td>
 												<td scope="col" class=" text-center">
 													@if($lan->budget-$totalprice_shopping > 0)
-														<div class="btn-group text-success">
+														<div class="btn-group text-success" id="lan-shopping-remaining-money">
 															{!!$lan->budget-$totalprice_shopping!!} €
 														</div>
 													@else
-														<div class="btn-group text-danger">
+														<div class="btn-group text-danger" id="lan-shopping-remaining-money">
 															{!!$lan->budget-$totalprice_shopping!!} €
 														</div>
 													@endif

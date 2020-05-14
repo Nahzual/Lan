@@ -61,7 +61,7 @@ class GamesController extends Controller
 
        if(Auth::check()){
            $user=Auth::user();
-           if($user->rank_user==config('ranks.ADMIN')){
+           if($user->isSiteAdmin()){
              $game = new Game();
 
              if($request->cost_game >= 0) $game->cost_game=$request->cost_game;
@@ -119,7 +119,7 @@ class GamesController extends Controller
     {
   		if(Auth::check()){
           $user=Auth::user();
-          if($user->rank_user==config('ranks.ADMIN')){
+          if($user->isSiteAdmin()){
             $game=Game::find($id);
             if($game!=null){
               return view('game.edit',compact('game'));
@@ -145,7 +145,7 @@ class GamesController extends Controller
     {
       if(Auth::check()){
           $user=Auth::user();
-          if($user->rank_user==config('ranks.ADMIN')){
+          if($user->isSiteAdmin()){
             $game = Game::find($id);
             if($game!=null){
               if($request->cost_game >= 0) $game->cost_game=$request->cost_game;

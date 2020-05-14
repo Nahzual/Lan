@@ -559,13 +559,18 @@ class LansController extends Controller
         $lan=Lan::find($id);
         if($lan!=null){
           if($lan->waiting_lan==config('waiting.ACCEPTED')){
-						$room=file_get_contents("../storage/lans/room_plan_".$lan->id.".json");
-            return view('lan.participate',compact('lan','room'));
+						$diff=(new \DateTime())->diff(date_create($lan->opening_date));
+						if($diff->invert==0 || $diff->days==0){
+							$room=file_get_contents("../storage/lans/room_plan_".$lan->id.".json");
+							return view('lan.participate',compact('lan','room','diff'));
+						}else{
+							return back()->with('error','You can\'t join this LAN because it is already over.');
+						}
           }else{
-            return redirect('/home')->with('error','You can\'t join this LAN because it isn\'t accepted yet.');
+            return back()->with('error','You can\'t join this LAN because it isn\'t accepted yet.');
           }
         }else{
-          return redirect('/home')->with('error','This LAN doesn\'t exist.');
+          return back()->with('error','This LAN doesn\'t exist.');
         }
 
       }else{
@@ -578,26 +583,31 @@ class LansController extends Controller
         $lan=Lan::find($id);
         if($lan!=null){
           if($lan->waiting_lan==config('waiting.ACCEPTED')){
-            $user=Auth::user();
-            $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
-            if($lan_user_player==null){
-              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number_x','=',$request->place_number_x)->where('place_number_y','=',$request->place_number_y)->select('id')->get();
-              if(count($place_taken)==0){
-								// update json file
-								if(isset($request->new_room)){
-									$file_name="../storage/lans/room_plan_".$id.".json";
-									file_put_contents($file_name,$request->new_room);
-								}
+						$diff=(new \DateTime())->diff(date_create($lan->opening_date));
+						if($diff->invert==0 || $diff->days==0){
+							$user=Auth::user();
+	            $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
+	            if($lan_user_player==null){
+	              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number_x','=',$request->place_number_x)->where('place_number_y','=',$request->place_number_y)->select('id')->get();
+	              if(count($place_taken)==0){
+									// update json file
+									if(isset($request->new_room)){
+										$file_name="../storage/lans/room_plan_".$id.".json";
+										file_put_contents($file_name,$request->new_room);
+									}
 
 
-                $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number_x'=>$request->place_number_x,'place_number_y'=>$request->place_number_y]);
-                return response()->json(['success'=>'You have been successfully registered to this LAN.']);
-              }else{
-                return response()->json(['error'=>'This place has already been taken, please choose another one.']);
-              }
-            }else{
-              return response()->json(['error'=>'You are already participating to this LAN.']);
-            }
+	                $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number_x'=>$request->place_number_x,'place_number_y'=>$request->place_number_y]);
+	                return response()->json(['success'=>'You have been successfully registered to this LAN.']);
+	              }else{
+	                return response()->json(['error'=>'This place has already been taken, please choose another one.']);
+	              }
+	            }else{
+	              return response()->json(['error'=>'You are already participating to this LAN.']);
+	            }
+						}else{
+							return response()->json(['error'=>'You can\'t join this LAN because it is already over.']);
+						}
           }else{
             return response()->json(['error'=>'You can\'t join this LAN because it isn\'t accepted yet.']);
           }
@@ -1085,35 +1095,33 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_games($id, $page = 1){
-	$user=Auth::user();
-	$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
-        $lan = Lan::findOrFail($id);
-	$tgames=$lan->games;
-	$nlan = $lan->name;
-	$games=$lan->games->forPage($page, 10);
+			  $lan = Lan::findOrFail($id);
+				$tgames=$lan->games;
+				$nlan = $lan->name;
+				$games=$lan->games->forPage($page, 10);
 
-	$max = ceil(count($tgames)/10);
+				$max = ceil(count($tgames)/10);
 
+				if(($page+1)*10>($max*10)){
+					$next = 0;
+				}else{
+					$next = $page + 1;
+				}
 
-	if(($page+1)*10>($max*10)){
-		$next = 0;
-	}
-	else{
-		$next = $page + 1;
-	}
+				if($page == 1){
+					$previous = 0;
+				}else{
+					$previous = $page-1;
+				}
 
-	if($page == 1){
-
-		$previous = 0;
-	}
-	else{
-		$previous = $page-1;
-	}
-
-	return view('lan.complete_lists.games', compact('games', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-
-
+				return view('lan.complete_lists.games', compact('games', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
+			}
     }
 
 		/**
@@ -1122,44 +1130,39 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_tasks($id, $page = 1){
-		if(Auth::check()){
-			$user=Auth::user();
-			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-  			if(!$userIsLanHelper){
-  				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+
+				if(!$userIsLanHelper && !$userIsLanAdmin){
+	  			return back()->with('error','You can\'t view a LAN\'s tasks if you are not admin or helper on this LAN.');
+				}else{
+					$lan = Lan::findOrFail($id);
+					$ttasks=$lan->tasks;
+					$nlan = $lan->name;
+					$tasks=$lan->tasks->forPage($page, 10);
+
+					$max = ceil(count($ttasks)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+
+					return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page','lan'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-			else{
-
-				$lan = Lan::findOrFail($id);
-				$ttasks=$lan->tasks;
-				$nlan = $lan->name;
-				$tasks=$lan->tasks->forPage($page, 10);
-
-				$max = ceil(count($ttasks)/10);
-
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-
-				return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page','lan'));
-			}
-		}
-
-
-    }
+  	}
 
     /**
      * List all the materials
@@ -1167,43 +1170,38 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_materials($id, $page = 1){
-		if(Auth::check()){
-			$user=Auth::user();
-			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-  			if(!$userIsLanHelper){
-  				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+
+				if(!$userIsLanAdmin && !$userIsLanHelper){
+	  			return back()->with('error','You can\'t view a LAN\'s material list if you are not admin or helper on this LAN.');
+				}else{
+					$lan = Lan::findOrFail($id);
+					$tmat=$lan->materials;
+					$nlan = $lan->name;
+					$materials=$lan->materials->forPage($page, 10);
+
+					$max = ceil(count($tmat)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+
+					return view('lan.complete_lists.materials', compact('materials', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-			else{
-
-				$lan = Lan::findOrFail($id);
-				$tmat=$lan->materials;
-				$nlan = $lan->name;
-				$materials=$lan->materials->forPage($page, 10);
-
-				$max = ceil(count($tmat)/10);
-
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-
-				return view('lan.complete_lists.materials', compact('materials', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-			}
-		}
-
-
     }
     /**
      * Shopping List
@@ -1211,42 +1209,38 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_shoppings($id, $page = 1){
-		if(Auth::check()){
-			$user=Auth::user();
-			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-  			if(!$userIsLanHelper && !$userIsLanAdmin){
-  				return back()->with('error','You can\'t edit a LAN for which you are not a helper or admin.');
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+
+				if(!$userIsLanHelper && !$userIsLanAdmin){
+	  			return back()->with('error','You can\'t view a LAN\'s shopping list if you are not admin or helper on this LAN.');
+				}else{
+					$lan = Lan::findOrFail($id);
+					$tshop=$lan->shoppings;
+					$nlan = $lan->name;
+					$shoppings=$lan->shoppings->forPage($page, 10);
+
+					$max = ceil(count($tshop)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+
+					return view('lan.complete_lists.shoppings', compact('shoppings', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-			else{
-
-				$lan = Lan::findOrFail($id);
-				$tshop=$lan->shoppings;
-				$nlan = $lan->name;
-				$shoppings=$lan->shoppings->forPage($page, 10);
-
-				$max = ceil(count($tshop)/10);
-
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-
-				return view('lan.complete_lists.shoppings', compact('shoppings', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-			}
-		}
-
     }
     /**
      * Player List
@@ -1258,83 +1252,74 @@ class LansController extends Controller
 				$user=Auth::user();
 				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-	  			if(!$userIsLanAdmin){
-	  				return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
+
+				if(!$userIsLanAdmin){
+	  			return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
+				}else{
+					$lan = Lan::findOrFail($id);
+					$tu=$lan->users;
+					$nlan = $lan->name;
+					$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->forPage($page, 10);
+
+					$max = ceil(count($tu)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
 					}else{
-						$lan = Lan::findOrFail($id);
-						$tu=$lan->users;
-						$nlan = $lan->name;
-						$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->forPage($page, 10);
+						$next = $page + 1;
+					}
 
-						$max = ceil(count($tu)/10);
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
 
-
-						if(($page+1)*10>($max*10)){
-							$next = 0;
-						}
-						else{
-							$next = $page + 1;
-						}
-
-						if($page == 1){
-
-							$previous = 0;
-						}
-						else{
-							$previous = $page-1;
-						}
-
-						//reduce users before compacting (limit the amount of information like emails)
-						return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					//reduce users before compacting (limit the amount of information like emails)
+					return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-
-
     }
+
     /**
      * Admin List
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_admins($id, $page = 1){
-		if(Auth::check()){
-			$user=Auth::user();
-			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-  			if(!$userIsLanAdmin){
-  				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+	  		if(!$userIsLanAdmin){
+	  			return back()->with('error','You do not have enough rights to view this LAN\'s admins list.');
+				}else{
+					$lan = Lan::findOrFail($id);
+					$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+					$nlan = $lan->name;
+					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->skip(abs(($page - 1)*10))->take(10)->get();
+
+					$max = ceil(count($tu)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+					//reduce users before compacting (limit the amount of information like emails)
+
+					return view('lan.complete_lists.admins', compact('admins', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-			else{
-				$lan = Lan::findOrFail($id);
-				$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-				$nlan = $lan->name;
-				$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->skip(abs(($page - 1)*10))->take(10)->get();
-
-				$max = ceil(count($tu)/10);
-
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-				//reduce users before compacting (limit the amount of information like emails)
-
-				return view('lan.complete_lists.admins', compact('admins', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-			}
-		}
-
-
     }
 
     /**
@@ -1343,50 +1328,46 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_helpers($id, $page = 1){
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+	  		if(!$userIsLanAdmin){
+					return back()->with('error','You do not have enough rights to view this LAN\'s helpers list.');
+				}else{
+					$lan = Lan::findOrFail($id);
+					$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+					$nlan = $lan->name;
+					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->skip(abs(($page - 1)*10))->take(10)->get();
 
-		if(Auth::check()){
-			$user=Auth::user();
-			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-  			if(!$userIsLanAdmin){
-  				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
+					$max = ceil(count($tu)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+
+					//reduce users before compacting (limit the amount of information like emails)
+					return view('lan.complete_lists.helpers', compact('helpers', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-			else{
-				$lan = Lan::findOrFail($id);
-				$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-				$nlan = $lan->name;
-				$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->skip(abs(($page - 1)*10))->take(10)->get();
-
-				$max = ceil(count($tu)/10);
-
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-				//reduce users before compacting (limit the amount of information like emails)
-
-				return view('lan.complete_lists.helpers', compact('helpers', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-			}
-		}
-
-
     }
+
     /**
      * Tournament List
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_tournaments($id, $page = 1){
+			if(Auth::check()){
 				$user=Auth::user();
 				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
@@ -1414,14 +1395,18 @@ class LansController extends Controller
 				}
 
 				return view('lan.complete_lists.tournaments', compact('tournaments', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
+			}
     }
+
     /**
      * Activities List
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_activities($id, $page = 1){
+			if(Auth::check()){
 				$user=Auth::user();
 				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
@@ -1432,25 +1417,20 @@ class LansController extends Controller
 
 				$max = ceil(count($ta)/10);
 
-
 				if(($page+1)*10>($max*10)){
 					$next = 0;
-				}
-				else{
+				}else{
 					$next = $page + 1;
 				}
 
 				if($page == 1){
-
 					$previous = 0;
-				}
-				else{
+				}else{
 					$previous = $page-1;
 				}
-
 				return view('lan.complete_lists.activities', compact('activities', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-
-    }
-
-
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
+			}
+		}
 }

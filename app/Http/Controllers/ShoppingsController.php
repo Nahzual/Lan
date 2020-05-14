@@ -35,10 +35,14 @@ public function index()
     {
 			if(Auth::check()){
   			$user=Auth::user();
-  			if(Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'))->first()==null && !$user->isSiteAdmin()){
-  				return back()->with('error','You can\'t add an shopping to a LAN if you are not an admin or helper of this LAN.');
+				$lan=$user->lans()->where(function($query){
+					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+				})->find($lanId);
+
+  			if($lan==null && !$user->isSiteAdmin()){
+					return back()->with('error','You can\'t add an shopping to a LAN if you are not an admin or helper of this LAN.');
   			}else{
-					$lan = $user->lans()->find($lanId);
 					$materials = $lan->materials;
 					$materials_array = array();
 					foreach($materials as $material){
@@ -153,24 +157,25 @@ public function index()
     {
 		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'))->find($lanId)==null && !$user->isSiteAdmin()){
+
+				$lan = $user->lans()->where(function($query){
+					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+				})->find($lanId);
+
+  			if($lan==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t edit an Shopping if you are not an admin or helper of its LAN.');
   			}else{
-					$lan = Lan::find($lanId);
-					if($lan!=null){
-						$shopping = $lan->shoppings()->find($shoppingId);
-						if($shopping == null){
-							return back()->with('error','This Shopping doesn\'t exist.');
-						}else{
-							$material = $shopping->material;
-							return view('shopping.edit', compact('lan', 'shopping', 'material'));
-						}
+					$shopping = $lan->shoppings()->find($shoppingId);
+					if($shopping == null){
+						return back()->with('error','This shopping list doesn\'t exist.');
 					}else{
-						return back()->with('error','This LAN doesn\'t exist.');
+						$material = $shopping->material;
+						return view('shopping.edit', compact('lan', 'shopping', 'material'));
 					}
   			}
   		}else{
-  			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping.');
+  			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping list.');
   		}
     }
 
@@ -184,22 +189,23 @@ public function index()
 	public function update(Request $request, $lanId, $shoppingId)
     {
 			if(Auth::check()){
+
 	  		$user=Auth::user();
-	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'))->find($lanId)==null && !$user->isSiteAdmin()){
+				$lan = $user->lans()->where(function($query){
+					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+				})->find($lanId);
+
+	  		if($lan==null && !$user->isSiteAdmin()){
 	  			return response()->json(['error'=>'You can\'t edit an shopping if you are not an admin or helper of its LAN.']);
 	  		}else{
-					$lan = Lan::find($lanId);
-					if($lan!=null){
-						$shopping = $lan->shoppings()->find($shoppingId);
-						if($shopping == null){
-							return response()->json(['error'=>'This shopping doesn\'t exist.']);
-						}else{
-							$shopping->update($request->all());
-							$shopping->save();
-							return response()->json(['success'=>'This shopping has been successfully edited.']);
-						}
+					$shopping = $lan->shoppings()->find($shoppingId);
+					if($shopping == null){
+						return response()->json(['error'=>'This shopping doesn\'t exist.']);
 					}else{
-						return back()->with('error','This LAN doesn\'t exist.');
+						$shopping->update($request->all());
+						$shopping->save();
+						return response()->json(['success'=>'This shopping has been successfully edited.']);
 					}
 	  		}
 	  	}else{

@@ -434,7 +434,6 @@ class UsersController extends Controller
 						$previous = $page-1;
 					}
 					//reduce users before compacting (limit the amount of information like emails)
-
 					return view('user.list', compact('users', 'max', 'previous', 'next', 'page'));
 				}
 			}
@@ -452,17 +451,17 @@ class UsersController extends Controller
 						  $user->theme = $user->theme+1;
 						  if($user->theme > 2){
 							$user->theme = 0;
-						  }	
+						  }
 						  $user->save();
-						  return redirect('/dashboard')->with('success','Enjoy your new theme.');
-						
+						  return back()->with('success','Enjoy your new theme.');
+
 						}else{
 					 		 return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
 						}
 				      }else{
 					return redirect('/login')->with('error','Please log in to perform this action.');
 				      }
-				    
+
 				}else{
 					 return redirect('/dashboard')->with('error','An error occured while updating your settings. Please try again');
 				}

@@ -45,7 +45,7 @@ public function index()
 
 		if(Auth::check()){
 			$user=Auth::user();
-			if($user->rank_user==config('ranks.ADMIN')){
+			if($user->isSiteAdmin()){
 				$material = new Material();
 
 				$material->name_material=htmlentities($request->name_material);
@@ -96,7 +96,7 @@ public function index()
 	{
 		if(Auth::check()){
 			$user=Auth::user();
-			if($user->rank_user==config('ranks.ADMIN')){
+			if($user->isSiteAdmin()){
 				$material=Material::find($id);
 				if($material!=null){
 					return view('material.edit',compact('material'));
@@ -123,7 +123,7 @@ public function index()
 	{
 		if(Auth::check()){
 			$user=Auth::user();
-			if($user->rank_user==config('ranks.ADMIN')){
+			if($user->isSiteAdmin()){
 				$material = Material::find($id);
 				if($material!=null){
 

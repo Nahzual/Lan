@@ -9,9 +9,7 @@ Dashboard
 @endsection
 
 @section('title-buttons')
-<div class="col">
-	<a class="btn btn-dark float-right" href="{{ route('user.updateTheme', $user->id) }}"><i class="fa fa-paint-brush"></i> Change Theme</a>
-</div>
+
 @endsection
 
 @section('content')

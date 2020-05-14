@@ -52,14 +52,38 @@
 													</td>
 												</tr>
 											@endforeach
-												<tr id="row-shopping-lan-totalprice_shopping">
-													<th scope="row">Total Price</th>
-													<td scope="col" class=" text-center">
-														<div class="btn-group">
+										</tbody>
+									</table>
+									<table class="text-center table card-table table-bordered">
+										<thead class="card-table text-center">
+											<th scope="col" >Total Price</th>
+											<th scope="col" >Budget</th>
+											<th scope="col" >remaining money</th>
+										</thead>
+										<tbody>
+											<tr id="row-shopping-lan-totalprice_shopping">
+												<td scope="col" class=" text-center">
+													<div class="btn-group">
 														{!!$totalprice_shopping!!} €
+													</div>
+												</td>
+												<td scope="col" class="text-center">
+													<div class="btn-group text-success">
+														{!!$lan->budget!!} €
+													</div>
+												</td>
+												<td scope="col" class=" text-center">
+													@if($lan->budget-$totalprice_shopping > 0)
+														<div class="btn-group text-success">
+															{!!$lan->budget-$totalprice_shopping!!} €
 														</div>
-													</td>
-												</tr>
+													@else
+														<div class="btn-group text-danger">
+															{!!$lan->budget-$totalprice_shopping!!} €
+														</div>
+													@endif
+												</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>

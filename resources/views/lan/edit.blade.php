@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Editing LAN : {!!lan->name!!}
+Editing LAN : {!!$lan->name!!}
 @endsection
 
 @section('page-title')

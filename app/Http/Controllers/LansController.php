@@ -1226,43 +1226,42 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_users($id, $page = 1){
-		if(Auth::check()){
-			$user=Auth::user();
-			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-  			if(!$userIsLanHelper){
-  				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
+			if(Auth::check()){
+				$user=Auth::user();
+				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+	  			if(!$userIsLanAdmin){
+	  				return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
+					}else{
+						$lan = Lan::findOrFail($id);
+						$tu=$lan->users;
+						$nlan = $lan->name;
+						$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->forPage($page, 10);
+
+						$max = ceil(count($tu)/10);
+
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}
+						else{
+							$next = $page + 1;
+						}
+
+						if($page == 1){
+
+							$previous = 0;
+						}
+						else{
+							$previous = $page-1;
+						}
+
+						//reduce users before compacting (limit the amount of information like emails)
+						return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
 			}
-			else{
-
-
-				$lan = Lan::findOrFail($id);
-				$tu=$lan->users;
-				$nlan = $lan->name;
-				$users=$lan->users->forPage($page, 10);
-
-				$max = ceil(count($tu)/10);
-
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-				//reduce users before compacting (limit the amount of information like emails)
-
-				return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-			}
-		}
 
 
     }

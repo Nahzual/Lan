@@ -7,7 +7,7 @@
 	<div class="card-body">
 		<div class="row">
 			<label class="lead col-3 mt-1 text-center">Price</label>
-			<label class="form-control col-8">{!!$shopping->cost_shopping!!}</label>
+			<label class="form-control col-8">{!!$shopping->cost_shopping!!} €</label>
 		</div>
 		<div class="row">
 			<label class="lead col-3 mt-1 text-center">Quantity</label>
@@ -15,7 +15,7 @@
 		</div>
 		<div class="row">
 			<label class="lead col-3 mt-1 text-center">Total price</label>
-			<label class="form-control col-8">a</label>
+			<label class="form-control col-8">{!!$shopping->cost_shopping*$shopping->quantity_shopping!!} €</label>
 		</div>
 		<div class="row">
 			<label class="lead col-3 mt-1 text-center">Name</label>

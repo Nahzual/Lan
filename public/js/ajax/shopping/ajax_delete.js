@@ -1,8 +1,8 @@
-function sendRequest(e,id){
+function removeShopping(e, lanId, shoppingId){
 	if(e!=null) e.preventDefault();
 	$.ajax({
 		type: "DELETE",
-		url: '/shopping/'+id,
+		url: '/lan/'+lanId+'/shopping/'+shoppingId+'/destroy',
 		dataType: 'json',
 		data: "_token="+$("[name='_token']").val()
 		+'&_method='+$("[name='_method']").val(),

@@ -137,6 +137,7 @@ LAN page
 <script src="/js/ajax/activity/ajax_delete.js"></script>
 <script src="/js/ajax/tournament/ajax_delete.js"></script>
 <script src="/js/ajax/task/ajax_delete.js"></script>
+<script src="/js/ajax/shopping/ajax_delete.js"></script>
 
 <script src="/js/ajax/game/ajax_port.js"></script>
 

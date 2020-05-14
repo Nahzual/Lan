@@ -22,7 +22,15 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @if(Auth::user()->theme == 0)
     <link href="{{ url('/') }}/css/dashboard-styles.css" rel="stylesheet" />
+    @else
+	@if(Auth::user()->theme == 1)
+		<link href="{{ url('/') }}/css/dashboard-styles-dark.css" rel="stylesheet" />
+	@else
+		<link href="{{ url('/') }}/css/dashboard-styles-darkblue.css" rel="stylesheet" />
+	@endif
+    @endif
 
 </head>
 
@@ -127,7 +135,7 @@
         <div class="container-fluid">
           <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; LAN Creator 2020</div>
-            <div>
+            <div class="footerlinks">
               <a href="#">Privacy Policy</a>
               &middot;
               <a href="#">Terms &amp; Conditions</a>

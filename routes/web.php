@@ -167,6 +167,7 @@ Route::get('search/user/', 'UsersController@search');
 Route::get('adm/users', 'UsersController@admList')->name('admin.users');
 Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.page');
 Route::get('search/helper/{task}', 'UsersController@searchHelper');
+Route::get('updateTheme/{id}', 'UsersController@updateTheme')->name('user.updateTheme');
 
 Route::get('/az', function(){
 	$t = App\Lan::all()->first();

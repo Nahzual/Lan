@@ -20,9 +20,15 @@ function removeShopping(e, lanId, shoppingId){
 				var cost=parseFloat($('#row-shopping-cost-'+shoppingId).html().replace(' €',''));
 				var quantity=parseFloat($('#row-shopping-quantity-'+shoppingId).html());
 
-				total_price=total_price-cost*quantity;
+				total_price=(total_price-cost*quantity).toFixed(2);
+				remaining=(budget-total_price).toFixed(2);
 				total_price_element.html(total_price+' €');
-				remaining_element.html(budget-total_price+' €');
+				remaining_element.html(remaining+' €');
+
+				if(remaining>=0){
+					remaining_element.removeClass('text-danger');
+					remaining_element.addClass('text-success');
+				}
 
 				$('#row-shopping-lan-'+shoppingId).remove();
 				success.show();

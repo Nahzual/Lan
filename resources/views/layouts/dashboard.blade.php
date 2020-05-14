@@ -20,7 +20,7 @@
     <!-- Styles -->
     @yield('css_includes')
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="shortcut icon" href="{{ url('/public/favicon/dash-favicon.ico') }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @if(Auth::user()->theme == 0)
     <link href="{{ url('/') }}/css/dashboard-styles.css" rel="stylesheet" />

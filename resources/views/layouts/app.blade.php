@@ -20,6 +20,7 @@
     <!-- Styles -->
     @yield('css_includes')
    	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ url('/public/favicon/ext-favicon.ico') }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href="{{ asset('css/external-styles.css') }}" rel="stylesheet">
 </head>

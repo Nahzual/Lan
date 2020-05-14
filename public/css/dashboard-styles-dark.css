@@ -1994,8 +1994,8 @@ pre code {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
+  color: #eeeeee;
+  background-color: rgba(255,255, 255, 0.05);
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
@@ -2015,11 +2015,11 @@ pre code {
   text-shadow: 0 0 0 #495057;
 }
 .form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: #80bdff;
+  color: #eeeeee;
+  background-color: rgba(255,255, 255, 0.07);
+  border-color: #ffffff;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
 .form-control::-webkit-input-placeholder {
   color: #6c757d;
@@ -2456,18 +2456,18 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #06176B;
+  border-color: #06176B;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #25316F;
+  border-color: #25316F;
 }
 .btn-primary:focus, .btn-primary.focus {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #25316F;
+  border-color: #25316F;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 .btn-primary.disabled, .btn-primary:disabled {
@@ -2666,7 +2666,7 @@ fieldset:disabled a.btn {
 
 .btn-dark {
   color: #fff;
-  background-color: #343a40;
+  background-color: #000000;
   border-color: #343a40;
 }
 .btn-dark:hover {
@@ -4353,6 +4353,7 @@ input[type=button].btn-block {
 .card-body {
   flex: 1 1 auto;
   min-height: 1px;
+  background-color:rgba(255,255, 255, 0.05);
   padding: 1.25rem;
 }
 
@@ -10271,4 +10272,17 @@ body {
   background-color: #AF9429;
   border-color: #AF9429;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+.card-table{
+  background-color:rgba(255,255, 255, 0.05);
+  color:#eeeeee
+}
+.card-table > td{
+  color:#eeeeee
+}
+.table-bordered{
+  color:#eeeeee
+}
+.lead-text{
+  color:#eeeeee
 }

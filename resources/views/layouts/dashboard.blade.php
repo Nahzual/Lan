@@ -36,7 +36,8 @@
 
 <body class="sb-nav-fixed">
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-		<button type="button" id="sidebarToggle" class="btn btn-info ml-2">
+		<button type="button" id="sidebarToggle" class="btn  @if(Auth::user()->theme == 0) btn-info  @else
+	@if(Auth::user()->theme == 1) btn-primary @else btn-info @endif @endif ml-2">
 			<i class="fa fa-align-left"></i>
 		</button>
     <a class="navbar-brand title-bebas bebas-size-1" href="{{ route('dashboard') }}">LAN Creator</a>

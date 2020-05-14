@@ -1179,8 +1179,8 @@ class LansController extends Controller
 			$user=Auth::user();
 			$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 			$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-  			if(!$userIsLanHelper){
-  				return back()->with('error','You can\'t edit a LAN for which you are not a helper.');
+  			if(!$userIsLanHelper && !$userIsLanAdmin){
+  				return back()->with('error','You can\'t edit a LAN for which you are not a helper or admin.');
 			}
 			else{
 

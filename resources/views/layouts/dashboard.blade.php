@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Dashboard - LAN Creator</title>
+    <title>@yield('page-title') - LAN Creator</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -108,8 +108,20 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
-        @yield('content')
+				<div class="card">
+					<div class="card-header">
+						<div class="row">
+							<div class="col">
+								<h2>@yield('title')</h2>
+							</div>
+							@yield('title-buttons')
+						</div>
+					</div>
+					@yield('toolbar')
+					<div class="card-body">
+						@yield('content')
+					</div>
+				</div>
       </main>
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid">

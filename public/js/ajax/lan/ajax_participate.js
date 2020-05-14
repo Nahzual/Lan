@@ -40,6 +40,7 @@ function addPlayer(e,id){
   return false;
 }
 
+// this function is used when a player chooses to quit a LAN
 function removePlayer(e,id){
   if(e!=null) e.preventDefault();
 
@@ -53,6 +54,42 @@ function removePlayer(e,id){
 			var error=$('#response-error-player');
       if(data.success != undefined){
 				$('#row-player-lan-'+id).html('');
+        success.show();
+        error.hide();
+        success.html(data.success);
+      }else{
+        error.show();
+        success.hide();
+        error.html(data.error);
+      }
+    },
+    error: function(xhr,status,error){
+			var success=$('#response-success-player');
+			var error=$('#response-error-player');
+      error.show();
+      success.hide();
+      error.html("An error occured on the server, please try again later.");
+    }
+  });
+
+  return false;
+}
+
+// this function is used when a LAN admin removes a player from a LAN
+function removePlayerLAN(e,idLan,idPlayer){
+  if(e!=null) e.preventDefault();
+
+  $.ajax({
+    type: "DELETE",
+    url: '/lan/participate/'+idLan,
+    dataType: 'json',
+    data: "_token="+$("[name='_token']").val()
+					+"&player_id="+idPlayer,
+    success: function(data){
+			var success=$('#response-success-player');
+			var error=$('#response-error-player');
+      if(data.success != undefined){
+				$('#row-player-lan-'+idPlayer).html('');
         success.show();
         error.hide();
         success.html(data.success);

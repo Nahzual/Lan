@@ -71,7 +71,7 @@ function removeHelper(e,lanID,helperID){
 			var success=$('#response-success-helper');
 			var error=$('#response-error-helper');
       if(data.success != undefined){
-				$('#row-helper-lan-'+helperID).html('');
+				$('#row-helper-lan-'+helperID).remove();
         success.show();
         error.hide();
         success.html(data.success);

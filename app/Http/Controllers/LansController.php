@@ -27,16 +27,16 @@ class LansController extends Controller
      */
     public function index()
     {
-		if(Auth::check()){
-			$user = Auth::user();
-			$admin_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-			$helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-			$player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
+			if(Auth::check()){
+				$user = Auth::user();
+				$admin_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+				$helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+				$player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
 
-			return view('lan.index',compact('user','admin_lans','helper_lans','player_lans'));
-		}else{
-			return redirect('/login')->with('error','Please log in to have access to this page.');
-		}
+				return view('lan.index',compact('user','admin_lans','helper_lans','player_lans'));
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
     }
 
     /**
@@ -218,9 +218,9 @@ class LansController extends Controller
 					$user=Auth::user();
 					$userIsLanAdmin=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 					if($userIsLanAdmin){
-						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get()->take(-5);
-						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
-						$users=$lan->users->take(-5);
+						$helpers=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get()->take(-5);
+						$admins=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
+						$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->take(-5);
 						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 						$tasks = $lan->tasks->take(-5);
 						$shoppings = $lan->shoppings->take(-5);
@@ -609,21 +609,49 @@ class LansController extends Controller
       }
     }
 
-    public function removePlayer($id){
+    public function removePlayer($id,Request $request){
       if(Auth::check()){
-        $lan=Lan::findOrFail($id);
-        $user=Auth::user();
-				$lan_user=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->select('place_number_x','place_number_y')->first();
+        $lan=Lan::find($id);
+				if($lan!=null){
+					if(isset($request->player_id)){
+						$user=User::find($request->player_id);
+						if($user!=null){
+							$lan_user=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->select('place_number_x','place_number_y')->first();
+							if($lan_user!=null){
+								$file_name="../storage/lans/room_plan_".$lan->id.".json";
+								if(file_exists($file_name)){
+									$room=json_decode(file_get_contents($file_name));
+									$room->room->field[$lan_user->place_number_y][$lan_user->place_number_x]=config('room.EMPTY_CHAIR');
+									file_put_contents($file_name, json_encode($room));
+								}
+								DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
+								return response()->json(['success'=>'This user is no longer a player of this LAN.']);
 
-				$file_name="../storage/lans/room_plan_".$lan->id.".json";
-				if(file_exists($file_name)){
-					$room=json_decode(file_get_contents($file_name));
-					$room->room->field[$lan_user->place_number_x][$lan_user->place_number_y]=config('room.EMPTY_CHAIR');
-					file_put_contents($file_name, json_encode($room));
+							}else{
+								return response()->json(['error'=>'This user isn\'t a player of this LAN.']);
+							}
+						}else{
+							return response()->json(['error'=>'This user does not exist.']);
+						}
+					}else{
+						$user=Auth::user();
+						$lan_user=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->select('place_number_x','place_number_y')->first();
+						if($lan_user!=null){
+							$file_name="../storage/lans/room_plan_".$lan->id.".json";
+							if(file_exists($file_name)){
+								$room=json_decode(file_get_contents($file_name));
+								$room->room->field[$lan_user->place_number_y][$lan_user->place_number_x]=config('room.EMPTY_CHAIR');
+								file_put_contents($file_name, json_encode($room));
+							}
+							DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
+							return response()->json(['success'=>'You are no longer registered to this LAN.']);
+						}else{
+							return response()->json(['error'=>'You are not a player of this LAN.']);
+						}
+					}
+				}else{
+					return response()->json(['error'=>'This LAN does not exist.']);
 				}
-
-        DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
-        return response()->json(['success'=>'You are no longer registered to this LAN.']);
       }else{
         return response()->json(['error'=>'Please login to perform this action.']);
       }

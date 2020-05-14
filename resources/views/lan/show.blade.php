@@ -88,8 +88,8 @@ LAN page
 	</div>
 
 	<div class="col-md-6">
-		<div id="response-success-task" class="container alert alert-success mt-2" style="display:none"></div>
-		<div id="response-error-task" class="container alert alert-danger mt-2" style="display:none"></div>
+		<div id="response-success-player" class="container alert alert-success mt-2" style="display:none"></div>
+		<div id="response-error-player" class="container alert alert-danger mt-2" style="display:none"></div>
 
 		@include('lan.show_parts.users_card')
 	</div>
@@ -131,6 +131,7 @@ LAN page
 <script src="/js/ajax/lan/ajax_submit.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
 <script src="/js/ajax/lan/ajax_remove_material.js"></script>
+<script src="/js/ajax/lan/ajax_participate.js"></script>
 
 <script src="/js/ajax/material/ajax_edit.js"></script>
 

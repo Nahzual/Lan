@@ -154,8 +154,10 @@ public function index()
 				if($lan!=null){
 					return view($request->view_path,compact('materials','user','lan'));
 				}else{
-					return "<p>This LAN doesn\'t exist</p>";
+					return back()->with('error','This LAN does not exist.');
 				}
+			}else{
+				return back()->with('error','Please provide a LAN.');
 			}
 		}else{
 			return redirect('/login')->with('error','Please log in to have access to this page.');

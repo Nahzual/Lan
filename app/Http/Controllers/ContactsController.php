@@ -17,18 +17,12 @@ class ContactsController extends Controller
      */
     public function index()
     {
-		$user = Auth::user();
-        return view('contact.index', compact('user'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+			if(Auth::check()){
+				$user = Auth::user();
+				return view('contact.index', compact('user'));
+			}else{
+				return view('contact.index');
+			}
     }
 
     /**
@@ -47,7 +41,7 @@ class ContactsController extends Controller
 				'description' => ['required']
 			]))
 			{
-				
+
 
 				$mail_cleaning = array("content-type","bcc:","to:","cc:","href");
 
@@ -59,7 +53,7 @@ class ContactsController extends Controller
 				$email = htmlentities($request->email);
 				$title = 'Message depuis le site Lan Creator';
 				$content = str_replace($mail_cleaning,"",htmlentities($request->description));
-				
+
 				if($request->has('fichier')){
 					$path = $request->fichier;
 					Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object, $path) {
@@ -87,7 +81,7 @@ class ContactsController extends Controller
 				return $this->validator($request);
 			}
     }
-	
+
 	protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -97,51 +91,5 @@ class ContactsController extends Controller
 			'object' => ['required', 'string', 'max:500'],
 			'description' => ['required']
 		]);
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

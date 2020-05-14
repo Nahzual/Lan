@@ -22,7 +22,8 @@ Route::get('/', 'PageController@home')->name('home');
 Route::get('/home', 'PageController@home')->name('home');
 
 
-Route::resource('contact', 'ContactsController');
+Route::get('/contact','ContactsController@index')->name('contact.index');
+Route::post('/contact','ContactsController@store')->name('contact.store');
 Route::post('/contact/{user}','UsersController@contact');
 
 /*LOGGED ROUTES*/
@@ -137,7 +138,12 @@ Route::get('/search/material','MaterialsController@search');
 Route::get('/search/shopping','ShoppingsController@search');
 
 /*LAN HELPER ROUTES*/
-Route::resource('material', 'MaterialsController');
+Route::get('material/create', 'MaterialsController@create')->name('material.create');
+Route::post('material', 'MaterialsController@store')->name('material.store');
+Route::put('material/{material}', 'MaterialsController@update')->name('material.update');
+Route::get('material/{material}', 'MaterialsController@show')->name('material.show');
+Route::delete('material/{material}', 'MaterialsController@destroy')->name('material.destroy');
+Route::get('material/{material}/edit', 'MaterialsController@edit')->name('material.edit');
 
 
 // Shoppings routes
@@ -161,7 +167,12 @@ Route::put('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')-
 
 /*GLOBAL ADMIN ROUTES*/
 
-Route::resource('user', 'UsersController');
+Route::get('/user','UsersController@index')->name('user.index');
+Route::post('/user','UsersController@store')->name('user.store');
+Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
+Route::get('/user/{user}','UsersController@show')->name('user.show');
+Route::post('/user/{user}','UsersController@update')->name('user.update');
+Route::get('/user/{user}/edit','UsersController@edit')->name('user.edit');
 Route::post('/user/{user}/restore','UsersController@restore');
 Route::get('search/user/', 'UsersController@search');
 Route::get('adm/users', 'UsersController@admList')->name('admin.users');

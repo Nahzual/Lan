@@ -71,10 +71,10 @@
 						</div>
 					@endif
 				</div>
-				
+
 				<div class="form-group row text-center">
 					<div class="col text-right">
-						<a class="btn  btn-outline-info shadow-sm" href="{{ route('lan.index') }}"><i class='fa fa-arrow-left'></i> Go Back to home</a>
+						<a class="btn  btn-outline-info shadow-sm" href="{{ route('dashboard') }}"><i class='fa fa-arrow-left'></i> Go Back to home</a>
 						<button type="submit" class="btn  btn-outline-success shadow-sm" id="AddNewContactSubmit"><i class='fa fa-plus-square'></i> Send</button>
 					</div>
 				</div>

@@ -23,10 +23,8 @@ LAN's games
 @section('content')
 
 
-<div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
-
-
+<div id="response-success-game" class="alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-game" class="alert alert-danger mt-2" style="display:none"></div>
 
 <div class="table-responsive">
 	<table class="table card-table">

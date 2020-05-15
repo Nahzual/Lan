@@ -11,10 +11,15 @@ function addPort(e,lanID,gameID){
           +'&port='+port,
     success: function(data){
       if(data.success != undefined){
-				ports_column.html(ports_column.html()+', '+port+' ');
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
+				ports_column.html(ports_column.html().trim());
+				if(ports_column.html().length===0){
+					ports_column.html(port);
+				}else{
+					ports_column.html(ports_column.html()+', '+port+' ');
+				}
+				$('#response-success').show();
+				$('#response-error').hide();
+				$('#response-success').html(data.success);
       }else{
         $('#response-error').show();
         $('#response-success').hide();

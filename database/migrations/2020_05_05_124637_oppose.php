@@ -15,9 +15,9 @@ class Oppose extends Migration
     {
       Schema::create('oppose', function (Blueprint $table) {
 		  $table->id();
-          $table->unsignedBigInteger('id_user');
+          $table->unsignedBigInteger('id_team');
           $table->unsignedBigInteger('id_match');
-          $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+          $table->foreign('id_team')->references('id')->on('teams')->onDelete('cascade');
           $table->foreign('id_match')->references('id')->on('matchs')->onDelete('cascade');
       });
     }

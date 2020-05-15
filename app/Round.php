@@ -15,10 +15,10 @@ class Round extends Model
 
   public function matches()
   {
-    return $this->belongsTo('App\Match');
+    return $this->hasMany('App\Match');
   }
 
   public function tournament(){
-    return $this->hasOne('App\Tournament');
+    return $this->belongsTo('App\Tournament');
   }
 }

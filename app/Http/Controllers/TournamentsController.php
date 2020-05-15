@@ -10,6 +10,7 @@ use App\Department;
 use App\Country;
 use App\Game;
 use App\Tournament;
+use App\Team;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -92,29 +93,31 @@ class TournamentsController extends Controller
        * @param  int  $id
        * @return \Illuminate\Http\Response
        */
-      public function show($lanId, $tournamentId)
-      {
-        if(Auth::check()){
+       public function show($lanId, $tournamentId)
+       {
+         if(Auth::check()){
 
-          $lan=Lan::find($lanId);
-    			if($lan!=null){
-    				$tournament=$lan->tournaments()->find($tournamentId);
-            $games=Game::all();
-    				if($tournament!=null){
-    					if(Auth::check()){
-    						$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-    						return view('tournament.show_tournament', compact('lan', 'tournament', 'games', 'userIsLanAdmin'));
-    					}else{
-    						return view('tournament.show_tournament', compact('lan', 'tournament', 'games'));
-    					}
-    				}else{
-    					return back()->with('error','This tournament doesn\'t exist.');
-    				}
-    			}else{
-    				return back()->with('error','This LAN doesn\'t exist.');
-    			}
-    		}
-    }
+           $lan=Lan::find($lanId);
+                 if($lan!=null){
+                     $tournament=$lan->tournaments()->find($tournamentId);
+             $games= $lan->games;
+             $teams= Team::all()->where('tournament_id', '=', $tournamentId);
+             $user= Auth::user();
+                     if($tournament!=null){
+                         if(Auth::check()){
+                             $userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+                             return view('tournament.show_tournament', compact('lan', 'tournament', 'games', 'userIsLanAdmin', 'teams', 'user'));
+                         }else{
+                             return view('tournament.show_tournament', compact('lan', 'tournament', 'games', 'teams', 'user'));
+                         }
+                     }else{
+                         return back()->with('error','This tournament doesn\'t exist.');
+                     }
+                 }else{
+                     return back()->with('error','This LAN doesn\'t exist.');
+                 }
+             }
+     }
 
     /**
      * Show the form for editing the specified resource.
@@ -213,4 +216,5 @@ class TournamentsController extends Controller
         return redirect('/login')->with('error','You must be logged in to delete a LAN\'s tournament.');
       }
     }
+
 }

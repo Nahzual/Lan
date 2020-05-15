@@ -52,9 +52,9 @@ class User extends Authenticatable
     return $this->belongsToMany('App\Game','favorite_games');
   }
 
-  public function matches()
+  public function teams()
   {
-    return $this->belongsToMany('App\Match','oppose');
+    return $this->belongsToMany('App\Team','part_of');
   }
 
   public function location(){

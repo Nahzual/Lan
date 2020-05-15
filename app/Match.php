@@ -13,12 +13,12 @@ class Match extends Model
    */
   protected $fillable = ['id_round'];
 
-  public function users()
+  public function teams()
   {
-    return $this->belongsToMany('App\User','oppose');
+    return $this->belongsToMany('App\Team','oppose');
   }
 
   public function round(){
-    return $this->hasOne('App\Round');
+    return $this->belongsTo('App\Round');
   }
 }

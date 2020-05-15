@@ -25,4 +25,7 @@ class Tournament extends Model
   public function lan(){
     return $this->belongsTo('App\Lan');
   }
+  public function team(){
+    return $this->hasMany('App\Team');
+  }
 }

@@ -21,6 +21,7 @@ class CreateTournamentsTable extends Migration
           $table->boolean('is_finished_tournament')->default(false);
           $table->unsignedInteger('player_count_tournament')->default(0);
           $table->boolean('match_mod_tournament')->default(false);
+          $table->unsignedInteger('number_per_team')->default(1);
           $table->unsignedInteger('max_player_count_tournament');
           $table->unsignedBigInteger('id_game');
           $table->unsignedBigInteger('lan_id');

@@ -138,8 +138,6 @@ Route::delete('lan/{lan}/tournament/{tournament}/destroy', 'TournamentsControlle
 	//round & match routes
 	Route::resource('tournament/round', 'RoundsController');
 	Route::resource('tournament/round/match', 'MatchesController');
-	Route::resource('tournament/round', 'RoundsController');
-	Route::resource('tournament/round/match', 'MatchesController');
 
 // material search
 Route::get('/search/material','MaterialsController@search');
@@ -177,7 +175,6 @@ Route::put('lan/{lan}/activity/{activity}/edit', 'ActivitiesController@update')-
 
 /*GLOBAL ADMIN ROUTES*/
 
-Route::get('/user','UsersController@index')->name('user.index');
 Route::post('/user','UsersController@store')->name('user.store');
 Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
 Route::get('/user/{user}','UsersController@show')->name('user.show');
@@ -188,7 +185,7 @@ Route::get('search/user/', 'UsersController@search');
 Route::get('adm/users', 'UsersController@admList')->name('admin.users');
 Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.page');
 Route::get('adm/tournaments', 'TournamentsController@admList')->name('admin.tournaments');
-Route::get('adm/tournaments/{page}', 'Tournaments@admList')->name('admin.tournaments.page');
+Route::get('adm/tournaments/{page}', 'TournamentsController@admList')->name('admin.tournaments.page');
 Route::get('search/helper/{task}', 'UsersController@searchHelper');
 Route::get('updateTheme/{id}', 'UsersController@updateTheme')->name('user.updateTheme');
 

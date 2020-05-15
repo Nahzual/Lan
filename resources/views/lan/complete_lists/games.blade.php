@@ -33,7 +33,7 @@ LAN's games
 			<th scope="col">Name</th>
 			<th scope="col">Release date</th>
 			<th scope="col">Game type</th>
-			@if($userIsLanAdmin) <th scope="col">Actions</th> <th scope="col">Used ports</th> @endif
+			@if($userIsLanAdmin) <th scope="col">Used ports</th> <th scope="col">Actions</th> @endif
 		</thead>
 
 		<tbody>

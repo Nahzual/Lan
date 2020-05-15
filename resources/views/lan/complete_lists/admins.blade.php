@@ -19,8 +19,8 @@ LAN's admins
 
 @section('content')
 
-<div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+<div id="response-success-admin" class="alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-admin" class="alert alert-danger mt-2" style="display:none"></div>
 
 
 <div class="table-responsive">
@@ -36,14 +36,19 @@ LAN's admins
 			@foreach($admins as $admin)
 			<tr id="row-admin-lan-{{$admin->id}}">
 				<th>{{$admin->id}}</th>
-				<td>{!!$admin->pseudo!!}</td>
+				<td>
+					{!!$admin->pseudo!!}
+					@if($admin->id==$logged_user->id)
+					<small class="text-warning">(You)</small>
+					@endif
+				</td>
 				<td scope="col" class="text-center">
 					<div class="btn-group text-center">
 						{!! Form::open(['method' => 'get','url'=>route('user.show', $admin->id)]) !!}
-						<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
+							<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
 						{!! Form::close() !!}
 						{!! Form::open(['method' => 'delete','onsubmit'=>'return removeAdmin(event,'.$id.','.$admin->id.')']) !!}
-						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
+							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i></button>
 						{!! Form::close() !!}
 					</div>
 				</td>
@@ -81,7 +86,7 @@ LAN's admins
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/ajax/lan/ajax_add_admin.js"></script>
 @endsection
 
 @section('css_includes')

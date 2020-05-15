@@ -20,8 +20,8 @@ LAN's helpers
 
 @section('content')
 
-<div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+<div id="response-success-helper" class="alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-helper" class="alert alert-danger mt-2" style="display:none"></div>
 
 <div class="table-responsive">
 	<table class="text-center table card-table table-bordered">
@@ -49,7 +49,7 @@ LAN's helpers
 						<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
 						{!! Form::close() !!}
 						{!! Form::open(['method' => 'delete','onsubmit'=>'return removeHelper(event,'.$id.','.$helper->id.')']) !!}
-						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
+						<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i></button>
 						{!! Form::close() !!}
 					</div>
 				</td>
@@ -87,7 +87,7 @@ LAN's helpers
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/ajax/lan/ajax_add_helper.js"></script>
 @endsection
 
 @section('css_includes')

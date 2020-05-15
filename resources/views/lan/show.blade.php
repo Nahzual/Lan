@@ -125,22 +125,37 @@ LAN page
 @endsection
 
 @section('js_includes')
-<script src="/js/ajax/lan/ajax_add_helper.js"></script>
-<script src="/js/ajax/lan/ajax_add_admin.js"></script>
 <script src="/js/ajax/lan/ajax_delete.js"></script>
 <script src="/js/ajax/lan/ajax_submit.js"></script>
+
+<!-- games scripts -->
+<script src="/js/ajax/game/ajax_port.js"></script>
 <script src="/js/ajax/lan/ajax_remove_game.js"></script>
-<script src="/js/ajax/lan/ajax_remove_material.js"></script>
-<script src="/js/ajax/lan/ajax_participate.js"></script>
 
+<!-- materials scripts -->
 <script src="/js/ajax/material/ajax_edit.js"></script>
+<script src="/js/ajax/lan/ajax_remove_material.js"></script>
 
-<script src="/js/ajax/activity/ajax_delete.js"></script>
-<script src="/js/ajax/tournament/ajax_delete.js"></script>
-<script src="/js/ajax/task/ajax_delete.js"></script>
+<!-- shoppings scripts -->
 <script src="/js/ajax/shopping/ajax_delete.js"></script>
 
-<script src="/js/ajax/game/ajax_port.js"></script>
+<!-- admin scripts -->
+<script src="/js/ajax/lan/ajax_add_admin.js"></script>
+
+<!-- helper scripts -->
+<script src="/js/ajax/lan/ajax_add_helper.js"></script>
+
+<!-- player scripts -->
+<script src="/js/ajax/lan/ajax_participate.js"></script>
+
+<!-- task scripts -->
+<script src="/js/ajax/task/ajax_delete.js"></script>
+
+<!-- tournament scripts -->
+<script src="/js/ajax/tournament/ajax_delete.js"></script>
+
+<!-- activity scripts -->
+<script src="/js/ajax/activity/ajax_delete.js"></script>
 
 <!-- pop-up windows scripts -->
 <script src="/js/windows/activity/display_window.js"></script>

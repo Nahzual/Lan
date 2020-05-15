@@ -223,15 +223,13 @@ class LansController extends Controller
 						$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->take(-5);
 						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
 						$tasks = $lan->tasks->take(-5);
-						$shoppings = $lan->shoppings->take(-5);
+						$shoppings = $lan->shoppings;
 						$ports=$games->toBase();
 						foreach($ports as $index=>$game){
 							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
 						}
-						$totalprice_shopping = 0;
-						foreach($shoppings as $shopping){
-							$totalprice_shopping += $shopping->cost_shopping*$shopping->quantity_shopping;
-						}
+						$totalprice_shopping = $lan->price_shopping($shoppings);
+						$shoppings = $shoppings->take(-5);
 						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'users', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
 					}else{
 						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
@@ -1186,7 +1184,7 @@ class LansController extends Controller
 					$lan = Lan::findOrFail($id);
 					$tmat=$lan->materials;
 					$nlan = $lan->name;
-					$materials=$lan->materials->forPage($page, 10);
+					$materials=$lan->materials()->select('materials.*','needs.quantity as quantity')->get()->forPage($page, 10);
 
 					$max = ceil(count($tmat)/10);
 
@@ -1195,7 +1193,6 @@ class LansController extends Controller
 					}else{
 						$next = $page + 1;
 					}
-
 					if($page == 1){
 						$previous = 0;
 					}else{
@@ -1222,10 +1219,12 @@ class LansController extends Controller
 				if(!$userIsLanHelper && !$userIsLanAdmin){
 	  			return back()->with('error','You can\'t view a LAN\'s shopping list if you are not admin or helper on this LAN.');
 				}else{
-					$lan = Lan::findOrFail($id);
+					$lan = Lan::where('id','=',$id)->select('name','id','budget')->first();
 					$tshop=$lan->shoppings;
-					$nlan = $lan->name;
-					$shoppings=$lan->shoppings->forPage($page, 10);
+
+					$totalprice_shopping=$lan->price_shopping($tshop);
+
+					$shoppings=$tshop->forPage($page, 10);
 
 					$max = ceil(count($tshop)/10);
 
@@ -1241,7 +1240,7 @@ class LansController extends Controller
 						$previous = $page-1;
 					}
 
-					return view('lan.complete_lists.shoppings', compact('shoppings', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					return view('lan.complete_lists.shoppings', compact('totalprice_shopping','shoppings', 'lan', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1262,9 +1261,9 @@ class LansController extends Controller
 	  			return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
 				}else{
 					$lan = Lan::findOrFail($id);
-					$tu=$lan->users;
+					$tu=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
 					$nlan = $lan->name;
-					$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->forPage($page, 10);
+					$users=$tu->forPage($page, 10);
 
 					$max = ceil(count($tu)/10);
 
@@ -1415,10 +1414,10 @@ class LansController extends Controller
 				$user=Auth::user();
 				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
-				$lan = Lan::findOrFail($id);
+				$lan = Lan::where('id','=',$id)->select('name','id')->first();
 				$ta=$lan->activities;
 				$nlan = $lan->name;
-				$activities=$lan->activities->forPage($page, 10);
+				$activities=$ta->forPage($page, 10);
 
 				$max = ceil(count($ta)/10);
 
@@ -1433,7 +1432,7 @@ class LansController extends Controller
 				}else{
 					$previous = $page-1;
 				}
-				return view('lan.complete_lists.activities', compact('activities', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				return view('lan.complete_lists.activities', compact('activities', 'lan', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
 			}

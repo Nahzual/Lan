@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the materials for the LAN {{ $nlan }}
+All the materials for the LAN {{ $nlan }}<small>#{{$id}}</small>
 @endsection
 
 @section('page-title')
@@ -20,8 +20,8 @@ LAN's materials
 
 @section('content')
 
-<div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+<div id="response-success-material" class="alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-material" class="alert alert-danger mt-2" style="display:none"></div>
 
 <div class="table-responsive">
 	<table class="table card-table text-center">
@@ -57,7 +57,7 @@ LAN's materials
 				<td scope="col">
 					<button class="btn btn-success mb-1" id="material-view-{{$material->id}}" onclick="openMaterial({{$material->id}})"><i class='fa fa-eye'></i></button>
 					{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeMaterial(event,'.$id.','.$material->id.')']) !!}
-					<button type="submit" class="d-inline btn btn-danger"><i class='fa fa-trash'></i></button>
+					<button type="submit" class="d-inline btn btn-danger"><i class='fa fa-times'></i></button>
 					{!! Form::close() !!}
 				</td>
 			</tr>
@@ -90,13 +90,25 @@ LAN's materials
 	</ul>
 </nav>
 
+@foreach($materials as $material)
+<div id="popup-material-{{$material->id}}" class="popup">
+	<div class="popup-content">
+		<span onclick="closeMaterial({{$material->id}})" class="close">&times;</span>
+		@include('material.show',$material)
+	</div>
+</div>
+@endforeach
+
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/windows/material/display_window.js"></script>
+<script src="/js/ajax/material/ajax_edit.js"></script>
+<script src="/js/ajax/lan/ajax_remove_material.js"></script>
 @endsection
 
 @section('css_includes')
+<link href="{{ asset('css/popup.css') }}" rel="stylesheet">
 <link href="{{ asset('css/game/game.css') }}" rel="stylesheet">
 <link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

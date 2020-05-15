@@ -73,4 +73,16 @@ class Lan extends Model
   public function country(){
     return $this->department()->belongsTo('App\Country');
   }
+
+	public function price_shopping($shoppings=null){
+		if($shoppings==null){
+			$shoppings=$this->shoppings;
+		}
+		$totalprice_shopping = 0;
+		foreach($shoppings as $shopping){
+			$totalprice_shopping += $shopping->cost_shopping*$shopping->quantity_shopping;
+		}
+
+		return $totalprice_shopping;
+	}
 }

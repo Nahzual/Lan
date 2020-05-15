@@ -13,7 +13,7 @@ Adding helper to Task
 <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
 {!! Form::open(['method' => 'post','onsubmit'=>'searchHelper(event,'.$task->id.')']) !!}
-	<div class="bg-light">
+	<div>
 		<h4 class=''>Helper's name :</h4>
 		<div class="form-group">
 			{!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}

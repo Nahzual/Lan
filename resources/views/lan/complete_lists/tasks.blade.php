@@ -21,8 +21,8 @@ LAN's tasks
 @section('content')
 
 
-<div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+<div id="response-success-task" class="alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-task" class="alert alert-danger mt-2" style="display:none"></div>
 
 <div class="table-responsive">
 	<table class="text-center table card-table table-bordered">
@@ -93,6 +93,7 @@ LAN's tasks
 
 @section('js_includes')
 <script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script src="/js/ajax/task/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

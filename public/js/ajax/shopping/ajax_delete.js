@@ -1,3 +1,4 @@
+// this function is used to delete a shopping in lan.show
 function removeShopping(e, lanId, shoppingId){
 	if(e!=null) e.preventDefault();
 	$.ajax({

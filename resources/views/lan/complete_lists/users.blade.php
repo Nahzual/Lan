@@ -11,8 +11,8 @@ LAN's players
 @section('content')
 
 
-<div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-<div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+<div id="response-success-player" class="alert alert-success mt-2" style="display:none"></div>
+<div id="response-error-player" class="alert alert-danger mt-2" style="display:none"></div>
 
 <div class="table-responsive">
 	<table class="text-center table card-table table-bordered">
@@ -27,21 +27,21 @@ LAN's players
 			@if (isset($users))
 			@if(count($users)==0)
 			<tr>
-				<td colspan="3"><h3>No helpers to show</h3></td>
+				<td colspan="3"><h3>No players to show</h3></td>
 			</tr>
 			@endif
 
-			@foreach($users as $helper)
-			<tr id="row-user-lan-{{$helper->id}}">
-				<th>{{$helper->id}}</th>
-				<td>{!!$helper->pseudo!!}</td>
+			@foreach($users as $user)
+			<tr id="row-player-lan-{{$user->id}}">
+				<th>{{$user->id}}</th>
+				<td>{!!$user->pseudo!!}</td>
 				<td scope="col" class="text-center">
 					<div class="btn-group text-center">
-						{!! Form::open(['method' => 'get','url'=>route('user.show', $helper->id)]) !!}
-						<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
+						{!! Form::open(['method' => 'get','url'=>route('user.show', $user->id)]) !!}
+							<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
 						{!! Form::close() !!}
-						{!! Form::open(['method' => 'delete','onsubmit'=>'return removeHelper(event,'.$id.','.$helper->id.')']) !!}
-						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
+						{!! Form::open(['method' => 'delete','onsubmit'=>'return removePlayerLAN(event,'.$id.','.$user->id.')']) !!}
+							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i></button>
 						{!! Form::close() !!}
 					</div>
 				</td>
@@ -79,7 +79,7 @@ LAN's players
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/ajax/lan/ajax_participate.js"></script>
 @endsection
 
 @section('css_includes')

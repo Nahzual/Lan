@@ -96,7 +96,7 @@ Games
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script src="/js/ajax/tournament/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

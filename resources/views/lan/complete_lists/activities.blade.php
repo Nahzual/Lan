@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All activities for the LAN {{ $nlan }}
+All activities for the LAN {{ $lan->name }}
 @endsection
 
 @section('page-title')
@@ -11,7 +11,7 @@ LAN's activities
 @section('title-buttons')
 @if ($userIsLanAdmin)
 	<div class="col mt-1">
-		<form method="GET" action="{{ route('activity.create', $id) }}">
+		<form method="GET" action="{{ route('activity.create', $lan->id) }}">
 			@csrf
 			<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> Add an activity</button>
 		</form>
@@ -68,22 +68,22 @@ LAN's activities
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
 		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">Return to the LAN</a>
+			<a class="btn btn-info" href="{{ url('/lan/'.$lan->id) }}" tabindex="-2">Return to the LAN</a>
 
 			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/activities/') }}" tabindex="-2">First</a>
+				<a class="btn btn-secondary" href="{{ url('/lan/'.$lan->id.'/activities/') }}" tabindex="-2">First</a>
 			</li>
 			<li class="page-item @if($previous == 0) disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/activities/'.($previous)) : '#' }}" tabindex="-1">Back</a>
+				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$lan->id.'/activities/'.($previous)) : '#' }}" tabindex="-1">Back</a>
 			</li>
-			<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/activities/'.($page)) }}">{{ $page }}</a></li>
-			@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/activities/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
-			@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/activities/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
+			<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$lan->id.'/activities/'.($page)) }}">{{ $page }}</a></li>
+			@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$lan->id.'/activities/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
+			@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$lan->id.'/activities/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 			<li class="page-item @if($next) @else disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/activities/'.($next)) : '#' }}">Next</a>
+				<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$lan->id.'/activities/'.($next)) : '#' }}">Next</a>
 			</li>
 			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/activities/'.$max) }}">Last</a>
+				<a class="btn btn-secondary" href="{{ url('/lan/'.$lan->id.'/activities/'.$max) }}">Last</a>
 			</li>
 		</ul>
 	</nav>
@@ -91,7 +91,7 @@ LAN's activities
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script src="/js/ajax/activity/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

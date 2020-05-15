@@ -1,32 +1,32 @@
 <div class="card">
 	<div class="card-header">
-		<h3 class="lead-title">Viewing : {!!$shopping->name_activity!!}</h3>
+		<h3>Viewing : {!!$shopping->name_activity!!}</h3>
 	</div>
 
 
 	<div class="card-body">
 		<div class="row">
-			<label class="lead col-3 mt-1 text-center">Price</label>
+			<label class="display-6 col-3 mt-1 text-center">Price</label>
 			<label class="form-control col-8">{!!$shopping->cost_shopping!!} €</label>
 		</div>
 		<div class="row">
-			<label class="lead col-3 mt-1 text-center">Quantity</label>
+			<label class="display-6 col-3 mt-1 text-center">Quantity</label>
 			<label class="form-control col-8">{!!$shopping->quantity_shopping!!}</label>
 		</div>
 		<div class="row">
-			<label class="lead col-3 mt-1 text-center">Total price</label>
+			<label class="display-6 col-3 mt-1 text-center">Total price</label>
 			<label class="form-control col-8">{!!$shopping->cost_shopping*$shopping->quantity_shopping!!} €</label>
 		</div>
 		<div class="row">
-			<label class="lead col-3 mt-1 text-center">Name</label>
+			<label class="display-6 col-3 mt-1 text-center">Name</label>
 			<label class="form-control col-8">{!!$material->name_material!!}</label>
 		</div>
 		<div class="row">
-			<label class="lead col-3 mt-1 text-center">Category</label>
+			<label class="display-6 col-3 mt-1 text-center">Category</label>
 			<label class="form-control col-8">{!!$material->category_material!!}</label>
 		</div>
 		<div class="row">
-			<label class="lead col-3 mt-1 text-center">Description</label>
+			<label class="display-6 col-3 mt-1 text-center">Description</label>
 			<label class="form-control col-8">{!!$material->desc_material!!}</label>
 		</div>
 		<div class="form-group row text-center">

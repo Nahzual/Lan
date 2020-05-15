@@ -35,6 +35,7 @@ Admin dashboard
 					</div>
 					<div class="col">
 						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-users" aria-expanded="false" aria-controls="collapse-users">Show/hide</button>
+						<a class="btn btn-outline-primary shadow-sm float-right" href="{{ url('/adm/users') }}"><i class='fa fa-list'></i> All</a>
 					</div>
 				</div>
 			</div>
@@ -72,6 +73,7 @@ Admin dashboard
 					</div>
 					<div class="col">
 						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-deleted-users" aria-expanded="false" aria-controls="collapse-deleted-users">Show/hide</button>
+						
 					</div>
 				</div>
 			</div>

@@ -89,8 +89,8 @@
 						@if($logged_user->rank_user == config('ranks.SITE_ADMIN'))
 			    	<div class="sb-sidenav-menu-heading">ADM</div>
 						<a class="nav-link" href="{{ url('/dashboard/admin') }}">Admin dashboard</a>
-						<a class="nav-link" href="{{ url('/users') }}">All Users</a>
-			    	<a class="nav-link" href="{{ route('task.all') }}">All Tournaments</a>
+						<a class="nav-link" href="{{ url('/adm/users') }}">All Users</a>
+			    	<a class="nav-link" href="{{ route('admin.tournaments') }}">All Tournaments</a>
 			    	@endif
           </div>
         </div>

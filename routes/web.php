@@ -187,6 +187,8 @@ Route::post('/user/{user}/restore','UsersController@restore');
 Route::get('search/user/', 'UsersController@search');
 Route::get('adm/users', 'UsersController@admList')->name('admin.users');
 Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.page');
+Route::get('adm/tournaments', 'TournamentsController@admList')->name('admin.tournaments');
+Route::get('adm/tournaments/{page}', 'Tournaments@admList')->name('admin.tournaments.page');
 Route::get('search/helper/{task}', 'UsersController@searchHelper');
 Route::get('updateTheme/{id}', 'UsersController@updateTheme')->name('user.updateTheme');
 

@@ -62,7 +62,7 @@ LAN's games
 
 				@if($userIsLanAdmin)
 				<td scope="col">
-					{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$id.','.$game->id.')']) !!}
+					 {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$id.','.$game->id.')']) !!}
 					<div class="form-group row text-center">
 						<div class="col">
 							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
@@ -104,6 +104,7 @@ LAN's games
 
 @section('js_includes')
 <script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script src="/js/ajax/lan/ajax_remove_game.js"></script>
 @endsection
 
 @section('css_includes')

@@ -35,7 +35,7 @@ LAN's games
 			<th scope="col">Name</th>
 			<th scope="col">Release date</th>
 			<th scope="col">Game type</th>
-			@if($userIsLanAdmin) <th scope="col">Actions</th> @endif
+			@if($userIsLanAdmin) <th scope="col">Actions</th> <th scope="col">Used ports</th> @endif
 		</thead>
 
 		<tbody>
@@ -45,7 +45,7 @@ LAN's games
 			</tr>
 			@endif
 
-			@foreach($games as $game)
+			@foreach($games as $index=>$game)
 			<?php $date=date_create($game->release_date_game); ?>
 			<tr id="row-game-lan-{{$game->id}}">
 				<th scope="row" class="text-center ">{{$game->id}}</th>
@@ -61,14 +61,18 @@ LAN's games
 				</td>
 
 				@if($userIsLanAdmin)
+				<td scope="col" id="game-ports-{{$game->id}}">
+					{{$game->ports_string($ports[$index])}}
+				</td>
 				<td scope="col">
-					 {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$id.','.$game->id.')']) !!}
-					<div class="form-group row text-center">
+					<div class="row text-center">
 						<div class="col">
+							<button class="btn btn-outline-primary shadow-sm" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
+						  {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$id.','.$game->id.')']) !!}
 							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
+						  {!! Form::close() !!}
 						</div>
 					</div>
-					{!! Form::close() !!}
 				</td>
 				@endif
 			</tr>
@@ -100,14 +104,24 @@ LAN's games
 		</li>
 	</ul>
 </nav>
+				@foreach($games as $game)
+				<div id="popup-game-{{$game->id}}" class="popup">
+					<div class="popup-content">
+						<span onclick="closeGame({{$game->id}})" class="close">&times;</span>
+						@include('game.add_port_list',[$game,$id])
+					</div>
+				</div>
+				@endforeach
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
-<script src="/js/ajax/lan/ajax_remove_game.js"></script>
+<script src="{{ asset('js/ajax/lan/ajax_remove_game.js') }} "></script>
+<script src="{{ asset('js/windows/game/add_port_window.js') }} "></script>
+<script src="{{ asset('js/ajax/game/ajax_port.js') }} "></script>
 @endsection
 
 @section('css_includes')
 <link href="{{ asset('css/game/game.css') }}" rel="stylesheet">
 <link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
+<link href="{{ asset('css/popup.css') }}" rel="stylesheet">
 @endsection

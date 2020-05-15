@@ -1117,8 +1117,12 @@ class LansController extends Controller
 				}else{
 					$previous = $page-1;
 				}
+				$ports=$games->toBase();
+						foreach($ports as $index=>$game){
+							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
+						}
 
-				return view('lan.complete_lists.games', compact('games', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				return view('lan.complete_lists.games', compact('games', 'ports', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
 			}

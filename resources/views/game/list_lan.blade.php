@@ -38,19 +38,16 @@
 				<td scope="col" id="game-ports-{{$game->id}}">
 					{{$game->ports_string($ports[$index])}}
 				</td>
-        <td scope="col" clas="text-center">
+        			<td scope="col" clas="text-center">
 					<div class="form-group row text-center">
 						<div class="col">
 							<button class="btn btn-outline-primary shadow-sm" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
+						  {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
+							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
+						  {!! Form::close() !!}
 						</div>
 					</div>
-          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
-            <div class="form-group row text-center">
-              <div class="col">
-                <button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
-              </div>
-            </div>
-          {!! Form::close() !!}
+
         </td>
         @endif
       </tr>

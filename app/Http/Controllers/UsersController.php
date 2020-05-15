@@ -347,7 +347,7 @@ class UsersController extends Controller
 					if($user!=null){
 						if($user->id==$logged_user->id){
 							Auth::logout();
-							$user->destroy();
+							$user->delete();
 							return response()->json(['success'=>'Your account has been successfully deleted.']);
 						}else{
 							$user->delete();
@@ -408,29 +408,24 @@ class UsersController extends Controller
 		 */
 		public function admList($page = 1){
 			if(Auth::check()){
-					$user=Auth::user();
-					if($user->rank_user!=config('ranks.SITE_ADMIN')){
-						return back()->with('error','You are not an Admin');
-				}
-				else{
-					$tu = User::get();
-					$users= User::skip(abs(($page - 1)*10))->take(10)->get();
+				$user=Auth::user();
+				if(!$user->isSiteAdmin()){
+					return back()->with('error','You are not an Admin');
+				}else{
+					$tu = User::withTrashed()->selectRaw('COUNT(*) AS count')->first()->count;
+					$users= User::withTrashed()->skip(abs(($page - 1)*10))->take(10)->get();
 
-					$max = ceil(count($tu)/10);
-
+					$max = ceil($tu/10);
 
 					if(($page+1)*10>($max*10)){
 						$next = 0;
-					}
-					else{
+					}else{
 						$next = $page + 1;
 					}
 
 					if($page == 1){
-
 						$previous = 0;
-					}
-					else{
+					}else{
 						$previous = $page-1;
 					}
 					//reduce users before compacting (limit the amount of information like emails)

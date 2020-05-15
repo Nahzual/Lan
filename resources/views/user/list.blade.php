@@ -24,18 +24,25 @@ Site Users
 			@if (isset($users))
 				@if(count($users)==0)
 				<tr>
-					<td colspan="3"><h3>No Users to show</h3></td>
+					<td colspan="3"><h3>No users to show</h3></td>
 				</tr>
 				@endif
 
-				@foreach($users as $helper)
-				<tr id="row-user-lan-{{$helper->id}}">
-					<th>{{$helper->id}}</th>
-					<td>{!!$helper->pseudo!!}</td>
+				@foreach($users as $user)
+				<tr id="row-user-lan-{{$user->id}}">
+					<th>{{$user->id}}</th>
+					<td>{!!$user->pseudo!!}</td>
 					<td scope="col" class="text-center">
 						<div class="btn-group text-center">
-							<button type="submit" class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
-							<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
+							{!! Form::open(['method'=>'get','url'=>route('user.show',$user->id) ]) !!}
+								<button type=submit class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
+							{{ Form::close() }}
+							{!! Form::open(['id'=>'form-undo-'.$user->id,'method'=>'post','onsubmit'=>'restoreUserList(event,'.$user->id.')','style'=>($user->trashed()) ? '' : 'display: none;']) !!}
+								<button type="submit" class="btn btn-primary"><i class='fa fa-undo'></i></button>
+							{{ Form::close() }}
+							{!! Form::open(['id'=>'form-ban-'.$user->id,'method'=>'post','onsubmit'=>'banUserList(event,'.$user->id.')','style'=>(!$user->trashed()) ? '' : 'display: none;']) !!}
+								<button type="submit" class="btn btn-danger"><i class='fa fa-ban'></i></button>
+							{{ Form::close() }}
 						</div>
 					</td>
 				</tr>
@@ -70,7 +77,8 @@ Site Users
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/game/ajax.js"></script>
+<script type="text/javascript" src="/js/ajax/user/ajax_delete.js"></script>
+<script type="text/javascript" src="/js/ajax/user/ajax_restore.js"></script>
 @endsection
 
 @section('css_includes')

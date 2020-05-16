@@ -39,7 +39,7 @@
 									{{ Form::open([ 'method'  => 'delete', 'url'=>'', 'onsubmit'=>'return deleteLan(event,'.$lan->id.')' ]) }}
 										{{ Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', ['class' => 'btn btn-outline-danger shadow-sm float-right', 'type' => 'submit']) }}
 									{{ Form::close() }}
-									<a class="btn btn-outline-warning shadow-sm float-right" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
+									<a class="btn btn-outline-warning shadow-sm mr-2" href="{{ route('lan.edit', $lan->id) }}"><i class='fa fa-edit'></i> Edit</a>
 								</div>
 							</div>
 							@endif

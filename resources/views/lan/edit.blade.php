@@ -106,7 +106,7 @@ Editing LAN
 			<button type="submit" class="btn  btn-outline-success shadow-sm"><i class='fa fa-edit'></i> Update</button>
 		</div>
 		<div class="col">
-			<a class="btn  btn-outline-info shadow-sm" href="{{ route('my_lans') }}"><i class='fa fa-arrow-left'></i> Go back to my LANs</a>
+			<a class="btn  btn-outline-info shadow-sm" href="{{ route('dashboard') }}"><i class='fa fa-arrow-left'></i> Go back to my LANs</a>
 		</div>
 	</div>
 {!! Form::close() !!}

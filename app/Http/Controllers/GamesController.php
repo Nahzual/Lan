@@ -24,8 +24,7 @@ class GamesController extends Controller
     public function index()
     {
         if(Auth::check()){
-          $user=Auth::user();
-          return view('game.index',compact('user'));
+          return view('game.index');
         }else{
           return redirect('/login')->with('error','Please log in to have access to this page.');
         }
@@ -38,7 +37,15 @@ class GamesController extends Controller
      */
     public function create()
     {
-        return view('game.create');
+			if(Auth::check()){
+				if(Auth::user()->isSiteAdmin()){
+					return view('game.create');
+				}else{
+					return back()->with('error','You do not have enough rights.');
+				}
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
     }
 
     public function showFavouriteGames()
@@ -58,35 +65,34 @@ class GamesController extends Controller
      * @return \Illuminate\Http\Response
      */
 	   public function store(Request $request){
-
        if(Auth::check()){
-           $user=Auth::user();
-           if($user->isSiteAdmin()){
-             $game = new Game();
+        $user=Auth::user();
+        if($user->isSiteAdmin()){
+          $game = new Game();
 
-             if($request->cost_game >= 0) $game->cost_game=$request->cost_game;
-             else return response()->json(['error'=>'The price has to be positive or zero.']);
+        	if($request->cost_game >= 0) $game->cost_game=$request->cost_game;
+          else return response()->json(['error'=>'The price has to be positive or zero.']);
 
-             if($request->is_multiplayer_game!=config('game.SOLO') && $request->is_multiplayer_game!=config('game.MULTI_LOCAL') &&  $request->is_multiplayer_game!=config('game.MULTI_ONL')){
-               return response()->json(['error'=>'Please select "Local Multiplayer", "Online Multiplayer" or "1 player" for the game type.']);
-             }else{
-               $game->is_multiplayer_game=htmlentities($request->is_multiplayer_game);
-             }
+        	if($request->is_multiplayer_game!=config('game.SOLO') && $request->is_multiplayer_game!=config('game.MULTI_LOCAL') &&  $request->is_multiplayer_game!=config('game.MULTI_ONL')){
+            return response()->json(['error'=>'Please select "Local Multiplayer", "Online Multiplayer" or "1 player" for the game type.']);
+          }else{
+            $game->is_multiplayer_game=htmlentities($request->is_multiplayer_game);
+          }
 
-             $game->name_game=htmlentities($request->name_game);
-             $game->desc_game=htmlentities($request->desc_game);
-             $game->release_date_game=htmlentities($request->release_date_game);
-             $game->save();
+          $game->name_game=htmlentities($request->name_game);
+          $game->desc_game=htmlentities($request->desc_game);
+          $game->release_date_game=htmlentities($request->release_date_game);
+          $game->save();
 
-             return response()->json(['success'=>'The game "'.$game->name_game.'" has been successfully created.']);
+          return response()->json(['success'=>'The game "'.$game->name_game.'" has been successfully created.']);
 
-           }else{
-             return response()->json(['error'=>'You do not have enough rights to do this.']);
-           }
-       }else{
-         return response()->json(['error'=>'Please log in to perform this action.']);
-       }
+        }else{
+          return response()->json(['error'=>'You do not have enough rights.']);
+        }
+      }else{
+        return response()->json(['error'=>'Please log in to perform this action.']);
       }
+    }
 
       /**
        * Display the specified resource.
@@ -94,19 +100,17 @@ class GamesController extends Controller
        * @param  int  $id
        * @return \Illuminate\Http\Response
        */
-      public function show($id)
-      {
-  		if(Auth::check()){
-        $game=Game::find($id);
-        if($game!=null){
-          $user=Auth::user();
-          return view('game.show',compact('game','user'));
-        }else{
-          return redirect('/login')->with('error','Please log in to have access to this page.');
-        }
-  		}else{
-  			return redirect('/login')->with('error','Please log in to have access to this page.');
-  		}
+      public function show($id){
+	  		if(Auth::check()){
+	        $game=Game::find($id);
+	        if($game!=null){
+	          return view('game.show',compact('game'));
+	        }else{
+	          return back()->with('error','This game does not exist.');
+	        }
+	  		}else{
+	  			return redirect('/login')->with('error','Please log in to have access to this page.');
+	  		}
     }
 
     /**
@@ -118,17 +122,17 @@ class GamesController extends Controller
     public function edit($id)
     {
   		if(Auth::check()){
-          $user=Auth::user();
-          if($user->isSiteAdmin()){
-            $game=Game::find($id);
-            if($game!=null){
-              return view('game.edit',compact('game'));
-            }else{
-              return redirect('/home')->with('error','This game does not exist.');
-            }
+        $user=Auth::user();
+        if($user->isSiteAdmin()){
+          $game=Game::find($id);
+          if($game!=null){
+            return view('game.edit',compact('game'));
           }else{
-            return redirect('/home')->with('error','You do not have enough rights to do this.');
+            return back()->with('error','This game does not exist.');
           }
+        }else{
+          return back()->with('error','You do not have enough rights.');
+        }
   		}else{
   			return redirect('/login')->with('error','Please log in to perform this action.');
   		}
@@ -144,31 +148,31 @@ class GamesController extends Controller
     public function update(Request $request, $id)
     {
       if(Auth::check()){
-          $user=Auth::user();
-          if($user->isSiteAdmin()){
-            $game = Game::find($id);
-            if($game!=null){
-              if($request->cost_game >= 0) $game->cost_game=$request->cost_game;
-              else return response()->json(['error'=>'The price has to be positive or zero.']);
+        $user=Auth::user();
+        if($user->isSiteAdmin()){
+          $game = Game::find($id);
+          if($game!=null){
+            if($request->cost_game >= 0) $game->cost_game=$request->cost_game;
+            else return response()->json(['error'=>'The price has to be positive or zero.']);
 
-              if($request->is_multiplayer_game!=config('game.SOLO') && $request->is_multiplayer_game!=config('game.MULTI_LOCAL') &&  $request->is_multiplayer_game!=config('game.MULTI_ONL')){
-                return response()->json(['error'=>'Please select "Local Multiplayer", "Online Multiplayer" or "1 player" for the game type.']);
-              }else{
-                $game->is_multiplayer_game=htmlentities($request->is_multiplayer_game);
-              }
-
-              $game->name_game=htmlentities($request->name_game);
-              $game->desc_game=htmlentities($request->desc_game);
-              $game->release_date_game=htmlentities($request->release_date_game);
-              $game->save();
-
-              return response()->json(['success'=>'The game "'.$game->name_game.'" has been successfully edited.']);
+            if($request->is_multiplayer_game!=config('game.SOLO') && $request->is_multiplayer_game!=config('game.MULTI_LOCAL') &&  $request->is_multiplayer_game!=config('game.MULTI_ONL')){
+              return response()->json(['error'=>'Please select "Local Multiplayer", "Online Multiplayer" or "1 player" for the game type.']);
             }else{
-              return response()->json(['error'=>'This game does not exist.']);
+              $game->is_multiplayer_game=htmlentities($request->is_multiplayer_game);
             }
+
+            $game->name_game=htmlentities($request->name_game);
+            $game->desc_game=htmlentities($request->desc_game);
+            $game->release_date_game=htmlentities($request->release_date_game);
+            $game->save();
+
+            return response()->json(['success'=>'The game "'.$game->name_game.'" has been successfully edited.']);
           }else{
-            return response()->json(['error','You do not have enough rights to do this.']);
+            return response()->json(['error'=>'This game does not exist.']);
           }
+        }else{
+          return response()->json(['error','You do not have enough rights to do this.']);
+        }
       }else{
         return response()->json(['error','Please log in to perform this action.']);
       }
@@ -184,12 +188,11 @@ class GamesController extends Controller
             $user->games()->attach($game);
             return response()->json(['success'=>'This game has been successfully added to your Favourite list.']);
           }else{
-            return response()->json(['error'=>'This game is already in your Favourite list.']);
+            return response()->json(['error'=>'This game is already in your favourite list.']);
           }
         }else{
           return response()->json(['error'=>'This game does not exist.']);
         }
-
       }else{
         return response()->json(['error'=>'Please log in to perform this action.']);
       }
@@ -203,7 +206,7 @@ class GamesController extends Controller
           $favourite_game=$user->games()->where('favorite_games.game_id','=',$id)->first();
           if($favourite_game!=null){
             $user->games()->detach($game);
-            return response()->json(['success'=>'This game has been successfully removed from your Favourite list.']);
+            return response()->json(['success'=>'This game has been successfully removed from your favourite list.']);
           }else{
             return response()->json(['error'=>'This game isn\'t in your Favourite list.']);
           }
@@ -331,17 +334,17 @@ class GamesController extends Controller
           if(isset($request->lan_id)){
             $lan=Lan::find($request->lan_id);
             if($lan!=null){
-              return view($request->view_path,compact('games','user','lan'));
+              return view($request->view_path,compact('games','lan'));
             }else{
               return "<p>This LAN doesn\'t exist</p>";
             }
           }else{
             $favourite_games=Auth::user()->games;
-            return view($request->view_path,compact('games','favourite_games','user'));
+            return view($request->view_path,compact('games','favourite_games'));
           }
         }else{
           $games=Auth::user()->games()->where('name_game','LIKE','%'.$request->name_game.'%')->get();
-          return view($request->view_path,compact('games','user'));
+          return view($request->view_path,compact('games'));
         }
       }else{
         return redirect('/login')->with('error','Please log in to have access to this page.');

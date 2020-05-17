@@ -36,7 +36,7 @@ Game
 <div id="response-error" class="container alert alert-danger mt-2" style="display:none"></div>
 
 <div class="mt-5 form-group row text-center">
-	@if($user->rank_user==config('ranks.SITE_ADMIN'))
+	@if($logged_user->isSiteAdmin())
 	<div class="col">
 		<a class="btn btn-outline-warning shadow-sm" href="{{ route('game.edit', $game->id) }}"><i class='fa fa-edit'></i> Edit</a>
 	</div>

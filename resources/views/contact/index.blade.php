@@ -17,18 +17,18 @@
 			{!! Form::open(['method' => 'post', 'id' => 'CreateNewContactForm', 'enctype' => 'multipart/form-data']) !!}
 				@csrf
 				<div class="bg-light">
-					@if(isset($user))
+					@if(isset($logged_user))
 						<div class="form-group">
 							{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
-							{!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
+							{!! Form::text('name', $logged_user->name, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
 							{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
-							{!! Form::text('lastname', $user->lastname, ['class' => 'form-control']) !!}
+							{!! Form::text('lastname', $logged_user->lastname, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
 							{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
-							{!! Form::text('email', $user->email, ['class' => 'form-control']) !!}
+							{!! Form::text('email', $logged_user->email, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
 							{!! Form::label('object', 'Object',['class' => 'display-6']) !!}

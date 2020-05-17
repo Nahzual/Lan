@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 class ContactsController extends Controller
 {
     /**
-	* bug de git à supprimer
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -75,7 +74,7 @@ class ContactsController extends Controller
 				}
 
 				return response()->json([
-					'success'=>'Your mail has been saved successfully.'
+					'success'=>'Your mail has been sent successfully.'
 				]);
 			}else{
 				return $this->validator($request);

@@ -9,7 +9,7 @@ Games
 @endsection
 
 @section('title-buttons')
-	@if($user->isSiteAdmin())
+	@if($logged_user->isSiteAdmin())
 		<div class="col mt-1">
 			<form method="GET" action="{{ route('game.create') }}">
 			@csrf

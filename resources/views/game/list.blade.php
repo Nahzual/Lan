@@ -45,7 +45,7 @@
             <button type="submit" class="btn btn-warning mb-2"><i class='fa fa-star-o'></i> Unmark</button>
           {!! Form::close() !!}
 
-        @if(isset($user) && $user->rank_user==config('ranks.SITE_ADMIN'))
+        @if(isset($logged_user) && $logged_user->isSiteAdmin())
         {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteGame(event,'.$game->id.')']) !!}
           <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
         {!! Form::close() !!}

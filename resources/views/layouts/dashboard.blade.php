@@ -140,6 +140,12 @@
 						@yield('content')
 					</div>
 				</div>
+@if(Auth::user()->theme == 3)
+  <audio autoplay loop>
+	<source src="http://angom8.net/dl/media/megalovania.mp3" type="audio/mpeg">
+       comic sans
+    </audio>
+@endif
       </main>
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid">

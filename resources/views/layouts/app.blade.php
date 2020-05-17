@@ -113,7 +113,7 @@
           @yield('content')
         </main>
 <footer class="container-fluid text-center footer">
-		<p class="informations"><span class="text-muted">Copyright &copy; LAN Creator 2020</span> - <a href="#">Privacy Policy</a> - <a href="#">Terms &amp; Conditions</a> </p>
+		<p class="informations"><span class="text-muted">Copyright &copy; LAN Creator 2020</span> - <a href="{{ url('/privacy') }}">Privacy Policy</a> </p>
     </footer>
     </div>
     @yield('js_includes')

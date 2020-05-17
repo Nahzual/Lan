@@ -90,6 +90,10 @@ class PageController extends Controller
     public function contact(){
 	    return view('contact');
     }
+    public function privacy(){
+	    return view('privacy');
+    }
+
 
 	public function dashboard(){
 		if(Auth::check()){

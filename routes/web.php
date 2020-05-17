@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', 'PageController@home')->name('home');
 Route::get('/home', 'PageController@home')->name('home');
-
+Route::get('/privacy', 'PageController@privacy')->name('privacy');
 
 Route::get('/contact','ContactsController@index')->name('contact.index');
 Route::post('/contact','ContactsController@store')->name('contact.store');

@@ -141,9 +141,7 @@
           <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; LAN Creator 2020</div>
             <div class="footerlinks">
-              <a href="#">Privacy Policy</a>
-              &middot;
-              <a href="#">Terms &amp; Conditions</a>
+              <a href="{{ url('/privacy') }}">Privacy Policy</a>
             </div>
           </div>
         </div>

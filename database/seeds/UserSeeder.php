@@ -23,7 +23,8 @@ class UserSeeder extends Seeder
 				'tel_user'=>'0123456789',
 				'rank_user'=>config('ranks.SITE_ADMIN'),
 				'location_id'=>1,
-				'theme'=>'0'
+				'theme'=>'0',
+				'language'=>'0'
 			]);
     }
 }

@@ -188,6 +188,7 @@ Route::get('adm/tournaments', 'TournamentsController@admList')->name('admin.tour
 Route::get('adm/tournaments/{page}', 'TournamentsController@admList')->name('admin.tournaments.page');
 Route::get('search/helper/{task}', 'UsersController@searchHelper');
 Route::get('updateTheme/{id}', 'UsersController@updateTheme')->name('user.updateTheme');
+Route::get('updateLanguage/{id}', 'UsersController@updateLanguage')->name('user.updateLanguage');
 
 Route::get('/az', function(){
 	$t = App\Lan::all()->first();

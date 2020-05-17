@@ -21,37 +21,16 @@ use Illuminate\Http\Request;
 class LansController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Shows the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-			if(Auth::check()){
-				$user = Auth::user();
-				$admin_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-				$helper_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-				$player_lans = $user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
-
-				return view('lan.index',compact('user','admin_lans','helper_lans','player_lans'));
-			}else{
-				return redirect('/login')->with('error','Please log in to have access to this page.');
-			}
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if(Auth::check()){
-          return view('lan.create');
-        }else{
-          return redirect('/login')->with('error','You have to be logged in to create a new LAN.');
-        }
-
+    public function create(){
+      if(Auth::check()){
+        return view('lan.create');
+      }else{
+        return redirect('/login')->with('error','You have to be logged in to create a new LAN.');
+      }
     }
 
     /**
@@ -60,10 +39,8 @@ class LansController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	   public function store(Request $request){
-
-       if(Auth::check()){
-
+	  public function store(Request $request){
+      if(Auth::check()){
          //Country
      		$countries = Country::where('name_country','=',$request->name_country)->get();
      		if($countries != null){$country = $countries->first();}
@@ -194,8 +171,7 @@ class LansController extends Controller
      		    'error'=>'Please log in to perform this action.'
      		]);
       }
-
-      }
+    }
 
       /**
        * Display the specified resource.
@@ -205,50 +181,54 @@ class LansController extends Controller
        */
 			public function show($id)
       {
-				$lan = Lan::findOrFail($id);
-				$location = $lan->location;
-				$street = $location->street;
-				$city = $street->city;
-				$department = $city->department;
-				$country = $department->country;
-				$games=$lan->games->take(-5);
-				$activities = $lan->activities->take(-5);
-				$tournaments = $lan->tournaments->take(-5);
-				if(Auth::check()){
-					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-					if($userIsLanAdmin){
-						$helpers=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get()->take(-5);
-						$admins=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
-						$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->take(-5);
-						$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
-						$tasks = $lan->tasks->take(-5);
-						$shoppings = $lan->shoppings;
-						$ports=$games->toBase();
-						foreach($ports as $index=>$game){
-							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
-						}
-						$totalprice_shopping = $lan->price_shopping($shoppings);
-						$shoppings = $shoppings->take(-5);
-						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'users', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
-					}else{
-						$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-						if($userIsLanHelper){
+				$lan = Lan::find($id);
+				if($lan!=null){
+					$location = $lan->location;
+					$street = $location->street;
+					$city = $street->city;
+					$department = $city->department;
+					$country = $department->country;
+					$games=$lan->games->take(-5);
+					$activities = $lan->activities->take(-5);
+					$tournaments = $lan->tournaments->take(-5);
+					if(Auth::check()){
+						$user=Auth::user();
+						$userIsLanAdmin=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+						if($userIsLanAdmin){
+							$helpers=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get()->take(-5);
+							$admins=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get()->take(-5);
+							$users=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get()->take(-5);
 							$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
-							$shoppings = $lan->shoppings->take(-5);
 							$tasks = $lan->tasks->take(-5);
-							$users=$lan->users->take(-5);
-							$totalprice_shopping = 0;
-							foreach($shoppings as $shopping){
-								$totalprice_shopping += $shopping->cost_shopping*$shopping->quantity_shopping;
+							$shoppings = $lan->shoppings;
+							$ports=$games->toBase();
+							foreach($ports as $index=>$game){
+								$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
 							}
-							return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'users','department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
+							$totalprice_shopping = $lan->price_shopping($shoppings);
+							$shoppings = $shoppings->take(-5);
+							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'helpers', 'admins', 'users', 'games', 'ports', 'materials', 'activities','tournaments','tasks','userIsLanAdmin', 'shoppings', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
 						}else{
-							return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
+							$userIsLanHelper=$user->lans()->where('lans.id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+							if($userIsLanHelper){
+								$materials=$lan->materials()->select('materials.*','quantity')->get()->take(-5);
+								$shoppings = $lan->shoppings->take(-5);
+								$tasks = $lan->tasks->take(-5);
+								$users=$lan->users->take(-5);
+								$totalprice_shopping = 0;
+								foreach($shoppings as $shopping){
+									$totalprice_shopping += $shopping->cost_shopping*$shopping->quantity_shopping;
+								}
+								return view('lan.show', compact('lan', 'location', 'street', 'city', 'tasks', 'users','department', 'country', 'games', 'materials', 'shoppings', 'activities','tournaments','userIsLanAdmin', 'totalprice_shopping'))->with(['userIsLanAdminOrHelper'=>true]);
+							}else{
+								return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
+							}
 						}
+					}else{
+						return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
 					}
 				}else{
-					return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
+					return back()->with('error','This LAN does not exist.');
 				}
       }
 
@@ -260,21 +240,25 @@ class LansController extends Controller
 			 */
 			public function guestShow($id)
 			{
-				$lan = Lan::findOrFail($id);
-				$location = $lan->location;
-				$street = $location->street;
-				$city = $street->city;
-				$department = $city->department;
-				$country = $department->country;
-				$games=$lan->games->take(-5);
-				$activities = $lan->activities->take(-5);
-				$tournaments = $lan->tournaments->take(-5);
-				
-				if(Auth::check()){
-					return view('lan.show_guest', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
-				}
-				else{
-					return view('lan.show_guest_external', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+				$lan = Lan::find($id);
+
+				if($lan!=null){
+					$location = $lan->location;
+					$street = $location->street;
+					$city = $street->city;
+					$department = $city->department;
+					$country = $department->country;
+					$games=$lan->games->take(-5);
+					$activities = $lan->activities->take(-5);
+					$tournaments = $lan->tournaments->take(-5);
+
+					if(Auth::check()){
+						return view('lan.show_guest', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+					}else{
+						return view('lan.show_guest_external', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+					}
+				}else{
+					return back()->with('error','This LAN does not exist.');
 				}
 			}
 
@@ -288,17 +272,21 @@ class LansController extends Controller
     {
   		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->find($id)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
+  			if($user->lans()->select('lans.id')->find($id)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
   			}else{
-  				$lan = Lan::findOrFail($id);
-					$location = $lan->location;
-    			$street = $location->street;
-    			$city = $street->city;
-    			$department = $city->department;
-    			$country = $department->country;
-					$room = file_get_contents('../storage/lans/room_plan_'.$id.'.json');
-  				return view('lan.edit', compact('lan', 'location', 'street', 'city', 'department', 'country','room'));
+  				$lan = Lan::find($id);
+					if($lan!=null){
+						$location = $lan->location;
+						$street = $location->street;
+						$city = $street->city;
+						$department = $city->department;
+						$country = $department->country;
+						$room = file_get_contents('../storage/lans/room_plan_'.$id.'.json');
+						return view('lan.edit', compact('lan', 'location', 'street', 'city', 'department', 'country','room'));
+					}else{
+						return back()->with('error','This LAN does not exist.');
+					}
   			}
   		}else{
   			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
@@ -321,212 +309,216 @@ class LansController extends Controller
           return response()->json(['error'=>'You have to be an admin of this LAN to edit it.']);
   			}else{
 
-  				$lan = Lan::findOrFail($id);
+  				$lan = Lan::find($id);
 
-					// handle room width and height requirements
-					if(isset($request->room_width) && $request->room_width<=0){
-						return response()->json(['error','Your room width has to be positive.']);
-					}else if(isset($request->room_length) && $request->room_length<=0){
-						return response()->json(['error','Your room length has to be positive.']);
-					}else if(isset($request->room_width) && isset($request->room_length)){
-						// sets the room_length and room_width values
-						if(isset($request->room_length)) $lan->room_length=$request->room_length;
-						if(isset($request->room_width)) $lan->room_width=$request->room_width;
+					if($lan!=null){
+						// handle room width and height requirements
+						if(isset($request->room_width) && $request->room_width<=0){
+							return response()->json(['error','Your room width has to be positive.']);
+						}else if(isset($request->room_length) && $request->room_length<=0){
+							return response()->json(['error','Your room length has to be positive.']);
+						}else if(isset($request->room_width) && isset($request->room_length)){
+							// sets the room_length and room_width values
+							if(isset($request->room_length)) $lan->room_length=$request->room_length;
+							if(isset($request->room_width)) $lan->room_width=$request->room_width;
 
 
-						if(isset($request->room_with_places) && isset($request->room)){
-							$room_json=json_decode($request->room_with_places);
-							$main_room_json=json_decode($request->room);
+							if(isset($request->room_with_places) && isset($request->room)){
+								$room_json=json_decode($request->room_with_places);
+								$main_room_json=json_decode($request->room);
 
-							for($i=1 ; $i<count($room_json->places) ; ++$i){
-								//  if there are places where x > room_length or y > room_width, or if there are places that are now bound to something else than a taken chair, then there are places that are deleted
-								// so let's delete all user participations that are bound to deleted places
-								if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width || $room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]!=config('room.TAKEN_CHAIR')){
+								for($i=1 ; $i<count($room_json->places) ; ++$i){
+									//  if there are places where x > room_length or y > room_width, or if there are places that are now bound to something else than a taken chair, then there are places that are deleted
+									// so let's delete all user participations that are bound to deleted places
+									if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width || $room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]!=config('room.TAKEN_CHAIR')){
 
-									$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number_x','=',$room_json->places[$i][1])->where('lan_user.place_number_y','=',$room_json->places[$i][0])->join('users','users.id','=','lan_user.user_id')->select('email')->first();
-									DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number_x','=',$room_json->places[$i][1])->where('lan_user.place_number_y','=',$room_json->places[$i][0])->delete();
+										$user_to_remove=DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number_x','=',$room_json->places[$i][1])->where('lan_user.place_number_y','=',$room_json->places[$i][0])->join('users','users.id','=','lan_user.user_id')->select('email')->first();
+										DB::table('lan_user')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.place_number_x','=',$room_json->places[$i][1])->where('lan_user.place_number_y','=',$room_json->places[$i][0])->delete();
 
-									if($user_to_remove!=null){
-										try{
-											Mail::send('mails.notification_player_removed', ['lan' => $lan], function ($message) use ($user_to_remove) {
-												$message->from('lancreator.noreply@gmail.com','LAN Creator')
-													->to($user_to_remove->email)
-													->subject('You are no longer registered to a LAN');
-											});
-										}catch(\Exception $e){
+										if($user_to_remove!=null){
+											try{
+												Mail::send('mails.notification_player_removed', ['lan' => $lan], function ($message) use ($user_to_remove) {
+													$message->from('lancreator.noreply@gmail.com','LAN Creator')
+														->to($user_to_remove->email)
+														->subject('You are no longer registered to a LAN');
+												});
+											}catch(\Exception $e){
+
+											}
 
 										}
 
-									}
+										// reset place to empty place if out of bounds
+										if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width){
+											$main_room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]=config('room.EMPTY_CHAIR');
+										}
 
-									// reset place to empty place if out of bounds
-									if($room_json->places[$i][0]>$lan->room_length || $room_json->places[$i][1]>$lan->room_width){
-										$main_room_json->room->field[$room_json->places[$i][0]][$room_json->places[$i][1]]=config('room.EMPTY_CHAIR');
 									}
+								}
+
+								// replace main room's field with the one on which we replaced taken places by empty places
+								$request->room=json_encode($main_room_json);
+							}
+						}
+
+						// save lan's previous state
+						$prev_state=$lan->waiting_lan;
+	  				$lan->update($request->all());
+
+						// get all location relative information
+						$location = $lan->location;
+	          $lan_location=$location;
+	    			$street = $location->street;
+	          $lan_street=$street;
+	    			$city = $street->city;
+	          $lan_city=$city;
+	    			$department = $city->department;
+	          $lan_department=$department;
+	    			$country = $department->country;
+	          $lan_country=$country;
+
+	          // Edit LAN's country if needed (might create an entry in the countries table)
+	          if(isset($request->name_country) && $request->name_country!=$country->name_country){
+
+	            $countries = Country::where('name_country','=',$request->name_country)->get();
+	            if($countries != null){$country = $countries->first();}
+	            if(!isset($country)){
+	              $country = new Country();
+	              $country->name_country = htmlentities($request->name_country);
+	              $country->save();
+	            }
+	          }
+
+	      		// Edit LAN's department if needed (might create an entry in the departments table)
+	          if(isset($request->name_department) && $request->name_department!=$department->name_department){
+
+	            $departments=$country->departments;
+	            $department=null;
+	            if(isset($departments)){
+	        			foreach($departments as $tdepartment){
+	        				if($tdepartment->name_department == $request->name_department){
+	        					$department = $tdepartment;
+	        					break;
+	        				}
+	        			}
+	        		}
+	          }
+
+	      		if(!isset($department) || $country!=$lan_country){
+	      			$department = new Department();
+	      			$department->name_department = htmlentities($request->name_department);
+	      			$department->country()->associate($country);
+	      			$department->save();
+	      		}
+
+	      		// Edit LAN's city if needed (might create an entry in the cities table)
+	          if(isset($request->name_city) && ($request->name_city!=$city->name_city || $request->zip_city!=$city->zip_city)){
+	            $cities=$department->cities;
+	            $city=null;
+
+	            if(isset($cities)){
+	        			foreach($cities as $tcity){
+	        				if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
+	        					$city = $tcity;
+	        					break;
+	        				}
+	        			}
+	        		}
+	          }
+
+	          if(!isset($city) || $department!=$lan_department){
+	      			$city = new City();
+	      			$city->name_city = htmlentities($request->name_city);
+	      			$city->zip_city = htmlentities($request->zip_city);
+	      			$city->department()->associate($department);
+	      			$city->save();
+	      		}
+
+	      		// Edit LAN's street if needed (might create an entry in the streets table)
+	          if(isset($request->name_street) && $request->name_street!=$street->name_street){
+	            $streets=$city->streets;
+	            $street=null;
+
+	            if(isset($streets)){
+	        			foreach($streets as $tstreet){
+	        				if($tstreet->name_street == $request->name_street){
+	        					$street = $tstreet;
+	        					break;
+	        				}
+	        			}
+	        		}
+	          }
+
+	      		if(!isset($street) || $city!=$lan_city){
+	      			$street = new Street();
+	      			$street->name_street = htmlentities($request->name_street);
+	      			$street->city()->associate($city);
+	      			$street->save();
+	      		}
+
+						// Edit LAN's location if needed (might create an entry in the locations table)
+	          if(isset($request->num_street) && $request->num_street!=$location->num_street){
+	            $locations=$street->locations;
+	            $location=null;
+
+	        		//Location
+	        		if(isset($locations)){
+	        			foreach($locations as $tlocation){
+	        				if($tlocation->num_street == $request->num_street){
+	        					$location = $tlocation;
+	        					break;
+	        				}
+	        			}
+	        		}
+	          }
+
+	      		if(!isset($location) || $street!=$lan_street){
+	      			$location = new Location();
+	      			$location->num_street = htmlentities($request->num_street);
+	      			$location->street()->associate($street);
+	      			$location->save();
+	      		}
+
+	          if($location!=$lan_location) $lan->location()->associate($location);
+	  				$lan->save();
+
+						// updates the json file containing the LAN's room plan
+						$file_name="../storage/lans/room_plan_".$lan->id.".json";
+						if(file_exists($file_name) && isset($request->room)){
+							file_put_contents($file_name, $request->room);
+						}
+
+						// if the LAN's state has changed, send an email to all of its admins to notify them
+						if(isset($request->waiting_lan) && $lan->waiting_lan!=$prev_state){
+							$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+							if($lan->waiting_lan==config('waiting.ACCEPTED')){
+								foreach($admins as $admin){
+									try{
+										Mail::send('mails.notification_lan_accepted', ['lan' => $lan], function ($message) use ($admin) {
+											$message->from('lancreator.noreply@gmail.com','LAN Creator')
+												->to($admin->email)
+												->subject('LAN accepted');
+										});
+									}catch(\Exception $e){}
 
 								}
-							}
-
-							// replace main room's field with the one on which we replaced taken places by empty places
-							$request->room=json_encode($main_room_json);
-						}
-					}
-
-					// save lan's previous state
-					$prev_state=$lan->waiting_lan;
-  				$lan->update($request->all());
-
-					// get all location relative information
-					$location = $lan->location;
-          $lan_location=$location;
-    			$street = $location->street;
-          $lan_street=$street;
-    			$city = $street->city;
-          $lan_city=$city;
-    			$department = $city->department;
-          $lan_department=$department;
-    			$country = $department->country;
-          $lan_country=$country;
-
-          // Edit LAN's country if needed (might create an entry in the countries table)
-          if(isset($request->name_country) && $request->name_country!=$country->name_country){
-
-            $countries = Country::where('name_country','=',$request->name_country)->get();
-            if($countries != null){$country = $countries->first();}
-            if(!isset($country)){
-              $country = new Country();
-              $country->name_country = htmlentities($request->name_country);
-              $country->save();
-            }
-          }
-
-      		// Edit LAN's department if needed (might create an entry in the departments table)
-          if(isset($request->name_department) && $request->name_department!=$department->name_department){
-
-            $departments=$country->departments;
-            $department=null;
-            if(isset($departments)){
-        			foreach($departments as $tdepartment){
-        				if($tdepartment->name_department == $request->name_department){
-        					$department = $tdepartment;
-        					break;
-        				}
-        			}
-        		}
-          }
-
-      		if(!isset($department) || $country!=$lan_country){
-      			$department = new Department();
-      			$department->name_department = htmlentities($request->name_department);
-      			$department->country()->associate($country);
-      			$department->save();
-      		}
-
-      		// Edit LAN's city if needed (might create an entry in the cities table)
-          if(isset($request->name_city) && ($request->name_city!=$city->name_city || $request->zip_city!=$city->zip_city)){
-            $cities=$department->cities;
-            $city=null;
-
-            if(isset($cities)){
-        			foreach($cities as $tcity){
-        				if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
-        					$city = $tcity;
-        					break;
-        				}
-        			}
-        		}
-          }
-
-          if(!isset($city) || $department!=$lan_department){
-      			$city = new City();
-      			$city->name_city = htmlentities($request->name_city);
-      			$city->zip_city = htmlentities($request->zip_city);
-      			$city->department()->associate($department);
-      			$city->save();
-      		}
-
-      		// Edit LAN's street if needed (might create an entry in the streets table)
-          if(isset($request->name_street) && $request->name_street!=$street->name_street){
-            $streets=$city->streets;
-            $street=null;
-
-            if(isset($streets)){
-        			foreach($streets as $tstreet){
-        				if($tstreet->name_street == $request->name_street){
-        					$street = $tstreet;
-        					break;
-        				}
-        			}
-        		}
-          }
-
-      		if(!isset($street) || $city!=$lan_city){
-      			$street = new Street();
-      			$street->name_street = htmlentities($request->name_street);
-      			$street->city()->associate($city);
-      			$street->save();
-      		}
-
-					// Edit LAN's location if needed (might create an entry in the locations table)
-          if(isset($request->num_street) && $request->num_street!=$location->num_street){
-            $locations=$street->locations;
-            $location=null;
-
-        		//Location
-        		if(isset($locations)){
-        			foreach($locations as $tlocation){
-        				if($tlocation->num_street == $request->num_street){
-        					$location = $tlocation;
-        					break;
-        				}
-        			}
-        		}
-          }
-
-      		if(!isset($location) || $street!=$lan_street){
-      			$location = new Location();
-      			$location->num_street = htmlentities($request->num_street);
-      			$location->street()->associate($street);
-      			$location->save();
-      		}
-
-          if($location!=$lan_location) $lan->location()->associate($location);
-  				$lan->save();
-
-					// updates the json file containing the LAN's room plan
-					$file_name="../storage/lans/room_plan_".$lan->id.".json";
-					if(file_exists($file_name) && isset($request->room)){
-						file_put_contents($file_name, $request->room);
-					}
-
-					// if the LAN's state has changed, send an email to all of its admins to notify them
-					if(isset($request->waiting_lan) && $lan->waiting_lan!=$prev_state){
-						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-						if($lan->waiting_lan==config('waiting.ACCEPTED')){
-							foreach($admins as $admin){
-								try{
-									Mail::send('mails.notification_lan_accepted', ['lan' => $lan], function ($message) use ($admin) {
-										$message->from('lancreator.noreply@gmail.com','LAN Creator')
-											->to($admin->email)
-											->subject('LAN accepted');
-									});
-								}catch(\Exception $e){}
-
-							}
-						}else if($lan->waiting_lan==config('waiting.REJECTED')){
-							foreach($admins as $admin){
-								try{
-									Mail::send('mails.notification_lan_rejected', ['lan' => $lan], function ($message) use ($admin) {
-										$message->from('lancreator.noreply@gmail.com','LAN Creator')
-											->to($admin->email)
-											->subject('LAN rejected');
-									});
-								}catch(\Exception $e){}
+							}else if($lan->waiting_lan==config('waiting.REJECTED')){
+								foreach($admins as $admin){
+									try{
+										Mail::send('mails.notification_lan_rejected', ['lan' => $lan], function ($message) use ($admin) {
+											$message->from('lancreator.noreply@gmail.com','LAN Creator')
+												->to($admin->email)
+												->subject('LAN rejected');
+										});
+									}catch(\Exception $e){}
+								}
 							}
 						}
-					}
 
-  				return response()->json(['success'=>'Your LAN has been successfully edited.('.$request->room_width.', '.$request->room_length.')']);
+	  				return response()->json(['success'=>'Your LAN has been successfully edited.']);
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
   			}
   		}else{
         return response()->json(['error'=>'Please login to perform this action.']);
@@ -575,7 +567,6 @@ class LansController extends Controller
         }else{
           return back()->with('error','This LAN doesn\'t exist.');
         }
-
       }else{
         return redirect('/login')->with('error','You must be logged in to join a LAN.');
       }
@@ -591,14 +582,13 @@ class LansController extends Controller
 							$user=Auth::user();
 	            $lan_user_player=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->first();
 	            if($lan_user_player==null){
-	              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number_x','=',$request->place_number_x)->where('place_number_y','=',$request->place_number_y)->select('id')->get();
+	              $place_taken=DB::table('lan_user')->where('lan_id','=',$id)->where('place_number_x','=',$request->place_number_x)->where('place_number_y','=',$request->place_number_y)->select('lan_id')->get();
 	              if(count($place_taken)==0){
 									// update json file
 									if(isset($request->new_room)){
 										$file_name="../storage/lans/room_plan_".$id.".json";
 										file_put_contents($file_name,$request->new_room);
 									}
-
 
 	                $lan->users()->attach($user,['rank_lan'=>config('ranks.PLAYER'),'score_lan'=>'0','place_number_x'=>$request->place_number_x,'place_number_y'=>$request->place_number_y]);
 	                return response()->json(['success'=>'You have been successfully registered to this LAN.']);
@@ -986,70 +976,6 @@ class LansController extends Controller
 		}
 	}
 
-
-	public function addShopping($id){
-		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
-				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-			})->find($id);
-			if($lan==null){
-				return back()->with('error','You have to be an admin of this LAN to add shoppings to it.');
-			}else{
-				return view('lan.add_shopping',compact('lan'));
-			}
-		}else{
-			return redirect('/login')->with('error','Please login to perform this action.');
-		}
-	}
-
-	public function postAddShopping($id,Request $request){
-		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
-				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-			})->find($id);
-			if($lan!=null){
-				$shopping=Shopping::where('shoppings.id','=',$request->shopping_id)->select('shoppings.id','shoppings.name_shopping')->first();
-				if($shopping!=null){
-					$lan_shopping=$lan->shoppings()->where('needs.id_shopping','=',$shopping->id)->first();
-					if($lan_shopping==null){
-						$lan->shoppings()->attach($shopping);
-						return response()->json(['success'=>'The shopping "'.$shopping->name_shopping.'" has been added to this LAN\'s shopping list.']);
-					}else{
-						return response()->json(['error'=>'The shopping "'.$shopping->name_shopping.'" is already in this LAN\'s shopping list.']);
-					}
-				}else{
-					return response()->json(['error'=>'This shopping doesn\'t exist.']);
-				}
-			}else{
-				return response()->json(['error'=>'You have to be an admin of this LAN to add shoppings to it.']);
-			}
-		}else{
-			return response()->json(['error'=>'Please login to perform this action.']);
-		}
-	}
-
-	public function removeShopping($id,Request $request){
-		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
-				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-			})->find($id);
-			if($lan!=null){
-				$shopping=Shopping::where('shoppings.id','=',$request->shopping_id)->join('needs','needs.id_shopping','=','shoppings.id')->where('needs.id_lan','=',$lan->id)->select('shoppings.id','shoppings.name_shopping')->first();
-				if($shopping!=null){
-					DB::table('needs')->where('id_lan','=',$lan->id)->where('id_shopping','=',$shopping->id)->delete();
-					return response()->json(['success'=>'The shopping "'.$shopping->name_shopping.'" is no longer in this lan\'s shopping list.']);
-				}else{
-					return response()->json(['error'=>'This shopping doesn\'t exist or isn\'t in this lan\'s shopping list.']);
-				}
-			}else{
-				return response()->json(['error'=>'You have to be an admin of this LAN to remove shoppings from it.']);
-			}
-		}else{
-			return response()->json(['error'=>'Please login to perform this action.']);
-		}
-	}
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -1061,7 +987,7 @@ class LansController extends Controller
 	 		if(Auth::check()){
 	 			$lan=Lan::find($id);
 	 			if($lan!=null){
-	 				$user=User::where('users.id','=',Auth::id())->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+	 				$user=Auth::user()->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lan_user.id')->first();
 	 				if($user!=null){
 	 					$lan->delete();
 
@@ -1088,15 +1014,12 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_all(Request $request){
-	$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->take(-5)->get();
-        if(Auth::check()){
-		return view('lan.list_all', compact('lans'));
-	}
-	else{
-		return view('lan.list_all_external', compact('lans'));
-	}
-
-    		
+			$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->get();
+      if(Auth::check()){
+				return view('lan.list_all', compact('lans'));
+			}else{
+				return view('lan.list_all_external', compact('lans'));
+			}
     }
 
     /**
@@ -1106,58 +1029,16 @@ class LansController extends Controller
      */
     public function list_games($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+			  $lan = Lan::find($id);
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
-			  $lan = Lan::findOrFail($id);
-				$tgames=$lan->games;
-				$nlan = $lan->name;
-				$games=$lan->games->forPage($page, 10);
-
-				$max = ceil(count($tgames)/10);
-
-				if(($page+1)*10>($max*10)){
-					$next = 0;
-				}else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-					$previous = 0;
-				}else{
-					$previous = $page-1;
-				}
-				$ports=$games->toBase();
-						foreach($ports as $index=>$game){
-							$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
-						}
-
-				return view('lan.complete_lists.games', compact('games', 'ports', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
-			}else{
-				return redirect('/login')->with('error','Please login to perform this action.');
-			}
-    }
-
-		/**
-     * List all the tasks
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function list_tasks($id, $page = 1){
-			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
-
-				if(!$userIsLanHelper && !$userIsLanAdmin){
-	  			return back()->with('error','You can\'t view a LAN\'s tasks if you are not admin or helper on this LAN.');
-				}else{
-					$lan = Lan::findOrFail($id);
-					$ttasks=$lan->tasks;
+					$tgames=$lan->games;
 					$nlan = $lan->name;
-					$tasks=$lan->tasks->forPage($page, 10);
+					$games=$lan->games->forPage($page, 10);
 
-					$max = ceil(count($ttasks)/10);
+					$max = ceil(count($tgames)/10);
 
 					if(($page+1)*10>($max*10)){
 						$next = 0;
@@ -1170,8 +1051,59 @@ class LansController extends Controller
 					}else{
 						$previous = $page-1;
 					}
+					$ports=$games->toBase();
+					foreach($ports as $index=>$game){
+						$ports[$index]=$game->ports()->where('uses_port.id_lan','=',$lan->id)->get();
+					}
 
-					return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page','lan'));
+					return view('lan.complete_lists.games', compact('games', 'ports', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}else{
+					return back()->with('error','This LAN does not exist.');
+				}
+			}else{
+				return redirect('/login')->with('error','Please login to perform this action.');
+			}
+    }
+
+		/**
+     * List all the tasks
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list_tasks($id, $page = 1){
+			if(Auth::check()){
+				$lan = Lan::find($id);
+
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+
+					if(!$userIsLanHelper && !$userIsLanAdmin){
+						return back()->with('error','You can\'t view a LAN\'s tasks if you are not admin or helper on this LAN.');
+					}else{
+						$ttasks=$lan->tasks;
+						$nlan = $lan->name;
+						$tasks=$lan->tasks->forPage($page, 10);
+
+						$max = ceil(count($ttasks)/10);
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}else{
+							$next = $page + 1;
+						}
+
+						if($page == 1){
+							$previous = 0;
+						}else{
+							$previous = $page-1;
+						}
+
+						return view('lan.complete_lists.tasks', compact('tasks', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page','lan'));
+					}
+				}else{
+					return back()->with('error','This LAN does not exist.');
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1185,32 +1117,38 @@ class LansController extends Controller
      */
     public function list_materials($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 
-				if(!$userIsLanAdmin && !$userIsLanHelper){
-	  			return back()->with('error','You can\'t view a LAN\'s material list if you are not admin or helper on this LAN.');
+				$lan = Lan::find($id);
+
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+
+					if(!$userIsLanAdmin && !$userIsLanHelper){
+						return back()->with('error','You can\'t view a LAN\'s material list if you are not admin or helper on this LAN.');
+					}else{
+						$tmat=$lan->materials;
+						$nlan = $lan->name;
+						$materials=$lan->materials()->select('materials.*','needs.quantity as quantity')->get()->forPage($page, 10);
+
+						$max = ceil(count($tmat)/10);
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}else{
+							$next = $page + 1;
+						}
+						if($page == 1){
+							$previous = 0;
+						}else{
+							$previous = $page-1;
+						}
+
+						return view('lan.complete_lists.materials', compact('materials', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					}
 				}else{
-					$lan = Lan::findOrFail($id);
-					$tmat=$lan->materials;
-					$nlan = $lan->name;
-					$materials=$lan->materials()->select('materials.*','needs.quantity as quantity')->get()->forPage($page, 10);
-
-					$max = ceil(count($tmat)/10);
-
-					if(($page+1)*10>($max*10)){
-						$next = 0;
-					}else{
-						$next = $page + 1;
-					}
-					if($page == 1){
-						$previous = 0;
-					}else{
-						$previous = $page-1;
-					}
-
-					return view('lan.complete_lists.materials', compact('materials', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					return back()->with('error','This LAN does not exist.');
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1223,35 +1161,40 @@ class LansController extends Controller
      */
     public function list_shoppings($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+				$lan = Lan::where('id','=',$id)->select('name','id','budget')->first();
 
-				if(!$userIsLanHelper && !$userIsLanAdmin){
-	  			return back()->with('error','You can\'t view a LAN\'s shopping list if you are not admin or helper on this LAN.');
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+
+					if(!$userIsLanHelper && !$userIsLanAdmin){
+						return back()->with('error','You can\'t view a LAN\'s shopping list if you are not admin or helper on this LAN.');
+					}else{
+						$tshop=$lan->shoppings;
+
+						$totalprice_shopping=$lan->price_shopping($tshop);
+
+						$shoppings=$tshop->forPage($page, 10);
+
+						$max = ceil(count($tshop)/10);
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}else{
+							$next = $page + 1;
+						}
+
+						if($page == 1){
+							$previous = 0;
+						}else{
+							$previous = $page-1;
+						}
+
+						return view('lan.complete_lists.shoppings', compact('totalprice_shopping','shoppings', 'lan', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					}
 				}else{
-					$lan = Lan::where('id','=',$id)->select('name','id','budget')->first();
-					$tshop=$lan->shoppings;
-
-					$totalprice_shopping=$lan->price_shopping($tshop);
-
-					$shoppings=$tshop->forPage($page, 10);
-
-					$max = ceil(count($tshop)/10);
-
-					if(($page+1)*10>($max*10)){
-						$next = 0;
-					}else{
-						$next = $page + 1;
-					}
-
-					if($page == 1){
-						$previous = 0;
-					}else{
-						$previous = $page-1;
-					}
-
-					return view('lan.complete_lists.shoppings', compact('totalprice_shopping','shoppings', 'lan', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					return back()->with('error','This LAN does not exist.');
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1264,34 +1207,38 @@ class LansController extends Controller
      */
     public function list_users($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-				$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+				$lan = Lan::find($id);
 
-				if(!$userIsLanAdmin){
-	  			return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+
+					if(!$userIsLanAdmin){
+						return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
+					}else{
+						$tu=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
+						$nlan = $lan->name;
+						$users=$tu->forPage($page, 10);
+
+						$max = ceil(count($tu)/10);
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}else{
+							$next = $page + 1;
+						}
+
+						if($page == 1){
+							$previous = 0;
+						}else{
+							$previous = $page-1;
+						}
+
+						//reduce users before compacting (limit the amount of information like emails)
+						return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					}
 				}else{
-					$lan = Lan::findOrFail($id);
-					$tu=$lan->real_users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
-					$nlan = $lan->name;
-					$users=$tu->forPage($page, 10);
-
-					$max = ceil(count($tu)/10);
-
-					if(($page+1)*10>($max*10)){
-						$next = 0;
-					}else{
-						$next = $page + 1;
-					}
-
-					if($page == 1){
-						$previous = 0;
-					}else{
-						$previous = $page-1;
-					}
-
-					//reduce users before compacting (limit the amount of information like emails)
-					return view('lan.complete_lists.users', compact('users', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					return back()->with('error','This LAN does not exist.');
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1305,32 +1252,38 @@ class LansController extends Controller
      */
     public function list_admins($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-	  		if(!$userIsLanAdmin){
-	  			return redirect('/dashboard')->with('error','You do not have enough rights to view this LAN\'s admins list.');
+				$lan = Lan::find($id);
+				if($lan!=null){
+
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+		  		if(!$userIsLanAdmin){
+						// /!\ redirects to dashboard (not back) to avoid too many redirections
+		  			return redirect('/dashboard')->with('error','You do not have enough rights to view this LAN\'s admins list.');
+					}else{
+						$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+						$nlan = $lan->name;
+						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->skip(abs(($page - 1)*10))->take(10)->get();
+
+						$max = ceil(count($tu)/10);
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}else{
+							$next = $page + 1;
+						}
+
+						if($page == 1){
+							$previous = 0;
+						}else{
+							$previous = $page-1;
+						}
+						//reduce users before compacting (limit the amount of information like emails)
+
+						return view('lan.complete_lists.admins', compact('admins', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					}
 				}else{
-					$lan = Lan::findOrFail($id);
-					$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-					$nlan = $lan->name;
-					$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->skip(abs(($page - 1)*10))->take(10)->get();
-
-					$max = ceil(count($tu)/10);
-
-					if(($page+1)*10>($max*10)){
-						$next = 0;
-					}else{
-						$next = $page + 1;
-					}
-
-					if($page == 1){
-						$previous = 0;
-					}else{
-						$previous = $page-1;
-					}
-					//reduce users before compacting (limit the amount of information like emails)
-
-					return view('lan.complete_lists.admins', compact('admins', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					return back()->with('error','This LAN does not exist.');
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1344,32 +1297,37 @@ class LansController extends Controller
      */
     public function list_helpers($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-	  		if(!$userIsLanAdmin){
-					return back()->with('error','You do not have enough rights to view this LAN\'s helpers list.');
+				$lan = Lan::find($id);
+
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					if(!$userIsLanAdmin){
+						return back()->with('error','You do not have enough rights to view this LAN\'s helpers list.');
+					}else{
+						$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
+						$nlan = $lan->name;
+						$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->skip(abs(($page - 1)*10))->take(10)->get();
+
+						$max = ceil(count($tu)/10);
+
+						if(($page+1)*10>($max*10)){
+							$next = 0;
+						}else{
+							$next = $page + 1;
+						}
+
+						if($page == 1){
+							$previous = 0;
+						}else{
+							$previous = $page-1;
+						}
+
+						//reduce users before compacting (limit the amount of information like emails)
+						return view('lan.complete_lists.helpers', compact('helpers', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					}
 				}else{
-					$lan = Lan::findOrFail($id);
-					$tu = $lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->get();
-					$nlan = $lan->name;
-					$helpers=$lan->users()->where('lan_user.rank_lan','=',config('ranks.HELPER'))->skip(abs(($page - 1)*10))->take(10)->get();
-
-					$max = ceil(count($tu)/10);
-
-					if(($page+1)*10>($max*10)){
-						$next = 0;
-					}else{
-						$next = $page + 1;
-					}
-
-					if($page == 1){
-						$previous = 0;
-					}else{
-						$previous = $page-1;
-					}
-
-					//reduce users before compacting (limit the amount of information like emails)
-					return view('lan.complete_lists.helpers', compact('helpers', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+					return back()->with('error','This LAN does not exist.');
 				}
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
@@ -1383,33 +1341,38 @@ class LansController extends Controller
      */
     public function list_tournaments($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+				$lan = Lan::find($id);
 
-				$lan = Lan::findOrFail($id);
-				$tt=$lan->tournaments;
-				$nlan = $lan->name;
-				$tournaments=$lan->tournaments->forPage($page, 10);
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
-				$max = ceil(count($tt)/10);
+					$tt=$lan->tournaments;
+					$nlan = $lan->name;
+					$tournaments=$lan->tournaments->forPage($page, 10);
+
+					$max = ceil(count($tt)/10);
 
 
-				if(($page+1)*10>($max*10)){
-					$next = 0;
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}
+					else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+
+						$previous = 0;
+					}
+					else{
+						$previous = $page-1;
+					}
+
+					return view('lan.complete_lists.tournaments', compact('tournaments', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
+				}else{
+					return back()->with('error','This LAN does not exist.');
 				}
-				else{
-					$next = $page + 1;
-				}
-
-				if($page == 1){
-
-					$previous = 0;
-				}
-				else{
-					$previous = $page-1;
-				}
-
-				return view('lan.complete_lists.tournaments', compact('tournaments', 'nlan', 'id', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
 			}
@@ -1422,28 +1385,33 @@ class LansController extends Controller
      */
     public function list_activities($id, $page = 1){
 			if(Auth::check()){
-				$user=Auth::user();
-				$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-
 				$lan = Lan::where('id','=',$id)->select('name','id')->first();
-				$ta=$lan->activities;
-				$nlan = $lan->name;
-				$activities=$ta->forPage($page, 10);
 
-				$max = ceil(count($ta)/10);
+				if($lan!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
-				if(($page+1)*10>($max*10)){
-					$next = 0;
+					$ta=$lan->activities;
+					$nlan = $lan->name;
+					$activities=$ta->forPage($page, 10);
+
+					$max = ceil(count($ta)/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+					return view('lan.complete_lists.activities', compact('activities', 'lan', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 				}else{
-					$next = $page + 1;
+					return back()->with('error','This LAN does not exist.');
 				}
-
-				if($page == 1){
-					$previous = 0;
-				}else{
-					$previous = $page-1;
-				}
-				return view('lan.complete_lists.activities', compact('activities', 'lan', 'userIsLanAdmin', 'max', 'previous', 'next', 'page'));
 			}else{
 				return redirect('/login')->with('error','Please login to perform this action.');
 			}

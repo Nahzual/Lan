@@ -88,13 +88,23 @@ LAN's activities
 		</ul>
 	</nav>
 
+	@foreach($activities as $activity)
+	<div id="popup-activity-{{$activity->id}}" class="popup">
+		<div class="popup-content">
+			<span onclick="closeActivity({{$activity->id}})" class="close">&times;</span>
+			@include('activity.show',$activity)
+		</div>
+	</div>
+	@endforeach
+
 @endsection
 
 @section('js_includes')
+<script type="text/javascript" src="/js/windows/activity/display_window.js"></script>
 <script src="/js/ajax/activity/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')
-<link href="{{ asset('css/game/game.css') }}" rel="stylesheet">
+<link href="{{ asset('css/popup.css') }}" rel="stylesheet">
 <link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

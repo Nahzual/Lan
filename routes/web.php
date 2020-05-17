@@ -44,7 +44,13 @@ Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.u
 
 
 // lan
-Route::resource('lan', 'LansController');
+Route::get('/lan/create','LansController@create')->name('lan.create');
+Route::get('/lan/{lan}','LansController@show')->name('lan.show');
+Route::post('/lan','LansController@store')->name('lan.store');
+Route::get('/lan/{lan}/edit','LansController@edit')->name('lan.edit');
+Route::put('/lan/{lan}','LansController@update')->name('lan.update');
+Route::delete('/lan/{lan}','LansController@destroy')->name('lan.destroy');
+
 Route::get('/lans/{id}/guest/show','LansController@guestShow')->name('lan.guest_show');
 Route::get('/all_lans','LansController@list_all')->name('all_lans');
 Route::post('/all_lans', 'PageController@allLansList');

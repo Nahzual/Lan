@@ -5,7 +5,7 @@ All tournaments for the LAN {{ $nlan }}
 @endsection
 
 @section('page-title')
-Games
+Tournaments
 @endsection
 
 @section('title-buttons')
@@ -52,10 +52,14 @@ Games
 
 				<td scope="col" class=" text-center">
 					<div class="btn-group">
-						<a class="btn btn-success" href="{{ route('tournament.show_tournament', array('lan' => $id, 'tournament' => $tournament->id)) }}"><i class='fa fa-eye'></i></a>
+						{!! Form::open([ 'method'=>'get','url'=>route('tournament.show_tournament', array('lan' => $id, 'tournament' => $tournament->id)) ])!!}
+							<button type="submit" class="btn btn-success mr-2"><i class='fa fa-eye'></i></button>
+						{{ Form::close() }}
 
 						@if(isset($userIsLanAdmin) && $userIsLanAdmin)
-						<a class="btn btn-warning" href="{{ route('tournament.edit_tournament', array('lan' => $id, 'tournament' => $tournament->id)) }}"><i class='fa fa-edit'></i></a>
+						{!! Form::open([ 'method'=>'get','url'=>route('tournament.edit_tournament', array('lan' => $id, 'tournament' => $tournament->id)) ])!!}
+							<button type="submit" class="btn btn-warning mr-2"><i class='fa fa-edit'></i></button>
+						{{ Form::close() }}
 
 						{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTournament(event,'.$id.','.$tournament->id.')']) !!}
 

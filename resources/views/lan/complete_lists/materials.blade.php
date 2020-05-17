@@ -109,6 +109,5 @@ LAN's materials
 
 @section('css_includes')
 <link href="{{ asset('css/popup.css') }}" rel="stylesheet">
-<link href="{{ asset('css/game/game.css') }}" rel="stylesheet">
 <link href="{{ asset('css/table-style.css') }}" rel="stylesheet">
 @endsection

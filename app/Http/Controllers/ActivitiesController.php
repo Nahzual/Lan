@@ -21,7 +21,7 @@ class ActivitiesController extends Controller
   			if(Auth::user()->lans()->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
   			}else{
-					$lan=Lan::find($id);
+					$lan=Lan::find($lanId);
 					if($lan!=null){
 						return view('activity.create', compact('lan'));
 					}else{

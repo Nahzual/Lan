@@ -1,6 +1,6 @@
 <div class="card">
 	<div class="card-header">
-		<h3>Viewing : {!!$shopping->name_activity!!}</h3>
+		<h3>Viewing shopping list element of {!! $lan->name !!}</h3>
 	</div>
 
 

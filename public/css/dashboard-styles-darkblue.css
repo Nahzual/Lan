@@ -2051,6 +2051,11 @@ select.form-control:focus::-ms-value {
   background-color: #fff;
 }
 
+option{
+	color: black;
+}
+
+
 .form-control-file,
 .form-control-range {
   display: block;
@@ -10231,10 +10236,10 @@ body {
 }
 
 .lan-btn-quick{
-	padding: 10% 0; 
+	padding: 10% 0;
 	font-size:1em;
 	margin:0;
-	
+
 }
 .space-remove{
 	padding:0;

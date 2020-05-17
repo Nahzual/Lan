@@ -446,7 +446,13 @@ class UsersController extends Controller
 					if($user->id==htmlentities($id)){
 					  $user->theme = $user->theme+1;
 					  if($user->theme > 2){
-						$user->theme = 0;
+						$i = random_int(0, 400);
+						if($i < 390){
+							$user->theme = 0;
+						}
+						else{
+							$user->theme = 3;
+						}
 					  }
 					  $user->save();
 					  return back()->with('success','Enjoy your new theme.');

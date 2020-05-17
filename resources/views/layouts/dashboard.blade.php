@@ -28,7 +28,11 @@
 	@if(Auth::user()->theme == 1)
 		<link href="{{ url('/') }}/css/dashboard-styles-dark.css" rel="stylesheet" />
 	@else
+		@if(Auth::user()->theme != 3)
 		<link href="{{ url('/') }}/css/dashboard-styles-darkblue.css" rel="stylesheet" />
+		@else
+		<link href="{{ url('/') }}/css/dashboard-styles-s.css" rel="stylesheet" />
+		@endif
 	@endif
     @endif
 

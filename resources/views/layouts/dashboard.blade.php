@@ -31,6 +31,7 @@
 		@if(Auth::user()->theme != 3)
 		<link href="{{ url('/') }}/css/dashboard-styles-darkblue.css" rel="stylesheet" />
 		@else
+		<link href="https://fonts.googleapis.com/css?family=Happy+Monkey" rel="stylesheet">
 		<link href="{{ url('/') }}/css/dashboard-styles-s.css" rel="stylesheet" />
 		@endif
 	@endif

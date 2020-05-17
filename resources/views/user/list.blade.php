@@ -16,15 +16,15 @@ Site Users
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
 			<th scope="col">#</th>
-			<th scope="col">Username</th>
-			<th scope="col">Actions</th>
+			<th scope="col">{{ __('messages.name') }}</th>
+			<th scope="col">{{ __('messages.actions') }}</th>
 		</thead>
 
 		<tbody>
 			@if (isset($users))
 				@if(count($users)==0)
 				<tr>
-					<td colspan="3"><h3>No users to show</h3></td>
+					<td colspan="3"><h3>{{ __('messages.nouser') }}</h3></td>
 				</tr>
 				@endif
 
@@ -55,22 +55,22 @@ Site Users
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
 		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/dashboard/admin') }}" tabindex="-2">Return to the admin Dashboard</a>
+			<a class="btn btn-info" href="{{ url('/dashboard/admin') }}" tabindex="-2">{{ __('messages.back_admin_dash') }}</a>
 
 			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/adm/users') }}" tabindex="-2">First</a>
+				<a class="btn btn-secondary" href="{{ url('/adm/users') }}" tabindex="-2">{{ __('messages.first') }}</a>
 			</li>
 			<li class="page-item @if($previous == 0) disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('adm/users/'.($previous)) : '#' }}" tabindex="-1">Back</a>
+				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('adm/users/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
 			</li>
 			<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page)) }}">{{ $page }}</a></li>
 			@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
 			@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 			<li class="page-item @if($next) @else disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $next ? url('/adm/users/'.($next)) : '#' }}">Next</a>
+				<a class="btn btn-outline-info" href="{{ $next ? url('/adm/users/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
 			</li>
 			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/adm/users/'.$max) }}">Last</a>
+				<a class="btn btn-secondary" href="{{ url('/adm/users/'.$max) }}">{{ __('messages.last') }}</a>
 			</li>
 		</ul>
 	</nav>

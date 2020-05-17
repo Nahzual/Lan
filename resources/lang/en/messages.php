@@ -49,7 +49,16 @@ return [
 	'zip' => 'Zip',
 	'depname' => 'Department name',
 	'country' => 'Country',
+	'address' => 'Address',
 	
+	'want_contact' => 'If you want to contact this user, please use the "Contact" button and wait for his reply on your mailbox.',
+	
+	// Stats
+	'statistics' => 'Statistics',
+	'user_admin_lan' => '{0} This user isn\'t an admin on any LAN currently |{1} This user is currently administrating :count lan|[2,*] This user is currently administrating :count lans',
+	
+
+	//echo trans_choice('time.minutes_ago', 5, ['value' => 5]);
 	
 	// Registration
 	'register' => 'Register ',
@@ -62,39 +71,47 @@ return [
 	'view' => 'View',
 	'edit' => 'Edit',
 	'delete' => 'Delete',
+	'ban' => 'Ban',
+	'restore' => 'Restore',
 	'show_hide' => 'Show/hide',
 	'all' => 'All',
+	
+	
+	'add' => 'Add',
+	'actions' => 'Actions',
+	'nohelper' => 'No helpers to show',
+	'helpers' => 'Helpers',
+	'admins' => 'Admins',
+	'nouser' => 'No users to show',
+	'first' => 'First',
+	'back' => 'Back',
+	'next' => 'Next',
+	'last' => 'Last',
+	'search' => 'Search',
+	'back_admin_dash' => 'Return to the admin Dashboard',
+	
 	/**
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => 'All the admins for the LAN '
+	'' => 'Add a new Admin'
+	'' => 'Adding admin to Lan :'
+	'' => 'Admin\'s name :'
 	
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'All the admins for the LAN '
-	'Add a new Admin'
-	'Adding admin to Lan :'
-	'Admin\'s name :'
+	'' => 'All the helpers for the LAN '
+	'' => 'Add a new Helper'
+	'' => 'Adding helper to LAN :'
+	'' => 'Helper\'s name :'
 	
-	'All the helpers for the LAN '
-	'Add a new Helper'
-	'Adding helper to LAN :'
-	'Helper\'s name :'
-	
-	'Username'
-	'Actions'
-	
-	'Return to the LAN'
-	'Go back to the LAN'
-	'First'
-	'Back'
-	'Next'
-	'Last'
-	'Search'
-	
-	'Navigation'
+	'' => 'Return to the LAN'
+	'' => 'Go back to the LAN'
+	**/
+	/**'Navigation'
 	'Dashboard'
 	'Home'
 	'LAN'

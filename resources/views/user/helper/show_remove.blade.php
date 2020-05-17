@@ -2,10 +2,10 @@
 	<div class="card-header" id="heading-helper">
     <div class="row">
    		<div class="col mt-2">
-    	  <h4>Helpers</h4>
+    	  <h4>{{ __('messages.helpers') }}</h4>
       </div>
       <div class="col">
-				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_helpers" aria-expanded="false" aria-controls="lan_helpers">Show/hide</button>
+				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_helpers" aria-expanded="false" aria-controls="lan_helpers">{{ __('messages.show_hide') }}</button>
 				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('lan.add_helper', $lan->id) }}"><i class='fa fa-plus'></i></a>
 				<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.helper_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
       </div>
@@ -17,8 +17,8 @@
 			  <table class="text-center table card-table table-bordered">
 			    <thead class="card-table text-center">
 			      <th scope="col">#</th>
-			      <th scope="col">Username</th>
-			      <th scope="col">Actions</th>
+			      <th scope="col">{{ __('messages.name') }}</th>
+			      <th scope="col">{{ __('messages.actions') }}</th>
 			    </thead>
 
 			    <tbody>
@@ -26,7 +26,7 @@
 			    @if (isset($helpers))
 						@if(count($helpers)==0)
 						<tr>
-							<td colspan="3"><h3>No helpers to show</h3></td>
+							<td colspan="3"><h3>{{ __('messages.nohelper') }}</h3></td>
 						</tr>
 						@endif
 

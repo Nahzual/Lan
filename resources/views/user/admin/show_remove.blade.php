@@ -2,10 +2,10 @@
 	<div class="card-header" id="heading-admin">
     <div class="row">
    		<div class="col mt-2">
-    	  <h4>Admins</h4>
+    	  <h4>{{ __('messages.admins') }}</h4>
       </div>
       <div class="col">
-				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_admins" aria-expanded="false" aria-controls="lan_admins">Show/hide</button>
+				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_admins" aria-expanded="false" aria-controls="lan_admins">{{ __('messages.show_hide') }}</button>
 				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('lan.add_admin', $lan->id) }}"><i class='fa fa-plus'></i></a>
 				<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.admin_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
       </div>
@@ -17,8 +17,8 @@
 			  <table class="text-center table card-table table-bordered">
 			    <thead class="card-table text-center">
 			      <th scope="col">#</th>
-			      <th scope="col">Username</th>
-			      <th scope="col">Actions</th>
+			      <th scope="col">{{ __('messages.name') }}</th>
+			      <th scope="col">{{ __('messages.actions') }}</th>
 			    </thead>
 
 			    <tbody>

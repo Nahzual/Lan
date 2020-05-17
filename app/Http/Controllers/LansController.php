@@ -269,8 +269,13 @@ class LansController extends Controller
 				$games=$lan->games->take(-5);
 				$activities = $lan->activities->take(-5);
 				$tournaments = $lan->tournaments->take(-5);
-
-				return view('lan.show_guest', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+				
+				if(Auth::check()){
+					return view('lan.show_guest', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+				}
+				else{
+					return view('lan.show_guest_external', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities','tournaments'));
+				}
 			}
 
     /**
@@ -1083,9 +1088,15 @@ class LansController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function list_all(Request $request){
-        $lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->get();
+	$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->take(-5)->get();
+        if(Auth::check()){
+		return view('lan.list_all', compact('lans'));
+	}
+	else{
+		return view('lan.list_all_external', compact('lans'));
+	}
 
-        return view('lan.list_all', compact('lans'));
+    		
     }
 
     /**

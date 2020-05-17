@@ -1,7 +1,9 @@
 			    <div class="card">
 						<div class="card-header">
 							<div class="row">
-								<h4 class="mt-2">About</h4>
+								<div class="col mt-2">
+									<h4>About</h4>
+								</div>
 							</div>
 						</div>
 						<div class="card-body">

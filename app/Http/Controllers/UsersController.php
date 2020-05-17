@@ -78,133 +78,141 @@ class UsersController extends Controller
 
       if(Auth::check()){
   			$user=Auth::user();
-        if($user->id==$id){
-          $location = $user->location;
-          $user_location=$location;
-    			$street = $location->street;
-          $user_street=$street;
-    			$city = $street->city;
-          $user_city=$city;
-    			$department = $city->department;
-          $user_department=$department;
-    			$country = $department->country;
-          $user_country=$country;
+        if($user->id==$id || $user->isSiteAdmin()){
+					if($user->id!=$id){
+						$user=User::find($id);
+					}
 
-          //Country
-          if(isset($request->name_country) && $request->name_country!=$country->name_country){
+					if($user!=null){
+						$location = $user->location;
+						$user_location=$location;
+						$street = $location->street;
+						$user_street=$street;
+						$city = $street->city;
+						$user_city=$city;
+						$department = $city->department;
+						$user_department=$department;
+						$country = $department->country;
+						$user_country=$country;
 
-            $countries = Country::where('name_country','=',$request->name_country)->get();
-            if($countries != null){$country = $countries->first();}
-            if(!isset($country)){
-              $country = new Country();
-              $country->name_country = htmlentities($request->name_country);
-              $country->save();
-            }
-          }
+						//Country
+						if(isset($request->name_country) && $request->name_country!=$country->name_country){
 
-      		//Department
-          if(isset($request->name_department) && $request->name_department!=$department->name_department){
+							$countries = Country::where('name_country','=',$request->name_country)->get();
+							if($countries != null){$country = $countries->first();}
+							if(!isset($country)){
+								$country = new Country();
+								$country->name_country = htmlentities($request->name_country);
+								$country->save();
+							}
+						}
 
-            $departments=$country->departments;
-            $department=null;
-            if(isset($departments)){
-        			foreach($departments as $tdepartment){
-        				if($tdepartment->name_department == $request->name_department){
-        					$department = $tdepartment;
-        					break;
-        				}
-        			}
-        		}
-          }
+						//Department
+						if(isset($request->name_department) && $request->name_department!=$department->name_department){
 
-      		if(!isset($department) || $country!=$user_country){
-      			$department = new Department();
-      			$department->name_department = htmlentities($request->name_department);
-      			$department->country()->associate($country);
-      			$department->save();
-      		}
+							$departments=$country->departments;
+							$department=null;
+							if(isset($departments)){
+								foreach($departments as $tdepartment){
+									if($tdepartment->name_department == $request->name_department){
+										$department = $tdepartment;
+										break;
+									}
+								}
+							}
+						}
 
-      		//City
-          if(isset($request->name_city) && ($request->name_city!=$city->name_city || $request->zip_city!=$city->zip_city)){
-            $cities=$department->cities;
-            $city=null;
+						if(!isset($department) || $country!=$user_country){
+							$department = new Department();
+							$department->name_department = htmlentities($request->name_department);
+							$department->country()->associate($country);
+							$department->save();
+						}
 
-            if(isset($cities)){
-        			foreach($cities as $tcity){
-        				if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
-        					$city = $tcity;
-        					break;
-        				}
-        			}
-        		}
-          }
+						//City
+						if(isset($request->name_city) && ($request->name_city!=$city->name_city || $request->zip_city!=$city->zip_city)){
+							$cities=$department->cities;
+							$city=null;
 
-          if(!isset($city) || $department!=$user_department){
-      			$city = new City();
-      			$city->name_city = htmlentities($request->name_city);
-      			$city->zip_city = htmlentities($request->zip_city);
-      			$city->department()->associate($department);
-      			$city->save();
-      		}
+							if(isset($cities)){
+								foreach($cities as $tcity){
+									if($tcity->name_city == $request->name_city && $tcity->zip_city == $request->zip_city){
+										$city = $tcity;
+										break;
+									}
+								}
+							}
+						}
 
-      		//Street
-          if(isset($request->name_street) && $request->name_street!=$street->name_street){
-            $streets=$city->streets;
-            $street=null;
+						if(!isset($city) || $department!=$user_department){
+							$city = new City();
+							$city->name_city = htmlentities($request->name_city);
+							$city->zip_city = htmlentities($request->zip_city);
+							$city->department()->associate($department);
+							$city->save();
+						}
 
-            if(isset($streets)){
-        			foreach($streets as $tstreet){
-        				if($tstreet->name_street == $request->name_street){
-        					$street = $tstreet;
-        					break;
-        				}
-        			}
-        		}
-          }
+						//Street
+						if(isset($request->name_street) && $request->name_street!=$street->name_street){
+							$streets=$city->streets;
+							$street=null;
 
-      		if(!isset($street) || $city!=$user_city){
-      			$street = new Street();
-      			$street->name_street = htmlentities($request->name_street);
-      			$street->city()->associate($city);
-      			$street->save();
-      		}
+							if(isset($streets)){
+								foreach($streets as $tstreet){
+									if($tstreet->name_street == $request->name_street){
+										$street = $tstreet;
+										break;
+									}
+								}
+							}
+						}
 
-          if(isset($request->num_street) && $request->num_street!=$location->num_street){
-            $locations=$street->locations;
-            $location=null;
+						if(!isset($street) || $city!=$user_city){
+							$street = new Street();
+							$street->name_street = htmlentities($request->name_street);
+							$street->city()->associate($city);
+							$street->save();
+						}
 
-        		//Location
-        		if(isset($locations)){
-        			foreach($locations as $tlocation){
-        				if($tlocation->num_street == $request->num_street){
-        					$location = $tlocation;
-        					break;
-        				}
-        			}
-        		}
-          }
+						if(isset($request->num_street) && $request->num_street!=$location->num_street){
+							$locations=$street->locations;
+							$location=null;
 
-      		if(!isset($location) || $street!=$user_street){
-      			$location = new Location();
-      			$location->num_street = htmlentities($request->num_street);
-      			$location->street()->associate($street);
-      			$location->save();
-      		}
+							//Location
+							if(isset($locations)){
+								foreach($locations as $tlocation){
+									if($tlocation->num_street == $request->num_street){
+										$location = $tlocation;
+										break;
+									}
+								}
+							}
+						}
 
-          if($location!=$user_location) $user->location()->associate($location);
+						if(!isset($location) || $street!=$user_street){
+							$location = new Location();
+							$location->num_street = htmlentities($request->num_street);
+							$location->street()->associate($street);
+							$location->save();
+						}
 
-          $user->name=htmlentities($request->name);
-          $user->lastname=htmlentities($request->lastname);
-          $user->pseudo=htmlentities($request->pseudo);
-          if(isset($request->password) && isset($request->password_confirmation) && !Hash::check($user->password,$request->password))
-            $user->password=Hash::make($request->password);
-          $user->email=htmlentities($request->email);
-          $user->tel_user=htmlentities($request->tel_user);
-          $user->theme=0;
+						if($location!=$user_location) $user->location()->associate($location);
 
-  				$user->save();
+						$user->name=htmlentities($request->name);
+						$user->lastname=htmlentities($request->lastname);
+						$user->pseudo=htmlentities($request->pseudo);
+						if(isset($request->password) && isset($request->password_confirmation) && !Hash::check($user->password,$request->password))
+							$user->password=Hash::make($request->password);
+						$user->email=htmlentities($request->email);
+						$user->tel_user=htmlentities($request->tel_user);
+						$user->theme=0;
 
-  				return redirect('/dashboard')->with('success','You successfully edited your profile.');
+						$user->save();
+
+						return redirect('/dashboard')->with('success','You successfully edited your profile.');
+					}else{
+						return back()->with('error','This user does not exist.');
+					}
         }else{
           return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
         }

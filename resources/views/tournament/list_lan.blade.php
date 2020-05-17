@@ -26,19 +26,20 @@
 
 
         <td scope="col" class=" text-center">
-            <div class="btn-group">
-              <a class="btn btn-success" href="{{ route('tournament.show_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-eye'></i></a>
-
-        @if(isset($userIsLanAdmin) && $userIsLanAdmin)
-            <a class="btn btn-warning" href="{{ route('tournament.edit_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-edit'></i></a>
-
-          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTournament(event,'.$lan->id.','.$tournament->id.')']) !!}
-
-                <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
-            </div>
-          {!! Form::close() !!}
-        </td>
-        @endif
+          <div class="btn-group">
+						{!! Form::open(['method' => 'get','url'=>route('tournament.show_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) ]) !!}
+							<button type="submit" class="btn btn-success mr-2"><i class='fa fa-eye'></i></button>
+						{!! Form::close() !!}
+		        @if(isset($userIsLanAdmin) && $userIsLanAdmin)
+							{!! Form::open(['method' => 'get','url'=>route('tournament.edit_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) ]) !!}
+									<button type="submit" class="btn btn-warning mr-2"><i class='fa fa-edit'></i></button>
+							{!! Form::close() !!}
+		          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTournament(event,'.$lan->id.','.$tournament->id.')']) !!}
+		            <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
+		          {!! Form::close() !!}
+		        @endif
+					</td>
+				</div>
       </tr>
       @endforeach
     </tbody>

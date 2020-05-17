@@ -71,13 +71,6 @@
 	<div id="layoutSidenav">
     <div id="layoutSidenav_nav">
       <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-				<!-- <div class="row">
-					<div class="col">
-						<button type="button" id="sidebarClose" class="btn float-right">
-							<i class="fa fa-times text-white"></i>
-						</button>
-					</div>
-				</div> -->
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading">Navigation</div>
@@ -109,21 +102,7 @@
 
 		<div id="layoutSidenav_content">
       <main>
-      	<!-- Success message -->
-        <div class="container alert alert-dismissible alert-success show mt-2" style="<?php  echo (!session('success')) ? 'display:none' : ''; ?>" role="alert">
-          <?php echo (session('success')) ? session('success') : ''; ?>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
 
-        <!-- Error message -->
-        <div class="container alert alert-dismissible alert-danger show mt-2" style="<?php  echo (!session('error')) ? 'display:none' : ''; ?>" role="alert">
-          <?php echo (session('error')) ? session('error') : ''; ?>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
 				<div class="card">
 					<div class="card-header">
 						<div class="row">
@@ -133,8 +112,26 @@
 							@yield('title-buttons')
 						</div>
 					</div>
+
 					@yield('toolbar')
 					<div class="card-body">
+
+						<!-- Success message -->
+						<div class="container alert alert-dismissible alert-success show mt-2" style="<?php  echo (!session('success')) ? 'display:none' : ''; ?>" role="alert">
+							<?php echo (session('success')) ? session('success') : ''; ?>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+
+						<!-- Error message -->
+						<div class="container alert alert-dismissible alert-danger show mt-2" style="<?php  echo (!session('error')) ? 'display:none' : ''; ?>" role="alert">
+							<?php echo (session('error')) ? session('error') : ''; ?>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+
 						@yield('content')
 					</div>
 				</div>

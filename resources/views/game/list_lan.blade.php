@@ -41,13 +41,12 @@
         			<td scope="col" clas="text-center">
 					<div class="form-group row text-center">
 						<div class="col">
-							<button class="btn btn-outline-primary shadow-sm" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
+							<button class="btn btn-primary shadow-sm mb-2" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
 						  {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
 							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
 						  {!! Form::close() !!}
 						</div>
 					</div>
-
         </td>
         @endif
       </tr>

@@ -23,11 +23,11 @@ class GamesController extends Controller
      */
     public function index()
     {
-        if(Auth::check()){
-          return view('game.index');
-        }else{
-          return redirect('/login')->with('error','Please log in to have access to this page.');
-        }
+      if(Auth::check()){
+        return view('game.index');
+      }else{
+        return redirect('/login')->with('error','Please log in to have access to this page.');
+      }
     }
 
     /**
@@ -54,7 +54,7 @@ class GamesController extends Controller
         $games=Auth::user()->games;
         return view('game.favourite',compact('games'));
       }else{
-        return redirect('/login')->with('error','Please log to have access to this page.');
+        return redirect('/login')->with('error','Please log in to have access to this page.');
       }
     }
 
@@ -111,7 +111,7 @@ class GamesController extends Controller
 	  		}else{
 	  			return redirect('/login')->with('error','Please log in to have access to this page.');
 	  		}
-    }
+    	}
 
     /**
      * Show the form for editing the specified resource.
@@ -145,8 +145,7 @@ class GamesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
       if(Auth::check()){
         $user=Auth::user();
         if($user->isSiteAdmin()){
@@ -224,7 +223,7 @@ class GamesController extends Controller
 				$lan=Lan::find($lanID);
 				if($lan!=null){
 					$lan_user=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lan_user.user_id','=',$user->id)->first();
-					if($lan_user!=null){
+					if($lan_user!=null || $user->isSiteAdmin()){
 						$game=Game::find($gameID);
 						if($game!=null){
 							$game_lan=$lan->games()->where('can_play.id_game','=',$game->id)->first();
@@ -253,7 +252,7 @@ class GamesController extends Controller
 				$lan=Lan::find($lanID);
 				if($lan!=null){
 					$lan_user=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lan_user.user_id','=',$user->id)->first();
-					if($lan_user!=null){
+					if($lan_user!=null || $user->isSiteAdmin()){
 						$game=Game::find($gameID);
 						if($game!=null){
 							$game_lan=$lan->games()->where('can_play.id_game','=',$game->id)->first();

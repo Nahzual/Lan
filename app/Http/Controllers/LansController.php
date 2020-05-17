@@ -272,7 +272,7 @@ class LansController extends Controller
     {
   		if(Auth::check()){
   			$user=Auth::user();
-  			if($user->lans()->select('lans.id')->find($id)==null && !$user->isSiteAdmin()){
+  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($id)==null && !$user->isSiteAdmin()){
   				return back()->with('error','You can\'t edit a LAN for which you are not an admin.');
   			}else{
   				$lan = Lan::find($id);
@@ -300,8 +300,7 @@ class LansController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
 
   		if(Auth::check()){
   			$user=Auth::user();
@@ -310,7 +309,6 @@ class LansController extends Controller
   			}else{
 
   				$lan = Lan::find($id);
-
 					if($lan!=null){
 						// handle room width and height requirements
 						if(isset($request->room_width) && $request->room_width<=0){
@@ -529,14 +527,15 @@ class LansController extends Controller
 			if(Auth::check()){
 				$lan=Lan::find($id);
 				if($lan!=null){
-					$lan_user=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-					if($lan_user!=null){
+					$user=Auth::user();
+					$lan_user=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+					if($lan_user!=null || $user->isSiteAdmin()){
 						if($lan->waiting_lan==config('waiting.REJECTED')){
 							$lan->waiting_lan=config('waiting.WAITING');
 							$lan->save();
-							return response()->json(['success'=>'You LAN has been successfully submitted.']);
+							return response()->json(['success'=>'Your LAN has been successfully submitted.']);
 						}else{
-							return response()->json(['error'=>'You LAN is already submitted or has been accepted.']);
+							return response()->json(['error'=>'Your LAN is already submitted or has been accepted.']);
 						}
 					}else{
 						return response()->json(['error'=>'You must be an admin of this LAN to do this.']);
@@ -557,7 +556,7 @@ class LansController extends Controller
 						$diff=(new \DateTime())->diff(date_create($lan->opening_date));
 						if($diff->invert==0 || $diff->days==0){
 							$room=file_get_contents("../storage/lans/room_plan_".$lan->id.".json");
-							return view('lan.participate',compact('lan','room','diff'));
+							return view('lan.participate',compact('lan','room'));
 						}else{
 							return back()->with('error','You can\'t join this LAN because it is already over.');
 						}
@@ -617,24 +616,29 @@ class LansController extends Controller
         $lan=Lan::find($id);
 				if($lan!=null){
 					if(isset($request->player_id)){
-						$user=User::find($request->player_id);
-						if($user!=null){
-							$lan_user=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->select('place_number_x','place_number_y')->first();
-							if($lan_user!=null){
-								$file_name="../storage/lans/room_plan_".$lan->id.".json";
-								if(file_exists($file_name)){
-									$room=json_decode(file_get_contents($file_name));
-									$room->room->field[$lan_user->place_number_y][$lan_user->place_number_x]=config('room.EMPTY_CHAIR');
-									file_put_contents($file_name, json_encode($room));
-								}
-								DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
-								return response()->json(['success'=>'This user is no longer a player of this LAN.']);
+						$user=Auth::user();
+						if($user->id==$request->player_id || $user->isSiteAdmin()){
+							$user=User::find($request->player_id);
+							if($user!=null){
+								$lan_user=DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->select('place_number_x','place_number_y')->first();
+								if($lan_user!=null){
+									$file_name="../storage/lans/room_plan_".$lan->id.".json";
+									if(file_exists($file_name)){
+										$room=json_decode(file_get_contents($file_name));
+										$room->room->field[$lan_user->place_number_y][$lan_user->place_number_x]=config('room.EMPTY_CHAIR');
+										file_put_contents($file_name, json_encode($room));
+									}
+									DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.PLAYER'))->delete();
+									return response()->json(['success'=>'This user is no longer a player of this LAN.']);
 
+								}else{
+									return response()->json(['error'=>'This user isn\'t a player of this LAN.']);
+								}
 							}else{
-								return response()->json(['error'=>'This user isn\'t a player of this LAN.']);
+								return response()->json(['error'=>'This user does not exist.']);
 							}
 						}else{
-							return response()->json(['error'=>'This user does not exist.']);
+							return response()->json(['error'=>'You can\'t make an other player leave this LAN.']);
 						}
 					}else{
 						$user=Auth::user();
@@ -662,11 +666,17 @@ class LansController extends Controller
 
     public function addHelper($id){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan==null){
+				$user=Auth::user();
+        $lan=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan==null && !$user->isSiteAdmin()){
           return back()->with('error','You have to be an admin of this LAN to add helpers to it.');
         }else{
-          return view('lan.add_helper',compact('lan'));
+					$lan=Lan::find($id);
+					if($lan!=null){
+						return view('lan.add_helper',compact('lan'));
+					}else{
+						return back()->with('error','This LAN does not exist.');
+					}
         }
       }else{
         return redirect('/login')->with('error','Please login to perform this action.');
@@ -677,31 +687,36 @@ class LansController extends Controller
       if(Auth::check()){
 				$admin=Auth::user();
 				$lan=$admin->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan!=null){
-          $user=User::where('id','=',$request->id_user)->select('id','pseudo','email')->first();
-          if($user!=null){
-            $lan_user_helper=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first();
-            if($lan_user_helper==null){
+        if($lan!=null || $admin->isSiteAdmin()){
+					$lan=Lan::find($id);
+					if($lan!=null){
+						$user=User::where('id','=',$request->id_user)->select('id','pseudo','email')->first();
+	          if($user!=null){
+	            $lan_user_helper=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first();
+	            if($lan_user_helper==null){
 
-							try{
-								// send a mail to notify the user that he has been added as an helper on this LAN
-								Mail::send('mails.notification_helper_added', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
-									$message->from('lancreator.noreply@gmail.com','LAN Creator')
-										->to($user->email)
-										->subject('You have been added as helper on a LAN');
-								});
-							}catch(\Exception $e){
+								try{
+									// send a mail to notify the user that he has been added as an helper on this LAN
+									Mail::send('mails.notification_helper_added', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
+										$message->from('lancreator.noreply@gmail.com','LAN Creator')
+											->to($user->email)
+											->subject('You have been added as helper on a LAN');
+									});
+								}catch(\Exception $e){
 
-							}
+								}
 
-              $lan->users()->attach($user,['rank_lan'=>config('ranks.HELPER'),'score_lan'=>'0']);
-              return response()->json(['success'=>'The user "'.$user->pseudo.'" is now helper on this LAN.']);
-            }else{
-              return response()->json(['error'=>'The user "'.$user->pseudo.'" is already helper on this LAN.']);
-            }
-          }else{
-            return response()->json(['error'=>'This user doesn\'t exist.']);
-          }
+	              $lan->users()->attach($user,['rank_lan'=>config('ranks.HELPER'),'score_lan'=>'0']);
+	              return response()->json(['success'=>'The user "'.$user->pseudo.'" is now helper on this LAN.']);
+	            }else{
+	              return response()->json(['error'=>'The user "'.$user->pseudo.'" is already helper on this LAN.']);
+	            }
+	          }else{
+	            return response()->json(['error'=>'This user doesn\'t exist.']);
+	          }
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to add helpers to it.']);
         }
@@ -714,25 +729,30 @@ class LansController extends Controller
       if(Auth::check()){
 				$admin=Auth::user();
         $lan=$admin->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan!=null){
-          $user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->select('users.id','pseudo','email')->first();
-          if($user!=null){
+        if($lan!=null || $admin->isSiteAdmin()){
+					$lan=Lan::find($id);
+					if($lan!=null){
+						$user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->select('users.id','pseudo','email')->first();
+	          if($user!=null){
 
-						try{
-							// send a mail to notify the user that he has been removed from the helper list
-							Mail::send('mails.notification_helper_removed', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
-								$message->from('lancreator.noreply@gmail.com','LAN Creator')
-									->to($user->email)
-									->subject('You have been removed from the helper list of a LAN');
-							});
-						}catch(\Exception $e){}
+							try{
+								// send a mail to notify the user that he has been removed from the helper list
+								Mail::send('mails.notification_helper_removed', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
+									$message->from('lancreator.noreply@gmail.com','LAN Creator')
+										->to($user->email)
+										->subject('You have been removed from the helper list of a LAN');
+								});
+							}catch(\Exception $e){}
 
 
-            DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.HELPER'))->delete();
-            return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer helper on this LAN.']);
-          }else{
-            return response()->json(['error'=>'This user doesn\'t exist or isn\'t helper on this lan.']);
-          }
+	            DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.HELPER'))->delete();
+	            return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer helper on this LAN.']);
+	          }else{
+	            return response()->json(['error'=>'This user doesn\'t exist or isn\'t helper on this lan.']);
+	          }
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to remove helpers from it.']);
         }
@@ -743,11 +763,17 @@ class LansController extends Controller
 
     public function addAdmin($id){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan==null){
+				$user=Auth::user();
+        $lan=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan==null && !$user->isSiteAdmin()){
           return back()->with('error','You have to be an admin of this LAN to add admins to it.');
         }else{
-          return view('lan.add_admin',compact('lan'));
+					$lan=Lan::find($id);
+					if($lan!=null){
+						return view('lan.add_admin',compact('lan'));
+					}else{
+						return back()->with('error','This LAN does not exist.');
+					}
         }
       }else{
         return redirect('/login')->with('error','Please login to perform this action.');
@@ -758,30 +784,36 @@ class LansController extends Controller
       if(Auth::check()){
 				$admin=Auth::user();
 				$lan=$admin->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan!=null){
-          $user=User::where('id','=',$request->id_user)->select('id','pseudo','email')->first();
-          if($user!=null){
-            $lan_user_admin=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first();
-            if($lan_user_admin==null){
+        if($lan!=null || $admin->isSiteAdmin()){
+					$lan=Lan::find($id);
+					if($lan!=null){
 
-							try{
-								// send a mail to notify the user that he has been added as an helper on this LAN
-								Mail::send('mails.notification_admin_added', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
-									$message->from('lancreator.noreply@gmail.com','LAN Creator')
-										->to($user->email)
-										->subject('You have been added as admin on a LAN');
-								});
-							}catch(\Exception $e){}
+						$user=User::where('id','=',$request->id_user)->select('id','pseudo','email')->first();
+	          if($user!=null){
+	            $lan_user_admin=$lan->users()->where('lan_user.user_id','=',$user->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first();
+	            if($lan_user_admin==null){
+
+								try{
+									// send a mail to notify the user that he has been added as an helper on this LAN
+									Mail::send('mails.notification_admin_added', ['lan' => $lan,'admin' => $admin], function ($message) use ($user) {
+										$message->from('lancreator.noreply@gmail.com','LAN Creator')
+											->to($user->email)
+											->subject('You have been added as admin on a LAN');
+									});
+								}catch(\Exception $e){}
 
 
-              $lan->users()->attach($user,['rank_lan'=>config('ranks.ADMIN'),'score_lan'=>'0']);
-              return response()->json(['success'=>'The user "'.$user->pseudo.'" is now admin on this LAN.']);
-            }else{
-              return response()->json(['error'=>'The user "'.$user->pseudo.'" is already admin on this LAN.']);
-            }
-          }else{
-            return response()->json(['error'=>'This user doesn\'t exist.']);
-          }
+	              $lan->users()->attach($user,['rank_lan'=>config('ranks.ADMIN'),'score_lan'=>'0']);
+	              return response()->json(['success'=>'The user "'.$user->pseudo.'" is now admin on this LAN.']);
+	            }else{
+	              return response()->json(['error'=>'The user "'.$user->pseudo.'" is already admin on this LAN.']);
+	            }
+	          }else{
+	            return response()->json(['error'=>'This user doesn\'t exist.']);
+	          }
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to add admins to it.']);
         }
@@ -794,18 +826,23 @@ class LansController extends Controller
       if(Auth::check()){
 				$logged_user=Auth::user();
         $lan=$logged_user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan!=null){
-          $user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('users.id','pseudo')->first();
-          if($user!=null){
-            if(count($lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get())>1){
-              DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.ADMIN'))->delete();
-							return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer admin on this LAN.']);
-            }else{
-              return response()->json(['error'=>'You are the last admin on this LAN, please add at least an other admin before removing yourself from this LAN\'s admin list.']);
-            }
-          }else{
-            return response()->json(['error'=>'This user doesn\'t exist or isn\'t admin on this lan.']);
-          }
+        if($lan!=null || $logged_user->isSiteAdmin()){
+					$lan=Lan::find($id);
+					if($lan!=null){
+						$user=User::where('users.id','=',$request->id_user)->join('lan_user','lan_user.user_id','=','users.id')->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('users.id','pseudo')->first();
+	          if($user!=null){
+	            if(count($lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get())>1){
+	              DB::table('lan_user')->where('lan_id','=',$lan->id)->where('user_id','=',$user->id)->where('rank_lan','=',config('ranks.ADMIN'))->delete();
+								return response()->json(['success'=>'The user "'.$user->pseudo.'" is no longer admin on this LAN.']);
+	            }else{
+	              return response()->json(['error'=>'You are the last admin on this LAN, please add at least an other admin before removing yourself from this LAN\'s admin list.']);
+	            }
+	          }else{
+	            return response()->json(['error'=>'This user doesn\'t exist or isn\'t admin on this lan.']);
+	          }
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to remove admins from it.']);
         }
@@ -816,11 +853,17 @@ class LansController extends Controller
 
     public function addGame($id){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan==null){
+				$user=Auth::user();
+        $lan=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan==null && !$user->isSiteAdmin()){
           return back()->with('error','You have to be an admin of this LAN to add games to it.');
         }else{
-          return view('lan.add_game',compact('lan'));
+					$lan=Lan::find($id);
+					if($lan!=null){
+						return view('lan.add_game',compact('lan'));
+					}else{
+						return back()->with('error','This LAN does not exist.');
+					}
         }
       }else{
         return redirect('/login')->with('error','Please login to perform this action.');
@@ -829,20 +872,26 @@ class LansController extends Controller
 
     public function postAddGame($id,Request $request){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan!=null){
-          $game=Game::where('games.id','=',$request->game_id)->select('games.id','games.name_game')->first();
-          if($game!=null){
-            $lan_game=$lan->games()->where('can_play.id_game','=',$game->id)->first();
-            if($lan_game==null){
-              $lan->games()->attach($game);
-              return response()->json(['success'=>'The game "'.$game->name_game.'" has been added to this LAN\'s game list.']);
-            }else{
-              return response()->json(['error'=>'The game "'.$game->name_game.'" is already in this LAN\'s game list.']);
-            }
-          }else{
-            return response()->json(['error'=>'This game doesn\'t exist.']);
-          }
+				$user=Auth::user();
+        $lan=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null || $user->isSiteAdmin()){
+					$lan=Lan::find($id);
+					if($lan!=null){
+						$game=Game::where('games.id','=',$request->game_id)->select('games.id','games.name_game')->first();
+	          if($game!=null){
+	            $lan_game=$lan->games()->where('can_play.id_game','=',$game->id)->first();
+	            if($lan_game==null){
+	              $lan->games()->attach($game);
+	              return response()->json(['success'=>'The game "'.$game->name_game.'" has been added to this LAN\'s game list.']);
+	            }else{
+	              return response()->json(['error'=>'The game "'.$game->name_game.'" is already in this LAN\'s game list.']);
+	            }
+	          }else{
+	            return response()->json(['error'=>'This game doesn\'t exist.']);
+	          }
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to add games to it.']);
         }
@@ -853,16 +902,22 @@ class LansController extends Controller
 
     public function removeGame($id,Request $request){
       if(Auth::check()){
-        $lan=Auth::user()->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
-        if($lan!=null){
-          $game=Game::where('games.id','=',$request->game_id)->join('can_play','can_play.id_game','=','games.id')->where('can_play.id_lan','=',$lan->id)->select('games.id','games.name_game')->first();
-          if($game!=null){
-            DB::table('can_play')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
-						DB::table('uses_port')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
-            return response()->json(['success'=>'The game "'.$game->name_game.'" is no longer in this lan\'s game list.']);
-          }else{
-            return response()->json(['error'=>'This game doesn\'t exist or isn\'t in this lan\'s game list.']);
-          }
+				$user=Auth::user();
+        $lan=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($id);
+        if($lan!=null || $user->isSiteAdmin()){
+					$lan=Lan::find($id);
+					if($lan!=null){
+						$game=Game::where('games.id','=',$request->game_id)->join('can_play','can_play.id_game','=','games.id')->where('can_play.id_lan','=',$lan->id)->select('games.id','games.name_game')->first();
+	          if($game!=null){
+	            DB::table('can_play')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
+							DB::table('uses_port')->where('id_lan','=',$lan->id)->where('id_game','=',$game->id)->delete();
+	            return response()->json(['success'=>'The game "'.$game->name_game.'" is no longer in this lan\'s game list.']);
+	          }else{
+	            return response()->json(['error'=>'This game doesn\'t exist or isn\'t in this lan\'s game list.']);
+	          }
+					}else{
+						return response()->json(['error'=>'This LAN does not exist.']);
+					}
         }else{
           return response()->json(['error'=>'You have to be an admin of this LAN to remove games from it.']);
         }
@@ -874,14 +929,20 @@ class LansController extends Controller
 
 	public function addMaterial($id){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
+			$user=Auth::user();
+			$lan=$user->lans()->where(function($query){
 				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
 			})->find($id);
 
-			if($lan==null){
+			if($lan==null && !$user->isSiteAdmin()){
 				return back()->with('error','You have to be an admin or helper of this LAN to add materials to it.');
 			}else{
-				return view('lan.add_material',compact('lan'));
+				$lan=Lan::find($id);
+				if($lan!=null){
+					return view('lan.add_material',compact('lan'));
+				}else{
+					return back()->with('error','This LAN does not exist.');
+				}
 			}
 		}else{
 			return redirect('/login')->with('error','Please login to perform this action.');
@@ -890,31 +951,37 @@ class LansController extends Controller
 
 	public function postAddMaterial($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
+			$user=Auth::user();
+			$lan=$user->lans()->where(function($query){
 				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
 			})->find($id);
 
-			if($lan!=null){
-				$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
-				if($material!=null){
-					$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->select('materials.*','needs.id as id_needs','quantity')->first();
-					if($lan_material==null){
-						if(is_numeric($request->quantity) && $request->quantity>0){
-							$lan->materials()->attach($material,['quantity'=>$request->quantity]);
-							return response()->json(['success'=>'The material "'.$material->name_material.'" has been added to this LAN\'s material list.']);
+			if($lan!=null || $user->isSiteAdmin()){
+				$lan=Lan::find($id);
+				if($lan!=null){
+					$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
+					if($material!=null){
+						$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->select('materials.*','needs.id as id_needs','quantity')->first();
+						if($lan_material==null){
+							if(is_numeric($request->quantity) && $request->quantity>0){
+								$lan->materials()->attach($material,['quantity'=>$request->quantity]);
+								return response()->json(['success'=>'The material "'.$material->name_material.'" has been added to this LAN\'s material list.']);
+							}else{
+								return response()->json(['error'=>'The quantity must be a positive number.']);
+							}
 						}else{
-							return response()->json(['error'=>'The quantity must be a positive number.']);
+							if(is_numeric($request->quantity) && $request->quantity>0){
+								DB::table('needs')->where('id','=',$lan_material->id_needs)->update(['quantity'=>$lan_material->quantity+$request->quantity]);
+								return response()->json(['success'=>$request->quantity.' "'.$material->name_material.'" have been added to this LAN\'s material list.']);
+							}else{
+								return response()->json(['error'=>'The quantity must be a positive number.']);
+							}
 						}
 					}else{
-						if(is_numeric($request->quantity) && $request->quantity>0){
-							DB::table('needs')->where('id','=',$lan_material->id_needs)->update(['quantity'=>$lan_material->quantity+$request->quantity]);
-							return response()->json(['success'=>$request->quantity.' "'.$material->name_material.'" have been added to this LAN\'s material list.']);
-						}else{
-							return response()->json(['error'=>'The quantity must be a positive number.']);
-						}
+						return response()->json(['error'=>'This material doesn\'t exist.']);
 					}
 				}else{
-					return response()->json(['error'=>'This material doesn\'t exist.']);
+					return response()->json(['error'=>'This LAN does not exist.']);
 				}
 			}else{
 				return response()->json(['error'=>'You have to be an admin or helper of this LAN to add materials to it.']);
@@ -926,26 +993,33 @@ class LansController extends Controller
 
 	public function editQuantity($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
+			$user=Auth::user();
+			$lan=$user->lans()->where(function($query){
 				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
 			})->find($id);
 
-			if($lan!=null){
-				$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
-				if($material!=null){
-					$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->select('materials.*','needs.id as id_needs','quantity');
-					if($lan_material->first()!=null){
-						if(is_numeric($request->quantity) && $request->quantity>0){
-							$lan_material->update(['quantity'=>$request->quantity]);
-							return response()->json(['success'=>'This material\'s quantity has been set to '.htmlentities($request->quantity).'.']);
+			if($lan!=null || $user->isSiteAdmin()){
+				$lan=Lan::find($id);
+
+				if($lan!=null){
+					$material=Material::where('materials.id','=',$request->material_id)->select('materials.id','materials.name_material')->first();
+					if($material!=null){
+						$lan_material=$lan->materials()->where('needs.id_material','=',$material->id)->select('materials.*','needs.id as id_needs','quantity');
+						if($lan_material->first()!=null){
+							if(is_numeric($request->quantity) && $request->quantity>0){
+								$lan_material->update(['quantity'=>$request->quantity]);
+								return response()->json(['success'=>'This material\'s quantity has been set to '.htmlentities($request->quantity).'.']);
+							}else{
+								return response()->json(['error'=>'The quantity must be a positive number.']);
+							}
 						}else{
-							return response()->json(['error'=>'The quantity must be a positive number.']);
+							return response()->json(['error'=>'This material isn\'t in this LAN\'s material list.']);
 						}
 					}else{
-						return response()->json(['error'=>'This material isn\'t in this LAN\'s material list.']);
+						return response()->json(['error'=>'This material doesn\'t exist.']);
 					}
 				}else{
-					return response()->json(['error'=>'This material doesn\'t exist.']);
+					return response()->json(['error'=>'This LAN does not exist.']);
 				}
 			}else{
 				return response()->json(['error'=>'You have to be an admin or helper of this LAN to edit its material list.']);
@@ -957,16 +1031,22 @@ class LansController extends Controller
 
 	public function removeMaterial($id,Request $request){
 		if(Auth::check()){
-			$lan=Auth::user()->lans()->where(function($query){
+			$user=Auth::user();
+			$lan=$user->lans()->where(function($query){
 				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
 			})->find($id);
-			if($lan!=null){
-				$material=Material::where('materials.id','=',$request->material_id)->join('needs','needs.id_material','=','materials.id')->where('needs.id_lan','=',$lan->id)->select('materials.id','materials.name_material')->first();
-				if($material!=null){
-					DB::table('needs')->where('id_lan','=',$lan->id)->where('id_material','=',$material->id)->delete();
-					return response()->json(['success'=>'The material "'.$material->name_material.'" is no longer in this lan\'s material list.']);
+			if($lan!=null || $user->isSiteAdmin()){
+				$lan=Lan::find($id);
+				if($lan!=null){
+					$material=Material::where('materials.id','=',$request->material_id)->join('needs','needs.id_material','=','materials.id')->where('needs.id_lan','=',$lan->id)->select('materials.id','materials.name_material')->first();
+					if($material!=null){
+						DB::table('needs')->where('id_lan','=',$lan->id)->where('id_material','=',$material->id)->delete();
+						return response()->json(['success'=>'The material "'.$material->name_material.'" is no longer in this lan\'s material list.']);
+					}else{
+						return response()->json(['error'=>'This material doesn\'t exist or isn\'t in this lan\'s material list.']);
+					}
 				}else{
-					return response()->json(['error'=>'This material doesn\'t exist or isn\'t in this lan\'s material list.']);
+					return response()->json(['error'=>'This LAN does not exist.']);
 				}
 			}else{
 				return response()->json(['error'=>'You have to be an admin or helper of this LAN to remove materials from it.']);
@@ -985,10 +1065,11 @@ class LansController extends Controller
 		 public function destroy($id)
 	 	{
 	 		if(Auth::check()){
+				$logged_user=Auth::user();
 	 			$lan=Lan::find($id);
 	 			if($lan!=null){
-	 				$user=Auth::user()->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lan_user.id')->first();
-	 				if($user!=null){
+	 				$user=$logged_user->join('lan_user','lan_user.user_id','=','users.id')->where('lan_id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lan_user.id')->first();
+	 				if($user!=null || $logged_user->isSiteAdmin()){
 	 					$lan->delete();
 
 	 					// delete the json file of this LAN
@@ -1032,7 +1113,7 @@ class LansController extends Controller
 			  $lan = Lan::find($id);
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 					$tgames=$lan->games;
 					$nlan = $lan->name;
@@ -1076,8 +1157,8 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-					$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanHelper=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 
 					if(!$userIsLanHelper && !$userIsLanAdmin){
 						return back()->with('error','You can\'t view a LAN\'s tasks if you are not admin or helper on this LAN.');
@@ -1122,8 +1203,8 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-					$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanHelper=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 
 					if(!$userIsLanAdmin && !$userIsLanHelper){
 						return back()->with('error','You can\'t view a LAN\'s material list if you are not admin or helper on this LAN.');
@@ -1165,8 +1246,8 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-					$userIsLanHelper=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanHelper=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.HELPER'))->first()!=null;
 
 					if(!$userIsLanHelper && !$userIsLanAdmin){
 						return back()->with('error','You can\'t view a LAN\'s shopping list if you are not admin or helper on this LAN.');
@@ -1211,7 +1292,7 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 					if(!$userIsLanAdmin){
 						return back()->with('error','You do not have enough rights to view this LAN\'s player list.');
@@ -1256,7 +1337,7 @@ class LansController extends Controller
 				if($lan!=null){
 
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 		  		if(!$userIsLanAdmin){
 						// /!\ redirects to dashboard (not back) to avoid too many redirections
 		  			return redirect('/dashboard')->with('error','You do not have enough rights to view this LAN\'s admins list.');
@@ -1301,7 +1382,7 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 					if(!$userIsLanAdmin){
 						return back()->with('error','You do not have enough rights to view this LAN\'s helpers list.');
 					}else{
@@ -1345,7 +1426,7 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 					$tt=$lan->tournaments;
 					$nlan = $lan->name;
@@ -1389,7 +1470,7 @@ class LansController extends Controller
 
 				if($lan!=null){
 					$user=Auth::user();
-					$userIsLanAdmin=$user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lans.id','=',$id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
 
 					$ta=$lan->activities;
 					$nlan = $lan->name;

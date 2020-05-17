@@ -26,63 +26,28 @@ class UsersController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-      return view('user.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('user.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-	   public function store(Request $request){
-
-    		return response()->json([
-    		    'success'=>'Votre Lan a été correctement enregistrée'
-    		]);
-      }
-
-    /**
      * Show the form for editing the logged-in user.
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
   		if(Auth::check()){
-          $user=Auth::user();
-          if($user->id==$id || $user->isSiteAdmin()){
-						if($user->id!=$id) $user=User::find($id);
-						if($user!=null){
-							$location = $user->location;
-							$street = $location->street;
-							$city = $street->city;
-							$department = $city->department;
-							$country = $department->country;
-							return view('auth.edit',compact('user','location','street','city','department','country'));
-						}else{
-							return back()->with('error','This user doesn\'t exist.');
-						}
-          }else{
-            return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
-          }
+        $user=Auth::user();
+        if($user->id==$id || $user->isSiteAdmin()){
+					if($user->id!=$id) $user=User::find($id);
+					if($user!=null){
+						$location = $user->location;
+						$street = $location->street;
+						$city = $street->city;
+						$department = $city->department;
+						$country = $department->country;
+						return view('auth.edit',compact('user','location','street','city','department','country'));
+					}else{
+						return back()->with('error','This user doesn\'t exist.');
+					}
+        }else{
+          return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
+        }
   		}else{
   			return redirect('/login')->with('error','Please log in to perform this action.');
   		}
@@ -295,7 +260,11 @@ class UsersController extends Controller
     {
       $users=User::where('pseudo','LIKE','%'.$request->pseudo.'%')->get();
       $lan=Lan::where('id','=',$request->lan_id)->first();
-      return view($request->view_path,compact('users','lan'));
+			if($lan!=null){
+				return view($request->view_path,compact('users','lan'));
+			}else{
+				return view('errors.404_include');
+			}
     }
 
 		public function searchHelper($taskID,Request $request)
@@ -386,7 +355,7 @@ class UsersController extends Controller
 							Mail::send('mails.notification_restore',[], function ($message) {
 								$message->from('lancreator.noreply@gmail.com','LAN Creator')
 									->to($user->email)
-									->subject('Your LanCreator has been restored');
+									->subject('Your LanCreator account has been restored');
 							});
 						}catch(\Exception $e){}
 						return response()->json(['success'=>'This user\'s account has been successfully restored.',
@@ -432,49 +401,42 @@ class UsersController extends Controller
 					//reduce users before compacting (limit the amount of information like emails)
 					return view('user.list', compact('users', 'max', 'previous', 'next', 'page'));
 				}
+			}else{
+				return redirect('/login')->with('error','Please log in to perform this action.');
 			}
 		}
 
 	    /*Updates the website style for the user*/
-	    public function updateTheme($id)
-	    {
-
-			if(htmlentities($id)){
-
-			      if(Auth::check()){
-			  		$user=Auth::user();
-					if($user->id==htmlentities($id)){
-					  $user->theme = $user->theme+1;
-					  if($user->theme > 2){
-						$i = random_int(0, 400);
-						if($i < 390){
-							$user->theme = 0;
+	    public function updateTheme($id){
+				if(htmlentities($id)){
+					if(Auth::check()){
+				  	$user=Auth::user();
+						if($user->id==htmlentities($id)){
+						  $user->theme = $user->theme+1;
+						  if($user->theme > 2){
+								$i = random_int(0, 400);
+								if($i < 390){
+									$user->theme = 0;
+								}else{
+									$user->theme = 3;
+								}
+						  }
+						  $user->save();
+						  return back()->with('success','Enjoy your new theme.');
+						}else{
+					 		 return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
 						}
-						else{
-							$user->theme = 3;
-						}
-					  }
-					  $user->save();
-					  return back()->with('success','Enjoy your new theme.');
-
-					}else{
-				 		 return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
-					}
-			      }else{
-				return redirect('/login')->with('error','Please log in to perform this action.');
-			      }
-
-			}else{
-				 return redirect('/dashboard')->with('error','An error occured while updating your settings. Please try again');
-			}
+				  }else{
+						return redirect('/login')->with('error','Please log in to perform this action.');
+				  }
+				}else{
+					 return redirect('/dashboard')->with('error','An error occured while updating your settings. Please try again');
+				}
 	    }
-	    
-	/*Updates the website style for the user*/
-	public function updateLanguage($id)
-	{
 
+	/*Updates the website's language for the user*/
+	public function updateLanguage($id){
 		if(htmlentities($id)){
-
 			if(Auth::check()){
 				$user=Auth::user();
 				if($user->id==htmlentities($id)){

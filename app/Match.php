@@ -11,14 +11,15 @@ class Match extends Model
    *
    * @var array
    */
-  protected $fillable = ['id_round'];
+	protected $fillable = ['id_round'];
+	
+	/*Returns all the teams for this match*/
+	public function teams(){
+		return $this->belongsToMany('App\Team','oppose');
+	}
 
-  public function teams()
-  {
-    return $this->belongsToMany('App\Team','oppose');
-  }
-
-  public function round(){
-    return $this->belongsTo('App\Round');
-  }
+	/*Returns the round of this match*/
+	public function round(){
+		return $this->belongsTo('App\Round');
+	}
 }

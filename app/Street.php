@@ -8,15 +8,15 @@ class Street extends Model
 {
 	public $timestamps = false;
 	
-    protected $fillable = ['name_street'];
+    	protected $fillable = ['name_street'];
 	
-	public function locations()
-	{
+	/*Returns all the locations within this street*/
+	public function locations(){
 		return $this->hasMany('App\Location');
 	}
 	
-	public function city()
-	{
+	/*Returns the parent city of this street*/
+	public function city(){
 		return $this->belongsTo('App\City');
 	}
 }

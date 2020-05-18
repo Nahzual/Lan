@@ -15,13 +15,13 @@ class Shopping extends Model
 
 	protected $fillable = ['cost_shopping', 'quantity_shopping'];
 
-	public function lan()
-	{
-	return $this->belongsTo('App\Lan');
+	/*Returns the LAN of this shopping*/
+	public function lan(){
+		return $this->belongsTo('App\Lan');
 	}
 
-	public function material()
-	{
+	/*Returns the material of this shopping*/
+	public function material(){
 		return $this->belongsTo('App\Material');
 	}
 }

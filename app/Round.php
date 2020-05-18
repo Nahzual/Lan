@@ -11,14 +11,15 @@ class Round extends Model
    *
    * @var array
    */
-  protected $fillable = ['max_player_count', 'match_duration', 'max_player_count_per_match', 'id_tournament'];
+	protected $fillable = ['max_player_count', 'match_duration', 'max_player_count_per_match', 'id_tournament'];
 
-  public function matches()
-  {
-    return $this->hasMany('App\Match');
-  }
+	/*Returns all the matches for this round*/
+	public function matches(){
+		return $this->hasMany('App\Match');
+	}
 
-  public function tournament(){
-    return $this->belongsTo('App\Tournament');
-  }
+	/*Returns the tournament of this round*/
+	public function tournament(){
+		return $this->belongsTo('App\Tournament');
+	}
 }

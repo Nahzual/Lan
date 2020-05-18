@@ -149,6 +149,10 @@ return [
 	'empty_chair' => 'chaise libre :',
 	'empty_space' => 'Espace libre :',
 	
+	// Edit
+	'update' => 'Sauvegarder',
+	'edit_title_lan' => 'Editing LAN ',
+	
 	// Contact
 	'contact_us' => 'Nous Contacter',
 	'object' => 'Object',

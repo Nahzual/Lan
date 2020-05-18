@@ -133,12 +133,12 @@ return [
 	// LAN
 	
 	'nb_max_registrants' => 'Maximum numbers of registrants',
-	'date' => '',
-	'duration' => '',
-	'budget' => '',
-	'room_length' => '',
-	'room_width' => '',
-	'' => '',
+	'date' => 'Date',
+	'duration' => 'Duration (in days)',
+	'budget' => 'Budget (in €)',
+	'room_length' => 'Room length (in meters)',
+	'room_width' => 'Room width (in meters)',
+	'location' => 'Location',
 	'' => '',
 	'room_plan' => 'Room plan :',
 	'legend' => 'Legend :',
@@ -148,6 +148,10 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'Empty chair :',
 	'empty_space' => 'Empty space :',
+	
+	// Edit
+	'update' => 'Update',
+	'edit_title_lan' => 'Editing LAN ',
 	
 	// Contact
 	'contact_us' => 'Contact us',

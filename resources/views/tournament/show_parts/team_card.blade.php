@@ -52,7 +52,7 @@
             <th scope="row">{{$team->id}}</th>
             <td scope="col">{!!$team->name_team!!}</td>
                 @if($tournament->match_mod_tournament==1)
-                  <td scope="col" class="text-center lead-text">{{$team->number_of_member}}/{{$tournament->number_per_team}}</a></td>
+                  <td scope="col" class="text-center lead-text">{{$team->users->count()}}/{{$tournament->number_per_team}}</a></td>
                 @endif
                 <td scope="col" class=" text-center">
                   <div class="btn-group">
@@ -60,9 +60,11 @@
                     {!! Form::open(['onsubmit'=>'return false;']) !!}
                                       <a class="btn btn-success" href="{{ route('team.players_team', array('tournament' =>$tournament->id, 'team' => $team->id)) }}"><i class='fa fa-eye'></i></a>
                                     {{ Form::close() }}
+                      @if($team->users->count()<$tournament->number_per_team)
                       {!! Form::open(['onsubmit'=>'return false;']) !!}
                       <button type="submit" class="btn btn-primary" id="AddNewTeamSubmit" onclick="document.location.reload(false)"><i class="fa fa-plus-square"></i> Join</button>
                       {{ Form::close() }}
+                      @endif
                     @endif
                     @if ($userIsLanAdmin)
                      {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTeam(event, '.$tournament->id.', '.$team->id.')']) !!}

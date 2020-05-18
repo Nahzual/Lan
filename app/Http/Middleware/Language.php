@@ -15,11 +15,6 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        if(isset($logged_user)){
-        
-        }
-        
-        
         if(is_null(session('locale')))
 		{
 		  session(['locale'=> "fr"]);

@@ -149,7 +149,7 @@ return [
 	'' => '',
 	
 	// Contact
-	'contact_us' => 'Contact us'
+	'contact_us' => 'Contact us',
 	'object' => 'Object',
 	'description' => 'Description',
 	'attachment' => 'Attachment',

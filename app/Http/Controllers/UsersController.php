@@ -468,9 +468,16 @@ class UsersController extends Controller
 				$user=Auth::user();
 				if($user->id==htmlentities($id)){
 					$user->language = $user->language+1;
-					App::setLocale('fr');
 					if($user->language > 1){
 						$user->language = 0;
+					}
+					if ($user->language == 0){
+						session(['locale'=> "fr"]);
+					}else if ($user->language == 1){
+						session(['locale'=> "en"]);
+					}
+					else {
+						session(['locale'=> "en"]);
 					}
 					$user->save();
 					return back()->with('success','Enjoy your new language.');

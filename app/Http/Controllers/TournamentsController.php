@@ -66,12 +66,13 @@ class TournamentsController extends Controller
       				return back()->with('error','You can\'t add a tournament to a LAN you are not an admin of.');
       			}else{
 
-    					$lan = $user->lans()->find($lanId);
+              $lan = $user->lans()->find($lanId);
       				$tournament = new Tournament();
     					$tournament->name_tournament = htmlentities($request->name_tournament);
     					$tournament->desc_tournament = htmlentities($request->desc_tournament);
              $tournament->opening_date_tournament = htmlentities($request->opening_date_tournament);
              $tournament->match_mod_tournament = htmlentities($request->match_mod_tournament);
+              $tournament->number_per_team = htmlentities($request->number_per_team);
              $tournament->max_player_count_tournament = htmlentities($request->max_player_count_tournament);
              $tournament->id_game = htmlentities($request->id_game);
              $tournament->lan()->associate($lan->id);
@@ -100,7 +101,7 @@ class TournamentsController extends Controller
            $lan=Lan::find($lanId);
                  if($lan!=null){
                      $tournament=$lan->tournaments()->find($tournamentId);
-             $games= $lan->games;
+             $games= Game::all();
              $teams= Team::all()->where('tournament_id', '=', $tournamentId);
              $user= Auth::user();
                      if($tournament!=null){

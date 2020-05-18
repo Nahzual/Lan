@@ -5,8 +5,12 @@
 
   <div class="card-body">
     <div class="row">
+      <label class="col-md-2 col-form-label text-md-right">Player tournament</label>
+      <label class="form-control col-8 h-100">{{$teams->count()}}/{{$tournament->max_player_count_tournament}}</label>
+    </div>
+    <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Game</label>
-      <label class="form-control col-8 h-100"></label>
+      <label class="form-control col-8 h-100">{{$game = $games->where('id', $tournament->id_game)->pluck('name_game')}}</label>
     </div>
     <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Name</label>
@@ -21,14 +25,6 @@
       <label class="form-control col-8 h-100">{{$tournament->desc_tournament}}</label>
     </div>
     <div class="row">
-      <label class="col-md-2 col-form-label text-md-right">Number of player in</label>
-      <label class="form-control col-8 h-100">{{$tournament->player_count_tournament}}</label>
-    </div>
-    <div class="row">
-      <label class="col-md-2 col-form-label text-md-right">Max registrants</label>
-      <label class="form-control col-8 h-100">{{$tournament->max_player_count_tournament}}</label>
-    </div>
-    <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Mode of match tournament</label>
       <label class="form-control col-8 h-100">
         @if( $tournament->match_mod_tournament == 1 )
@@ -38,6 +34,12 @@
         @endif
       </label>
     </div>
+    @if( $tournament->match_mod_tournament == 1 )
+      <div class="row">
+        <label class="col-md-2 col-form-label text-md-right">Number per team</label>
+        <label class="form-control col-8 h-100">{{$tournament->number_per_team}}</label>
+      </div>
+    @endif
     <div class="form-group row text-center">
       @if(isset($userIsLanAdmin) && $userIsLanAdmin)
       <div class="col">

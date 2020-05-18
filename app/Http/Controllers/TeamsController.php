@@ -97,29 +97,30 @@ class TeamsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($lanId, $tournamentId)
-    {
-      if(Auth::check()){
+     public function show($tournamentId, $teamId)
+         {
+           if(Auth::check()){
 
-        $lan=Lan::find($lanId);
-        if($lan!=null){
-          $tournament=$lan->tournaments()->find($tournamentId);
-          $games=Game::all();
-          if($tournament!=null){
-            if(Auth::check()){
-              $userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-              return view('tournament.show_tournament', compact('lan', 'tournament', 'games', 'userIsLanAdmin'));
-            }else{
-              return view('tournament.show_tournament', compact('lan', 'tournament', 'games'));
-            }
-          }else{
-            return back()->with('error','This tournament doesn\'t exist.');
-          }
-        }else{
-          return back()->with('error','This LAN doesn\'t exist.');
-        }
-      }
-  }
+             $tournament=Tournament::find($tournamentId);
+             if($tournament!=null){
+               $team=Team::all()->find($teamId);
+               $users = $team->users;
+               if($team!=null){
+                 if(Auth::check()){
+                   $userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$tournament->lan_id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+                   return view('team.players_team', compact('tournament', 'team', 'userIsLanAdmin', 'users'));
+                 }else{
+                   return view('team.players_team', compact('tournament', 'team', 'users'));
+                 }
+               }else{
+                 return back()->with('error','This team doesn\'t exist.');
+               }
+             }else{
+               return back()->with('error','This LAN doesn\'t exist.');
+             }
+           }
+       }
+   
 
   /**
    * Show the form for editing the specified resource.
@@ -194,32 +195,30 @@ class TeamsController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($tournamentId, $teamId)
-  {
-    if(Auth::check()){
-      $user=Auth::user();
-      $team= Team::find($teamId);
-      $tournamentId= $team->tournament_id;
-      $tournament = Tournament::find($tournamentId);
-      $lan = Lan::find($tournament->lan_id);
-      if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && $user->rank_user!=config('ranks.SITE_ADMIN')){
-        return response()->json(['error'=>'You can\'t delete a team if you are not an admin of its LAN.']);
-      }else{
-        if($lan!=null){
-          if($team == null){
-            return response()->json(['error'=>'This team doesn\'t exist.']);
-          }else{
-            $team->delete();
-            return response()->json(['success'=>'This team has been successfully deleted.']);
-          }
-        }else{
-          return response()->json(['error'=>'This team doesn\'t exist.']);
-        }
-      }
-    }else{
-      return redirect('/login')->with('error','You must be logged in to delete a tournament\'s team.');
-    }
-  }
+   public function destroy($tournamentId, $teamId)
+   {
+     if(Auth::check()){
+         $user=Auth::user();
+         $tournament = Tournament::find($tournamentId);
+         if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($tournament->lan_id)==null && !$user->isSiteAdmin()){
+           return response()->json(['error'=>'You can\'t delete a team if you are not an admin of its LAN.']);
+         }else{
+           if($lan!=null){
+             $team = $tournament->teams()->find($teamId);
+             if($team == null){
+               return response()->json(['error'=>'This team doesn\'t exist.']);
+             }else{
+               $team->delete();
+               return response()->json(['success'=>'This team has been successfully deleted.']);
+             }
+           }else{
+             return response()->json(['error'=>'This team doesn\'t exist.']);
+           }
+         }
+       }else{
+         return redirect('/login')->with('error','You must be logged in to delete a LAN\'s team.');
+       }
+     }
 
 
    public function joinTeam($teamId){

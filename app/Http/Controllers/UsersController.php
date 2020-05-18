@@ -18,48 +18,47 @@ use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
-{
+class UsersController extends Controller{
 
 	public function __construct(){
 		$this->middleware('auth');
 	}
 
 	/**
-	* Show the form for editing the logged-in user.
+	* Show the form for editing a user
 	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
 	public function edit($id){
-  		if(Auth::check()){
+		if(Auth::check()){
 			$user=Auth::user();
 			if($user->id==$id || $user->isSiteAdmin()){
-					if($user->id!=$id) $user=User::find($id);
-					if($user!=null){
-						$location = $user->location;
-						$street = $location->street;
-						$city = $street->city;
-						$department = $city->department;
-						$country = $department->country;
-						return view('auth.edit',compact('user','location','street','city','department','country'));
-					}else{
-						return back()->with('error','This user doesn\'t exist.');
-					}
+				if($user->id!=$id) $user=User::find($id);
+				if($user!=null){
+					$location = $user->location;
+					$street = $location->street;
+					$city = $street->city;
+					$department = $city->department;
+					$country = $department->country;
+					return view('auth.edit',compact('user','location','street','city','department','country'));
 				}else{
-					return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
+					return back()->with('error','This user doesn\'t exist.');
+				}
+			}else{
+				return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
 			}
-  		}else{
-  			return redirect('/login')->with('error','Please log in to perform this action.');
-  		}
-    	}
+		}else{
+			return redirect('/login')->with('error','Please log in to perform this action.');
+		}
+	}
 
-	    /**
-	     * Update the specified resource in storage.
-	     *
-	     * @param  \Illuminate\Http\Request  $request
-	     * @param  int  $id
-	     * @return \Illuminate\Http\Response
-	     */
+	/**
+	* Update the specified resource in storage.
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
 	public function update(Request $request, $id){
 
 		if(!isset($request->password) && !isset($request->password_confirmation)){
@@ -67,14 +66,14 @@ class UsersController extends Controller
 			unset($request->password_confirmation);
 		}
 
-	      	$this->validate($request, [
+		$this->validate($request, [
 			'name' => ['required', 'string', 'max:24'],
 			'lastname' => ['required', 'string', 'max:24'],
 			'pseudo' => ['required', 'string', 'max:24',Rule::unique('users')->ignore($id)],
 			'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($id)],
 			'tel_user' => ['required','digits:10',Rule::unique('users')->ignore($id)],
 			'password' => ['nullable','string', 'min:8', 'confirmed']
-	   	]);
+		]);
 
 		if(Auth::check()){
 			$user=Auth::user();
@@ -202,7 +201,7 @@ class UsersController extends Controller
 					$user->lastname=htmlentities($request->lastname);
 					$user->pseudo=htmlentities($request->pseudo);
 					if(isset($request->password) && isset($request->password_confirmation) && !Hash::check($user->password,$request->password))
-							$user->password=Hash::make($request->password);
+					$user->password=Hash::make($request->password);
 					$user->email=htmlentities($request->email);
 					$user->tel_user=htmlentities($request->tel_user);
 					$user->theme=0;
@@ -213,12 +212,12 @@ class UsersController extends Controller
 				}else{
 					return back()->with('error','This user does not exist.');
 				}
-        		}else{
+			}else{
 				return redirect('/home')->with('error','You are not allowed to edit other users\' profiles.');
 			}
 		}else{
 			return redirect('/login')->with('error','Please log in to perform this action.');
-     		}
+		}
 	}
 
 	/**
@@ -230,10 +229,10 @@ class UsersController extends Controller
 			$user=User::find($id);
 			if($user!=null){
 				$location = $user->location;
-    				$street = $location->street;
-    				$city = $street->city;
-    				$department = $city->department;
-    				$country = $department->country;
+				$street = $location->street;
+				$city = $street->city;
+				$department = $city->department;
+				$country = $department->country;
 
 				//statistics
 				$lans_admin_count=$user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->where('lans.opening_date','<',date('Y-m-d'))->selectRaw('COUNT(lan_user.id) as count')->groupBy('lan_user.id')->first();
@@ -306,19 +305,32 @@ class UsersController extends Controller
 			if($to!=null){
 				try{
 					Mail::send('mails.notification_contact', ['from' => $from,'to'=>$to], function ($message) use ($to) {
-					$message->from('lancreator.noreply@gmail.com','LAN Creator')
-								->to($to->email)
-								->subject('A user tried to contact you');
+						$message->from('lancreator.noreply@gmail.com','LAN Creator')
+						->to($to->email)
+						->subject('A user tried to contact you');
 					});
 					return response()->json(['success'=>'Your message has been successfully sent.']);
 				}catch(\Exception $e){
-						return response()->json(['error'=>'Your message couldn\'t be sent due to an internal server error. If the problem persists, please contact an administrator.']);
+					return response()->json(['error'=>'Your message couldn\'t be sent due to an internal server error. If the problem persists, please contact an administrator.']);
 				}
 			}else{
 				return response()->json(['error'=>'This user does not exist.']);
 			}
 		}else{
 			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+
+	/**
+	*	Show a page to make sure that the logged user wanted to delete his account
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function confirmDestroy(){
+		if(Auth::check()){
+			return view('user.confirm_destroy');
+		}else{
+			return redirect('/login')->with('error','Please log in to perform this action');
 		}
 	}
 
@@ -336,16 +348,19 @@ class UsersController extends Controller
 					if($user->id==$logged_user->id){
 						Auth::logout();
 						$user->delete();
-						return response()->json(['success'=>'Your account has been successfully deleted.']);
+						if($user->isSiteAdmin()) return response()->json(['success'=>'Your account has been successfully deleted.']);
+						else return redirect('/')->with('success','Your account has been successfully deleted.');
 					}else{
 						$user->delete();
 						try{
 							Mail::send('mails.notification_ban',[], function ($message) {
-							$message->from('lancreator.noreply@gmail.com','LAN Creator')
-										->to($user->email)
-										->subject('Your have been banned from LanCreator');
+								$message->from('lancreator.noreply@gmail.com','LAN Creator')
+								->to($user->email)
+								->subject('Your have been banned from LanCreator');
 							});
-						}catch(\Exception $e){}
+						}catch(\Exception $e){
+
+						}
 						return response()->json(['success'=>'This user\'s account has been successfully deleted.','html'=>view('user.show_restore',compact('user'))->render() ]);
 					}
 				}else{
@@ -373,11 +388,13 @@ class UsersController extends Controller
 					$user->restore();
 					try{
 						Mail::send('mails.notification_restore',[], function ($message) {
-						$message->from('lancreator.noreply@gmail.com','LAN Creator')
-								->to($user->email)
-								->subject('Your LanCreator account has been restored');
+							$message->from('lancreator.noreply@gmail.com','LAN Creator')
+							->to($user->email)
+							->subject('Your LanCreator account has been restored');
 						});
-					}catch(\Exception $e){}
+					}catch(\Exception $e){
+
+					}
 					return response()->json(['success'=>'This user\'s account has been successfully restored.','html'=>view('user.show_delete',compact('user'))->render() ]);
 				}else{
 					return response()->json(['error'=>'This user hasn\'t been deleted.']);
@@ -456,7 +473,7 @@ class UsersController extends Controller
 		}else{
 			return redirect('/dashboard')->with('error','An error occured while updating your settings. Please try again');
 		}
-	    }
+	}
 
 	/**
 	* Change the site's language for the specified user

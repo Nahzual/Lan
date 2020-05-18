@@ -178,6 +178,7 @@ Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->nam
 /* ----------------- ADMIN ROUTES ----------------- */
 
 //User
+Route::get('/user/{user}/delete','UsersController@confirmDestroy')->name('user.confirmDestroy');
 Route::post('/user','UsersController@store')->name('user.store');
 Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
 Route::get('/user/{user}','UsersController@show')->name('user.show');

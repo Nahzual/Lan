@@ -51,15 +51,15 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-			<a class="dropdown-item" href="{{ route('user.updateTheme', $logged_user->id) }}"><i class="fa fa-paint-brush"></i> {{ __('messages.chtheme') }}</a>
+					<a class="dropdown-item" href="{{ route('user.updateTheme', $logged_user->id) }}"><i class="fa fa-paint-brush"></i> {{ __('messages.chtheme') }}</a>
           <a class="dropdown-item" href="{{ route('user.edit',$logged_user->id) }}" onclick="event.preventDefault(); document.getElementById('edit-profile-form').submit();"><i class="fa fa-wrench"></i> {{ __('messages.settings') }}</a>
-          <div class="dropdown-divider"></div>
-          
-			<a class="dropdown-item" href="{{ route('user.updateLanguage', $logged_user->id) }}"><i class="fa fa-language"></i>{{ __('messages.chln') }}</a>
+					<a class="dropdown-item" href="{{ route('user.confirmDestroy',$logged_user->id) }}"><i class="fa fa-trash"></i> {{ 'Delete your account' }}</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{{ route('user.updateLanguage', $logged_user->id) }}"><i class="fa fa-language"></i>{{ __('messages.chln') }}</a>
 
-          
+
           <div class="dropdown-divider"></div>
-          
+
           <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ __('messages.logout') }}</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf

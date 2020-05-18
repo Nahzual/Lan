@@ -47,7 +47,7 @@
 			<div class="jumbotron home_div" >
 				<div class="container">
 
-					<p>The latest LAN was created on<?php $date = date_create($lan->opening_date); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</p>
+					<p>The latest LAN was created on<?php $date = date_create($lan->created_at); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</p>
 					<p>{{ __('messages.homejoin') }}</p>
 
 				</div>

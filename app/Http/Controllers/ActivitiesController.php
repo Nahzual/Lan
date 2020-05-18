@@ -7,8 +7,7 @@ use App\Lan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class ActivitiesController extends Controller
-{
+class ActivitiesController extends Controller{
 	/**
 	* Show the form for creating a new resource.
 	* @return \Illuminate\Http\Response
@@ -16,19 +15,19 @@ class ActivitiesController extends Controller
 	public function create($lanId){
 		if(Auth::check()){
 			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
-  				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
-  			}else{
+			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
+				return back()->with('error','You can\'t add an activity to a LAN you are not an admin of.');
+			}else{
 				$lan=Lan::find($lanId);
 				if($lan!=null){
 					return view('activity.create', compact('lan'));
 				}else{
 					return back()->with('error','This LAN doesn\'t exist.');
 				}
-  			}
-  		}else{
-  			return redirect('/login')->with('error','Please log in to perform this action.');
-  		}
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to perform this action.');
+		}
 	}
 
 	/**
@@ -40,9 +39,9 @@ class ActivitiesController extends Controller
 	public function store(Request $request, $lanId){
 		if(Auth::check()){
 			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
-  				return response()->json(['error'=>'You can\'t add an activity to a LAN you are not an admin of.']);
-  			}else{
+			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
+				return response()->json(['error'=>'You can\'t add an activity to a LAN you are not an admin of.']);
+			}else{
 				$lan = Lan::find($lanId);
 				if($lan!=null){
 					$activity = new Activity();
@@ -52,15 +51,15 @@ class ActivitiesController extends Controller
 					$activity->save();
 
 					return response()->json([
-							'success'=>'Your Activity has been saved successfully.'
+						'success'=>'Your Activity has been saved successfully.'
 					]);
 				}else{
 					return response()->json(['error'=>'This LAN doesn\'t exist.']);
 				}
-  		}
-  		}else{
-  			return response()->json(['error'=>'You must be logged in to edit a LAN.']);
-  		}
+			}
+		}else{
+			return response()->json(['error'=>'You must be logged in to edit a LAN.']);
+		}
 	}
 
 	/**
@@ -74,19 +73,19 @@ class ActivitiesController extends Controller
 		if($lan!=null){
 			$activity=$lan->activities()->find($activityId);
 			if($activity!=null){
-					if(Auth::check()){
-						$user=Auth::user();
-						$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->first()!=null;
-						return view('activity.show', compact('lan', 'activity','userIsLanAdmin'));
-					}else{
-						return view('activity.show', compact('lan', 'activity'));
-					}
+				if(Auth::check()){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->first()!=null;
+					return view('activity.show', compact('lan', 'activity','userIsLanAdmin'));
 				}else{
-					return back()->with('error','This activity doesn\'t exist.');
+					return view('activity.show', compact('lan', 'activity'));
 				}
 			}else{
-				return back()->with('error','This LAN doesn\'t exist.');
+				return back()->with('error','This activity doesn\'t exist.');
 			}
+		}else{
+			return back()->with('error','This LAN doesn\'t exist.');
+		}
 	}
 
 	/**
@@ -98,9 +97,9 @@ class ActivitiesController extends Controller
 	public function edit($lanId, $activityId){
 		if(Auth::check()){
 			$user=Auth::user();
-  			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){		  
+			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
 				return back()->with('error','You can\'t edit an activity if you are not an admin of its LAN.');
-	  		}else{
+			}else{
 				$lan = Lan::find($lanId);
 				if($lan!=null){
 					$activity = $lan->activities()->find($activityId);
@@ -112,10 +111,10 @@ class ActivitiesController extends Controller
 				}else{
 					return back()->with('error','This LAN doesn\'t exist.');
 				}
-	  		}
-	  	}else{
-	  		return redirect('/login')->with('error','You must be logged in to edit a LAN\'s activity.');
-	  	}
+			}
+		}else{
+			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s activity.');
+		}
 	}
 
 	/**
@@ -128,9 +127,9 @@ class ActivitiesController extends Controller
 	public function update(Request $request, $lanId, $activityId){
 		if(Auth::check()){
 			$user=Auth::user();
-	  		if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
-	  			return response()->json(['error'=>'You can\'t edit an activity if you are not an admin of its LAN.']);
-	  		}else{
+			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
+				return response()->json(['error'=>'You can\'t edit an activity if you are not an admin of its LAN.']);
+			}else{
 				$lan = Lan::find($lanId);
 				if($lan!=null){
 					$activity = $lan->activities()->find($activityId);
@@ -145,10 +144,10 @@ class ActivitiesController extends Controller
 				}else{
 					return back()->with('error','This LAN doesn\'t exist.');
 				}
-	  		}
-	  	}else{
-	  		return redirect('/login')->with('error','You must be logged in to edit a LAN\'s activity.');
-	  	}
+			}
+		}else{
+			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s activity.');
+		}
 	}
 
 	/**
@@ -161,8 +160,8 @@ class ActivitiesController extends Controller
 		if(Auth::check()){
 			$user=Auth::user();
 			if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->select('lans.id')->find($lanId)==null && !$user->isSiteAdmin()){
-	  			return response()->json(['error'=>'You can\'t delete an activity if you are not an admin of its LAN.']);
-  			}else{
+				return response()->json(['error'=>'You can\'t delete an activity if you are not an admin of its LAN.']);
+			}else{
 				$lan = Lan::find($lanId);
 				if($lan!=null){
 					$activity = $lan->activities()->find($activityId);
@@ -175,9 +174,9 @@ class ActivitiesController extends Controller
 				}else{
 					return response()->json(['error'=>'This LAN doesn\'t exist.']);
 				}
-	  		}
-  		}else{
-  			return redirect('/login')->with('error','You must be logged in to delete a LAN\'s activity.');
-  		}
-    }
+			}
+		}else{
+			return redirect('/login')->with('error','You must be logged in to delete a LAN\'s activity.');
+		}
+	}
 }

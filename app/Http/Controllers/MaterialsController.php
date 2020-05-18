@@ -11,38 +11,29 @@ use Illuminate\Http\Request;
 class MaterialsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-public function index()
-	{
-		if(Auth::check()){
-			$user=Auth::user();
-			return view('material.index',compact('user'));
-		}else{
-			return redirect('/login')->with('error','Please log in to have access to this page.');
-		}
-	}
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('material.create');
+    public function create(){
+			if(Auth::check()){
+				if(Auth::user()->isSiteAdmin()){
+					return view('material.create');
+				}else{
+					return back()->with('error','You do not have enough rights.');
+				}
+			}else{
+				return redirect('/login')->with('error','Please log in to perform this action.');
+			}
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  /**
+  	* Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+  */
 	public function store(Request $request){
-
 		if(Auth::check()){
 			$user=Auth::user();
 			if($user->isSiteAdmin()){
@@ -64,19 +55,17 @@ public function index()
 	}
 
 
-      /**
-       * Display the specified resource.
-       *
-       * @param  int  $id
-       * @return \Illuminate\Http\Response
-       */
-	public function show($id)
-		{
+  /**
+    * Display the specified resource.
+  	*
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+  */
+	public function show($id){
 		if(Auth::check()){
 			$material=Material::find($id);
 			if($material!=null){
-				$user=Auth::user();
-				return view('material.show',compact('material','user'));
+				return view('material.show',compact('material'));
 			}else{
 				return redirect('/login')->with('error','Please log in to have access to this page.');
 			}
@@ -86,14 +75,13 @@ public function index()
 	}
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-	public function edit($id)
-	{
+  /**
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+  */
+	public function edit($id){
 		if(Auth::check()){
 			$user=Auth::user();
 			if($user->isSiteAdmin()){
@@ -112,15 +100,14 @@ public function index()
 	}
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-	public function update(Request $request, $id)
-	{
+  /**
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+  */
+	public function update(Request $request, $id){
 		if(Auth::check()){
 			$user=Auth::user();
 			if($user->isSiteAdmin()){
@@ -144,7 +131,12 @@ public function index()
 		}
 	}
 
-
+	/**
+    * Searches materials in the database whose name/category contains a string, and returns a view to list the materials
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+  */
 	public function search(Request $request){
 		if(Auth::check()){
 			$user=Auth::user();
@@ -152,7 +144,7 @@ public function index()
 			if(isset($request->lan_id)){
 				$lan=Lan::find($request->lan_id);
 				if($lan!=null){
-					return view($request->view_path,compact('materials','user','lan'));
+					return view($request->view_path,compact('materials','lan'));
 				}else{
 					return back()->with('error','This LAN does not exist.');
 				}
@@ -165,12 +157,12 @@ public function index()
 	}
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+  */
 	public function destroy($id){
 		if(Auth::check()){
 			if(Auth::user()->isSiteAdmin()){

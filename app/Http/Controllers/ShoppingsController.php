@@ -9,68 +9,60 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
-class ShoppingsController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-public function index()
-	{
+class ShoppingsController extends Controller{
+
+	/**
+	* Show the form for creating a new resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
+	public function create($lanId){
 		if(Auth::check()){
 			$user=Auth::user();
-			return view('shopping.index',compact('user'));
-		}else{
-			return redirect('/login')->with('error','Please log in to have access to this page.');
-		}
-	}
+			$lan=$user->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+				->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($lanId);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($lanId)
-    {
-			if(Auth::check()){
-  			$user=Auth::user();
-				$lan=$user->lans()->where(function($query){
-					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
-								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-				})->find($lanId);
-
-  			if($lan==null && !$user->isSiteAdmin()){
-					return back()->with('error','You can\'t add an shopping to a LAN if you are not an admin or helper of this LAN.');
-  			}else{
+			if($lan==null && !$user->isSiteAdmin()){
+				return back()->with('error','You can\'t add an shopping to a LAN if you are not an admin or helper of this LAN.');
+			}else{
+				$lan=Lan::find($lanId);
+				if($lan!=null){
 					$materials = $lan->materials;
 					$materials_array = array();
 					foreach($materials as $material){
 						$materials_array[$material->id]= ''.$material->name_material.'';
 					}
-  				return view('shopping.create', compact('lan','materials_array'));
-  			}
-  		}else{
-  			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
-  		}
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-		 public function store(Request $request, $lanId){
-			if(Auth::check()){
-				$user=Auth::user();
-				$lan = $user->lans()->where(function($query){
-					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
-								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-				})->find($lanId);
-				if($lan==null && !$user->isSiteAdmin()){
-					return back()->with('error','You can\'t add a shopping to a LAN you are not an admin or helper of.');
+					return view('shopping.create', compact('lan','materials_array'));
 				}else{
+					return back()->with('error','This LAN does not exist.');
+				}
+			}
+		}else{
+			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+		}
+	}
+
+	/**
+	* Store a newly created resource in storage.
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function store(Request $request, $lanId){
+		if(Auth::check()){
+			$user=Auth::user();
+			$lan = $user->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+				->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($lanId);
+
+			if($lan==null && !$user->isSiteAdmin()){
+				return back()->with('error','You can\'t add a shopping to a LAN you are not an admin or helper of.');
+			}else{
+				$lan=Lan::find($lanId);
+				if($lan!=null){
 					if(isset($request->material_id)){
 						$material = Material::find($request->material_id);
 						if($material!=null){
@@ -106,13 +98,14 @@ public function index()
 					}else{
 						return response()->json(['error'=>'Please provide a correct material.']);
 					}
-
-
+				}else{
+					return response()->json(['error'=>'This LAN does not exist.']);
 				}
-			}else{
-				return redirect('/login')->with('error','You must be logged in to edit a LAN.');
 			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
 		}
+	}
 
 
 	/**
@@ -121,51 +114,62 @@ public function index()
 	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function show($lanId, $shoppingId)
-	{
+	public function show($lanId, $shoppingId){
 		if(Auth::check()){
-			$lan=Lan::find($lanId);
-			if($lan!=null){
-				$shopping=$lan->shoppings()->find($shoppingId);
-				if($shopping!=null){
-					$material = $shopping->material;
-					if(Auth::check()){
-						$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-						return view('shopping.show', compact('lan', 'shopping', 'material', 'userIsLanAdmin'));
+			$user=Auth::user();
+
+			$lan = $user->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+				->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($lanId);
+
+			if($lan!=null || $user->isSiteAdmin()){
+				if($lan==null) $lan=Lan::find($lanId);
+
+				if($lan!=null){
+					$shopping=$lan->shoppings()->find($shoppingId);
+					if($shopping!=null){
+						$material = $shopping->material;
+						if(Auth::check()){
+							$userIsLanAdmin=Auth::user()->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+							return view('shopping.show', compact('lan', 'shopping', 'material', 'userIsLanAdmin'));
+						}else{
+							return view('shopping.show', compact('lan', 'shopping', 'material'));
+						}
 					}else{
-						return view('shopping.show', compact('lan', 'shopping', 'material'));
+						return back()->with('error','This shopping doesn\'t exist.');
 					}
 				}else{
-					return back()->with('error','This shopping doesn\'t exist.');
+					return back()->with('error','This LAN doesn\'t exist.');
 				}
 			}else{
-				return back()->with('error','This LAN doesn\'t exist.');
+				return back()->with('error','You must be an admin or helper of this LAN to view its shopping list.');
 			}
 		}else{
 			return redirect('/login')->with('error','Please log in to have access to this page.');
 		}
-
 	}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-	public function edit($lanId, $shoppingId)
-    {
+	/**
+	* Show the form for editing the specified resource.
+	*
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function edit($lanId, $shoppingId){
 		if(Auth::check()){
-  			$user=Auth::user();
+			$user=Auth::user();
 
-				$lan = $user->lans()->where(function($query){
-					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
-								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-				})->find($lanId);
+			$lan = $user->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+				->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($lanId);
 
-  			if($lan==null && !$user->isSiteAdmin()){
-  				return back()->with('error','You can\'t edit an Shopping if you are not an admin or helper of its LAN.');
-  			}else{
+			if($lan==null && !$user->isSiteAdmin()){
+				return back()->with('error','You can\'t edit a shopping list if you are not an admin or helper of its LAN.');
+			}else{
+				$lan=Lan::find($lanId);
+				if($lan!=null){
 					$shopping = $lan->shoppings()->find($shoppingId);
 					if($shopping == null){
 						return back()->with('error','This shopping list doesn\'t exist.');
@@ -173,32 +177,36 @@ public function index()
 						$material = $shopping->material;
 						return view('shopping.edit', compact('lan', 'shopping', 'material'));
 					}
-  			}
-  		}else{
-  			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping list.');
-  		}
-    }
+				}else{
+					return back()->with('error','This LAN doesn\'t exist.');
+				}
+			}
+		}else{
+			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping list.');
+		}
+	}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-	public function update(Request $request, $lanId, $shoppingId)
-    {
-			if(Auth::check()){
+	/**
+	* Update the specified resource in storage.
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function update(Request $request, $lanId, $shoppingId){
+		if(Auth::check()){
 
-	  		$user=Auth::user();
-				$lan = $user->lans()->where(function($query){
-					$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
-								->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
-				})->find($lanId);
+			$user=Auth::user();
+			$lan = $user->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+				->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($lanId);
 
-	  		if($lan==null && !$user->isSiteAdmin()){
-	  			return response()->json(['error'=>'You can\'t edit an shopping if you are not an admin or helper of its LAN.']);
-	  		}else{
+			if($lan==null && !$user->isSiteAdmin()){
+				return response()->json(['error'=>'You can\'t edit an shopping if you are not an admin or helper of its LAN.']);
+			}else{
+				$lan=Lan::find($lanId);
+				if($lan!=null){
 					$shopping = $lan->shoppings()->find($shoppingId);
 					if($shopping == null){
 						return response()->json(['error'=>'This shopping doesn\'t exist.']);
@@ -207,60 +215,47 @@ public function index()
 						$shopping->save();
 						return response()->json(['success'=>'This shopping has been successfully edited.']);
 					}
-	  		}
-	  	}else{
-	  		return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping.');
-	  	}
-    }
-
-
-	public function search(Request $request){
-		if(Auth::check()){
-			$user=Auth::user();
-			$shoppings=Shopping::where('name_material','LIKE','%'.$request->name_material.'%')->get();
-			if(isset($request->lan_id)){
-				$lan=Lan::find($request->lan_id);
-				if($lan!=null){
-					return view($request->view_path,compact('materials','user','lan'));
 				}else{
-					return "<p>This LAN doesn\'t exist</p>";
+					return back()->with('error','This LAN doesn\'t exist.');
 				}
 			}
 		}else{
-			return redirect('/login')->with('error','Please log in to have access to this page.');
+			return response()->json(['error'=>'You must be logged in to edit a LAN\'s shopping list.']);
 		}
 	}
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-	public function destroy($lanId, $shoppingId)
-    {
-      if(Auth::check()){
-  			$user=Auth::user();
-				if($user->lans()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->find($lanId)==null && !$user->isSiteAdmin()){
-	  			return response()->json(['error'=>'You can\'t delete an shopping if you are not an admin of its LAN.']);
-  			}else{
-					$lan = Lan::find($lanId);
-					if($lan!=null){
-						$shopping = $lan->shoppings()->find($shoppingId);
-						if($shopping == null){
-							return response()->json(['error'=>'This shopping doesn\'t exist.']);
-						}else{
-							$shopping->delete();
-							return response()->json(['success'=>'This shopping has been successfully deleted.']);
-						}
+	/**
+	* Remove the specified resource from storage.
+	*
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function destroy($lanId, $shoppingId){
+		if(Auth::check()){
+			$user=Auth::user();
+			$lan=$user->lans()->where(function($query){
+				$query->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+							->orWhere('lan_user.rank_lan','=',config('ranks.HELPER'));
+			})->find($lanId);
+			
+			if($lan==null && !$user->isSiteAdmin()){
+				return response()->json(['error'=>'You can\'t edit a shopping list if you are not an admin or helper of its LAN.']);
+			}else{
+				$lan = Lan::find($lanId);
+				if($lan!=null){
+					$shopping = $lan->shoppings()->find($shoppingId);
+					if($shopping == null){
+						return response()->json(['error'=>'This shopping doesn\'t exist.']);
 					}else{
-						return response()->json(['error'=>'This LAN doesn\'t exist.']);
+						$shopping->delete();
+						return response()->json(['success'=>'This shopping has been successfully deleted.']);
 					}
-	  		}
-  		}else{
-  			return redirect('/login')->with('error','You must be logged in to delete a LAN\'s shopping.');
-  		}
-    }
-
+				}else{
+					return response()->json(['error'=>'This LAN doesn\'t exist.']);
+				}
+			}
+		}else{
+			return redirect('/login')->with('error','You must be logged in to edit a LAN\'s shopping list.');
+		}
+	}
 }

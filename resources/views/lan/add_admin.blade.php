@@ -15,7 +15,7 @@ Adding admin to Lan
 
 {!! Form::open(['method' => 'post','onsubmit'=>'searchAdmin(event,'.$lan->id.')']) !!}
 	<div>
-		<h4>Admin's name :</h4>
+		<h4>{{ __('messages.admin_name') }}</h4>
 		<div class="form-group">
 			{!! Form::hidden('view_path', 'user.admin.show_add') !!}
 			{!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}
@@ -23,14 +23,14 @@ Adding admin to Lan
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i> Search</button>
+			<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i>{{ __('messages.search') }}</button>
 		</div>
 	</div>
 {!! Form::close() !!}
 <div id="requestResult"></div>
 
 <div class="col text-right">
-	<a class="btn btn-outline-info shadow-sm" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go back to Lan</a>
+	<a class="btn btn-outline-info shadow-sm" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i>{{ __('messages.back_lan') }}</a>
 </div>
 @endsection
 

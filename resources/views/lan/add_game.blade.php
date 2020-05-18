@@ -23,7 +23,7 @@ Adding games to LAN
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i> Search</button>
+			<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i>{{ __('messages.search') }}</button>
 		</div>
 	</div>
 {!! Form::close() !!}

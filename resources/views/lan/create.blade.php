@@ -65,30 +65,30 @@ Create a LAN
 	<hr/>
 	{!! Form::label('room_plan', 'Room plan :', ['class' => 'display-6']) !!}
 
-	<p class="lead-text">Legend :</p>
+	<p class="lead-text">{{ __('messages.legend') }}</p>
 	<table>
 		<tbody>
 			<tr>
-				<table style="display: inline-table;" class="border border-dark field">Wall : <td class="cell wall"></td></table>
+				<table style="display: inline-table;" class="border border-dark field">{{ __('messages.wall') }}<td class="cell wall"></td></table>
 			</tr>
 			<tr>
-				<td scope="col">Table :</td>
+				<td scope="col">{{ __('messages.table') }}</td>
 				<table style="display: inline-table;" class="border border-dark field"><td class="mr-2 cell table"></td></table>
 			</tr>
 			<tr>
-				<td scope="col">Computer :</td>
+				<td scope="col">{{ __('messages.computer') }}</td>
 				<table style="display: inline-table;" class="border border-dark field"><td class="cell computer"></td></table>
 			</tr>
 			<tr>
-				<td scope="col">Console :</td>
+				<td scope="col">{{ __('messages.console') }}</td>
 				<table style="display: inline-table;" class="border border-dark field"><td class="cell console"></td></table>
 			</tr>
 			<tr>
-				<td scope="col">Empty chair :</td>
+				<td scope="col">{{ __('messages.empty_chair') }}</td>
 				<table style="display: inline-table;" class="border border-dark field"><td class="cell chairNull"></td></table>
 			</tr>
 			<tr>
-				<td scope="col">Empty space :</td>
+				<td scope="col">{{ __('messages.empty_space') }}</td>
 				<table style="display: inline-table;" class="border border-dark field"><td class="mr-2 cell null"></td></table>
 			</tr>
 		</tbody>
@@ -101,10 +101,10 @@ Create a LAN
 
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn  btn-outline-success shadow-sm"><i class='fa fa-plus-square'></i> Add</button>
+			<button type="submit" class="btn  btn-outline-success shadow-sm"><i class='fa fa-plus-square'></i>{{ __('messages.add') }}</button>
 		</div>
 		<div class="col">
-			<a class="btn  btn-outline-info shadow-sm" href="{{ route('dashboard') }}"><i class='fa fa-arrow-left'></i> Go back to dashboard</a>
+			<a class="btn  btn-outline-info shadow-sm" href="{{ route('dashboard') }}"><i class='fa fa-arrow-left'></i>{{ __('messages.back_dashboard') }}</a>
 		</div>
 	</div>
 {!! Form::close() !!}

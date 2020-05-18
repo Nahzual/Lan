@@ -31,7 +31,7 @@ Dashboard
 							</form>
 						</div>
 						<div class="col mt-1">
-							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#my_lans" aria-expanded="false" aria-controls="my_lans">Show/hide</button>
+							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#my_lans" aria-expanded="false" aria-controls="my_lans">{{ __('messages.show_hide') }}</button>
 						</div>
 					</div>
 				</div>
@@ -40,12 +40,12 @@ Dashboard
 				<table class="table card-table table-bordered">
 					<thead class="card-table text-center">
 						<th scope="col" >#</th>
-						<th scope="col" >Name</th>
-						<th scope="col" >Participants</th>
-						<th scope="col" >State</th>
-						<th scope="col" >View</th>
-						<th scope="col">Edit</th>
-						<th scope="col">Delete</th>
+						<th scope="col">{{ __('messages.name') }}</th>
+						<th scope="col">{{ __('messages.participants') }}</th>
+						<th scope="col">{{ __('messages.state') }}</th>
+						<th scope="col">{{ __('messages.view') }}</th>
+						<th scope="col">{{ __('messages.edit') }}</th>
+						<th scope="col">{{ __('messages.delete') }}</th>
 					</thead>
 
 					<tbody>
@@ -72,7 +72,7 @@ Dashboard
 							<h3>LANs on which I am helper</h3>
 						</div>
 						<div class="col mt-1">
-							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#helper_lans" aria-expanded="false" aria-controls="helper_lans">Show/hide</button>
+							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#helper_lans" aria-expanded="false" aria-controls="helper_lans">{{ __('messages.show_hide') }}</button>
 						</div>
 					</div>
 				</div>
@@ -81,11 +81,11 @@ Dashboard
 			<div class="table-responsive collapse" id="helper_lans">
 				<table class="table card-table table-bordered">
 					<thead class="card-table text-center">
-						<th scope="col" >#</th>
-						<th scope="col" >Name</th>
-						<th scope="col" >Participants</th>
-						<th scope="col">State</th>
-						<th scope="col">View</th>
+						<th scope="col">#</th>
+						<th scope="col">{{ __('messages.name') }}</th>
+						<th scope="col">{{ __('messages.participants') }}</th>
+						<th scope="col">{{ __('messages.state') }}</th>
+						<th scope="col">{{ __('messages.view') }}</th>
 					</thead>
 
 					<tbody>
@@ -112,7 +112,7 @@ Dashboard
 							<h3>LANs on which I am player</h3>
 						</div>
 						<div class="col mt-1">
-							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#player_lans" aria-expanded="false" aria-controls="player_lans">Show/hide</button>
+							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#player_lans" aria-expanded="false" aria-controls="player_lans">{{ __('messages.show_hide') }}</button>
 						</div>
 					</div>
 				</div>
@@ -122,10 +122,10 @@ Dashboard
 				<table class="text-center table card-table table-bordered">
 					<thead class="card-table text-center">
 						<th scope="col" >#</th>
-						<th scope="col" >Name</th>
-						<th scope="col" >Participants</th>
-						<th scope="col" >View</th>
-						<th scope="col">Quit</th>
+						<th scope="col">{{ __('messages.name') }}</th>
+						<th scope="col">{{ __('messages.participants') }}</th>
+						<th scope="col">{{ __('messages.view') }}</th>
+						<th scope="col">{{ __('messages.quit') }}</th>
 					</thead>
 
 					<tbody>

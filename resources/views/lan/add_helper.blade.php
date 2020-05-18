@@ -15,7 +15,7 @@ Adding helper to LAN
 
 {!! Form::open(['method' => 'post','onsubmit'=>'searchHelper(event,'.$lan->id.')']) !!}
 	<div>
-		<h4>Helper's name :</h4>
+		<h4>{{ __('messages.helper_name') }}</h4>
 		<div class="form-group">
 			{!! Form::hidden('view_path', 'user.helper.show_add') !!}
 			{!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}
@@ -23,7 +23,7 @@ Adding helper to LAN
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i> Search</button>
+			<button type="submit" class="btn btn-outline-info shadow-sm"><i class='fa fa-search'></i>{{ __('messages.search') }}</button>
 		</div>
 	</div>
 {!! Form::close() !!}

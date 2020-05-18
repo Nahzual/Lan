@@ -90,27 +90,45 @@ return [
 	'search' => 'Search',
 	'back_admin_dash' => 'Return to the admin Dashboard',
 	
-	/**
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => 'All the admins for the LAN '
-	'' => 'Add a new Admin'
-	'' => 'Adding admin to Lan :'
-	'' => 'Admin\'s name :'
 	
-	'' => 'All the helpers for the LAN '
-	'' => 'Add a new Helper'
-	'' => 'Adding helper to LAN :'
-	'' => 'Helper\'s name :'
+	'admin_lan' => 'All the admins for the LAN ',
+	'add_new_admin' => 'Add a new Admin',
+	'adding_admin_lan' => 'Adding admin to Lan :',
+	'admin_name' => 'Admin\'s name :',
 	
-	'' => 'Return to the LAN'
-	'' => 'Go back to the LAN'
-	**/
+	'helper_lan' => 'All the helpers for the LAN ',
+	'add_new_helper' => 'Add a new Helper',
+	'adding_helper_lan' => 'Adding helper to LAN :',
+	'helper_name' => 'Helper\'s name :',
+	
+	'back_lan' => 'Go back to the LAN',
+	'back_dashboard' => 'Go back to the dashboard',
+	
+	'participants' => 'Participants',
+	'state' => 'State',
+	'quit' => 'Quit',
+	
+	
+	// LAN
+	
+	'' => '',
+	'' => '',
+	'' => '',
+	'legend' => 'Legend :',
+	'wall' => 'Wall :',
+	'table' => 'Table :',
+	'computer' => 'Computer :',
+	'console' => 'Console :',
+	'empty_chair' => 'Empty chair :',
+	'empty_space' => 'Empty space :',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	
+	// {{ __('messages.chln') }}
+	
 	/**'Navigation'
 	'Dashboard'
 	'Home'
@@ -128,9 +146,7 @@ return [
 	
 	'Create New Lan'
 	
-	'Participants'
-	'State'
-	'Quit'
+	
 	
 	// LAN
 	

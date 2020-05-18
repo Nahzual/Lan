@@ -8,14 +8,14 @@
 					</div>
 				</div>
 
-        <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
-        <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
+        <div id="response-success-{{$game->id}}" class="alert alert-success mt-2" style="display:none"></div>
+        <div id="response-error-{{$game->id}}" class="alert alert-danger mt-2" style="display:none"></div>
 
 				<div class="card-body">
 					<div>
 		        <h4>Port :</h4>
             <div class="form-group">
-              {!! Form::number('port', null, ['required'=>'', 'min'=>'1','class' => 'form-control']) !!}
+              {!! Form::number('port', null, ['id'=>'port-number-'.$game->id,'required'=>'', 'min'=>'1','class' => 'form-control']) !!}
 						</div>
           </div>
           <div class="form-group row text-center">

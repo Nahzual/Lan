@@ -13,6 +13,27 @@ Route::get('/contact','ContactsController@index')->name('contact.index');
 Route::post('/contact','ContactsController@store')->name('contact.store');
 Route::post('/contact/{user}','UsersController@contact');
 
+/* ----------------- Tasks routes ----------------- */
+
+//Show and list
+Route::get('/lan/tasks/', 'TasksController@all')->name('task.all');
+Route::get('/lan/{lan}/tasks/','LansController@list_tasks')->name('lan.task_list');
+Route::get('/lan/{lan}/tasks/{page}','LansController@list_tasks')->name('lan.task_list.page');
+Route::get('/lan/{lan}/task/{task}/show', 'TasksController@show')->name('task.show');
+
+//Resource managment and related
+Route::get('lan/{lan}/task/create', 'TasksController@create')->name('task.create');
+Route::post('lan/{lan}/task/store', 'TasksController@store')->name('task.store');
+Route::get('lan/{lan}/task/{task}/edit', 'TasksController@edit')->name('task.edit');
+Route::delete('lan/{lan}/task/{task}/destroy', 'TasksController@destroy')->name('task.destroy');
+Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.update');
+
+//Assign
+Route::get('lan/{lan}/task/{task}/assign', 'TasksController@addHelper')->name('task.add_helper');
+Route::post('lan/{lan}/task/{task}/assign', 'TasksController@assign')->name('task.assign');
+Route::delete('lan/{lan}/task/{task}/unassign', 'TasksController@unassign')->name('task.unassign');
+
+
 /* ----------------- Lan routes ----------------- */
 
 //Resource managment and related
@@ -64,26 +85,6 @@ Route::get('lan/admin/{id}', 'LansController@addAdmin')->name('lan.add_admin');
 Route::post('lan/admin/{id}', 'LansController@postAddAdmin');
 Route::delete('lan/admin/{id}', 'LansController@removeAdmin');
 
-/* ----------------- Task routes ----------------- */
-
-//Resource managment and related
-Route::get('lan/{lan}/task/create', 'TasksController@create')->name('task.create');
-Route::post('lan/{lan}/task/store', 'TasksController@store')->name('task.store');
-Route::get('lan/{lan}/task/{task}/edit', 'TasksController@edit')->name('task.edit');
-Route::delete('lan/{lan}/task/{task}/destroy', 'TasksController@destroy')->name('task.destroy');
-Route::put('lan/{lan}/task/{task}/edit', 'TasksController@update')->name('task.update');
-
-//Show and list
-Route::get('/lan/{lan}/tasks/','LansController@list_tasks')->name('lan.task_list');
-Route::get('/lan/{lan}/tasks/{page}','LansController@list_tasks')->name('lan.task_list.page');
-Route::get('lan/tasks', 'TasksController@all')->name('task.all');
-Route::get('lan/{lan}/task/{task}/show', 'TasksController@show')->name('task.show');
-
-//Assign
-Route::get('lan/{lan}/task/{task}/assign', 'TasksController@addHelper')->name('task.add_helper');
-Route::post('lan/{lan}/task/{task}/assign', 'TasksController@assign')->name('task.assign');
-Route::delete('lan/{lan}/task/{task}/unassign', 'TasksController@unassign')->name('task.unassign');
-
 /* ----------------- Material routes ----------------- */
 
 //Resource managment and related
@@ -111,9 +112,6 @@ Route::get('/dashboard/admin', 'PageController@adminDashboard')->name('dashboard
 
 /* ----------------- Game routes ----------------- */
 
-//Resource managment and related
-Route::resource('game', 'GamesController');
-
 //Fav
 Route::post('/game/favourite/{id}','GamesController@addToFavourite')->name('game.add_favourite');
 Route::delete('/game/favourite/{id}','GamesController@removeFromFavourite')->name('game.remove_favourite');
@@ -121,6 +119,10 @@ Route::delete('/game/favourite/{id}','GamesController@removeFromFavourite')->nam
 //Show and list
 Route::get('/search/game','GamesController@search')->name('game.search');
 Route::get('/game/favourite/','GamesController@showFavouriteGames')->name('game.favourite');
+
+//Resource managment and related
+Route::resource('game', 'GamesController');
+
 
 /* ----------------- Tournament routes ----------------- */
 
@@ -176,10 +178,11 @@ Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->nam
 /* ----------------- ADMIN ROUTES ----------------- */
 
 //User
+Route::get('/user/{user}/delete','UsersController@confirmDestroy')->name('user.confirmDestroy');
 Route::post('/user','UsersController@store')->name('user.store');
 Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
 Route::get('/user/{user}','UsersController@show')->name('user.show');
-Route::post('/user/{user}','UsersController@update')->name('user.update');
+Route::put('/user/{user}','UsersController@update')->name('user.update');
 Route::get('/user/{user}/edit','UsersController@edit')->name('user.edit');
 Route::post('/user/{user}/restore','UsersController@restore');
 Route::get('search/user/', 'UsersController@search');

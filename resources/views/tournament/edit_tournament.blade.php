@@ -17,7 +17,7 @@ Editing Tournament
 	<div>
     <div class="form-group">
       {!! Form::label('is_finished_tournament', 'State of tournament :', ['class' => 'display-6']) !!}
-      {!! Form::select('is_finished_tournament', array('0'=>'Not finished', '1'=>'finished'), ['id'=>'is_finished_tournament', 'class'=>'form-control']) !!}
+      {!! Form::select('is_finished_tournament', array('0'=>'Not finished', '1'=>'Finished'), ['id'=>'is_finished_tournament', 'class'=>'form-control']) !!}
 
 		</div>
     <div class="form-group">

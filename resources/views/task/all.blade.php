@@ -9,6 +9,7 @@ Your tasks
 @endsection
 
 @section('content')
+@if(empty($tasks))
 <div id="accordion">
 	<?php $end=$tasks->keys()->last(); ?>
 	@foreach($tasks as $index=>$lan_tasks)
@@ -54,6 +55,17 @@ Your tasks
 	</div>
 	@endforeach
 </div>
+@else
+<div class="card">
+		<div class="card-header">
+				<div class="row">
+					<div class="col mt-2">
+						<h3>Nothing to do, nothing to show</h3>
+					</div>
+				</div>
+		</div>
+</div>
+@endif
 @endsection
 
 @section('js_includes')

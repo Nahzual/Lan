@@ -17,10 +17,19 @@ return [
 	
 	// Menu
 	
-	'menu_1' => 'Trouver une LAN',
-	'menu_2' => 'Contact',
-	'menu_2' => 'Connexion',
-	'menu_2' => 'Inscription',
+	//'menu_1' => 'Trouver une LAN',
+	//'menu_2' => 'Contact',
+	//'menu_2' => 'Connexion',
+	//'menu_2' => 'Inscription',
+	
+	'find_lan' => 'Trouver une LAN',
+	'contact' => 'Contact',
+	'login' => 'Connexion',
+	'register' => 'Inscription',
+	'logout' => 'Deconnexion',
+	'remember_me' => 'Se souvenir de moi',
+	'forgot_password' => 'Mot de passe oublié ?',
+
 
 	// Home
 	'home' => 'Accueil',
@@ -36,38 +45,34 @@ return [
 	'homejoin' => 'Sign-in now to create your first LAN !',
 	
 
-	'name' => 'Name',
+	'name' => 'Nom',
 	'lname' => 'Last Name',
 	'pseudo' => 'Pseudo',
-	'email' => 'E-Mail Address',
-	'tel' => 'Phone number ',
-	'password' => 'Password',
-	'confirmpassword' => 'Confirm Password',
-	'streetnbr' => 'Street number',
-	'streetname' => 'Street name',
-	'city' => 'City',
+	'email' => 'Adresse e-Mail',
+	'tel' => 'Numero de téléphone ',
+	'password' => 'Mot de passe',
+	'confirmpassword' => 'Confirmer le mot de passe',
+	'streetnbr' => 'Numero de rue',
+	'streetname' => 'Rue',
+	'city' => 'Ville',
 	'zip' => 'Zip',
 	'depname' => 'Department name',
-	'country' => 'Country',
-	'address' => 'Address',
+	'country' => 'Pays',
+	'address' => 'Adresse',
 	
 	'want_contact' => 'If you want to contact this user, please use the "Contact" button and wait for his reply on your mailbox.',
 	
 	// Stats
 	'statistics' => 'Statistics',
-	'user_admin_lan' => '{0} This user isn\'t an admin on any LAN currently |{1} This user is currently administrating :count lan|[2,*] This user is currently administrating :count lans',
+	'user_admin_lan' => '{0} Cet utilisateur n\'est un admin sur aucune LAN pour le moment |{1} This user is currently administrating :count lan|[2,*] This user is currently administrating :count lans',
 	
 
 	//echo trans_choice('time.minutes_ago', 5, ['value' => 5]);
-	
-	// Registration
-	'register' => 'Register ',
 	
 	
 	// Dashboard
 	'chtheme' => 'Changer le Theme',
 	'settings' => 'Parametres',
-	'logout' => 'Deconnexion',
 	'view' => 'Voir',
 	'edit' => 'Edit',
 	'delete' => 'Supprimer',
@@ -108,7 +113,22 @@ return [
 	'state' => 'State',
 	'quit' => 'Quit',
 	
+	'' =>'Navigation',
+	'' =>'Dashboard',
+	'' =>'Home',
+	'' =>'LAN',
+	'' =>'All LANs',
+	'' =>'My Tasks',
 	
+	'' =>'GAMES',
+	'' =>'All games',
+	'' =>'My games',
+	
+	'' =>'My LANs',
+	'' =>'LANs on which I am helper',
+	'' =>'LANs on which I am player',
+	
+	'create_new_lan' =>'Creer une nouvelle LAN',
 	
 	// LAN
 	
@@ -130,27 +150,8 @@ return [
 	
 	// {{ __('messages.chln') }}
 	
-	/**'Navigation'
-	'Dashboard'
-	'Home'
-	'LAN'
-	'All LANs'
-	'My Tasks'
 	
-	'GAMES'
-	'All games'
-	'My games'
-	
-	'My LANs'
-	'LANs on which I am helper'
-	'LANs on which I am player'
-	
-	'Create New Lan'
-	
-	'Participants'
-	'State'
-	'Quit'
-	
+	/**
 	// LAN
 	
 	'Viewing :'

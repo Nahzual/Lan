@@ -27,7 +27,7 @@ Dashboard
 							<form method="GET" action="{{ route('lan.create') }}">
 								@csrf
 								@method('GET')
-								<button type="submit" class="btn  btn-outline-dark shadow-sm float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
+								<button type="submit" class="btn  btn-outline-dark shadow-sm float-right"><i class='fa fa-plus-square'></i>{{ __('messages.create_new_lan') }}</button>
 							</form>
 						</div>
 						<div class="col mt-1">

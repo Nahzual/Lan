@@ -17,10 +17,19 @@ return [
 	
 	// Menu
 	
-	'menu_1' => 'Find a LAN',
-	'menu_2' => 'Contact',
-	'menu_2' => 'Login',
-	'menu_2' => 'Register',
+	//'menu_1' => 'Find a LAN',
+	//'menu_2' => 'Contact',
+	//'menu_2' => 'Login',
+	//'menu_2' => 'Register',
+	
+	'find_lan' => 'Find a LAN',
+	'contact' => 'Contact',
+	'login' => 'Login',
+	'register' => 'Register',
+	'logout' => 'Logout',
+	'remember_me' => 'Remember me',
+	'forgot_password' => 'Forgot Your Password?',
+
 
 	// Home
 	'home' => 'Home',
@@ -60,14 +69,10 @@ return [
 
 	//echo trans_choice('time.minutes_ago', 5, ['value' => 5]);
 	
-	// Registration
-	'register' => 'Register ',
-	
 	
 	// Dashboard
 	'chtheme' => 'Change Theme',
 	'settings' => 'Settings',
-	'logout' => 'Logout',
 	'view' => 'View',
 	'edit' => 'Edit',
 	'delete' => 'Delete',
@@ -108,6 +113,22 @@ return [
 	'state' => 'State',
 	'quit' => 'Quit',
 	
+	'' =>'Navigation',
+	'' =>'Dashboard',
+	'' =>'Home',
+	'' =>'LAN',
+	'' =>'All LANs',
+	'' =>'My Tasks',
+	
+	'' =>'GAMES',
+	'' =>'All games',
+	'' =>'My games',
+	
+	'' =>'My LANs',
+	'' =>'LANs on which I am helper',
+	'' =>'LANs on which I am player',
+	
+	'create_new_lan' =>'Create New LAN',
 	
 	// LAN
 	
@@ -129,25 +150,7 @@ return [
 	
 	// {{ __('messages.chln') }}
 	
-	/**'Navigation'
-	'Dashboard'
-	'Home'
-	'LAN'
-	'All LANs'
-	'My Tasks'
-	
-	'GAMES'
-	'All games'
-	'My games'
-	
-	'My LANs'
-	'LANs on which I am helper'
-	'LANs on which I am player'
-	
-	'Create New Lan'
-	
-	
-	
+	/**
 	// LAN
 	
 	'Viewing :'

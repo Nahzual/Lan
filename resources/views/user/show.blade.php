@@ -54,7 +54,7 @@ User page
 				<h4>{{ __('messages.statistics') }}</h4>
 			</div>
 			<div class="card-body">
-				<p>{{ trans_choice('messages.user_admin_lan', $lans_admin_count, ['count' => $lans_admin_count]); }}
+				<p>{{ trans_choice('messages.user_admin_lan', $lans_admin_count, ['count' => $lans_admin_count]) }}
 				
 				This user is currently administrating {{$lans_admin_count}} {{($lans_admin_count>1) ? 'lans' : 'lan'}}</p>
 				<p>This user is currently helping on {{$lans_helper_count}} {{($lans_helper_count>1) ? 'lans' : 'lan'}}</p>

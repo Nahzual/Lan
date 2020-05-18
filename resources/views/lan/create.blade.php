@@ -47,7 +47,7 @@ Create a LAN
 	<div>
 		{!! Form::label('location', __('messages.location'), ['class' => 'display-6']) !!}
 		<div id="location" class="input-group mb-1">
-			{!! Form::number('num_location', null, ['id'=>'num_location','min'=>'0', 'placeholder'=>__('messages.streetnbr'),'class' => 'form-control']) !!}
+			{!! Form::number('num_street', null, ['id'=>'num_street','min'=>'0', 'placeholder'=>__('messages.streetnbr'),'class' => 'form-control']) !!}
 			<span class="input-group-addon mr-2"></span>
 			{!! Form::text('name_street', null, ['id'=>'name_street','placeholder'=> __('messages.streetname'), 'class' => 'form-control']) !!}
 			<span class="input-group-addon mr-2"></span>

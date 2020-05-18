@@ -110,42 +110,29 @@
 						</div>
 
 
-						<div class="form-group row">
-							{!! Form::label('num_street', 'Street number', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-							<div class="col-md-6">
-								{!! Form::number('num_street', null, ['min'=>'1', 'class' => 'form-control']) !!}
-							</div>
-						</div>
-						<div class="form-group row">
-							{!! Form::label('name_street', 'Street name', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-							<div class="col-md-6">
-								{!! Form::text('name_street', null, ['class' => 'form-control']) !!}
-							</div>
-						</div>
-						<div class="form-group row">
-							{!! Form::label('name_city', 'City', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-							<div class="col-md-6">
-								{!! Form::text('name_city', null, ['class' => 'form-control']) !!}
-							</div>
-						</div>
-						<div class="form-group row">
-							{!! Form::label('zip_city', 'Zip', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-							<div class="col-md-6">
-								{!! Form::number('zip_city', null, ['class' => 'form-control']) !!}
-							</div>
-						</div>
-						<div class="form-group row">
-							{!! Form::label('name_department', 'Department name', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-							<div class="col-md-6">
-								{!! Form::text('name_department', null, ['class' => 'form-control']) !!}
-							</div>
-						</div>
-						<div class="form-group row">
-							{!! Form::label('name_country', 'Country', ['class' => 'col-md-4 col-form-label text-md-right']) !!}
-							<div class="col-md-6">
-								{!! Form::text('name_country', null, ['class' => 'form-control']) !!}
-							</div>
-						</div>
+
+
+	<div>
+		{!! Form::label('location', __('messages.location'), ['class' => 'display-6']) !!}
+		<div id="location" class="input-group mb-1">
+			{!! Form::number('num_street', null, ['id'=>'num_street','min'=>'0', 'placeholder'=>__('messages.streetnbr'),'class' => 'form-control']) !!}
+			<span class="input-group-addon mr-2"></span>
+			{!! Form::text('name_street', null, ['id'=>'name_street','placeholder'=> __('messages.streetname'), 'class' => 'form-control']) !!}
+			<span class="input-group-addon mr-2"></span>
+			{!! Form::text('name_city', null, ['id'=>'name_city','placeholder'=>__('messages.city'),'class' => 'form-control']) !!}
+		</div>
+		<div class="input-group mb-5">
+			{!! Form::text('zip_city', null, ['id'=>'zip_city','placeholder'=>__('messages.zip'),'class' => 'form-control']) !!}
+			<span class="input-group-addon mr-2"></span>
+			{!! Form::text('name_department', null, ['id'=>'name_department','placeholder'=>__('messages.depname'),'class' => 'form-control']) !!}
+			<span class="input-group-addon mr-2"></span>
+			{!! Form::text('name_country', null, ['id'=>'name_country','placeholder'=> __('messages.country'), 'class' => 'form-control']) !!}
+		</div>
+	</div>
+
+
+
+
 
 						<div class="form-group row mb-0">
 							<div class="col-md-6 offset-md-4">

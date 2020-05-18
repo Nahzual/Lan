@@ -217,4 +217,39 @@ class TournamentsController extends Controller
       }
     }
 
+		/**
+		 * Tournament List
+		 *
+		 * @return \Illuminate\Contracts\Support\Renderable
+		 */
+		public function admList($page = 1){
+			if(Auth::check()){
+				$user=Auth::user();
+				if(!$user->isSiteAdmin()){
+					return back()->with('error','You are not an Admin');
+				}else{
+					$tu = Tournament::selectRaw('COUNT(*) AS count')->first()->count;
+					$tournaments= Tournament::skip(abs(($page - 1)*10))->take(10)->get();
+
+					$max = ceil($tu/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+					//reduce tournaments before compacting (limit the amount of information like emails)
+					return view('tournament.all', compact('tournaments', 'max', 'previous', 'next', 'page'));
+				}
+			}else{
+				return redirect('/login')->with('error','Please log in to perform this action.');
+			}
+		}
+
 }

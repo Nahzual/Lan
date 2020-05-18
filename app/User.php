@@ -9,61 +9,42 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-		use SoftDeletes;
+	use Notifiable;
+	use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'lastname', 'pseudo', 'email', 'tel_user', 'password', 'theme'];
+	protected $fillable = ['name', 'lastname', 'pseudo', 'email', 'tel_user', 'password', 'theme'];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+	protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+	protected $casts = ['email_verified_at' => 'datetime'];
 
-	public function lans()
-	{
+	/*Returns all the LANs with this user*/
+	public function lans(){
 		return $this->belongsToMany('App\Lan');
 	}
 
-	public function tasks()
-	{
+	/*Returns all the tasks assigned to this user*/
+	public function tasks(){
 		return $this->belongsToMany('App\Task','assigned_to');
 	}
 
-  public function games()
-  {
-    return $this->belongsToMany('App\Game','favorite_games');
-  }
+	/*Returns all the favorite games for this user*/
+	public function games(){
+		return $this->belongsToMany('App\Game','favorite_games');
+	}
 
-  public function teams()
-  {
-    return $this->belongsToMany('App\Team','part_of');
-  }
+	/*Returns all the teams with this user*/
+	public function teams(){
+		return $this->belongsToMany('App\Team','part_of');
+	}
 
-  public function location(){
-    return $this->belongsTo('App\Location');
-  }
+	/*Returns the location of this user*/
+	public function location(){
+		return $this->belongsTo('App\Location');
+	}
 
+	/*Returns a boolean to check if this user is a site admin or not*/
 	public function isSiteAdmin(){
 		return $this->rank_user==config('ranks.SITE_ADMIN');
 	}
-
-
 }

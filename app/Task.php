@@ -11,16 +11,17 @@ class Task extends Model
    *
    * @var array
    */
-  protected $fillable = ['name_task','desc_task','deadline_task','id_lan'];
+	protected $fillable = ['name_task','desc_task','deadline_task','id_lan'];
 
 	public $timestamps=false;
 
-  public function lan(){
-    return $this->belongsTo('App\Lan');
-  }
+	/*Returns the parent LAN of this task*/
+	public function lan(){
+		return $this->belongsTo('App\Lan');
+	}
 
-	public function users()
-	{
+	/*Returns the users assigned to this task*/
+	public function users(){
 		return $this->belongsToMany('App\User','assigned_to');
 	}
 }

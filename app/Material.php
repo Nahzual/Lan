@@ -11,13 +11,13 @@ class Material extends Model
 
 	public $timestamps=false;
 
-	public function lans()
-	{
-	return $this->belongsToMany('App\Lan','needs');
+	/*Returns the LANs using this material*/
+	public function lans(){
+		return $this->belongsToMany('App\Lan','needs');
 	}
 
-	public function shoppings()
-	{
-	return $this->hasMany('App\Shopping');
+	/*Returns the shopping list with this material in*/
+	public function shoppings(){
+		return $this->hasMany('App\Shopping');
 	}
 }

@@ -10,6 +10,7 @@ class Country extends Model
 	
 	protected $fillable = ['name_country'];
 	
+	/*Return all the cild departments*/
 	public function departments()
 	{
 		return $this->hasMany('App\Department');

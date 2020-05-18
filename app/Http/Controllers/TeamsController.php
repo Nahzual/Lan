@@ -51,10 +51,10 @@ class TeamsController extends Controller
           $userList = $lan->users()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->get();
           return view('team.create_team', compact('tournament', 'user', 'userList'));
         }else{
-          return redirect('/lan/{lan}/tournament/{tournament}/show')->with('error', 'You are already in team for this tournament');
+          return back()->with('error', 'You are already in a team for this tournament.');
         }
       }else{
-        return redirect('/lan/{lan}/tournament/{tournament}/show')->with('error', 'You must be registered with the LAN.');
+        return back()->with('error', 'You must be have joined the LAN.');
       }
     }else{
       return redirect('/login')->with('error','You must be logged in to edit a LAN.');
@@ -120,7 +120,7 @@ class TeamsController extends Controller
              }
            }
        }
-   
+
 
   /**
    * Show the form for editing the specified resource.

@@ -24,7 +24,7 @@ class UsersController extends Controller
 	public function __construct(){
 		$this->middleware('auth');
 	}
-	
+
 	/**
 	* Show the form for editing the logged-in user.
 	* @param  int  $id
@@ -78,6 +78,7 @@ class UsersController extends Controller
 
 		if(Auth::check()){
 			$user=Auth::user();
+			$logged_user=$user;
 			if($user->id==$id || $user->isSiteAdmin()){
 				if($user->id!=$id){
 					$user=User::find($id);
@@ -207,7 +208,8 @@ class UsersController extends Controller
 					$user->theme=0;
 					$user->save();
 
-					return redirect('/dashboard')->with('success','You successfully edited your profile.');
+					if($user->id==$logged_user->id) return back()->with('success','You successfully edited your profile.');
+					else return back()->with('success','This user\'s account has been successfully edited.');
 				}else{
 					return back()->with('error','This user does not exist.');
 				}

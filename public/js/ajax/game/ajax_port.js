@@ -1,6 +1,6 @@
 function addPort(e,lanID,gameID){
   if(e!=null) e.preventDefault();
-	var port=$("[name='port']").val();
+	var port=$("#port-number-"+gameID).val();
 	var ports_column=$("#game-ports-"+gameID);
 
   $.ajax({
@@ -17,19 +17,19 @@ function addPort(e,lanID,gameID){
 				}else{
 					ports_column.html(ports_column.html()+', '+port+' ');
 				}
-				$('#response-success').show();
-				$('#response-error').hide();
-				$('#response-success').html(data.success);
+				$('#response-success-'+gameID).show();
+				$('#response-error-'+gameID).hide();
+				$('#response-success-'+gameID).html(data.success);
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        $('#response-error-'+gameID).show();
+        $('#response-success-'+gameID).hide();
+        $('#response-error-'+gameID).html(data.error);
       }
     },
     error: function(data){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+      $('#response-error-'+gameID).show();
+      $('#response-success-'+gameID).hide();
+      $('#response-error-'+gameID).html("An error occured on the server, please try again later.");
     }
   });
 
@@ -38,7 +38,7 @@ function addPort(e,lanID,gameID){
 
 function removePort(e,lanID,gameID){
   if(e!=null) e.preventDefault();
-	var port=$("[name='port']").val();
+	var port=$("#port-number-"+gameID).val();
 	var ports_column=$("#game-ports-"+gameID);
 
   $.ajax({
@@ -50,19 +50,19 @@ function removePort(e,lanID,gameID){
     success: function(data){
       if(data.success != undefined){
 				ports_column.html(data.new_port_list);
-        $('#response-success').show();
-        $('#response-error').hide();
-        $('#response-success').html(data.success);
+        $('#response-success-'+gameID).show();
+        $('#response-error-'+gameID).hide();
+        $('#response-success-'+gameID).html(data.success);
       }else{
-        $('#response-error').show();
-        $('#response-success').hide();
-        $('#response-error').html(data.error);
+        $('#response-error-'+gameID).show();
+        $('#response-success-'+gameID).hide();
+        $('#response-error-'+gameID).html(data.error);
       }
     },
     error: function(data){
-      $('#response-error').show();
-      $('#response-success').hide();
-      $('#response-error').html("An error occured on the server, please try again later.");
+      $('#response-error-'+gameID).show();
+      $('#response-success-'+gameID).hide();
+      $('#response-error-'+gameID).html("An error occured on the server, please try again later.");
     }
   });
 

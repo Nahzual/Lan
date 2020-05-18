@@ -1,10 +1,12 @@
-<html>
-	<head>
-		<h1>{{$title}}</h1>
-	</head>
-	<body style="background: white; color: black">
-		<p>User : {{$name}} {{$lastname}}</p>
-		<p>Email : {{$email}}</p>
-		<p>{{$content}}</p>
-	</body>
-</html>
+@extends('mails.notification_layout')
+
+@section('content')
+	<div class="card">
+		<div class="card-header">
+			<p>From : {!!$name!!} {!!$lastname!!}</p>
+		</div>
+		<div class="card-body">
+			<p>{!!$content!!}</p>
+		</div>
+	</div>
+@endsection

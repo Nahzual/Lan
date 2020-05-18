@@ -47,20 +47,22 @@ class ContactsController extends Controller
 			$name = htmlentities($request->name);
 			$lastname = htmlentities($request->lastname);
 			$email = htmlentities($request->email);
-			$title = 'Message depuis le site Lan Creator';
 			$content = str_replace($mail_cleaning,"",htmlentities($request->description));
 
-			if($request->has('fichier')){
-				$path = $request->fichier;
-				Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object, $path) {
+			if($request->file('file')){
+				$file=$request->file('file');
+				Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'content' => $content], function ($message) use ($sender, $object,$file) {
 					$message->to('lancreator.noreply@gmail.com')
 					->from($sender, 'Lan Creator')
 					->cc($sender)
 					->subject($object)
-					->attachData($path, 'fichierjoint');
+					->attach($file->getRealPath(),[
+						'as'=>$file->getClientOriginalName(),
+						'mime'=>$file->getMimeType()
+					]);
 				});
 			}else{
-				Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'title' => $title, 'content' => $content], function ($message) use ($sender, $object) {
+				Mail::send('contact.mail', ['name' => $name, 'lastname' => $lastname, 'email' => $email, 'content' => $content], function ($message) use ($sender, $object) {
 					$message->to('lancreator.noreply@gmail.com')
 					->from($sender, 'Lan Creator')
 					->cc($sender)

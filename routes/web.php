@@ -130,7 +130,6 @@ Route::post('lan/{lan}/tournament/store', 'TournamentsController@store')->name('
 Route::get('lan/{lan}/tournament/{tournament}/edit', 'TournamentsController@edit')->name('tournament.edit_tournament');
 Route::put('lan/{lan}/tournament/{tournament}/edit', 'TournamentsController@update')->name('tournament.update');
 Route::delete('lan/{lan}/tournament/{tournament}/destroy', 'TournamentsController@destroy')->name('tournament.destroy');
-
 //Show and list
 Route::get('lan/{lan}/tournament/{tournament}/show', 'TournamentsController@show')->name('tournament.show_tournament');
 Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
@@ -142,7 +141,7 @@ Route::get('/lan/{lan}/tournaments/{page}','LansController@list_tournaments')->n
 Route::get('tournament/{tournament}/team/create', 'TeamsController@create')->name('team.create_team');
 Route::post('tournament/{tournament}/team/store', 'TeamsController@store')->name('team.store');
 Route::post('tournament/{tournament}/team/joinTeam', 'TeamsController@joinTeam')->name('team.joinTeam');
-Route::get('tournament/{tournament}/team/{team}/show', 'TeamsController@show')->name('team.show_team');
+Route::get('tournament/{tournament}/team/{team}/show', 'TeamsController@show')->name('team.players_team');
 Route::delete('tournament/{tournament}/team/{team}/destroy', 'TeamsController@destroy')->name('team.destroy');
 
 /* ----------------- Round and matches routes ----------------- */

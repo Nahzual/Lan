@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
 
-	protected $fillable = ['name_tournament','desc_tournament','opening_date_tournament', 'is_finished_tournament', 'player_count', 'match_mod', 'max_player_count', 'lan_id','id_game'];
+	protected $fillable = ['name_tournament','desc_tournament','opening_date_tournament', 'is_finished_tournament', 'player_count', 'match_mod', 'max_player_count', 'lan_id','id_game', 'number_per_team'];
 
 	/*Returns all the rounds for this tournament*/
 	public function rounds(){

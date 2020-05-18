@@ -13,9 +13,10 @@ class Activity extends Model
      */
 	public $timestamps = false;
 	 
-    protected $fillable = ['name_activity', 'desc_activity', 'id_lan'];
+    	protected $fillable = ['name_activity', 'desc_activity', 'id_lan'];
 
-    public function lan(){
-		return $this->belongsTo('App\Lan');
-    }
+	/*Returns the parent LAN*/
+    	public function lan(){
+			return $this->belongsTo('App\Lan');
+    	}
 }

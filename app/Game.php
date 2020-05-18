@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
-  protected $fillable = ['name_game', 'desc_game', 'release_date_game', 'cost_game', 'is_multiplayer_game'];
+	  /**
+	   * The attributes that are mass assignable.
+	   *
+	   * @var array
+	   */
+	protected $fillable = ['name_game', 'desc_game', 'release_date_game', 'cost_game', 'is_multiplayer_game'];
 
-  public $timestamps=false;
+  	public $timestamps=false;
 
-  public function ports(){
-    return $this->belongsToMany('App\Lan','uses_port','id_game','id_lan')->select('uses_port.port');
-  }
+	/*Returns the connexion_ports used for this game*/
+ 	public function ports(){
+   		return $this->belongsToMany('App\Lan','uses_port','id_game','id_lan')->select('uses_port.port');
+  	}
 
+	/*Returns the connexion_ports used for this game as String*/
 	public function ports_string($ports_collection=null){
 		if(!isset($ports_collection)) $ports_collection=$this->ports;
 		$list='';
@@ -37,20 +39,18 @@ class Game extends Model
 		return $list;
 	}
 
-  public function lans()
-  {
-    return $this->belongsToMany('App\Lan','can_play');
-  }
+	/*Returns the LANs listing this game*/
+ 	public function lans(){
+		return $this->belongsToMany('App\Lan','can_play');
+	}
 
-  public function users()
-  {
-    return $this->belongsToMany('App\User','favorite_games');
-  }
+	/*Returns all the beloved users*/
+	public function users(){
+    		return $this->belongsToMany('App\User','favorite_games');
+	}
 
-  public function tournaments()
-  {
-    return $this->belongsToMany('App\Tournament');
-  }
-
-
+	/*Returns all the tournaments with this game listed*/
+	public function tournaments(){
+		return $this->belongsToMany('App\Tournament');
+	}
 }

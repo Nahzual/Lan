@@ -361,7 +361,7 @@ class UsersController extends Controller{
 						}catch(\Exception $e){
 
 						}
-						return response()->json(['success'=>'This user\'s account has been successfully deleted.','html'=>view('user.show_restore',compact('user'))->render() ]);
+						return response()->json(['success'=>'This user has been successfully banned from LanCreator.','html'=>view('user.show_restore',compact('user'))->render() ]);
 					}
 				}else{
 					return response()->json(['error'=>'This user does not exist.']);
@@ -410,17 +410,23 @@ class UsersController extends Controller{
 	/**
 	* User List
 	* @param  int  $page
+	* @param  \Illuminate\Http\Request  $request
 	* @return \Illuminate\Contracts\Support\Renderable
 	*/
 
-	public function admList($page = 1){
+	public function admList($page = 1,Request $request){
 		if(Auth::check()){
 			$user=Auth::user();
 			if(!$user->isSiteAdmin()){
 				return back()->with('error','You are not an Admin');
 			}else{
-				$tu = User::withTrashed()->selectRaw('COUNT(*) AS count')->first()->count;
-				$users= User::withTrashed()->skip(abs(($page - 1)*10))->take(10)->get();
+				if(isset($request->pseudo)){
+					$tu = User::withTrashed()->where('pseudo','LIKE','%'.$request->pseudo.'%')->selectRaw('COUNT(*) AS count')->first()->count;
+					$users= User::withTrashed()->where('pseudo','LIKE','%'.$request->pseudo.'%')->skip(abs(($page - 1)*10))->take(10)->get();
+				}else{
+					$tu = User::withTrashed()->selectRaw('COUNT(*) AS count')->first()->count;
+					$users= User::withTrashed()->skip(abs(($page - 1)*10))->take(10)->get();
+				}
 
 				$max = ceil($tu/10);
 
@@ -436,7 +442,7 @@ class UsersController extends Controller{
 					$previous = $page-1;
 				}
 				//reduce users before compacting (limit the amount of information like emails)
-				return view('user.list', compact('users', 'max', 'previous', 'next', 'page'));
+				return view('user.list', compact('users', 'max', 'previous', 'next', 'page'))->with('username',$request->pseudo);
 			}
 		}else{
 			return redirect('/login')->with('error','Please log in to perform this action.');

@@ -12,44 +12,65 @@ Site Users
 <div id="response-success" class="alert alert-success mt-2" style="display:none"></div>
 <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
-<div class="table-responsive">
-	<table class="text-center table card-table table-bordered">
-		<thead class="card-table text-center">
-			<th scope="col">#</th>
-			<th scope="col">{{ __('messages.name') }}</th>
-			<th scope="col">{{ __('messages.actions') }}</th>
-		</thead>
+{!! Form::open(['method'=>'get','url'=>'/adm/users']) !!}
+	<div class="row form-group">
+		<div class="col">
+			<h4>Username :</h4>
+			{!! Form::text('pseudo',($username) ? $username : null,['class'=>'form-control']) !!}
+		</div>
+	</div>
+	<div class="row form-group text-center">
+		<div class="col">
+			<button type="submit" class="btn btn-outline-info shadow-sm"><i class="fa fa-search"></i> Search</button>
+		</div>
+	</div>
+{{ Form::close() }}
 
-		<tbody>
-			@if (isset($users))
-				@if(count($users)==0)
-				<tr>
-					<td colspan="3"><h3>{{ __('messages.nouser') }}</h3></td>
-				</tr>
-				@endif
 
-				@foreach($users as $user)
-				<tr id="row-user-lan-{{$user->id}}">
-					<th>{{$user->id}}</th>
-					<td>{!!$user->pseudo!!}</td>
-					<td scope="col" class="text-center">
-						<div class="btn-group text-center">
-							{!! Form::open(['method'=>'get','url'=>route('user.show',$user->id) ]) !!}
-								<button type=submit class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
-							{{ Form::close() }}
-							{!! Form::open(['id'=>'form-undo-'.$user->id,'method'=>'post','onsubmit'=>'restoreUserList(event,'.$user->id.')','style'=>($user->trashed()) ? '' : 'display: none;']) !!}
-								<button type="submit" class="btn btn-primary"><i class='fa fa-undo'></i></button>
-							{{ Form::close() }}
-							{!! Form::open(['id'=>'form-ban-'.$user->id,'method'=>'post','onsubmit'=>'banUserList(event,'.$user->id.')','style'=>(!$user->trashed()) ? '' : 'display: none;']) !!}
-								<button type="submit" class="btn btn-danger"><i class='fa fa-ban'></i></button>
-							{{ Form::close() }}
-						</div>
-					</td>
-				</tr>
-				@endforeach
-			@endif
-		</tbody>
-	</table>
+<hr>
+
+<div class="row">
+	<div class="col">
+		<div class="table-responsive">
+			<table class="text-center table card-table table-bordered">
+				<thead class="card-table text-center">
+					<th scope="col">#</th>
+					<th scope="col">{{ __('messages.name') }}</th>
+					<th scope="col">{{ __('messages.actions') }}</th>
+				</thead>
+
+				<tbody>
+					@if (isset($users))
+						@if(count($users)==0)
+						<tr>
+							<td colspan="3"><h3>{{ __('messages.nouser') }}</h3></td>
+						</tr>
+						@endif
+
+						@foreach($users as $user)
+						<tr id="row-user-lan-{{$user->id}}">
+							<th>{{$user->id}}</th>
+							<td>{!!$user->pseudo!!}</td>
+							<td scope="col" class="text-center">
+								<div class="btn-group text-center">
+									{!! Form::open(['method'=>'get','url'=>route('user.show',$user->id) ]) !!}
+										<button type=submit class="mr-2 btn btn-success"><i class='fa fa-eye'></i></button>
+									{{ Form::close() }}
+									{!! Form::open(['id'=>'form-undo-'.$user->id,'method'=>'post','onsubmit'=>'restoreUserList(event,'.$user->id.')','style'=>($user->trashed()) ? '' : 'display: none;']) !!}
+										<button type="submit" class="btn btn-primary"><i class='fa fa-undo'></i></button>
+									{{ Form::close() }}
+									{!! Form::open(['id'=>'form-ban-'.$user->id,'method'=>'post','onsubmit'=>'banUserList(event,'.$user->id.')','style'=>(!$user->trashed()) ? '' : 'display: none;']) !!}
+										<button type="submit" class="btn btn-danger"><i class='fa fa-ban'></i></button>
+									{{ Form::close() }}
+								</div>
+							</td>
+						</tr>
+						@endforeach
+					@endif
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
 <nav aria-label="page navigation">

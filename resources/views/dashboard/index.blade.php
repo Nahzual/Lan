@@ -27,7 +27,7 @@ Dashboard
 							<form method="GET" action="{{ route('lan.create') }}">
 								@csrf
 								@method('GET')
-								<button type="submit" class="btn  btn-outline-dark shadow-sm float-right"><i class='fa fa-plus-square'></i>{{ __('messages.create_new_lan') }}</button>
+								<button type="submit" class="btn  btn-outline-dark shadow-sm float-right"><i class='fa fa-plus-square'></i> {{ __('messages.create_new_lan') }}</button>
 							</form>
 						</div>
 						<div class="col mt-1">
@@ -37,8 +37,8 @@ Dashboard
 				</div>
 			</div>
 			<div class="table-responsive collapse" id="my_lans">
-				<table class="table card-table table-bordered">
-					<thead class="card-table text-center">
+				<table class="table card-table text-center table-bordered">
+					<thead class="card-table">
 						<th scope="col" >#</th>
 						<th scope="col">{{ __('messages.name') }}</th>
 						<th scope="col">{{ __('messages.participants') }}</th>
@@ -49,7 +49,13 @@ Dashboard
 					</thead>
 
 					<tbody>
-						@each('lan.my_lans',$admin_lans,'lan')
+						@if(count($helper_lans)!=0)
+							@each('lan.my_lans',$admin_lans,'lan')
+						@else
+						<tr>
+							<td colspan="7"><h4>{{ __('messages.no_lans') }}</h4></td>
+						</tr>
+						@endif
 					</tbody>
 				</table>
 			</div>
@@ -79,8 +85,8 @@ Dashboard
 			</div>
 
 			<div class="table-responsive collapse" id="helper_lans">
-				<table class="table card-table table-bordered">
-					<thead class="card-table text-center">
+				<table class="table card-table text-center table-bordered">
+					<thead class="card-table">
 						<th scope="col">#</th>
 						<th scope="col">{{ __('messages.name') }}</th>
 						<th scope="col">{{ __('messages.participants') }}</th>
@@ -89,7 +95,13 @@ Dashboard
 					</thead>
 
 					<tbody>
-						@each('lan.helper_lans',$helper_lans,'lan')
+						@if(count($helper_lans)!=0)
+							@each('lan.helper_lans',$helper_lans,'lan')
+						@else
+						<tr>
+							<td colspan="5"><h4>{{ __('messages.no_lans') }}</h4></td>
+						</tr>
+						@endif
 					</tbody>
 				</table>
 			</div>
@@ -129,7 +141,13 @@ Dashboard
 					</thead>
 
 					<tbody>
-						@each('lan.player_lans',$player_lans,'lan')
+						@if(count($player_lans)!=0)
+							@each('lan.player_lans',$player_lans,'lan')
+						@else
+						<tr>
+							<td colspan="5"><h4>{{ __('messages.no_lans') }}</h4></td>
+						</tr>
+						@endif
 					</tbody>
 				</table>
 			</div>

@@ -14,14 +14,14 @@ return [
 
 	'chln' => ' Change Language',
 	'dashboard' => 'LAN Creator ',
-	
+
 	// Menu
-	
+
 	//'menu_1' => 'Find a LAN',
 	//'menu_2' => 'Contact',
 	//'menu_2' => 'Login',
 	//'menu_2' => 'Register',
-	
+
 	'find_lan' => 'Find a LAN',
 	'contact' => 'Contact',
 	'login' => 'Login',
@@ -40,10 +40,10 @@ return [
 	'home_p2' => 'Create heavily-customised tournaments, define what your own LAN is and more ! With our room mapping application, you also can see how everyone can fit !',
 	'home_p3t' => 'Organization is key ',
 	'home_p3' => 'Don\'t do it alone ! Add helpers, news admins, deploy tasks, define a shopping list and a to-do list to avoid some last-minute expenses !',
-	
+
 	'homestats' => 'The latest LAN was created on :date with :reg registrants !',
 	'homejoin' => 'Sign-in now to create your first LAN !',
-	
+
 
 	'name' => 'Name',
 	'lname' => 'Last Name',
@@ -59,17 +59,17 @@ return [
 	'depname' => 'Department name',
 	'country' => 'Country',
 	'address' => 'Address',
-	
+
 	'want_contact' => 'If you want to contact this user, please use the "Contact" button and wait for his reply on your mailbox.',
-	
+
 	// Stats
 	'statistics' => 'Statistics',
 	'user_admin_lan' => '{0} This user isn\'t an admin on any LAN currently |{1} This user is currently administrating :count lan|[2,*] This user is currently administrating :count lans',
-	
+
 
 	//echo trans_choice('time.minutes_ago', 5, ['value' => 5]);
-	
-	
+
+
 	// Dashboard
 	'chtheme' => 'Change Theme',
 	'settings' => 'Settings',
@@ -80,8 +80,8 @@ return [
 	'restore' => 'Restore',
 	'show_hide' => 'Show/hide',
 	'all' => 'All',
-	
-	
+
+
 	'add' => 'Add',
 	'actions' => 'Actions',
 	'nohelper' => 'No helpers to show',
@@ -94,44 +94,46 @@ return [
 	'last' => 'Last',
 	'search' => 'Search',
 	'back_admin_dash' => 'Return to the admin Dashboard',
-	
-	
+
+
 	'admin_lan' => 'All the admins for the LAN ',
 	'add_new_admin' => 'Add a new Admin',
 	'adding_admin_lan' => 'Adding admin to Lan :',
 	'admin_name' => 'Admin\'s name :',
-	
+
 	'helper_lan' => 'All the helpers for the LAN ',
 	'add_new_helper' => 'Add a new Helper',
 	'adding_helper_lan' => 'Adding helper to LAN :',
 	'helper_name' => 'Helper\'s name :',
-	
+
 	'back_lan' => 'Go back to the LAN',
 	'back_dashboard' => 'Go back to the dashboard',
-	
+
 	'participants' => 'Participants',
 	'state' => 'State',
 	'quit' => 'Quit',
-	
+
 	'' =>'Navigation',
 	'' =>'Dashboard',
 	'' =>'Home',
 	'' =>'LAN',
 	'' =>'All LANs',
 	'' =>'My Tasks',
-	
+
 	'' =>'GAMES',
 	'' =>'All games',
 	'' =>'My games',
-	
+
+	'no_lans' =>'No LANs to show',
+
 	'my_lans' =>'My LANs',
 	'my_lans_helper' =>'LANs on which I am helper',
 	'my_lans_player' =>'LANs on which I am player',
-	
+
 	'create_new_lan' =>'Create New LAN',
-	
+
 	// LAN
-	
+
 	'nb_max_registrants' => 'Maximum numbers of registrants',
 	'date' => 'Date',
 	'duration' => 'Duration (in days)',
@@ -148,23 +150,23 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'Empty chair :',
 	'empty_space' => 'Empty space :',
-	
+
 	// Edit
 	'update' => 'Update',
 	'edit_title_lan' => 'Editing LAN ',
-	
+
 	// Contact
 	'contact_us' => 'Contact us',
 	'object' => 'Object',
 	'description' => 'Description',
 	'attachment' => 'Attachment',
 	'send' => ' Send',
-	
+
 	// {{ __('messages.contact_us') }}
-	
+
 	/**
 	// LAN
-	
+
 	'Viewing :'
 	'About'
 	'Max number of players'
@@ -173,8 +175,8 @@ return [
 	'Budget'
 	'Room dimensions'
 	'Location'
-	
-	
+
+
 	'Quick-Links'
 	'Activities'
 	'Games'
@@ -186,10 +188,10 @@ return [
 	'Admins'
 	'Helpers'
 	'Public View'
-	
+
 	'Helper section'
 	'Admin section'
-	
+
 	// Shopping
 	'The Shopping List for the LAN '
 	'To buy'
@@ -201,35 +203,10 @@ return [
 	'Quantity'
 	'Choose Material'
 	'Creating new Shopping'
-	
+
 	// Tasks
 	'No tasks to show'
 	'Add a Task'
-	
+
 	**/
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

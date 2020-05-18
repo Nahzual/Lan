@@ -8,7 +8,7 @@
         <div class="card-header bg-dark ">
 				<div class="row">
 						<div class="col mt-2">
-							<h3 class="text-light" >Contact us</h3>
+							<h3 class="text-light" >{{ __('messages.contact_us') }}</h3>
 						</div>
 				</div>
 		</div>
@@ -19,53 +19,53 @@
 				<div class="bg-light">
 					@if(isset($logged_user))
 						<div class="form-group">
-							{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
+							{!! Form::label('name', __('messages.name'), ['class' => 'display-6']) !!}
 							{!! Form::text('name', $logged_user->name, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
+							{!! Form::label('lastname', __('messages.lname'), ['class' => 'display-6']) !!}
 							{!! Form::text('lastname', $logged_user->lastname, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
+							{!! Form::label('email', __('messages.email'), ['class' => 'display-6']) !!}
 							{!! Form::text('email', $logged_user->email, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('object', 'Object',['class' => 'display-6']) !!}
+							{!! Form::label('object', __('messages.object'),['class' => 'display-6']) !!}
 							{!! Form::text('object', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
+							{!! Form::label('description', __('messages.description'), ['class' => 'display-6']) !!}
 							{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('fichier', 'Attachment', ['class' => 'display-6']) !!}
+							{!! Form::label('fichier', __('messages.attachment'), ['class' => 'display-6']) !!}
 							<br>
 							{!! Form::file('fichier', null, ['class' => 'form-control', 'name' => 'fichier', 'id' => 'fichier']) !!}
 						</div>
 					@else
 						<div class="form-group">
-							{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
+							{!! Form::label('name', __('messages.name'), ['class' => 'display-6']) !!}
 							{!! Form::text('name', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('lastname', 'Last Name', ['class' => 'display-6']) !!}
+							{!! Form::label('lastname', __('messages.lname'), ['class' => 'display-6']) !!}
 							{!! Form::text('lastname', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('email', 'Email', ['class' => 'display-6']) !!}
+							{!! Form::label('email', __('messages.email'), ['class' => 'display-6']) !!}
 							{!! Form::text('email', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('object', 'Object',['class' => 'display-6']) !!}
+							{!! Form::label('object', __('messages.object'),['class' => 'display-6']) !!}
 							{!! Form::text('object', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('description', 'Description', ['class' => 'display-6']) !!}
+							{!! Form::label('description', __('messages.description'), ['class' => 'display-6']) !!}
 							{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
 						</div>
 						<div class="form-group">
-							{!! Form::label('fichier', 'Attachment', ['class' => 'display-6']) !!}
+							{!! Form::label('fichier', __('messages.attachment'), ['class' => 'display-6']) !!}
 							<br>
 							{!! Form::file('fichier', null, ['class' => 'form-control', 'name' => 'fichier', 'id' => 'fichier']) !!}
 						</div>
@@ -75,7 +75,7 @@
 				<div class="form-group row text-center">
 					<div class="col text-right">
 						<a class="btn  btn-outline-info shadow-sm" href="{{ route('dashboard') }}"><i class='fa fa-arrow-left'></i> Go Back to home</a>
-						<button type="submit" class="btn  btn-outline-success shadow-sm" id="AddNewContactSubmit"><i class='fa fa-plus-square'></i> Send</button>
+						<button type="submit" class="btn  btn-outline-success shadow-sm" id="AddNewContactSubmit"><i class='fa fa-plus-square'></i>{{ __('messages.send') }}</button>
 					</div>
 				</div>
 			{!! Form::close() !!}

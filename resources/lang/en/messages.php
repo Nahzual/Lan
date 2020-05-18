@@ -148,7 +148,14 @@ return [
 	'' => '',
 	'' => '',
 	
-	// {{ __('messages.chln') }}
+	// Contact
+	'contact_us' => 'Contact us'
+	'object' => 'Object',
+	'description' => 'Description',
+	'attachment' => 'Attachment',
+	'send' => ' Send',
+	
+	// {{ __('messages.contact_us') }}
 	
 	/**
 	// LAN

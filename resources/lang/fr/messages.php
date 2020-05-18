@@ -148,6 +148,13 @@ return [
 	'' => '',
 	'' => '',
 	
+	// Contact
+	'contact_us' => 'Nous Contacter',
+	'object' => 'Object',
+	'description' => 'Description',
+	'attachment' => 'Piece jointe',
+	'send' => ' Envoyer',
+	
 	// {{ __('messages.chln') }}
 	
 	

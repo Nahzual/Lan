@@ -49,7 +49,7 @@ Dashboard
 					</thead>
 
 					<tbody>
-						@if(count($helper_lans)!=0)
+						@if(count($admin_lans)!=0)
 							@each('lan.my_lans',$admin_lans,'lan')
 						@else
 						<tr>

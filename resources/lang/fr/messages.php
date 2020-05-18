@@ -56,7 +56,7 @@ return [
 	'streetname' => 'Rue',
 	'city' => 'Ville',
 	'zip' => 'Zip',
-	'depname' => 'Department name',
+	'depname' => 'Department',
 	'country' => 'Pays',
 	'address' => 'Adresse',
 	
@@ -124,17 +124,23 @@ return [
 	'' =>'All games',
 	'' =>'My games',
 	
-	'' =>'My LANs',
-	'' =>'LANs on which I am helper',
-	'' =>'LANs on which I am player',
+	'my_lans' =>'Mes LANs',
+	'my_lans_helper' =>'LANs pour lesquelles je suis un helper',
+	'my_lans_player' =>'LANs pour lesquelles je suis un player',
 	
 	'create_new_lan' =>'Creer une nouvelle LAN',
 	
 	// LAN
 	
+	'nb_max_registrants' => 'Nombre maximum de participants',
+	'date' => 'Date ',
+	'duration' => 'Durée (en jours)',
+	'budget' => 'Budget (in €)',
+	'room_length' => 'Longeur de la salle (en mètres)',
+	'room_width' => 'Largeur de la salle (en mètres)',
+	'location' => 'Adresse',
 	'' => '',
-	'' => '',
-	'' => '',
+	'room_plan' => 'Plan de la salle :',
 	'legend' => 'Legende :',
 	'wall' => 'Mur :',
 	'table' => 'Table :',
@@ -142,11 +148,6 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'chaise libre :',
 	'empty_space' => 'Espace libre :',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
 	
 	// Contact
 	'contact_us' => 'Nous Contacter',

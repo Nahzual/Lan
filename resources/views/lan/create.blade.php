@@ -16,54 +16,54 @@ Create a LAN
 {!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event)']) !!}
 	<div>
 		<div class="form-group">
-			{!! Form::label('name', 'Name', ['class' => 'display-6']) !!}
+			{!! Form::label('name', __('messages.name'), ['class' => 'display-6']) !!}
 			{!! Form::text('name', null, ['id'=>'name', 'class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('max_num_registrants', 'Maximum numbers of registrants', ['class' => 'display-6']) !!}
+			{!! Form::label('max_num_registrants', __('messages.nb_max_registrants'), ['class' => 'display-6']) !!}
 			{!! Form::number('max_num_registrants', null, ['id'=>'max_num_registrants','min'=>'1', 'class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('opening_date', 'Date', ['class' => 'display-6']) !!}
+			{!! Form::label('opening_date', __('messages.date'), ['class' => 'display-6']) !!}
 			{!! Form::date('opening_date', null, ['id'=>'opening_date','class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('duration', 'Duration (in days)', ['class' => 'display-6']) !!}
+			{!! Form::label('duration', __('messages.duration'), ['class' => 'display-6']) !!}
 			{!! Form::number('duration', null, ['id'=>'duration','min'=>'1','class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('budget', 'Budget (in €)', ['class' => 'display-6']) !!}
+			{!! Form::label('budget', __('messages.budget'), ['class' => 'display-6']) !!}
 			{!! Form::number('budget', null, ['id'=>'budget','min'=>'0', 'class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('room_length', 'Room length (in meters)', ['class' => 'display-6']) !!}
+			{!! Form::label('room_length', __('messages.room_length'), ['class' => 'display-6']) !!}
 			{!! Form::number('room_length', null, ['id'=>'room_length','min'=>'1', 'class' => 'form-control', 'onchange'=>'changeDimensions()']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('room_width', 'Room width (in meters)', ['class' => 'display-6']) !!}
+			{!! Form::label('room_width', __('messages.room_width'), ['class' => 'display-6']) !!}
 			{!! Form::number('room_width', null, ['id'=>'room_width','min'=>'1', 'class' => 'form-control', 'onchange'=>'changeDimensions()']) !!}
 		</div>
 	</div>
 	<div>
-		{!! Form::label('location', 'Location', ['class' => 'display-6']) !!}
+		{!! Form::label('location', __('messages.location'), ['class' => 'display-6']) !!}
 		<div id="location" class="input-group mb-1">
-			{!! Form::number('num_location', null, ['id'=>'num_location','min'=>'0', 'placeholder'=>'Street number','class' => 'form-control']) !!}
+			{!! Form::number('num_location', null, ['id'=>'num_location','min'=>'0', 'placeholder'=>__('messages.streetnbr'),'class' => 'form-control']) !!}
 			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_street', null, ['id'=>'name_street','placeholder'=>'Street Name', 'class' => 'form-control']) !!}
+			{!! Form::text('name_street', null, ['id'=>'name_street','placeholder'=> __('messages.streetname'), 'class' => 'form-control']) !!}
 			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_city', null, ['id'=>'name_city','placeholder'=>'City','class' => 'form-control']) !!}
+			{!! Form::text('name_city', null, ['id'=>'name_city','placeholder'=>__('messages.city'),'class' => 'form-control']) !!}
 		</div>
 		<div class="input-group mb-5">
-			{!! Form::text('zip_city', null, ['id'=>'zip_city','placeholder'=>'ZIP Code','class' => 'form-control']) !!}
+			{!! Form::text('zip_city', null, ['id'=>'zip_city','placeholder'=>__('messages.zip'),'class' => 'form-control']) !!}
 			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_department', null, ['id'=>'name_department','placeholder'=>'Region Name','class' => 'form-control']) !!}
+			{!! Form::text('name_department', null, ['id'=>'name_department','placeholder'=>__('messages.depname'),'class' => 'form-control']) !!}
 			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_country', null, ['id'=>'name_country','placeholder'=>'Country Name', 'class' => 'form-control']) !!}
+			{!! Form::text('name_country', null, ['id'=>'name_country','placeholder'=> __('messages.country'), 'class' => 'form-control']) !!}
 		</div>
 	</div>
 
 	<hr/>
-	{!! Form::label('room_plan', 'Room plan :', ['class' => 'display-6']) !!}
+	{!! Form::label('room_plan', __('messages.room_plan'), ['class' => 'display-6']) !!}
 
 	<p class="lead-text">{{ __('messages.legend') }}</p>
 	<table>

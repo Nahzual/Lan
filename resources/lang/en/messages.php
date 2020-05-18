@@ -124,17 +124,23 @@ return [
 	'' =>'All games',
 	'' =>'My games',
 	
-	'' =>'My LANs',
-	'' =>'LANs on which I am helper',
-	'' =>'LANs on which I am player',
+	'my_lans' =>'My LANs',
+	'my_lans_helper' =>'LANs on which I am helper',
+	'my_lans_player' =>'LANs on which I am player',
 	
 	'create_new_lan' =>'Create New LAN',
 	
 	// LAN
 	
+	'nb_max_registrants' => 'Maximum numbers of registrants',
+	'date' => '',
+	'duration' => '',
+	'budget' => '',
+	'room_length' => '',
+	'room_width' => '',
 	'' => '',
 	'' => '',
-	'' => '',
+	'room_plan' => 'Room plan :',
 	'legend' => 'Legend :',
 	'wall' => 'Wall :',
 	'table' => 'Table :',
@@ -142,11 +148,6 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'Empty chair :',
 	'empty_space' => 'Empty space :',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
 	
 	// Contact
 	'contact_us' => 'Contact us',

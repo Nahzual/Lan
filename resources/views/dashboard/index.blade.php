@@ -21,7 +21,7 @@ Dashboard
 				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>My LANs</h3>
+							<h3>{{ __('messages.my_lans') }}</h3>
 						</div>
 						<div class="col mt-1">
 							<form method="GET" action="{{ route('lan.create') }}">
@@ -69,7 +69,7 @@ Dashboard
 				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>LANs on which I am helper</h3>
+							<h3>{{ __('messages.my_lans_helper') }}</h3>
 						</div>
 						<div class="col mt-1">
 							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#helper_lans" aria-expanded="false" aria-controls="helper_lans">{{ __('messages.show_hide') }}</button>
@@ -109,7 +109,7 @@ Dashboard
 				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>LANs on which I am player</h3>
+							<h3>{{ __('messages.my_lans_player') }}</h3>
 						</div>
 						<div class="col mt-1">
 							<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#player_lans" aria-expanded="false" aria-controls="player_lans">{{ __('messages.show_hide') }}</button>

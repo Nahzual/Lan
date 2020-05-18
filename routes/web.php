@@ -157,7 +157,6 @@ Route::delete('lan/{lan}/shopping/{shopping}/destroy', 'ShoppingsController@dest
 Route::put('lan/{lan}/shopping/{shopping}/edit', 'ShoppingsController@update')->name('shopping.update');
 
 //Show and list
-Route::get('/search/shopping','ShoppingsController@search');
 Route::get('lan/{lan}/shopping/{shopping}/show', 'ShoppingsController@show')->name('shopping.show');
 Route::get('/lan/{lan}/shoppings/','LansController@list_shoppings')->name('lan.shopping_list');
 Route::get('/lan/{lan}/shoppings/{page}','LansController@list_shoppings')->name('lan.shopping_list.page');

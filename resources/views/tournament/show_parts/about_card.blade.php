@@ -6,7 +6,7 @@
   <div class="card-body">
     <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Game</label>
-      <label class="form-control col-8 h-100"></label>
+      <label class="form-control col-8 h-100">{{$game->name_game}}</label>
     </div>
     <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Name</label>

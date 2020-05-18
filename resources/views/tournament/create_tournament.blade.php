@@ -23,7 +23,7 @@ Creating new Tournament
     {!! Form::text('desc_tournament', null, ['id'=>'desc_tournament', 'class'=>'form-control', 'size'=>'30x5']) !!}
   </div>
   <div class="form-group">
-    {!! Form::label('opening_date_tournament', 'Houre of begin tournament :', ['class' => 'display-6']) !!}
+    {!! Form::label('opening_date_tournament', 'Begins...', ['class' => 'display-6']) !!}
     {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control']) !!}
   </div>
   <div class="form-group">
@@ -31,23 +31,21 @@ Creating new Tournament
     {!! Form::number('max_player_count_tournament', null, ['id'=>'max_player_count_tournament', 'class'=>'form-control']) !!}
   </div>
   <div class="form-group">
-    <label for="match_mod_tournament">Mod of tournament</label>
+    <label for="match_mod_tournament">Mode of tournament</label>
     <select id="match_mod_tournament" name="match_mod_tournament" onchange="changementType();">
-      <option value="0">solo</option>
-      <option value="1">equipes</option>
+      <option value="0">Solo</option>
+      <option value="1">Teams</option>
     </select>
-    <!--{!! Form::label('match_mod_tournament', 'Mod of tournament :', ['class' => 'lead']) !!}
-    {!! Form::select('match_mod_tournament', array('0'=>'solo', '1'=>'equipes'), ['id'=>'match_mod_tournament', 'class'=>'form-control']) !!}-->
+
   </div>
   <div class="form-group" id="number" style="display:none">
-    <label for="number_per_team">Number per team</label>
+    <label for="number_per_team">Number of players per team</label>
     <input type="number" id="number_per_team" name="number_per_team" value="1">
-    <!--{!! Form::label('number_per_team', 'Number per team :', ['class' => 'lead']) !!}
-    {!! Form::number('number_per_team', '1', ['id'=>'number_per_team', 'class'=>'form-control']) !!}-->
+
   </div>
   <div class="form-group">
     {!! Form::label('id_game', 'Choose the game :', ['class'=>'display-6']) !!}
-    {!! Form::select('id_game', $games->pluck('name_game', 'id'), ['id'=>'id_game', 'class'=>'lead']) !!}
+    {!! Form::select('id_game', $games->pluck('name_game', 'id'), ['id'=>'id_game','class'=>'display-6']) !!}
   </div>
 </div>
 

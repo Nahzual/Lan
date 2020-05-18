@@ -6,7 +6,7 @@
   <div class="card-body">
     <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Game</label>
-      <label class="form-control col-8 h-100">{{$game = $games->where('id', $tournament->id_game)->pluck('name_game')}}</label>
+      <label class="form-control col-8 h-100">{{$game->name_game}}</label>
     </div>
     <div class="row">
       <label class="col-md-2 col-form-label text-md-right">Name</label>
@@ -21,11 +21,11 @@
       <label class="form-control col-8 h-100">{{$tournament->desc_tournament}}</label>
     </div>
     <div class="row">
-      <label class="col-md-2 col-form-label text-md-right">Number of player subscride</label>
+      <label class="col-md-2 col-form-label text-md-right">Number of player in</label>
       <label class="form-control col-8 h-100">{{$tournament->player_count_tournament}}</label>
     </div>
     <div class="row">
-      <label class="col-md-2 col-form-label text-md-right">Max of player</label>
+      <label class="col-md-2 col-form-label text-md-right">Max registrants</label>
       <label class="form-control col-8 h-100">{{$tournament->max_player_count_tournament}}</label>
     </div>
     <div class="row">

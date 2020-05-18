@@ -40,14 +40,14 @@ All Tournaments
 
         <td scope="col" class=" text-center">
           <div class="btn-group">
-						{!! Form::open(['method' => 'get','url'=>route('tournament.show_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) ]) !!}
+						{!! Form::open(['method' => 'get','url'=>route('tournament.show_tournament', array('lan' => $tournament->lan->id, 'tournament' => $tournament->id)) ]) !!}
 							<button type="submit" class="btn btn-success mr-2"><i class='fa fa-eye'></i></button>
 						{!! Form::close() !!}
 		        @if(isset($userIsLanAdmin) && $userIsLanAdmin)
-							{!! Form::open(['method' => 'get','url'=>route('tournament.edit_tournament', array('lan' => $lan->id, 'tournament' => $tournament->id)) ]) !!}
+							{!! Form::open(['method' => 'get','url'=>route('tournament.edit_tournament', array('lan' => $tournament->lan->id, 'tournament' => $tournament->id)) ]) !!}
 									<button type="submit" class="btn btn-warning mr-2"><i class='fa fa-edit'></i></button>
 							{!! Form::close() !!}
-		          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTournament(event,'.$lan->id.','.$tournament->id.')']) !!}
+		          {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTournament(event,'.$tournament->lan->id.','.$tournament->id.')']) !!}
 		            <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i></button>
 		          {!! Form::close() !!}
 		        @endif
@@ -65,19 +65,19 @@ All Tournaments
 			<a class="btn btn-info" href="{{ url('/dashboard/admin') }}" tabindex="-2">{{ __('messages.back_admin_dash') }}</a>
 
 			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/adm/users') }}" tabindex="-2">{{ __('messages.first') }}</a>
+				<a class="btn btn-secondary" href="{{ url('/adm/tournaments') }}" tabindex="-2">{{ __('messages.first') }}</a>
 			</li>
 			<li class="page-item @if($previous == 0) disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('adm/users/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
+				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/adm/tournaments/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
 			</li>
-			<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page)) }}">{{ $page }}</a></li>
-			@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
-			@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
+			<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/tournaments/'.($page)) }}">{{ $page }}</a></li>
+			@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/tournaments/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
+			@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/tournaments/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 			<li class="page-item @if($next) @else disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $next ? url('/adm/users/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
+				<a class="btn btn-outline-info" href="{{ $next ? url('/adm/tournaments/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
 			</li>
 			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/adm/users/'.$max) }}">{{ __('messages.last') }}</a>
+				<a class="btn btn-secondary" href="{{ url('/adm/tournaments/'.$max) }}">{{ __('messages.last') }}</a>
 			</li>
 		</ul>
 	</nav>

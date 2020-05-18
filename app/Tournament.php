@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
 
-	protected $fillable = ['name_tournament','desc_tournament','opening_date_tournament', 'is_finished_tournament', 'player_count', 'match_mod', 'max_player_count', 'lan_id'];
+	protected $fillable = ['name_tournament','desc_tournament','opening_date_tournament', 'is_finished_tournament', 'player_count', 'match_mod', 'max_player_count', 'lan_id','id_game'];
 
 	/*Returns all the rounds for this tournament*/
 	public function rounds(){
 		return $this->hasMany('App\Round');
 	}
 
-	/*Returns all the games for this tournament*/
-	public function games(){
-		return $this->hasOne('App\Game');
+	/*Returns the game pf this tournament*/
+	public function game(){
+		return $this->belongsTo('App\Game','id_game');
 	}
 
 	/*Returns the parent LAN of this tournament*/

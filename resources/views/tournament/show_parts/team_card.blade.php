@@ -20,6 +20,7 @@
           @if($tournament->match_mod_tournament==1)
             <th scope="col" >Number</th>
           @endif
+	<th scope="col" >Actions</th>
         </thead>
 
         <tbody>
@@ -32,21 +33,23 @@
           <tr id="row-team-tournament-{{$team->id}}">
             <th scope="row">{{$team->id}}</th>
             <td scope="col">{!!$team->name_team!!}</td>
+                @if($tournament->match_mod_tournament==1)
+                  <td scope="col" class="text-center">{{$team->number_of_member}}/{{$tournament->number_per_team}}</a></td>
+                @endif
             <td scope="col" class=" text-center">
               <div class="btn-group">
                 {!! Form::open(['onsubmit'=>'return false;']) !!}
                   <button class="btn btn-success mr-2" id="team-view-{{$team->id}}" onclick="openTeam({{$team->id}})"><i class='fa fa-eye'></i> View</button>
                 {{ Form::close() }}
-                @if($tournament->match_mod_tournament==1)
-                  <td scope="col" class="text-center lead-text">{{$team->number_of_member}}/{{$tournament->number_per_team}}</a></td>
-                @endif
+
                 @if ($userIsLanAdmin)
                   {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTeam(event, '.$tournament->id.', '.$team->id.')']) !!}
                     <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
                   {!! Form::close() !!}
+		
                 @endif
               </div>
-            </td>
+		</td>
           </tr>
         @endforeach
         </tbody>

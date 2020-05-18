@@ -48,18 +48,18 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('all_lans') }}">Find a LAN</a><!-- Insérer lien vers page listant les LANs-->
+                                <a class="nav-link" href="{{ route('all_lans') }}">{{ __('messages.find_lan') }}</a><!-- Insérer lien vers page listant les LANs-->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contact.index') }}">Contact</a><!-- Insérer lien vers page de contact-->
                             </li>
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('messages.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -75,7 +75,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('messages.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

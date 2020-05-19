@@ -96,6 +96,7 @@ return [
 	'back_admin_dash' => 'Return to the admin Dashboard',
 	'accept' => 'Accept',
 	'reject' => 'Reject',
+	'remove' => 'Remove',
 
 
 	'admin_lan' => 'All the admins for the LAN ',
@@ -109,7 +110,7 @@ return [
 	'helper_name' => 'Helper\'s name :',
 	
 	'add_new_game' => 'Add a new game',
-	'add_new_material' => 'Add a new material'
+	'add_new_material' => 'Add a new material',
 
 	'back_home' => ' Go back to the home page',
 	'back_lan' => ' Go back to the LAN',
@@ -193,7 +194,20 @@ return [
 	'check_email' => 'Before proceeding, please check your email for a verification link.',
 	'not_get' => 'If you did not receive the email',
 	'click_request_another' => 'click here to request another',
-
+	
+	// Errors
+	'error_404' => '404 Error',
+	'' => 'The page you attempted to reach is not registered.',
+	
+	// Ports
+	'add_port_game' => 'Adding port to game ":game" for LAN :lan',
+	'port' => 'Port :',
+	
+	// echo __('messages.welcome', ['name' => 'dayle']);
+	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
+	//'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
+	//{{ __('messages.add_port_game', ['game' => $game->name_game, 'lan' => $lan->name]) }}
+	
 	// {{ __('messages.contact_us') }}
 
 	/**

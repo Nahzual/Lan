@@ -96,6 +96,7 @@ return [
 	'back_admin_dash' => 'Return to the admin Dashboard',
 	'accept' => 'Accept',
 	'reject' => 'Reject',
+	'remove' => 'Retirer',
 
 
 	'admin_lan' => 'All the admins for the LAN ',
@@ -109,7 +110,7 @@ return [
 	'helper_name' => 'nom du helper :',
 	
 	'add_new_game' => 'Add a new game',
-	'add_new_material' => 'Add a new material'
+	'add_new_material' => 'Add a new material',
 
 	'back_home' => ' Retour a la page d\'accueil',
 	'back_lan' => ' Retourner a la LAN',
@@ -197,6 +198,14 @@ return [
 	// Errors
 	'error_404' => '404 Error',
 	'' => 'The page you attempted to reach is not registered.',
+	
+	// Ports
+	'add_port_game' => 'Adding port to game ":game" for LAN :lan',
+	'port' => 'Port :',
+	
+	// echo __('messages.welcome', ['name' => 'dayle']);
+	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
+	//'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
 
 	// {{ __('messages.chln') }}
 

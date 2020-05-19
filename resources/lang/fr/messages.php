@@ -13,14 +13,8 @@ return [
 	*/
 
 	'chln' => ' Changer la Langue',
-	'dashboard' => 'LAN Creator ',
 
 	// Menu
-
-	//'menu_1' => 'Trouver une LAN',
-	//'menu_2' => 'Contact',
-	//'menu_2' => 'Connexion',
-	//'menu_2' => 'Inscription',
 
 	'find_lan' => 'Trouver une LAN',
 	'contact' => 'Contact',
@@ -29,6 +23,11 @@ return [
 	'logout' => 'Deconnexion',
 	'remember_me' => 'Se souvenir de moi',
 	'forgot_password' => 'Mot de passe oublié ?',
+	'reset_password' => 'Reinitialiser le mot de passe',
+	'send_reset_link' => 'Send Password Reset Link',
+	'confirm_password_before' => 'Please confirm your password before continuing.',
+	
+	'lan_creator' => 'LAN Creator',
 
 
 	// Home
@@ -106,23 +105,28 @@ return [
 	'adding_helper_lan' => 'Ajouter un helper a la LAN :',
 	'helper_name' => 'nom du helper :',
 
-	'back_lan' => 'Retourner a la LAN',
-	'back_dashboard' => 'Retourner au dashboard',
+	'back_home' => ' Retour a la page d\'accueil',
+	'back_lan' => ' Retourner a la LAN',
+	'back_dashboard' => ' Retourner au dashboard',
 
 	'participants' => 'Participants',
 	'state' => 'State',
 	'quit' => 'Quit',
 
-	'' =>'Navigation',
-	'' =>'Dashboard',
-	'' =>'Home',
-	'' =>'LAN',
-	'' =>'All LANs',
-	'' =>'My Tasks',
+	'navigation' =>'Navigation',
+	'dashboard' =>'Dashboard',
+	'lan' =>'LAN',
+	'all_lans' =>'Toutes les LANs',
+	'my_tasks' =>'My Tasks',
 
-	'' =>'GAMES',
-	'' =>'All games',
-	'' =>'My games',
+	'games' =>'JEUX',
+	'all_games' =>'Tous les jeux',
+	'my_games' =>'Mes jeux',
+	
+	'admin' => 'ADM',
+	'admin_dashboard' => 'Admin dashboard',
+	'all_users' => 'All Users',
+	'all_tournaments' => 'All Tournaments',
 
 	'no_lans' =>'Aucune LAN à afficher',
 
@@ -150,10 +154,14 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'chaise libre :',
 	'empty_space' => 'Espace libre :',
+	
+	'viewing' => 'Viewing :',
+	'' => 'Room dimensions',
 
 	// Edit
 	'update' => 'Sauvegarder',
 	'edit_title_lan' => 'Editing LAN ',
+	'edit_profile' => 'Edit your profile',
 
 	// Contact
 	'contact_us' => 'Nous Contacter',
@@ -161,22 +169,18 @@ return [
 	'description' => 'Description',
 	'attachment' => 'Piece jointe',
 	'send' => ' Envoyer',
+	
+	'logged_as' => 'Logged in as:',
+	
+	// Activity
+	
+	'create_activity' => 'Creating new Activity',
+	'edit_activity' => 'Editing Activity',
 
 	// {{ __('messages.chln') }}
 
 
 	/**
-	// LAN
-
-	'Viewing :'
-	'About'
-	'Max number of players'
-	'Opening date'
-	'Duration'
-	'Budget'
-	'Room dimensions'
-	'Location'
-
 
 	'Quick-Links'
 	'Activities'

@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-{{ __('Edit your profile') }}
+{{ __('messages.edit_profile') }}
 @endsection
 
 @section('page-title')
-{{ __('Edit your profile') }}
+{{ __('messages.edit_profile') }}
 @endsection
 
 @section('content')

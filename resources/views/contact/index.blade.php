@@ -46,7 +46,7 @@
 
 				<div class="form-group row text-center">
 					<div class="col text-right">
-						<a class="btn  btn-outline-info shadow-sm" href="{{ route('dashboard') }}"><i class='fa fa-arrow-left'></i> Go Back to home</a>
+						<a class="btn  btn-outline-info shadow-sm" href="{{ route('home') }}"><i class='fa fa-arrow-left'></i>{{ __('messages.back_home') }}</a>
 						<button type="submit" class="btn  btn-outline-success shadow-sm"><i class='fa fa-plus-square'></i>{{ __('messages.send') }}</button>
 					</div>
 				</div>

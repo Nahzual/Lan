@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('page-title') - LAN Creator</title>
+    <title>@yield('page-title') - {{ __('messages.lan_creator') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -45,7 +45,7 @@
 	@if(Auth::user()->theme == 1) btn-primary @else btn-info @endif @endif ml-2">
 			<i class="fa fa-align-left"></i>
 		</button>
-    <a class="navbar-brand title-bebas bebas-size-1" href="{{ route('dashboard') }}">LAN Creator</a>
+    <a class="navbar-brand title-bebas bebas-size-1" href="{{ route('dashboard') }}">{{ __('messages.lan_creator') }}</a>
 
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <li class="nav-item dropdown">
@@ -78,28 +78,28 @@
       <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
           <div class="nav">
-            <div class="sb-sidenav-menu-heading">Navigation</div>
-            <a class="nav-link" href="{{ route('dashboard') }}"><div class="sb-nav-link-icon"><i class="fa fa-tachometer"></i></div>Dashboard</a>
+            <div class="sb-sidenav-menu-heading">{{ __('messages.navigation') }}</div>
+            <a class="nav-link" href="{{ route('dashboard') }}"><div class="sb-nav-link-icon"><i class="fa fa-tachometer"></i></div>{{ __('messages.dashboard') }}</a>
             <a class="nav-link" href="{{ route('home') }}"><div class="sb-nav-link-icon"><i class="fa fa-home"></i></div>{{ __('messages.home') }}</a>
 
-						<div class="sb-sidenav-menu-heading">LAN</div>
-						<a class="nav-link" href="{{ route('all_lans') }}">All LANs</a>
-            <a class="nav-link" href="{{ route('task.all') }}">My Tasks</a>
+						<div class="sb-sidenav-menu-heading">{{ __('messages.lan') }}</div>
+						<a class="nav-link" href="{{ route('all_lans') }}">{{ __('messages.all_lans') }}</a>
+            <a class="nav-link" href="{{ route('task.all') }}">{{ __('messages.my_tasks') }}</a>
 
-						<div class="sb-sidenav-menu-heading">Games</div>
-            <a class="nav-link" href="{{ url('/game') }}">All games</a>
-            <a class="nav-link" href="{{ route('game.favourite') }}">My games</a>
+						<div class="sb-sidenav-menu-heading">{{ __('messages.games') }}</div>
+            <a class="nav-link" href="{{ url('/game') }}">{{ __('messages.all_games') }}</a>
+            <a class="nav-link" href="{{ route('game.favourite') }}">{{ __('messages.my_games') }}</a>
 
 						@if($logged_user->rank_user == config('ranks.SITE_ADMIN'))
-			    	<div class="sb-sidenav-menu-heading">ADM</div>
-						<a class="nav-link" href="{{ url('/dashboard/admin') }}">Admin dashboard</a>
-						<a class="nav-link" href="{{ url('/adm/users') }}">All Users</a>
-			    	<a class="nav-link" href="{{ route('admin.tournaments') }}">All Tournaments</a>
+			    	<div class="sb-sidenav-menu-heading">{{ __('messages.admin') }}</div>
+						<a class="nav-link" href="{{ url('/dashboard/admin') }}">{{ __('messages.admin_dashboard') }}</a>
+						<a class="nav-link" href="{{ url('/adm/users') }}">{{ __('messages.all_users') }}</a>
+			    	<a class="nav-link" href="{{ route('admin.tournaments') }}">{{ __('messages.all_tournaments') }}</a>
 			    	@endif
           </div>
         </div>
       	<div class="sb-sidenav-footer">
-          <div class="small">Logged in as:</div>
+          <div class="small">{{ __('messages.logged_as') }}</div>
           {!!$logged_user->name!!} {!!$logged_user->lastname!!}
         </div>
       </nav>

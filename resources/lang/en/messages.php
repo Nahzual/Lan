@@ -13,14 +13,8 @@ return [
 	*/
 
 	'chln' => ' Change Language',
-	'dashboard' => 'LAN Creator ',
 
 	// Menu
-
-	//'menu_1' => 'Find a LAN',
-	//'menu_2' => 'Contact',
-	//'menu_2' => 'Login',
-	//'menu_2' => 'Register',
 
 	'find_lan' => 'Find a LAN',
 	'contact' => 'Contact',
@@ -29,6 +23,11 @@ return [
 	'logout' => 'Logout',
 	'remember_me' => 'Remember me',
 	'forgot_password' => 'Forgot Your Password?',
+	'reset_password' => 'Reset Password',
+	'send_reset_link' => 'Send Password Reset Link',
+	'confirm_password_before' => 'Please confirm your password before continuing.',
+	
+	'lan_creator' => 'LAN Creator',
 
 
 	// Home
@@ -106,23 +105,28 @@ return [
 	'adding_helper_lan' => 'Adding helper to LAN :',
 	'helper_name' => 'Helper\'s name :',
 
-	'back_lan' => 'Go back to the LAN',
-	'back_dashboard' => 'Go back to the dashboard',
+	'back_home' => ' Go back to the home page',
+	'back_lan' => ' Go back to the LAN',
+	'back_dashboard' => ' Go back to the dashboard',
 
 	'participants' => 'Participants',
 	'state' => 'State',
 	'quit' => 'Quit',
 
-	'' =>'Navigation',
-	'' =>'Dashboard',
-	'' =>'Home',
-	'' =>'LAN',
-	'' =>'All LANs',
-	'' =>'My Tasks',
+	'navigation' =>'Navigation',
+	'dashboard' =>'Dashboard',
+	'lan' =>'LAN',
+	'all_lans' =>'All LANs',
+	'my_tasks' =>'My Tasks',
 
-	'' =>'GAMES',
-	'' =>'All games',
-	'' =>'My games',
+	'games' =>'GAMES',
+	'all_games' =>'All games',
+	'my_games' =>'My games',
+	
+	'admin' => 'ADM',
+	'admin_dashboard' => 'Admin dashboard',
+	'all_users' => 'All Users',
+	'all_tournaments' => 'All Tournaments',
 
 	'no_lans' =>'No LANs to show',
 
@@ -131,7 +135,7 @@ return [
 	'my_lans_player' =>'LANs on which I am player',
 
 	'create_new_lan' =>'Create New LAN',
-
+	
 	// LAN
 
 	'nb_max_registrants' => 'Maximum numbers of registrants',
@@ -150,10 +154,14 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'Empty chair :',
 	'empty_space' => 'Empty space :',
+	
+	'viewing' => 'Viewing :',
+	'' => 'Room dimensions',
 
 	// Edit
 	'update' => 'Update',
 	'edit_title_lan' => 'Editing LAN ',
+	'edit_profile' => 'Edit your profile',
 
 	// Contact
 	'contact_us' => 'Contact us',
@@ -161,21 +169,17 @@ return [
 	'description' => 'Description',
 	'attachment' => 'Attachment',
 	'send' => ' Send',
+	
+	'logged_as' => 'Logged in as:',
+	
+	// Activity
+	
+	'create_activity' => 'Creating new Activity',
+	'edit_activity' => 'Editing Activity',
 
 	// {{ __('messages.contact_us') }}
 
 	/**
-	// LAN
-
-	'Viewing :'
-	'About'
-	'Max number of players'
-	'Opening date'
-	'Duration'
-	'Budget'
-	'Room dimensions'
-	'Location'
-
 
 	'Quick-Links'
 	'Activities'

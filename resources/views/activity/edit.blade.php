@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Editing Activity : {!!$activity->name!!}
+{{ __('messages.edit_activity') }} : {!!$activity->name!!}
 @endsection
 
 @section('page-title')
-Editing Activity
+{{ __('messages.edit_activity') }}
 @endsection
 
 @section('content')
@@ -16,20 +16,20 @@ Editing Activity
 {!! Form::model($activity, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$lan->id.','.$activity->id.')']) !!}
 	<div>
 		<div class="form-group">
-			{!! Form::label('name_activity', 'Name', ['class' => 'display-6']) !!}
+			{!! Form::label('name_activity', {{ __('messages.name') }}, ['class' => 'display-6']) !!}
 			{!! Form::text('name_activity', null, ['class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('desc_activity', 'Description', ['class' => 'display-6']) !!}
+			{!! Form::label('desc_activity', {{ __('messages.description') }}, ['class' => 'display-6']) !!}
 			{!! Form::textarea('desc_activity', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-warning shadow-sm"><i class='fa fa-edit'></i> Update</button>
+			<button type="submit" class="btn btn-outline-warning shadow-sm"><i class='fa fa-edit'></i> {{ __('messages.update') }}</button>
 		</div>
 		<div class="col">
-			<a class="btn btn-outline-info shadow-sm" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> Go Back to Lan</a>
+			<a class="btn btn-outline-info shadow-sm" href="{{ route('lan.show', $lan) }}"><i class='fa fa-arrow-left'></i> {{ __('messages.back_lan') }}</a>
 		</div>
 	</div>
 {!! Form::close() !!}

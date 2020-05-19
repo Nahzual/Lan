@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Games
+{{ __('messages.games') }}
 @endsection
 
 @section('page-title')
-Games
+{{ __('messages.games') }}
 @endsection
 
 @section('title-buttons')
@@ -14,7 +14,7 @@ Games
 			<form method="GET" action="{{ route('game.create') }}">
 			@csrf
 			@method('GET')
-				<button type="submit" class="btn  btn-outline-success shadow-sm float-right"><i class='fa fa-plus-square'></i> Create a new game</button>
+				<button type="submit" class="btn  btn-outline-success shadow-sm float-right"><i class='fa fa-plus-square'></i> {{ __('create_new_game') }}</button>
 			</form>
 		</div>
 	@endif
@@ -26,7 +26,7 @@ Games
 
 {!! Form::open(['method' => 'post','onsubmit'=>'return searchGames(event)']) !!}
 	<div>
-		<h4 >What's gaming, doc ?</h4>
+		<h4 >{{ __('messages.no_games2') }}</h4>
 		<div class="form-group">
 			{!! Form::hidden('view_path', 'game.list') !!}
 			{!! Form::text('name_game', null, ['required'=>'', 'class' => 'form-control']) !!}
@@ -34,7 +34,7 @@ Games
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn  btn-outline-info shadow-sm"><i class='fa fa-search'></i> Search</button>
+			<button type="submit" class="btn  btn-outline-info shadow-sm"><i class='fa fa-search'></i> {{ __('messages.search') }}</button>
 		</div>
 	</div>
 {!! Form::close() !!}

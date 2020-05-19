@@ -3,17 +3,17 @@
   <table class="table card-table">
     <thead class="card-table text-center">
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col" >Release date</th>
-      <th scope="col" >Cost</th>
-      <th scope="col" >Game type</th>
-      <th scope="col" >Actions</th>
+      <th scope="col">{{ __('messages.name') }}</th>
+      <th scope="col">{{ __('messages.release_date') }}</th>
+      <th scope="col">{{ __('messages.price') }}</th>
+      <th scope="col">{{ __('messages.game_type') }}</th>
+      <th scope="col">{{ __('messages.actions') }}</th>
     </thead>
 
     <tbody>
       @if(count($games)==0)
       <tr>
-        <td colspan="7"><h3 class="text-center">Your game is in another castle...</h3></td>
+        <td colspan="7"><h3 class="text-center">{{ __('messages.no_game3') }}</h3></td>
       </tr>
       @endif
 
@@ -34,20 +34,20 @@
         </td>
 
         <td scope="col" class="text-center">
-          <a class="mb-2 btn btn-success" href="{{ route('game.show', $game->id) }}"><i class='fa fa-eye'></i> View</a>
+          <a class="mb-2 btn btn-success" href="{{ route('game.show', $game->id) }}"><i class='fa fa-eye'></i> {{ __('messages.view') }}</a>
 
         <?php $game_isnt_favourite=isset($favourite_games) && !$favourite_games->contains($game); ?>
           {!! Form::open(['method' => 'post','url'=>'', 'id'=>'game-mark-'.$game->id, 'style'=>(!$game_isnt_favourite) ? 'display: none;' : 'display: block;','onsubmit'=>'return addGameToFavourite(event,'.$game->id.')']) !!}
-          	<button type="submit" class="btn btn-primary mb-2"><i class='fa fa-star'></i> Mark</button>
+          	<button type="submit" class="btn btn-primary mb-2"><i class='fa fa-star'></i> {{ __('messages.mark') }}</button>
           {!! Form::close() !!}
 
           {!! Form::open(['method' => 'delete','url'=>'', 'id'=>'game-unmark-'.$game->id,'style'=>($game_isnt_favourite) ? 'display: none;' : 'display: block;', 'onsubmit'=>'return removeGameFromFavourite(event,'.$game->id.')']) !!}
-            <button type="submit" class="btn btn-warning mb-2"><i class='fa fa-star-o'></i> Unmark</button>
+            <button type="submit" class="btn btn-warning mb-2"><i class='fa fa-star-o'></i> {{ __('messages.unmark') }}</button>
           {!! Form::close() !!}
 
         @if(isset($logged_user) && $logged_user->isSiteAdmin())
         {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteGame(event,'.$game->id.')']) !!}
-          <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+          <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> {{ __('messages.delete') }}</button>
         {!! Form::close() !!}
         @endif
 	</td>

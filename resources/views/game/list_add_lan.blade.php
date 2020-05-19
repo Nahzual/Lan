@@ -3,17 +3,17 @@
   <table class="table card-table">
     <thead class="card-table text-center">
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Release date</th>
-      <th scope="col">Cost</th>
-      <th scope="col">Game type</th>
-      <th scope="col">Actions</th>
+      <th scope="col">{{ __('messages.name') }}</th>
+      <th scope="col">{{ __('messages.release_date') }}</th>
+      <th scope="col">{{ __('messages.price') }}</th>
+      <th scope="col">{{ __('messages.game_type') }}</th>
+      <th scope="col">{{ __('messages.actions') }}</th>
     </thead>
 
     <tbody>
       @if(count($games)==0)
       <tr>
-        <td colspan="6"><h3 class="text-center">No games to show</h3></td>
+        <td colspan="6"><h3 class="text-center">{{ __('messages.no_game') }}</h3></td>
       </tr>
       @endif
 
@@ -37,7 +37,7 @@
           {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'return addGame(event,'.$lan->id.','.$game->id.')']) !!}
             <div class="form-group row text-center">
               <div class="col">
-                <button type="submit" class="btn btn-success"><i class='fa fa-plus-square'></i> Add game</button>
+                <button type="submit" class="btn btn-success"><i class='fa fa-plus-square'></i> {{ __('messages.add_game') }}</button>
               </div>
             </div>
           {!! Form::close() !!}

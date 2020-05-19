@@ -115,6 +115,7 @@ return [
 	'back_home' => ' Go back to the home page',
 	'back_lan' => ' Go back to the LAN',
 	'back_dashboard' => ' Go back to the dashboard',
+	'back_game' => 'Return to the game list',
 
 	'participants' => 'Participants',
 	'state' => 'State',
@@ -136,9 +137,11 @@ return [
 	'all_tournaments' => 'Manage tournaments',
 	'all_materials' => 'Manage materials',
 
-
 	'no_lans' =>'No LANs to show',
 	'no_users'=>'No users to show',
+	'no_games'=>'No games to show',
+	'no_games2'=> 'What\'s gaming, doc ?',
+	'no_games3'=> 'Your game is in another castle...',
 	'latest_users' => 'Latest users',
 	'latest_deleted_users' => 'Latest deleted users',
 
@@ -196,14 +199,32 @@ return [
 	'check_email' => 'Before proceeding, please check your email for a verification link.',
 	'not_get' => 'If you did not receive the email',
 	'click_request_another' => 'click here to request another',
-	
+
 	// Errors
 	'error_404' => '404 Error',
 	'' => 'The page you attempted to reach is not registered.',
 	
 	// Ports
-	'add_port_game' => 'Adding port to game ":game" for LAN :lan',
+	'add_port_game_lan' => 'Adding port to game ":game" for LAN :lan',
+	'add_port_game' => 'Adding port to game ":game"',
 	'port' => 'Port :',
+	
+	// games
+	'release_date' => 'Release date',
+	'price' => 'Price (in €) ',
+	'game_type' => 'Game type',
+	'solo' => '1 player',
+	'multi_local' => 'Local multiplayer',
+	'Online multiplayer',
+	'used_ports' => 'Used ports',
+	'ports' => 'Ports',
+	'my_fav' => 'My precious',
+	'find_new_games' => 'Find new games',
+	'mark' => 'Mark',
+	'unmark' => 'Unmark',
+	'create_new_game' => 'Create a new game',
+	'add_game' => 'Add game',
+	'game' => 'Game'
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE

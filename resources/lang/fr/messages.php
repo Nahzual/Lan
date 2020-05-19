@@ -115,6 +115,7 @@ return [
 	'back_home' => ' Retour a la page d\'accueil',
 	'back_lan' => ' Retourner a la LAN',
 	'back_dashboard' => ' Retourner au dashboard',
+	'back_game' => 'Return to the game list',
 
 	'participants' => 'Participants',
 	'state' => 'State',
@@ -138,6 +139,9 @@ return [
 
 	'no_lans' =>'Aucune LAN à afficher',
 	'no_users'=>'No users to show',
+	'no_games'=>'No games to show',
+	'no_games2'=> 'What\'s gaming, doc ?',
+	'no_games3'=> 'Your game is in another castle...',
 	'latest_users' => 'Latest users',
 	'latest_deleted_users' => 'Latest deleted users',
 
@@ -201,12 +205,31 @@ return [
 	'' => 'The page you attempted to reach is not registered.',
 	
 	// Ports
-	'add_port_game' => 'Adding port to game ":game" for LAN :lan',
+	'add_port_game_lan' => 'Adding port to game ":game" for LAN :lan',
+	'add_port_game' => 'Adding port to game ":game"',
 	'port' => 'Port :',
+	
+	// games
+	'release_date' => 'Release date',
+	'price' => 'Price (in €) ',
+	'game_type' => 'Game type',
+	'solo' => '1 player',
+	'multi_local' => 'Local multiplayer',
+	'Online multiplayer',
+	'used_ports' => 'Used ports',
+	'ports' => 'Ports',
+	'my_fav' => 'My precious',
+	'find_new_games' => 'Find new games',
+	'mark' => 'Mark',
+	'unmark' => 'Unmark',
+	'create_new_game' => 'Create a new game',
+	'add_game' => 'Add game',
+	'game' => 'Game'
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
 	//'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
+	//{{ __('messages.add_port_game', ['game' => $game->name_game, 'lan' => $lan->name]) }}
 
 	// {{ __('messages.chln') }}
 

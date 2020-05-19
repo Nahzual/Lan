@@ -3,19 +3,19 @@
   <table class="table card-table">
     <thead class="card-table text-center">
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Release date</th>
-      <th scope="col">Game type</th>
+      <th scope="col">{{ __('messages.name') }}</th>
+      <th scope="col">{{ __('messages.release_date')</th>
+      <th scope="col">{{ __('messages.game_type') }}</th>
 			@if(isset($userIsLanAdmin) && $userIsLanAdmin)
-			<th scope="col">Used ports</th>
-      <th scope="col">Actions</th>
+			<th scope="col">{{ __('messages.used_ports') }}</th>
+      <th scope="col">{{ __('messages.actions') }}</th>
 			@endif
     </thead>
 
     <tbody>
       @if(count($games)==0)
       <tr>
-        <td colspan="6"><h3 class="text-center">No games to show</h3></td>
+        <td colspan="6"><h3 class="text-center">{{ __('messages.no_games') }}</h3></td>
       </tr>
       @endif
 
@@ -41,9 +41,9 @@
         			<td scope="col" clas="text-center">
 					<div class="form-group row text-center">
 						<div class="col">
-							<button class="btn btn-primary shadow-sm mb-2" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
+							<button class="btn btn-primary shadow-sm mb-2" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> {{ __('messages.ports') }}</button>
 						  {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$lan->id.','.$game->id.')']) !!}
-							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Delete</button>
+							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> {{ __('messages.delete') }}</button>
 						  {!! Form::close() !!}
 						</div>
 					</div>

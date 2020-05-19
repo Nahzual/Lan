@@ -3,7 +3,7 @@
         <div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3>{{ __('messages.add_port_game', ['game' => $game->name_game, 'lan' => $lan->name]) }}</h3>
+							<h3>{{ __('messages.add_port_game_lan', ['game' => $game->name_game, 'lan' => $lan->name]) }}</h3>
 						</div>
 					</div>
 				</div>

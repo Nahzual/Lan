@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All tournaments for the LAN {{ $nlan }}
+All tournaments for the LAN {!! $nlan !!}
 @endsection
 
 @section('page-title')

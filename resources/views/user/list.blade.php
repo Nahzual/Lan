@@ -75,26 +75,45 @@ Site Users
 
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
-		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/dashboard/admin') }}" tabindex="-2">{{ __('messages.back_admin_dash') }}</a>
+		@if(!isset($username))
+		<a class="btn btn-info" href="{{ url('/dashboard/admin') }}" tabindex="-2">{{ __('messages.back_admin_dash') }}</a>
 
-			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/adm/users') }}" tabindex="-2">{{ __('messages.first') }}</a>
-			</li>
-			<li class="page-item @if($previous == 0) disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('adm/users/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
-			</li>
-			<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page)) }}">{{ $page }}</a></li>
-			@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
-			@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
-			<li class="page-item @if($next) @else disabled @endif">
-				<a class="btn btn-outline-info" href="{{ $next ? url('/adm/users/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
-			</li>
-			<li class="page-item">
-				<a class="btn btn-secondary" href="{{ url('/adm/users/'.$max) }}">{{ __('messages.last') }}</a>
-			</li>
-		</ul>
-	</nav>
+		<li class="page-item">
+			<a class="btn btn-secondary" href="{{ url('/adm/users') }}" tabindex="-2">{{ __('messages.first') }}</a>
+		</li>
+		<li class="page-item @if($previous == 0) disabled @endif">
+			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('adm/users/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
+		</li>
+		<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page)) }}">{{ $page }}</a></li>
+		@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
+		@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
+		<li class="page-item @if($next) @else disabled @endif">
+			<a class="btn btn-outline-info" href="{{ $next ? url('/adm/users/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
+		</li>
+		<li class="page-item">
+			<a class="btn btn-secondary" href="{{ url('/adm/users/'.$max) }}">{{ __('messages.last') }}</a>
+		</li>
+		@else
+		<a class="btn btn-info" href="{{ url('/dashboard/admin?pseudo='.$username) }}" tabindex="-2">{{ __('messages.back_admin_dash') }}</a>
+
+		<li class="page-item">
+			<a class="btn btn-secondary" href="{{ url('/adm/users?pseudo='.$username) }}" tabindex="-2">{{ __('messages.first') }}</a>
+		</li>
+		<li class="page-item @if($previous == 0) disabled @endif">
+			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('adm/users/'.($previous).'?pseudo='.$username) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
+		</li>
+		<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page).'?pseudo='.$username) }}">{{ $page }}</a></li>
+		@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+1).'?pseudo='.$username) }}">{{ ($page+1) }}</a></li>@endif
+		@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/adm/users/'.($page+2).'?pseudo='.$username) }}">{{ ($page+2) }}</a></li>@endif
+		<li class="page-item @if($next) @else disabled @endif">
+			<a class="btn btn-outline-info" href="{{ $next ? url('/adm/users/'.($next).'?pseudo='.$username) : '#' }}">{{ __('messages.next') }}</a>
+		</li>
+		<li class="page-item">
+			<a class="btn btn-secondary" href="{{ url('/adm/users/'.$max.'?pseudo='.$username) }}">{{ __('messages.last') }}</a>
+		</li>
+		@endif
+	</ul>
+</nav>
 @endsection
 
 @section('js_includes')

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All activities for the LAN {{ $lan->name }}
+All activities for the LAN {!! $lan->name !!}
 @endsection
 
 @section('page-title')

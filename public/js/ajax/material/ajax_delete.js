@@ -1,17 +1,17 @@
-function sendRequest(e,id){
+function sendRequest(e,materialID){
   if(e!=null) e.preventDefault();
 
-
+	if(confirm("Do you really want to delete this material ?")){
 	  $.ajax({
 	    type: "DELETE",
-	    url: '/material/'+id,
+	    url: '/material/'+materialID,
 	    dataType: 'json',
-	    data: "_token="+$("[name='_token']").val()
-	          +'&_method='+$("[name='_method']").val(),
+	    data: "_token="+$("[name='_token']").val(),
 	    success: function(data){
 				var success=$('#response-success');
 				var error=$('#response-error');
 	      if(data.success != undefined){
+					$('#row-material-'+materialID).html('');
 	        success.show();
 	        error.hide();
 	        success.html(data.success);
@@ -21,7 +21,7 @@ function sendRequest(e,id){
 	        error.html(data.error);
 	      }
 	    },
-	    error: function(data){
+	    error: function(xhr,status,error){
 				var success=$('#response-success');
 				var error=$('#response-error');
 	      error.show();
@@ -29,6 +29,7 @@ function sendRequest(e,id){
 	      error.html("An error occured on the server, please try again later.");
 	    }
 	  });
+	}
 
   return false;
 }

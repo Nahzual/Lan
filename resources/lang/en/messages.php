@@ -26,7 +26,7 @@ return [
 	'reset_password' => 'Reset Password',
 	'send_reset_link' => 'Send Password Reset Link',
 	'confirm_password_before' => 'Please confirm your password before continuing.',
-	
+
 	'lan_creator' => 'LAN Creator',
 
 
@@ -108,7 +108,7 @@ return [
 	'add_new_helper' => 'Add a new Helper',
 	'adding_helper_lan' => 'Adding helper to LAN :',
 	'helper_name' => 'Helper\'s name :',
-	
+
 	'add_new_game' => 'Add a new game',
 	'add_new_material' => 'Add a new material',
 
@@ -129,17 +129,19 @@ return [
 	'games' =>'GAMES',
 	'all_games' =>'All games',
 	'my_games' =>'My games',
-	
+
 	'admin' => 'ADM',
 	'admin_dashboard' => 'Admin dashboard',
-	'all_users' => 'All Users',
-	'all_tournaments' => 'All Tournaments',
+	'all_users' => 'Manage users',
+	'all_tournaments' => 'Manage tournaments',
+	'all_materials' => 'Manage materials',
+
 
 	'no_lans' =>'No LANs to show',
 	'no_users'=>'No users to show',
 	'latest_users' => 'Latest users',
 	'latest_deleted_users' => 'Latest deleted users',
-	
+
 	'pending_lans' => 'Pending LANs',
 
 	'my_lans' =>'My LANs',
@@ -147,7 +149,7 @@ return [
 	'my_lans_player' =>'LANs on which I am player',
 
 	'create_new_lan' =>'Create New LAN',
-	
+
 	// LAN
 
 	'nb_max_registrants' => 'Maximum numbers of registrants',
@@ -166,7 +168,7 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'Empty chair :',
 	'empty_space' => 'Empty space :',
-	
+
 	'viewing' => 'Viewing :',
 	'' => 'Room dimensions',
 
@@ -181,14 +183,14 @@ return [
 	'description' => 'Description',
 	'attachment' => 'Attachment',
 	'send' => ' Send',
-	
+
 	'logged_as' => 'Logged in as:',
-	
+
 	// Activity
-	
+
 	'create_activity' => 'Creating new Activity',
 	'edit_activity' => 'Editing Activity',
-	
+
 	'verify_email' => 'Verify Your Email Address',
 	'verif_link_sent' => 'A fresh verification link has been sent to your email address.',
 	'check_email' => 'Before proceeding, please check your email for a verification link.',

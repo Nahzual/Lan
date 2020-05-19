@@ -181,6 +181,7 @@ Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->nam
 Route::get('/user/{user}/delete','UsersController@confirmDestroy')->name('user.confirmDestroy');
 Route::post('/user','UsersController@store')->name('user.store');
 Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
+Route::delete('/user/{user}/force','UsersController@forceDestroy')->name('user.force_destroy');
 Route::get('/user/{user}','UsersController@show')->name('user.show');
 Route::put('/user/{user}','UsersController@update')->name('user.update');
 Route::get('/user/{user}/edit','UsersController@edit')->name('user.edit');
@@ -192,6 +193,10 @@ Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.pag
 //Tournaments
 Route::get('adm/tournaments', 'TournamentsController@admList')->name('admin.tournaments');
 Route::get('adm/tournaments/{page}', 'TournamentsController@admList')->name('admin.tournaments.page');
+
+// Materials
+Route::get('/adm/materials', 'MaterialsController@index')->name('material.list');
+Route::get('/adm/materials/{page}', 'MaterialsController@index')->name('material.list_page');
 
 /* ----------------- SETTINGS ROUTES ----------------- */
 

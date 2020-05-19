@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-The Shopping List for the LAN {{ $lan->name }}
+The Shopping List for the LAN {!! $lan->name !!}
 @endsection
 
 @section('page-title')

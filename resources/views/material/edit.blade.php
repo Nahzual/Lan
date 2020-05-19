@@ -15,7 +15,7 @@ Editing Material
 <div id="response-error" class="alert alert-danger mt-2" style="display:none"></div>
 
 {!! Form::model($material, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$material->id.')']) !!}
-	<div class="bg-light">
+	<div>
 		<div class="form-group">
 			{!! Form::label('name_material', 'Name') !!}
 			{!! Form::text('name_material', null, ['class' => 'form-control']) !!}

@@ -90,11 +90,12 @@
             <a class="nav-link" href="{{ url('/game') }}">{{ __('messages.all_games') }}</a>
             <a class="nav-link" href="{{ route('game.favourite') }}">{{ __('messages.my_games') }}</a>
 
-						@if($logged_user->rank_user == config('ranks.SITE_ADMIN'))
+						@if($logged_user->isSiteAdmin())
 			    	<div class="sb-sidenav-menu-heading">{{ __('messages.admin') }}</div>
 						<a class="nav-link" href="{{ url('/dashboard/admin') }}">{{ __('messages.admin_dashboard') }}</a>
 						<a class="nav-link" href="{{ url('/adm/users') }}">{{ __('messages.all_users') }}</a>
 			    	<a class="nav-link" href="{{ route('admin.tournaments') }}">{{ __('messages.all_tournaments') }}</a>
+						<a class="nav-link" href="{{ url('/adm/materials') }}">{{ __('messages.all_materials') }}</a>
 			    	@endif
           </div>
         </div>

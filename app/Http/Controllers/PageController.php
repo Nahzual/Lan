@@ -22,7 +22,12 @@ class PageController extends Controller{
 		* @return \Illuminate\Contracts\Support\Renderable
 		*/
 		public function home(Request $request){
-			$lan = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->orderBy('created_at','desc')->first();
+			$lan = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->whereExists(function($query){
+				$query->select('lan_user.id')
+							->from('lan_user')
+							->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+							->where('lan_user.lan_id','=','lan.id');
+			})->orderBy('created_at','desc')->first();
 			return view('home', compact('lan'));
 		}
 
@@ -33,7 +38,14 @@ class PageController extends Controller{
 		*/
 		public function allLansList(Request $request){
 			if(Auth::check()){
-				$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'));
+				$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->whereExists(function($query){
+					$query->select('lan_user.id')
+								->from('lan_user')
+								->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+								->whereRaw('lan_user.lan_id=lans.id')
+								->join('users','lan_user.user_id','=','users.id')
+								->whereNull('users.deleted_at');
+				});
 
 				// lan research based on location
 				if(Auth::check() && isset($request->location)){

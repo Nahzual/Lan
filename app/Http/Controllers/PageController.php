@@ -22,12 +22,7 @@ class PageController extends Controller{
 		* @return \Illuminate\Contracts\Support\Renderable
 		*/
 		public function home(Request $request){
-			$lan = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->whereExists(function($query){
-				$query->select('lan_user.id')
-							->from('lan_user')
-							->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
-							->where('lan_user.lan_id','=','lan.id');
-			})->orderBy('created_at','desc')->first();
+			$lan = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->orderBy('created_at','desc')->first();
 			return view('home', compact('lan'));
 		}
 

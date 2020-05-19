@@ -1,17 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
+
 		<section id="jumbotron">
 			<div class="jumbotron" >
 				<div class="container">
+
 					<h1 class="display-3 text-right">{{ __('messages.hometitle') }}</h1>
-					todopage : remplacer img et le noir
+					@if($lan)
+						<div id="homediscover" class="alert alert-dark text-center" role="alert">
+							<span>The latest LAN was created on<?php $date = date_create($lan->created_at); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</span>
+							<span>{{ __('messages.homejoin') }}</span>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>	
+					@endif
 				</div>
+
 			</div>
+
+
 		</section>
 
-
-		<section id="features" style="background-color:black">
+		<section id="features" style="background-color:#212529">
 
 			<div class="container" style="background-color:white">
 				<div class="row">
@@ -42,18 +54,7 @@
 			</div>
 
 		</section>
-		@if($lan)
-		<section id="discover" >
-			<div class="jumbotron home_div" >
-				<div class="container">
 
-					<p>The latest LAN was created on<?php $date = date_create($lan->created_at); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</p>
-					<p>{{ __('messages.homejoin') }}</p>
-
-				</div>
-			</div>
-		</section>
-		@endif
 </div>
 
 

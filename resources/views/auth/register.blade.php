@@ -8,7 +8,7 @@
 				<div class="card-header  bg-dark">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="text-light">{{ __('Register') }}</h3>
+							<h3 class="text-light">{{ __('messages.register') }}</h3>
 						</div>
 					</div>
 				</div>
@@ -18,7 +18,7 @@
 						@csrf
 
 						<div class="form-group row">
-							<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+							<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('messages.name') }}</label>
 
 							<div class="col-md-6">
 								<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -32,7 +32,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+							<label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('messages.lname') }}</label>
 
 							<div class="col-md-6">
 								<input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
@@ -46,7 +46,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="pseudo" class="col-md-4 col-form-label text-md-right">{{ __('Pseudo') }}</label>
+							<label for="pseudo" class="col-md-4 col-form-label text-md-right">{{ __('messages.pseudo') }}</label>
 
 							<div class="col-md-6">
 								<input id="pseudo" type="text" class="form-control @error('pseudo') is-invalid @enderror" name="pseudo" value="{{ old('pseudo') }}" required autocomplete="pseudo" autofocus>
@@ -60,7 +60,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+							<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('messages.email') }}</label>
 
 							<div class="col-md-6">
 								<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -74,7 +74,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="tel_user" class="col-md-4 col-form-label text-md-right">{{ __('Tel') }}</label>
+							<label for="tel_user" class="col-md-4 col-form-label text-md-right">{{ __('messages.tel') }}</label>
 
 							<div class="col-md-6">
 								<input id="tel_user" type="tel_user" class="form-control @error('tel_user') is-invalid @enderror" name="tel_user" value="{{ old('tel_user') }}" required autocomplete="tel_user">
@@ -88,7 +88,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+							<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('messages.password') }}</label>
 
 							<div class="col-md-6">
 								<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -102,7 +102,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+							<label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('messages.confirmpassword') }}</label>
 
 							<div class="col-md-6">
 								<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -137,7 +137,7 @@
 						<div class="form-group row mb-0">
 							<div class="col-md-6 offset-md-4">
 								<button type="submit" class="btn  btn-outline-dark shadow-sm"><i class='fa fa-sign-in'></i>
-									{{ __('Register') }}
+									{{ __('messages.register') }}
 								</button>
 							</div>
 						</div>

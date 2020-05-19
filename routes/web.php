@@ -181,6 +181,7 @@ Route::get('/lan/{lan}/activities/{page}','LansController@list_activities')->nam
 Route::get('/user/{user}/delete','UsersController@confirmDestroy')->name('user.confirmDestroy');
 Route::post('/user','UsersController@store')->name('user.store');
 Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
+Route::delete('/user/{user}/force','UsersController@forceDestroy')->name('user.force_destroy');
 Route::get('/user/{user}','UsersController@show')->name('user.show');
 Route::put('/user/{user}','UsersController@update')->name('user.update');
 Route::get('/user/{user}/edit','UsersController@edit')->name('user.edit');

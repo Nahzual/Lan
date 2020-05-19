@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -345,11 +346,28 @@ class UsersController extends Controller{
 			if($logged_user->id==$id || $logged_user->isSiteAdmin()){
 				$user=User::find($id);
 				if($user!=null){
+					// free places taken by this user
+					$player_lans=$user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->select('lan_user.place_number_x','lan_user.place_number_y','lan_user.id AS lan_user_id','lan_user.lan_id')->get();
+
+					foreach($player_lans as $lan){
+						$x=$lan->place_number_x;
+						$y=$lan->place_number_y;
+						$p_id=$lan->lan_user_id;
+						$lan_id=$lan->lan_id;
+						$file_name="../storage/lans/room_plan_".$lan_id.".json";
+
+						if(file_exists($file_name)){
+							$room=json_decode(file_get_contents($file_name));
+							$room->room->field[$y][$x]=config('room.EMPTY_CHAIR');
+							file_put_contents($file_name,json_encode($room));
+						}
+						DB::table('lan_user')->where('lan_user.id','=',$p_id)->delete();
+					}
+
 					if($user->id==$logged_user->id){
 						Auth::logout();
 						$user->delete();
-						if($user->isSiteAdmin()) return response()->json(['success'=>'Your account has been successfully deleted.']);
-						else return redirect('/')->with('success','Your account has been successfully deleted.');
+						return redirect('/')->with('success','Your account has been successfully disabled.');
 					}else{
 						$user->delete();
 						try{
@@ -371,6 +389,43 @@ class UsersController extends Controller{
 			}
 		}else{
 			return response()->json(['error'=>'Please log in to perform this action.']);
+		}
+	}
+
+	/**
+	* HardDelete the specified resource from storage.
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function forceDestroy($id){
+		if(Auth::check()){
+			$logged_user=Auth::user();
+			if($logged_user->id==$id){
+				// free places taken by this user
+				$player_lans=$logged_user->lans()->where('lan_user.rank_lan','=',config('ranks.PLAYER'))->select('lan_user.place_number_x','lan_user.place_number_y','lan_user.id AS lan_user_id','lan_user.lan_id')->get();
+
+				foreach($player_lans as $lan){
+					$x=$lan->place_number_x;
+					$y=$lan->place_number_y;
+					$p_id=$lan->lan_user_id;
+					$lan_id=$lan->lan_id;
+					$file_name="../storage/lans/room_plan_".$lan_id.".json";
+
+					if(file_exists($file_name)){
+						$room=json_decode(file_get_contents($file_name));
+						$room->room->field[$y][$x]=config('room.EMPTY_CHAIR');
+						file_put_contents($file_name,json_encode($room));
+					}
+				}
+
+				Auth::logout();
+				$logged_user->forceDelete();
+				return redirect('/')->with('success','Your account has been successfully deleted.');
+			}else{
+				return back()->with('error','You can\'t delete other users\' accounts.');
+			}
+		}else{
+			return back()->with('error','Please log in to perform this action.');
 		}
 	}
 

@@ -1206,7 +1206,14 @@ class LansController extends Controller{
 	* @return \Illuminate\Contracts\Support\Renderable
 	*/
 	public function list_all(Request $request){
-		$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->get();
+		$lans = Lan::where('waiting_lan','=',config('waiting.ACCEPTED'))->where('opening_date','>',date('Y-m-d'))->whereExists(function($query){
+			$query->select('lan_user.id')
+						->from('lan_user')
+						->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
+						->whereRaw('lan_user.lan_id=lans.id')
+						->join('users','lan_user.user_id','=','users.id')
+						->whereNull('users.deleted_at');
+		})->get();
 		if(Auth::check()){
 			return view('lan.list_all', compact('lans'));
 		}else{

@@ -25,7 +25,21 @@ class Tournament extends Model
 	}
 
 	/*Returns all the teams for this tournament*/
-	public function team(){
+	public function teams(){
 		return $this->hasMany('App\Team');
+	}
+
+	/*Returns the number of users that joined this tournament*/
+	public function players_count($teams=null){
+		if($teams==null) $teams=$this->teams;
+		
+		$players_count=0;
+		foreach($teams as $team){
+			$count=$team->users()->selectRaw('COUNT(*) as count')->first();
+			if($count==null) $count=0;
+			else $count=$count->count;
+			$players_count+=$count;
+		}
+		return $players_count;
 	}
 }

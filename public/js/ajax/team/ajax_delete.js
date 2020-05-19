@@ -9,10 +9,10 @@ function removeTeam(e, tournamentId, teamId){
       data: "_token="+$("[name='_token']").val()
 	          +'&_method='+$("[name='_method']").val(),
 	    success: function(data){
-				var success=$('#response-success-team');
-				var error=$('#response-error-team');
+				var success=$('#response-success-teams');
+				var error=$('#response-error-teams');
 	      if(data.success != undefined){
-					$('#row-team-lan-'+teamId).html('');
+					$('#row-team-tournament-'+teamId).remove();
 	        success.show();
 	        error.hide();
 	        success.html(data.success);
@@ -23,8 +23,8 @@ function removeTeam(e, tournamentId, teamId){
 	      }
 	    },
 	    error: function(data){
-				var success=$('#response-success-team');
-				var error=$('#response-error-team');
+				var success=$('#response-success-teams');
+				var error=$('#response-error-teams');
 	      error.show();
 	      success.hide();
 	      error.html("An error occured on the server, please try again later.");

@@ -1,4 +1,4 @@
-function sendRequest(e,tournamentID){
+function sendRequest(e,tournamentID,teamID){
 	e.preventDefault();
 
 	$.ajaxSetup({
@@ -7,10 +7,10 @@ function sendRequest(e,tournamentID){
 		}
 	});
 	$.ajax({
-		url: '/tournament/'+tournamentID+'/team/store',
-		method: 'post',
+		url: '/tournament/'+tournamentID+'/team/'+teamID,
+		method: 'put',
 		data: {
-			name_team: $('#name_team').val()
+			name_team: $('#name_team').val(),
 		},
 		success: function(result){
 			var success=$('#response-success');

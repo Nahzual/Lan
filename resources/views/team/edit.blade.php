@@ -1,33 +1,27 @@
 @extends('layouts.dashboard')
 
 @section('title')
-{!!$tournament->name_tournament!!} : Creating new Team
+Editing team {!! $team->name !!} of tournament {!! $tournament->name !!}
 @endsection
 
 @section('page-title')
-Creating new Team
+Editing team
 @endsection
 
 @section('content')
 <div id="response-success" class ="alert alert-success" style="display:none"></div>
 <div id="response-error" class ="alert alert-danger" style="display:none"></div>
 
-{!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event,'.$tournament->id.')']) !!}
+{!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event,'.$tournament->id.','.$team->id.')']) !!}
 	<div>
-		@if($tournament->match_mod_tournament==config('tournament.SOLO'))
-		<div class="form-group">
-			<h4>You can\'t create teams for this tournament, as the match mode of this tournament is solo.</h4>
-		</div>
-		@else
 		<div class="form-group">
       {!! Form::label('name_team', 'Name of the team :', ['class' => 'display-6']) !!}
-      {!! Form::text('name_team', null, ['id'=>'name_team', 'class'=>'form-control']) !!}
+      {!! Form::text('name_team', $team->name_team, ['id'=>'name_team', 'class'=>'form-control']) !!}
 		</div>
-	  @endif
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-success shadow-sm"><i class='fa fa-plus-square'></i> Add</button>
+			<button type="submit" class="btn btn-outline-success shadow-sm"><i class='fa fa-edit'></i> Update</button>
 		</div>
 
 		<div class="col">
@@ -39,5 +33,5 @@ Creating new Team
 @endsection
 
 @section('js_includes')
-<script type="text/javascript" src="/js/ajax/team/ajax_create.js" defer></script>
+<script type="text/javascript" src="/js/ajax/team/ajax_edit.js" defer></script>
 @endsection

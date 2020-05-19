@@ -26,7 +26,7 @@ return [
 	'reset_password' => 'Reinitialiser le mot de passe',
 	'send_reset_link' => 'Send Password Reset Link',
 	'confirm_password_before' => 'Please confirm your password before continuing.',
-	
+
 	'lan_creator' => 'LAN Creator',
 
 
@@ -107,9 +107,9 @@ return [
 	'add_new_helper' => 'Add a new Helper',
 	'adding_helper_lan' => 'Ajouter un helper a la LAN :',
 	'helper_name' => 'nom du helper :',
-	
+
 	'add_new_game' => 'Add a new game',
-	'add_new_material' => 'Add a new material'
+	'add_new_material' => 'Add a new material',
 
 	'back_home' => ' Retour a la page d\'accueil',
 	'back_lan' => ' Retourner a la LAN',
@@ -128,7 +128,7 @@ return [
 	'games' =>'JEUX',
 	'all_games' =>'Tous les jeux',
 	'my_games' =>'Mes jeux',
-	
+
 	'admin' => 'ADM',
 	'admin_dashboard' => 'Admin dashboard',
 	'all_users' => 'All Users',
@@ -138,7 +138,7 @@ return [
 	'no_users'=>'No users to show',
 	'latest_users' => 'Latest users',
 	'latest_deleted_users' => 'Latest deleted users',
-	
+
 	'pending_lans' => 'Pending LANs',
 
 	'my_lans' =>'Mes LANs',
@@ -165,7 +165,7 @@ return [
 	'console' => 'Console :',
 	'empty_chair' => 'chaise libre :',
 	'empty_space' => 'Espace libre :',
-	
+
 	'viewing' => 'Viewing :',
 	'' => 'Room dimensions',
 
@@ -180,20 +180,20 @@ return [
 	'description' => 'Description',
 	'attachment' => 'Piece jointe',
 	'send' => ' Envoyer',
-	
+
 	'logged_as' => 'Logged in as:',
-	
+
 	// Activity
-	
+
 	'create_activity' => 'Creating new Activity',
 	'edit_activity' => 'Editing Activity',
-	
+
 	'verify_email' => 'Verify Your Email Address',
 	'verif_link_sent' => 'A fresh verification link has been sent to your email address.',
 	'check_email' => 'Before proceeding, please check your email for a verification link.',
 	'not_get' => 'If you did not receive the email',
 	'click_request_another' => 'click here to request another',
-	
+
 	// Errors
 	'error_404' => '404 Error',
 	'' => 'The page you attempted to reach is not registered.',

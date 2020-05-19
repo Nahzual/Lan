@@ -14,10 +14,10 @@
 	<div class="card-body">
 		<div class="row">
 			{!! Form::open(['method'=>'get','url'=>'/game/create']) !!}
-				<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> {{ __('messages.add_new_game') }</button>
+				<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> {{ __('messages.add_new_game') }}</button>
 			{!! Form::close() !!}
 			{!! Form::open(['method'=>'get','url'=>'/material/create']) !!}
-			 <button type="submit" class="ml-2 btn btn-primary"><i class="fa fa-plus-square"></i> {{ __('messages.add_new_material') }</button>
+			 <button type="submit" class="ml-2 btn btn-primary"><i class="fa fa-plus-square"></i> {{ __('messages.add_new_material') }}</button>
 		 {!! Form::close() !!}
 		</div>
 	</div>
@@ -31,11 +31,11 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col">
-						<h3>{{ __('messages.latest_users') }</h3>
+						<h3>{{ __('messages.latest_users') }}</h3>
 					</div>
 					<div class="col">
 						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-users" aria-expanded="false" aria-controls="collapse-users">{{ __('messages.show_hide') }}</button>
-						<a class="btn btn-outline-primary shadow-sm float-right" href="{{ url('/adm/users') }}"><i class='fa fa-list'></i> {{ __('messages.all') }</a>
+						<a class="btn btn-outline-primary shadow-sm float-right" href="{{ url('/adm/users') }}"><i class='fa fa-list'></i> {{ __('messages.all') }}</a>
 					</div>
 				</div>
 			</div>
@@ -69,11 +69,11 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col">
-						<h3>{{ __('messages.latest_deleted_user') }</h3>
+						<h3>{{ __('messages.latest_deleted_user') }}</h3>
 					</div>
 					<div class="col">
 						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-deleted-users" aria-expanded="false" aria-controls="collapse-deleted-users">{{ __('messages.show_hide') }}</button>
-						
+
 					</div>
 				</div>
 			</div>

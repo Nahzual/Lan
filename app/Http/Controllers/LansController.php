@@ -48,7 +48,6 @@ class LansController extends Controller{
 				$country = new Country();
 				$country->name_country = htmlentities($request->name_country);
 				$country->save();
-				//$country = Country::findOrFail($country->id);
 			}else{
 				$departments = $country->departments;
 			}
@@ -66,7 +65,6 @@ class LansController extends Controller{
 				$department->name_department = htmlentities($request->name_department);
 				$department->country()->associate($country);
 				$department->save();
-				//$department = Department::findOrFail($department->id);
 			}else{
 				$cities = $department->cities;
 			}
@@ -86,7 +84,6 @@ class LansController extends Controller{
 				$city->zip_city = htmlentities($request->zip_city);
 				$city->department()->associate($department);
 				$city->save();
-				//$city = City::findOrFail($city->id);
 			}else{
 				$streets = $city->streets;
 			}
@@ -105,7 +102,6 @@ class LansController extends Controller{
 				$street->name_street = htmlentities($request->name_street);
 				$street->city()->associate($city);
 				$street->save();
-				//$street = Street::findOrFail($street->id);
 			}else{
 				$locations = $street->locations;
 			}
@@ -124,7 +120,6 @@ class LansController extends Controller{
 				$location->num_street = htmlentities($request->num_location);
 				$location->street()->associate($street);
 				$location->save();
-				//$location = Location::findOrFail($location->id);
 			}
 
 			$lan = new Lan();
@@ -307,9 +302,9 @@ class LansController extends Controller{
 				if($lan!=null){
 					// handle room width and height requirements
 					if(isset($request->room_width) && $request->room_width<=0){
-						return response()->json(['error','Your room width has to be positive.']);
+						return response()->json(['error'=>'Your room width has to be positive.']);
 					}else if(isset($request->room_length) && $request->room_length<=0){
-						return response()->json(['error','Your room length has to be positive.']);
+						return response()->json(['error'=>'Your room length has to be positive.']);
 					}else if(isset($request->room_width) && isset($request->room_length)){
 						// sets the room_length and room_width values
 						if(isset($request->room_length)) $lan->room_length=$request->room_length;
@@ -352,7 +347,37 @@ class LansController extends Controller{
 
 					// save lan's previous state
 					$prev_state=$lan->waiting_lan;
-					$lan->update($request->all());
+
+					// update LAN
+					if(isset($request->max_num_registrants) && is_numeric($request->max_num_registrants) && $request->max_num_registrants>0){
+						$lan->max_num_registrants=$request->max_num_registrants;
+					}else if(isset($request->max_num_registrants)){
+						return response()->json(['error'=>'The number of registrants has to be a positive number.']);
+					}
+
+					if(isset($request->opening_date)){
+						$date=date_create($request->opening_date);
+
+						if($date && $date->format('Y-m-d')===$request->opening_date){
+							$lan->opening_date=$request->opening_date;
+						}else{
+							return response()->json(['error'=>'The opening date is not a valid date.']);
+						}
+					}
+
+					if(isset($request->duration) && is_numeric($request->duration) && $request->duration>0){
+						$lan->duration=$request->duration;
+					}else if(isset($request->duration)){
+						return response()->json(['error'=>'The duration has to be a positive number.']);
+					}
+
+					if(isset($request->budget) && is_numeric($request->budget) && $request->budget>=0){
+						$lan->budget=$request->budget;
+					}else if(isset($request->budget)){
+						return response()->json(['error'=>'The budget has to be a positive number or zero.']);
+					}
+
+					if(isset($request->name)) $lan->name=htmlentities($request->name);
 
 					// get all location relative information
 					$location = $lan->location;
@@ -418,7 +443,11 @@ class LansController extends Controller{
 					if(!isset($city) || $department!=$lan_department){
 						$city = new City();
 						$city->name_city = htmlentities($request->name_city);
-						$city->zip_city = htmlentities($request->zip_city);
+						if(strlen($request->zip_city)==5 && ctype_digit($request->zip_city)){
+							$city->zip_city = htmlentities($request->zip_city);
+						}else{
+							return response()->json(['error'=>'The ZIP code must be a 5-digit number.']);
+						}
 						$city->department()->associate($department);
 						$city->save();
 					}
@@ -463,7 +492,11 @@ class LansController extends Controller{
 
 					if(!isset($location) || $street!=$lan_street){
 						$location = new Location();
-						$location->num_street = htmlentities($request->num_street);
+						if(is_numeric($request->num_street) && $request->num_street>0){
+							$location->num_street = htmlentities($request->num_street);
+						}else{
+							return response()->json(['error'=>'The street number has to be a positive number.']);
+						}
 						$location->street()->associate($street);
 						$location->save();
 					}

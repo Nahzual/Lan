@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the admins for the LAN {{ $nlan }}
+All the admins for the LAN {!! $nlan !!}
 @endsection
 
 @section('page-title')

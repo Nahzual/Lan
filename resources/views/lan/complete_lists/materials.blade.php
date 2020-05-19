@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the materials for the LAN {{ $nlan }}<small>#{{$id}}</small>
+All the materials for the LAN {!! $nlan !!}<small>#{{$id}}</small>
 @endsection
 
 @section('page-title')

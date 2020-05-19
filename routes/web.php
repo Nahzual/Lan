@@ -194,6 +194,10 @@ Route::get('adm/users/{page}', 'UsersController@admList')->name('admin.users.pag
 Route::get('adm/tournaments', 'TournamentsController@admList')->name('admin.tournaments');
 Route::get('adm/tournaments/{page}', 'TournamentsController@admList')->name('admin.tournaments.page');
 
+// Materials
+Route::get('/adm/materials', 'MaterialsController@index')->name('material.list');
+Route::get('/adm/materials/{page}', 'MaterialsController@index')->name('material.list_page');
+
 /* ----------------- SETTINGS ROUTES ----------------- */
 
 Route::get('updateTheme/{id}', 'UsersController@updateTheme')->name('user.updateTheme');

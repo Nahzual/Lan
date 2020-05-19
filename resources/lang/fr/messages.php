@@ -120,19 +120,20 @@ return [
 	'quit' => 'Quit',
 
 	'navigation' =>'Navigation',
-	'dashboard' =>'Dashboard',
+	'dashboard' =>'Tableau de bord',
 	'lan' =>'LAN',
 	'all_lans' =>'Toutes les LANs',
-	'my_tasks' =>'My Tasks',
+	'my_tasks' =>'Mes tâches',
 
 	'games' =>'JEUX',
 	'all_games' =>'Tous les jeux',
 	'my_games' =>'Mes jeux',
 
 	'admin' => 'ADM',
-	'admin_dashboard' => 'Admin dashboard',
-	'all_users' => 'All Users',
-	'all_tournaments' => 'All Tournaments',
+	'admin_dashboard' => 'Tableau de bord admin',
+	'all_users' => 'Gérer les utilisateurs',
+	'all_tournaments' => 'Gérer les tournois',
+	'all_materials' => 'Gérer le matériel',
 
 	'no_lans' =>'Aucune LAN à afficher',
 	'no_users'=>'No users to show',

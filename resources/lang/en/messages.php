@@ -131,8 +131,10 @@ return [
 
 	'admin' => 'ADM',
 	'admin_dashboard' => 'Admin dashboard',
-	'all_users' => 'All Users',
-	'all_tournaments' => 'All Tournaments',
+	'all_users' => 'Manage users',
+	'all_tournaments' => 'Manage tournaments',
+	'all_materials' => 'Manage materials',
+
 
 	'no_lans' =>'No LANs to show',
 	'no_users'=>'No users to show',

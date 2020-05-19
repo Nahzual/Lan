@@ -476,10 +476,20 @@ class UsersController extends Controller{
 				return back()->with('error','You are not an Admin');
 			}else{
 				if(isset($request->pseudo)){
-					$tu = User::withTrashed()->where('pseudo','LIKE','%'.$request->pseudo.'%')->selectRaw('COUNT(*) AS count')->first()->count;
+					$tu = User::withTrashed()->where('pseudo','LIKE','%'.$request->pseudo.'%')->selectRaw('COUNT(*) AS count')->first();
+					if($tu!=null){
+						$tu=$tu->count;
+					}else{
+						$tu=0;
+					}
 					$users= User::withTrashed()->where('pseudo','LIKE','%'.$request->pseudo.'%')->skip(abs(($page - 1)*10))->take(10)->get();
 				}else{
-					$tu = User::withTrashed()->selectRaw('COUNT(*) AS count')->first()->count;
+					$tu = User::withTrashed()->selectRaw('COUNT(*) AS count')->first();
+					if($tu!=null){
+						$tu=$tu->count;
+					}else{
+						$tu=0;
+					}
 					$users= User::withTrashed()->skip(abs(($page - 1)*10))->take(10)->get();
 				}
 

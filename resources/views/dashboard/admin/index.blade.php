@@ -47,8 +47,8 @@
 				<thead class="card-table text-center">
 					<th scope="col">#</th>
 					<th scope="col">{{ __('messages.name') }}</th>
-					<th scope="col">{{ __('messages.username') }}<</th>
-					<th scope="col">{{ __('messages.actions') }}<</th>
+					<th scope="col">{{ __('messages.username') }}</th>
+					<th scope="col">{{ __('messages.actions') }}</th>
 				</thead>
 
 				<tbody class="text-center" id="table-users">

@@ -8,8 +8,58 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
-class MaterialsController extends Controller
-{
+class MaterialsController extends Controller{
+
+		/**
+		 * Show a list of the resource
+		 *
+		 * @return \Illuminate\Http\Response
+		 */
+		public function index($page=1,Request $request){
+			if(Auth::check()){
+				if(Auth::user()->isSiteAdmin()){
+					if(isset($request->name_material)){
+						$tm = Material::where('name_material','LIKE','%'.$request->name_material.'%')->orWhere('category_material','LIKE','%'.$request->name_material.'%')->selectRaw('COUNT(*) AS count')->first();
+						if($tm!=null){
+							$tm=$tm->count;
+						}else{
+							$tm=0;
+						}
+						$materials=Material::where('name_material','LIKE','%'.$request->name_material.'%')->orWhere('category_material','LIKE','%'.$request->name_material.'%')->skip(abs(($page - 1)*10))->take(10)->get();
+					}else{
+						$tm = Material::selectRaw('COUNT(*) AS count')->first();
+						if($tm!=null){
+							$tm=$tm->count;
+						}else{
+							$tm=0;
+						}
+						$materials=Material::skip(abs(($page - 1)*10))->take(10)->get();
+					}
+
+					$max = ceil($tm/10);
+
+					if(($page+1)*10>($max*10)){
+						$next = 0;
+					}else{
+						$next = $page + 1;
+					}
+
+					if($page == 1){
+						$previous = 0;
+					}else{
+						$previous = $page-1;
+					}
+
+					if(isset($request->name_material)) return view('material.list',compact('materials','max','page','previous','next'))->with('name',$request->name_material);
+					else return view('material.list',compact('materials','max','page','previous','next'));
+				}else{
+					return back()->with('error','You do not have enough rights.');
+				}
+			}else{
+				return redirect('/login')->with('error','Please log in to have access to this page.');
+			}
+		}
+
     /**
      * Show the form for creating a new resource.
      *

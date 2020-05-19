@@ -46,6 +46,7 @@ return [
 
 	'name' => 'Nom',
 	'lname' => 'Last Name',
+	'username' => 'Username',
 	'pseudo' => 'Pseudo',
 	'email' => 'Adresse e-Mail',
 	'tel' => 'Numero de téléphone ',
@@ -93,6 +94,8 @@ return [
 	'last' => 'Last',
 	'search' => 'Rechercher',
 	'back_admin_dash' => 'Return to the admin Dashboard',
+	'accept' => 'Accept',
+	'reject' => 'Reject',
 
 
 	'admin_lan' => 'All the admins for the LAN ',
@@ -104,6 +107,9 @@ return [
 	'add_new_helper' => 'Add a new Helper',
 	'adding_helper_lan' => 'Ajouter un helper a la LAN :',
 	'helper_name' => 'nom du helper :',
+	
+	'add_new_game' => 'Add a new game',
+	'add_new_material' => 'Add a new material'
 
 	'back_home' => ' Retour a la page d\'accueil',
 	'back_lan' => ' Retourner a la LAN',
@@ -129,6 +135,11 @@ return [
 	'all_tournaments' => 'All Tournaments',
 
 	'no_lans' =>'Aucune LAN à afficher',
+	'no_users'=>'No users to show',
+	'latest_users' => 'Latest users',
+	'latest_deleted_users' => 'Latest deleted users',
+	
+	'pending_lans' => 'Pending LANs',
 
 	'my_lans' =>'Mes LANs',
 	'my_lans_helper' =>'LANs sur lesquelles j\'aide',
@@ -182,6 +193,10 @@ return [
 	'check_email' => 'Before proceeding, please check your email for a verification link.',
 	'not_get' => 'If you did not receive the email',
 	'click_request_another' => 'click here to request another',
+	
+	// Errors
+	'error_404' => '404 Error',
+	'' => 'The page you attempted to reach is not registered.',
 
 	// {{ __('messages.chln') }}
 

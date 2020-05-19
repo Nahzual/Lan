@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Create a LAN
+{{ __('messages.create_new_lan') }}
 @endsection
 
 @section('page-title')
-Create a LAN
+{{ __('messages.create_new_lan') }}
 @endsection
 
 

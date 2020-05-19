@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Dashboard
+{{ __('messages.dashboard') }}
 @endsection
 
 @section('page-title')
-Dashboard
+{{ __('messages.dashboard') }}
 @endsection
 
 @section('title-buttons')

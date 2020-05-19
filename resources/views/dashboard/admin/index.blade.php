@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Administrator dashboard
+{{ __('messages.admin_dashboard') }}
 @endsection
 
 @section('page-title')
-Admin dashboard
+{{ __('messages.admin_dashboard') }}
 @endsection
 
 @section('toolbar')
@@ -14,10 +14,10 @@ Admin dashboard
 	<div class="card-body">
 		<div class="row">
 			{!! Form::open(['method'=>'get','url'=>'/game/create']) !!}
-				<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Add a new game</button>
+				<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> {{ __('messages.add_new_game') }</button>
 			{!! Form::close() !!}
 			{!! Form::open(['method'=>'get','url'=>'/material/create']) !!}
-			 <button type="submit" class="ml-2 btn btn-primary"><i class="fa fa-plus-square"></i> Add a new material</button>
+			 <button type="submit" class="ml-2 btn btn-primary"><i class="fa fa-plus-square"></i> {{ __('messages.add_new_material') }</button>
 		 {!! Form::close() !!}
 		</div>
 	</div>
@@ -31,11 +31,11 @@ Admin dashboard
 			<div class="card-header">
 				<div class="row">
 					<div class="col">
-						<h3>Latest users</h3>
+						<h3>{{ __('messages.latest_users') }</h3>
 					</div>
 					<div class="col">
-						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-users" aria-expanded="false" aria-controls="collapse-users">Show/hide</button>
-						<a class="btn btn-outline-primary shadow-sm float-right" href="{{ url('/adm/users') }}"><i class='fa fa-list'></i> All</a>
+						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-users" aria-expanded="false" aria-controls="collapse-users">{{ __('messages.show_hide') }}</button>
+						<a class="btn btn-outline-primary shadow-sm float-right" href="{{ url('/adm/users') }}"><i class='fa fa-list'></i> {{ __('messages.all') }</a>
 					</div>
 				</div>
 			</div>
@@ -46,9 +46,9 @@ Admin dashboard
 			<table class="table card-table table-bordered">
 				<thead class="card-table text-center">
 					<th scope="col">#</th>
-					<th scope="col">Name</th>
-					<th scope="col">Username</th>
-					<th scope="col">Actions</th>
+					<th scope="col">{{ __('messages.name') }}</th>
+					<th scope="col">{{ __('messages.username') }}<</th>
+					<th scope="col">{{ __('messages.actions') }}<</th>
 				</thead>
 
 				<tbody class="text-center" id="table-users">
@@ -56,7 +56,7 @@ Admin dashboard
 					@each('user.show_delete',$latest_users,'user')
 					@else
 					<tr id="row-user-empty">
-						<td colspan="4"><h4>No users to show</h4></td>
+						<td colspan="4"><h4>{{ __('messages.no_users') }}</h4></td>
 					</tr>
 					@endif
 				</tbody>
@@ -69,10 +69,10 @@ Admin dashboard
 			<div class="card-header">
 				<div class="row">
 					<div class="col">
-						<h3>Latest deleted users</h3>
+						<h3>{{ __('messages.latest_deleted_user') }</h3>
 					</div>
 					<div class="col">
-						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-deleted-users" aria-expanded="false" aria-controls="collapse-deleted-users">Show/hide</button>
+						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-deleted-users" aria-expanded="false" aria-controls="collapse-deleted-users">{{ __('messages.show_hide') }}</button>
 						
 					</div>
 				</div>
@@ -85,9 +85,9 @@ Admin dashboard
 			<table class="table card-table table-bordered">
 				<thead class="card-table text-center">
 					<th scope="col">#</th>
-					<th scope="col">Name</th>
-					<th scope="col">Username</th>
-					<th scope="col">Actions</th>
+					<th scope="col">{{ __('messages.name') }}</th>
+					<th scope="col">{{ __('messages.username') }}</th>
+					<th scope="col">{{ __('messages.actions') }}</th>
 				</thead>
 
 				<tbody class="text-center" id="table-deleted-users">
@@ -95,7 +95,7 @@ Admin dashboard
 					@each('user.show_restore',$latest_deleted_users,'user')
 					@else
 					<tr id="row-user-deleted-empty">
-						<td colspan="4"><h4>No users to show</h4></td>
+						<td colspan="4"><h4>{{ __('messages.no_users') }}</h4></td>
 					</tr>
 					@endif
 				</tbody>
@@ -112,10 +112,10 @@ Admin dashboard
 			<div class="card-header">
 				<div class="row">
 					<div class="col">
-						<h3>Pending LANs</h3>
+						<h3>{{ __('messages.pending_lans') }}</h3>
 					</div>
 					<div class="col">
-						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-lans" aria-expanded="false" aria-controls="collapse-lans">Show/hide</button>
+						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-lans" aria-expanded="false" aria-controls="collapse-lans">{{ __('messages.show_hide') }}</button>
 					</div>
 				</div>
 			</div>
@@ -125,16 +125,16 @@ Admin dashboard
 			<table class="table card-table table-bordered">
 				<thead class="card-table text-center">
 					<th scope="col">#</th>
-					<th scope="col">Name</th>
-					<th scope="col">View</th>
-					<th scope="col">Accept</th>
-					<th scope="col">Reject</th>
+					<th scope="col">{{ __('messages.name') }}</th>
+					<th scope="col">{{ __('messages.view') }}</th>
+					<th scope="col">{{ __('messages.accept') }}</th>
+					<th scope="col">{{ __('messages.reject') }}</th>
 				</thead>
 
 				<tbody class="text-center">
 					@if(count($waiting_lans)==0)
 					<tr scope="row">
-						<td scope="col" colspan="5"><h4>No lans to show</h4></td>
+						<td scope="col" colspan="5"><h4>{{ __('messages.no_lans') }}</h4></td>
 					</tr>
 					@endif
 					@foreach($waiting_lans as $lan)
@@ -143,7 +143,7 @@ Admin dashboard
 						<td scope="col" class="mt-2 lead-text">{!!$lan->name!!}</td>
 
 						<td scope="col">
-							<a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> View</a>
+							<a class="btn btn-success" href="{{ route('lan.show', $lan->id) }}"><i class='fa fa-eye'></i> {{ __('messages.view') }}</a>
 						</td>
 						<td scope="col">
 							{!! Form::model($lan, ['method' => 'put', 'onsubmit' => 'return sendRequestAccept(event,'.$lan->id.')']) !!}

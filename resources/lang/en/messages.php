@@ -46,6 +46,7 @@ return [
 
 	'name' => 'Name',
 	'lname' => 'Last Name',
+	'username' => 'Username',
 	'pseudo' => 'Pseudo',
 	'email' => 'E-Mail Address',
 	'tel' => 'Phone number ',
@@ -93,6 +94,8 @@ return [
 	'last' => 'Last',
 	'search' => 'Search',
 	'back_admin_dash' => 'Return to the admin Dashboard',
+	'accept' => 'Accept',
+	'reject' => 'Reject',
 
 
 	'admin_lan' => 'All the admins for the LAN ',
@@ -104,6 +107,9 @@ return [
 	'add_new_helper' => 'Add a new Helper',
 	'adding_helper_lan' => 'Adding helper to LAN :',
 	'helper_name' => 'Helper\'s name :',
+	
+	'add_new_game' => 'Add a new game',
+	'add_new_material' => 'Add a new material'
 
 	'back_home' => ' Go back to the home page',
 	'back_lan' => ' Go back to the LAN',
@@ -129,6 +135,11 @@ return [
 	'all_tournaments' => 'All Tournaments',
 
 	'no_lans' =>'No LANs to show',
+	'no_users'=>'No users to show',
+	'latest_users' => 'Latest users',
+	'latest_deleted_users' => 'Latest deleted users',
+	
+	'pending_lans' => 'Pending LANs',
 
 	'my_lans' =>'My LANs',
 	'my_lans_helper' =>'LANs on which I am helper',

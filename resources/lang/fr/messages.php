@@ -177,11 +177,11 @@ return [
 	'create_activity' => 'Creating new Activity',
 	'edit_activity' => 'Editing Activity',
 	
-	'verify_email' => 'Verify Your Email Address'
-	'verif_link_sent' => 'A fresh verification link has been sent to your email address.'
-	'check_email' => 'Before proceeding, please check your email for a verification link.'
-	'not_get' => 'If you did not receive the email'
-	'click_request_another' => 'click here to request another'
+	'verify_email' => 'Verify Your Email Address',
+	'verif_link_sent' => 'A fresh verification link has been sent to your email address.',
+	'check_email' => 'Before proceeding, please check your email for a verification link.',
+	'not_get' => 'If you did not receive the email',
+	'click_request_another' => 'click here to request another',
 
 	// {{ __('messages.chln') }}
 

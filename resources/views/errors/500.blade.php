@@ -5,8 +5,8 @@
 		<section id="jumbotron">
 			<div class="jumbotron" >
 				<div class="container">
-					<h1 class="display-3">500 Error</h1>
-					<p>The server encountered a fatal error. Please, contact the website's admin</p>
+					<h1 class="display-3">{{ __('messages.error_500') }}</h1>
+					<p>{{ __('messages.error_500_message') }}</p>
 				</div>
 			</div>
 		</section>

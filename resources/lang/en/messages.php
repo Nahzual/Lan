@@ -202,7 +202,9 @@ return [
 
 	// Errors
 	'error_404' => '404 Error',
-	'' => 'The page you attempted to reach is not registered.',
+	'error_404_message' => 'The page you attempted to reach is not registered.',
+	'error_500' => '500 error',
+	'error_500_message' => 'The server encountered a fatal error. Please, contact the website\'s admin',
 	
 	// Ports
 	'add_port_game_lan' => 'Adding port to game ":game" for LAN :lan',

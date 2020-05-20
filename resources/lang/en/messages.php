@@ -42,7 +42,7 @@ return [
 	'home_p3t' => 'Organization is key ',
 	'home_p3' => 'Don\'t do it alone ! Add helpers, news admins, deploy tasks, define a shopping list and a to-do list to avoid some last-minute expenses !',
 
-	'homestats' => 'The latest LAN was created on :date with :reg registrants !',
+	'homestats' => 'The latest LAN was created on :date with :reg / :maxreg registrants !',
 	'homejoin' => 'Sign-in now to create your first LAN !',
 
 
@@ -235,6 +235,8 @@ return [
 	'game' => 'Game',
 	
 	// team
+	'add_players' => 'Add players',
+	'add_users' => 'Add users',
 	'nbr_members' => 'Number of member',
 	'member' => 'Member',
 	'join_tournament' => 'Join tournament',
@@ -245,8 +247,9 @@ return [
 	'create_new_team' => 'Creating new Team',
 	'back_tournament' => 'Go Back to Tournament',
 	'team_name' => 'Name of team :',
-	'team_members'=> 'Participants of team',
+	'team_members'=> 'Team players',
 	'all_players_team' => 'All the players of the team '
+	'cannot_create_team_solo' => 'You can\'t create teams for this tournament, as the match mode of this tournament is solo.',
 	
 	// Account deletion
 	
@@ -260,12 +263,27 @@ return [
 	'disable_account' => 'Disable your account',
 	'delete_account' => 'Delete your account',
 	
+	// Tasks
+	'task_page' =>'Task page',
+	'viewing_task' =>'Viewing task ',
+	'' => 'No tasks to show' ,
+	'' => 'Add a Task',
+	'helper_task' => 'Helpers in charge of this task :'
+	'deadline' => 'Deadline',
+	'my_tasks_lan' => 'My tasks for LAN :',
+	'no_tasks' => 'Nothing to do, nothing to show',
+	'create_new_task' => 'Creating new task',
+	'back_tasklist' => 'Go to your tasklist',
+	'adding_helper_task' => 'Adding helper to Task',
+	'editing_task' => 'Editing Task',
+	'assign_to_helper' => 'Assign to an helper',
+	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
 	//'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
 	//{{ __('messages.add_port_game', ['game' => $game->name_game, 'lan' => $lan->name]) }}
 	
-	// {{ __('messages.contact_us') }}
+	// {{ __('messages.') }}
 
 	/**
 
@@ -297,10 +315,7 @@ return [
 	'Quantity'
 	'Choose Material'
 	'Creating new Shopping'
-
-	// Tasks
-	'No tasks to show'
-	'Add a Task'
-
 	**/
+	
+
 ];

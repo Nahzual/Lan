@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Adding helper to Task : {!!$task->name_task!!}
+{{ __('messages.adding_helper_task') }} : {!!$task->name_task!!}
 @endsection
 
 @section('page-title')
-Adding helper to Task
+{{ __('messages.adding_helper_task') }}
 @endsection
 
 @section('content')
@@ -14,14 +14,14 @@ Adding helper to Task
 
 {!! Form::open(['method' => 'post','onsubmit'=>'searchHelper(event,'.$task->id.')']) !!}
 	<div>
-		<h4 class=''>Helper's name :</h4>
+		<h4 class=''>{{ __('messages.helper_name') }}</h4>
 		<div class="form-group">
 			{!! Form::text('pseudo', null, ['required'=>'', 'class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-primary"><i class='fa fa-search'></i> Search</button>
+			<button type="submit" class="btn btn-primary"><i class='fa fa-search'></i> {{ __('messages.search') }}</button>
 		</div>
 	</div>
 {!! Form::close() !!}

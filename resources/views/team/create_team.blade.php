@@ -20,7 +20,7 @@
 		</div>
 		@else
 		<div class="form-group">
-      {!! Form::label('name_team', __('team_name'), ['class' => 'display-6']) !!}
+      {!! Form::label('name_team', __('messages.team_name'), ['class' => 'display-6']) !!}
       {!! Form::text('name_team', null, ['id'=>'name_team', 'class'=>'form-control']) !!}
 		</div>
 	  @endif

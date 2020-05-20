@@ -17,7 +17,7 @@ Editing Tournament
 	<div>
     <div class="form-group">
       {!! Form::label('is_finished_tournament', 'State of tournament :', ['class' => 'display-6']) !!}
-      {!! Form::select('is_finished_tournament', array('0'=>'Not finished', '1'=>'Finished'), ['id'=>'is_finished_tournament', 'class'=>'form-control']) !!}
+      {!! Form::select('is_finished_tournament', array('0'=>'Not finished', '1'=>'Finished'), null,['id'=>'is_finished_tournament', 'class'=>'form-control']) !!}
 
 		</div>
     <div class="form-group">
@@ -38,7 +38,19 @@ Editing Tournament
 		</div>
     <div class="form-group">
       {!! Form::label('id_game', 'Choose the game :', ['class'=>'display-6']) !!}
-      {!! Form::select('id_game', $games->pluck('name_game', 'id'), ['id'=>'id_game', 'class'=>'lead']) !!}
+      {!! Form::select('id_game', $games->pluck('name_game', 'id'),null, ['id'=>'id_game', 'class'=>'form-control']) !!}
+		</div>
+		<div class="form-group">
+			<label for="match_mod_tournament">Mode of tournament</label>
+			<select id="match_mod_tournament" class="form-control" name="match_mod_tournament" onchange="changementType();" required>
+				<option value="{{config('tournament.SOLO')}}" {{ ($tournament->match_mod_tournament==config('tournament.SOLO')) ? 'selected' : '' }}>Solo</option>
+				<option value="{{config('tournament.TEAM')}}" {{ ($tournament->match_mod_tournament==config('tournament.TEAM')) ? 'selected' : '' }}>Teams</option>
+			</select>
+		</div>
+
+		<div class="form-group" id="number" style="{{ ($tournament->match_mod_tournament==config('tournament.SOLO')) ? 'display: none;' : '' }}">
+			<label for="number_per_team">Number of players per team</label>
+			<input type="number" class="form-control" id="number_per_team" name="number_per_team" value="{{$tournament->number_per_team}}">
 		</div>
 	</div>
 	<div class="form-group row text-center">
@@ -54,4 +66,5 @@ Editing Tournament
 
 @section('js_includes')
 <script src="/js/ajax/tournament/ajax_edit.js"></script>
+<script src="/js/ajax/tournament/ajax_create.js"></script>
 @endsection

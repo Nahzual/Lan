@@ -232,7 +232,7 @@ echo "</tr></table>";
 /*******************************************/
 ?>
 @else
-  There are not teams
+  There are no teams
 @endif
 
 <div class="row">
@@ -242,6 +242,10 @@ echo "</tr></table>";
 </div>
 </div>
 
+@endsection
+
+@section('js_includes')
+<script src="/js/ajax/team/ajax_delete.js"></script>
 @endsection
 
 @section('css_includes')

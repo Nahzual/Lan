@@ -35,6 +35,7 @@ class TournamentsController extends Controller
 	/**
 	* Show the form for creating a new resource.
 	*
+	* @param int $lanId
 	* @return \Illuminate\Http\Response
 	*/
 	public function create($lanId){
@@ -60,6 +61,7 @@ class TournamentsController extends Controller
 	* Store a newly created resource in storage.
 	*
 	* @param  \Illuminate\Http\Request  $request
+	* @param int $lanId
 	* @return \Illuminate\Http\Response
 	*/
 	public function store(Request $request, $lanId){
@@ -157,7 +159,8 @@ class TournamentsController extends Controller
 	/**
 	* Display the specified resource.
 	*
-	* @param  int  $id
+	* @param  int  $lanId
+	* @param  int  $tournamentId
 	* @return \Illuminate\Http\Response
 	*/
 	public function show($lanId, $tournamentId){
@@ -197,7 +200,8 @@ class TournamentsController extends Controller
 	/**
 	* Show the form for editing the specified resource.
 	*
-	* @param  int  $id
+	* @param  int  $lanId
+	* @param  int  $tournamentId
 	* @return \Illuminate\Http\Response
 	*/
 	public function edit($lanId, $tournamentId){
@@ -228,7 +232,8 @@ class TournamentsController extends Controller
 	* Update the specified resource in storage.
 	*
 	* @param  \Illuminate\Http\Request  $request
-	* @param  int  $id
+	* @param  int  $lanId
+	* @param  int  $tournamentId
 	* @return \Illuminate\Http\Response
 	*/
 	public function update(Request $request, $lanId, $tournamentId){
@@ -312,6 +317,14 @@ class TournamentsController extends Controller
 		}
 	}
 
+	/**
+	* Make the specified user join the specified tournament
+	* This method creates a team for the tournament, and places the user inside that team
+	*
+	* @param  int  $tournamentId
+	* @param  int  $userId
+	* @return \Illuminate\Http\Response
+	*/
 	public function join($tournamentId,$userId){
 		if(Auth::check()){
 			$logged_user=Auth::user();
@@ -352,6 +365,15 @@ class TournamentsController extends Controller
 		}
 	}
 
+	/**
+	* Display the list of users that can join the specified tournament
+	* All players who joined the tournament's LAN can join the tournament
+	*
+	* @param  int  $tournamentId
+	* @param  int  $page
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
 	public function joinList($tournamentId,$page=1,Request $request){
 		if(Auth::check()){
 			$logged_user=Auth::user();
@@ -408,7 +430,8 @@ class TournamentsController extends Controller
 	/**
 	* Remove the specified resource from storage.
 	*
-	* @param  int  $id
+	* @param  int  $lanId
+	* @param  int  $tournamentId
 	* @return \Illuminate\Http\Response
 	*/
 	public function destroy($lanId, $tournamentId){
@@ -436,8 +459,9 @@ class TournamentsController extends Controller
 	}
 
 	/**
-	* Tournament List
+	* Display the tournament List for site admins
 	*
+	* @param  int  $page
 	* @return \Illuminate\Contracts\Support\Renderable
 	*/
 	public function admList($page = 1){
@@ -476,8 +500,12 @@ class TournamentsController extends Controller
 	}
 
   /**
-  * Tournament tree
+  * Randomly oppose the teams of the specified tournament for the first round
+	* This method does not create any match or round in the database, it just displays random matches for the first round
+	* and offers the possibility to enter in each case the winning team of the previous match
   *
+	* @param  int  $lanId
+	* @param  int  $tournamentId
   * @return \Illuminate\Contracts\Support\Renderable
   */
   public function tree($lanId, $tournamentId){

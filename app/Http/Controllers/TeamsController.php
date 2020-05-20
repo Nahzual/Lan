@@ -35,6 +35,7 @@ class TeamsController extends Controller
 	/**
 	* Show the form for creating a new resource.
 	*
+	* @param int $tournamentId
 	* @return \Illuminate\Http\Response
 	*/
 	public function create($tournamentId){
@@ -69,6 +70,7 @@ class TeamsController extends Controller
 	* Store a newly created resource in storage.
 	*
 	* @param  \Illuminate\Http\Request  $request
+	* @param int $tournamentId
 	* @return \Illuminate\Http\Response
 	*/
 	public function store(Request $request, $tournamentId){
@@ -117,7 +119,8 @@ class TeamsController extends Controller
 	/**
 	* Display the specified resource.
 	*
-	* @param  int  $id
+	* @param int $tournamentId
+	* @param int $teamId
 	* @return \Illuminate\Http\Response
 	*/
 	public function show($tournamentId, $teamId){
@@ -142,7 +145,8 @@ class TeamsController extends Controller
 	/**
 	* Show the form for editing the specified resource.
 	*
-	* @param  int  $id
+	* @param int $tournamentId
+	* @param int $teamId
 	* @return \Illuminate\Http\Response
 	*/
 	public function edit($tournamentId,$teamId){
@@ -172,7 +176,8 @@ class TeamsController extends Controller
 	* Update the specified resource in storage.
 	*
 	* @param  \Illuminate\Http\Request  $request
-	* @param  int  $id
+	* @param int $tournamentId
+	* @param int $teamId
 	* @return \Illuminate\Http\Response
 	*/
 	public function update(Request $request, $tournamentId, $teamId){
@@ -205,7 +210,8 @@ class TeamsController extends Controller
 	/**
 	* Remove the specified resource from storage.
 	*
-	* @param  int  $id
+	* @param int $tournamentId
+	* @param int $teamId
 	* @return \Illuminate\Http\Response
 	*/
 	public function destroy($tournamentId, $teamId){
@@ -232,7 +238,13 @@ class TeamsController extends Controller
 		}
 	}
 
-
+	/**
+	* Make the specified user join the specified team
+	*
+	* @param int $teamId
+	* @param int $userId
+	* @return \Illuminate\Http\Response
+	*/
 	public function join($teamId,$userId){
 		if(Auth::check()){
 			$logged_user=Auth::user();
@@ -277,6 +289,15 @@ class TeamsController extends Controller
 		}
 	}
 
+	/**
+	* Show a list of the users who can join the specified team
+	* Every player of the team's LAN can join it
+	*
+	* @param int $teamId
+	* @param int $page
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
 	public function joinList($teamId,$page=1,Request $request){
 		if(Auth::check()){
 			$logged_user=Auth::user();
@@ -331,6 +352,13 @@ class TeamsController extends Controller
 		}
 	}
 
+	/**
+	* Make the specified user leave the specified team
+	*
+	* @param int $teamId
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
 	public function leaveTeam($teamId,Request $request){
 		if(Auth::check()){
 			$logged_user=Auth::user();

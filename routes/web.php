@@ -142,6 +142,7 @@ Route::get('/tournament/{tournament}/join/{page}','TournamentsController@joinLis
 Route::get('lan/{lan}/tournament/{tournament}/show', 'TournamentsController@show')->name('tournament.show_tournament');
 Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
 Route::get('/lan/{lan}/tournaments/{page}','LansController@list_tournaments')->name('lan.tour_list.page');
+Route::get('/lan/{lan}/tournament/{tournament}/tree', 'TournamentsController@tree')->name('tournament.tree');
 
 /* ----------------- TEAM routes ----------------- */
 

@@ -205,6 +205,7 @@ return [
 	'check_email' => 'Before proceeding, please check your email for a verification link.',
 	'not_get' => 'If you did not receive the email',
 	'click_request_another' => 'click here to request another',
+	'no_activities' => 'No activities to show',
 
 	// Errors
 	'error_404' => '404 Error',

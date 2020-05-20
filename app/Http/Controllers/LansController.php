@@ -81,7 +81,11 @@ class LansController extends Controller{
 			if(!isset($city)){
 				$city = new City();
 				$city->name_city = htmlentities($request->name_city);
-				$city->zip_city = htmlentities($request->zip_city);
+				if(strlen($request->zip_city)==5 && ctype_digit($request->zip_city)){
+					$city->zip_city = htmlentities($request->zip_city);
+				}else{
+					return response()->json(['error'=>'The ZIP code must be a 5-digit number.']);
+				}
 				$city->department()->associate($department);
 				$city->save();
 			}else{
@@ -123,13 +127,47 @@ class LansController extends Controller{
 			}
 
 			$lan = new Lan();
-			$lan->name = htmlentities($request->name);
-			$lan->max_num_registrants = htmlentities($request->max_num_registrants);
-			$lan->opening_date = htmlentities($request->opening_date);
-			$lan->duration = htmlentities($request->duration);
-			$lan->budget = htmlentities($request->budget);
-			$lan->room_width = htmlentities($request->room_width);
-			$lan->room_length = htmlentities($request->room_length);
+
+			// update LAN
+			if(isset($request->max_num_registrants) && is_numeric($request->max_num_registrants) && $request->max_num_registrants>0){
+				$lan->max_num_registrants=$request->max_num_registrants;
+			}else if(isset($request->max_num_registrants)){
+				return response()->json(['error'=>'The number of registrants has to be a positive number.']);
+			}else{
+				return response()->json(['error'=>"The number of registrants is required."]);
+			}
+
+			if(isset($request->opening_date)){
+				$date=date_create($request->opening_date);
+
+				if($date && $date->format('Y-m-d')===$request->opening_date){
+					$lan->opening_date=$request->opening_date;
+				}else{
+					return response()->json(['error'=>'The opening date is not a valid date.']);
+				}
+			}else{
+				return response()->json(['error'=>"The LAN's opening date is required."]);
+			}
+
+			if(isset($request->duration) && is_numeric($request->duration) && $request->duration>0){
+				$lan->duration=$request->duration;
+			}else if(isset($request->duration)){
+				return response()->json(['error'=>'The duration has to be a positive number.']);
+			}else{
+				return response()->json(['error'=>"The LAN's duration is required."]);
+			}
+
+			if(isset($request->budget) && is_numeric($request->budget) && $request->budget>=0){
+				$lan->budget=$request->budget;
+			}else if(isset($request->budget)){
+				return response()->json(['error'=>'The budget has to be a positive number or zero.']);
+			}else{
+				return response()->json(['error'=>"The LAN's budget is required."]);
+			}
+
+			if(isset($request->name)) $lan->name=htmlentities($request->name);
+			else return response()->json(['error'=>"The LAN's name is required."]);
+
 			$lan->location()->associate($location);
 			$lan->save();
 

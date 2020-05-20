@@ -87,15 +87,15 @@
             <a class="nav-link" href="{{ route('task.all') }}">{{ __('messages.my_tasks') }}</a>
 
 						<div class="sb-sidenav-menu-heading">{{ __('messages.games') }}</div>
-            <a class="nav-link" href="{{ url('/game') }}">{{ __('messages.all_games') }}</a>
-            <a class="nav-link" href="{{ route('game.favourite') }}">{{ __('messages.my_games') }}</a>
+            <a class="nav-link" href="{{ url('/game') }}"><div class="sb-nav-link-icon"><i class="fa fa-list"></i></div>{{ __('messages.all_games') }}</a>
+            <a class="nav-link" href="{{ route('game.favourite') }}"><div class="sb-nav-link-icon"><i class="fa fa-heart"></i></div>{{ __('messages.my_games') }}</a>
 
 						@if($logged_user->isSiteAdmin())
 			    	<div class="sb-sidenav-menu-heading">{{ __('messages.admin') }}</div>
 						<a class="nav-link" href="{{ url('/dashboard/admin') }}">{{ __('messages.admin_dashboard') }}</a>
-						<a class="nav-link" href="{{ url('/adm/users') }}">{{ __('messages.all_users') }}</a>
+						<a class="nav-link" href="{{ url('/adm/users') }}"><div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>{{ __('messages.all_users') }}</a>
 			    	<a class="nav-link" href="{{ route('admin.tournaments') }}">{{ __('messages.all_tournaments') }}</a>
-						<a class="nav-link" href="{{ url('/adm/materials') }}">{{ __('messages.all_materials') }}</a>
+						<a class="nav-link" href="{{ url('/adm/materials') }}"><div class="sb-nav-link-icon"><i class="fa fa-cutlery"></i></div>{{ __('messages.all_materials') }}</a>
 			    	@endif
           </div>
         </div>

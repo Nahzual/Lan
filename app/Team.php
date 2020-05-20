@@ -17,12 +17,12 @@ class Team extends Model
 	public function matchs(){
 		return $this->hasMany('App\Match', 'oppose');
 	}
-	
+
 	/*Returns the users part of the team*/
 	public function users(){
 		return $this->belongsToMany('App\User', 'part_of');
 	}
-	
+
 	/*Returns the tournament*/
 	public function tournament(){
 		return $this->belongsTo('App\Tournament');

@@ -132,6 +132,12 @@ Route::post('lan/{lan}/tournament/store', 'TournamentsController@store')->name('
 Route::get('lan/{lan}/tournament/{tournament}/edit', 'TournamentsController@edit')->name('tournament.edit_tournament');
 Route::put('lan/{lan}/tournament/{tournament}/edit', 'TournamentsController@update')->name('tournament.update');
 Route::delete('lan/{lan}/tournament/{tournament}/destroy', 'TournamentsController@destroy')->name('tournament.destroy');
+Route::post('/tournament/{tournament}/join/{user}','TournamentsController@join')->name('tournament.join');
+Route::get('/tournament/{tournament}/join','TournamentsController@joinList')->name('tournament.join_list');
+Route::get('/tournament/{tournament}/join/{page}','TournamentsController@joinList')->name('tournament.join_list_page');
+
+
+
 //Show and list
 Route::get('lan/{lan}/tournament/{tournament}/show', 'TournamentsController@show')->name('tournament.show_tournament');
 Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
@@ -142,15 +148,24 @@ Route::get('/lan/{lan}/tournaments/{page}','LansController@list_tournaments')->n
 //Resource managment and related
 Route::get('tournament/{tournament}/team/create', 'TeamsController@create')->name('team.create_team');
 Route::post('tournament/{tournament}/team/store', 'TeamsController@store')->name('team.store');
-Route::post('tournament/{tournament}/team/joinTeam', 'TeamsController@joinTeam')->name('team.joinTeam');
 Route::get('tournament/{tournament}/team/{team}/show', 'TeamsController@show')->name('team.players_team');
+Route::get('tournament/{tournament}/team/{team}/edit', 'TeamsController@edit')->name('team.edit');
+Route::put('tournament/{tournament}/team/{team}', 'TeamsController@update')->name('team.update');
 Route::delete('tournament/{tournament}/team/{team}/destroy', 'TeamsController@destroy')->name('team.destroy');
 
+// Add/remove players from the team
+Route::post('/team/{team}/join/{user}', 'TeamsController@join')->name('team.join');
+Route::get('/team/{team}/join', 'TeamsController@joinList')->name('team.join_list');
+Route::get('/team/{team}/join/{page}', 'TeamsController@joinList')->name('team.join_list_page');
+Route::delete('/team/{team}/leave', 'TeamsController@leaveTeam')->name('team.leaveTeam');
+
+
 /* ----------------- Round and matches routes ----------------- */
-Route::resource('tournament/round', 'RoundsController');
-Route::resource('tournament/round/match', 'MatchesController');
+Route::resource('tournament/{tournament}/round', 'RoundsController');
+Route::resource('tournament/{tournament}/match', 'MatchesController');
 
 /* ----------------- SHOPPING routes ----------------- */
+
 //Resource managment and related
 Route::get('lan/{lan}/shopping/create', 'ShoppingsController@create')->name('shopping.create');
 Route::post('lan/{lan}/shopping/store', 'ShoppingsController@store')->name('shopping.store');

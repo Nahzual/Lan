@@ -26,7 +26,7 @@ class PageController extends Controller{
 				$query->select('lan_user.id')
 							->from('lan_user')
 							->where('lan_user.rank_lan','=',config('ranks.ADMIN'))
-							->where('lan_user.lan_id','=','lan.id');
+							->whereRaw('lan_user.lan_id=lans.id');
 			})->orderBy('created_at','desc')->first();
 			return view('home', compact('lan'));
 		}

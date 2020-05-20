@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-{{$tournament->name}} : {{ __('messages.create_new_team') }}
+{!!$tournament->name_tournament!!} : {{ __('messages.create_new_team') }}
 @endsection
 
 @section('page-title')
@@ -14,21 +14,16 @@
 
 {!! Form::open(['method' => 'put', 'onsubmit'=>'return sendRequest(event,'.$tournament->id.')']) !!}
 	<div>
-		@if($tournament->number_per_team == 1)
+		@if($tournament->match_mod_tournament==config('tournament.SOLO'))
 		<div class="form-group">
-      {!! Form::label('name_team', __('messages.pseudo'), ['class' => 'display-6']) !!}
-      {!! Form::text('name_team', $user->pseudo, ['id'=>'name_team', 'class'=>'display-6']) !!}
+			<h4>{{ __('messages.cannot_create_team_solo') }}</h4>
 		</div>
 		@else
 		<div class="form-group">
-      {!! Form::label('name_team', __('messages.team_name'), ['class' => 'display-6']) !!}
+      {!! Form::label('name_team', __('team_name'), ['class' => 'display-6']) !!}
       {!! Form::text('name_team', null, ['id'=>'name_team', 'class'=>'form-control']) !!}
 		</div>
 	  @endif
-    <div class="form-group">
-      {!! Form::label('id_user', __('messages.participants'), ['class' => 'display-6'])!!}
-      {!! Form::label('id_user', $user->name, ['id'=>'id_user', 'class'=>'display-6']) !!}
-		</div>
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
@@ -41,10 +36,6 @@
 	</div>
 {!! Form::close() !!}
 
-<script src=" http://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
-</script>
 @endsection
 
 @section('js_includes')

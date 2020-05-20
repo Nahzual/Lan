@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the tasks for the LAN {!! $nlan !!}
+{{ __('messages.all_task_lan') }} {!! $nlan !!}
 @endsection
 
 @section('page-title')
-LAN's tasks
+{{ __('messages.lan_task') }}
 @endsection
 
 @section('title-buttons')
@@ -13,7 +13,7 @@ LAN's tasks
 	<form method="GET" action="{{ route('task.create', $id) }}">
 		@csrf
 		@method('GET')
-		<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> Add a Task</button>
+		<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> {{ __('messages.add_task') }}</button>
 	</form>
 </div>
 @endsection
@@ -28,14 +28,14 @@ LAN's tasks
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
 			<th scope="col" >#</th>
-			<th scope="col" >Name</th>
-			<th scope="col" >Actions</th>
+			<th scope="col" >{{ __('messages.name') }}</th>
+			<th scope="col" >{{ __('messages.actions') }}</th>
 		</thead>
 
 		<tbody>
 			@if(count($tasks)==0)
 			<tr>
-				<td colspan="5"><h3 class="text-center">No tasks to show</h3></td>
+				<td colspan="5"><h3 class="text-center">{{ __('messages.no_tasks') }}</h3></td>
 			</tr>
 			@endif
 			@foreach($tasks as $task)
@@ -45,17 +45,17 @@ LAN's tasks
 				<td scope="col" class=" text-center">
 					<div class="btn-group">
 						{!! Form::open(['method'=>'get','url'=>route('task.show',[$lan->id,$task->id])]) !!}
-						<button type="submit" class="btn btn-success mr-2"><i class='fa fa-eye'></i> View</button>
+						<button type="submit" class="btn btn-success mr-2"><i class='fa fa-eye'></i> {{ __('messages.view') }}</button>
 						{{ Form::close() }}
 						@if ($userIsLanAdmin)
 						{!! Form::open(['method'=>'get','url'=>route('task.edit',[$lan->id,$task->id])]) !!}
-						<button type="submit" class="btn btn-warning mr-2"><i class='fa fa-edit'></i> Edit</button>
+						<button type="submit" class="btn btn-warning mr-2"><i class='fa fa-edit'></i> {{ __('messages.edit') }}</button>
 						{{ Form::close() }}
 						{!! Form::open(['method'=>'get','url'=>route('task.assign',[$lan->id,$task->id])]) !!}
-						<button type="submit" class="btn btn-primary mr-2"><i class='fa fa-user-plus'></i> Assign</button>
+						<button type="submit" class="btn btn-primary mr-2"><i class='fa fa-user-plus'></i> {{ __('messages.assign') }}</button>
 						{{ Form::close() }}
 						{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return deleteTask(event, '.$lan->id.', '.$task->id.')']) !!}
-						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> {{ __('messages.delete') }}</button>
 						{!! Form::close() !!}
 						@endif
 					</div>
@@ -69,23 +69,23 @@ LAN's tasks
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
 		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">Return to the LAN</a>
+			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">{{ __('messages.back_lan') }}</a>
 		</li>
 
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/tasks/') }}" tabindex="-2">First</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/tasks/') }}" tabindex="-2">{{ __('messages.first') }}</a>
 		</li>
 		<li class="page-item @if($previous == 0) disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/tasks/'.($previous)) : '#' }}" tabindex="-1">Back</a>
+			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/tasks/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
 		</li>
 		<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/tasks/'.($page)) }}">{{ $page }}</a></li>
 		@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/tasks/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
 		@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/tasks/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 		<li class="page-item @if($next) @else disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/tasks/'.($next)) : '#' }}">Next</a>
+			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/tasks/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
 		</li>
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/tasks/'.$max) }}">Last</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/tasks/'.$max) }}">{{ __('messages.last') }}</a>
 		</li>
 	</ul>
 </nav>

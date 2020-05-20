@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-The Shopping List for the LAN {!! $lan->name !!}
+{{ __('messages.all_shopping_lan') }} {!! $lan->name !!}
 @endsection
 
 @section('page-title')
-LAN's shopping
+{{ __('messages.lan_shopping') }}
 @endsection
 
 @section('title-buttons')
@@ -14,16 +14,16 @@ LAN's shopping
 	<form method="GET" action="{{ route('shopping.create', $lan->id) }}">
 		@csrf
 		@method('GET')
-		<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> To buy</button>
+		<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> {{ __('messages.to_buy') }}</button>
 	</form>
 </div>
 
 <div class="col mt-1">
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
-			<th scope="col" >Total Price</th>
-			<th scope="col" >Budget</th>
-			<th scope="col" >Remaining money</th>
+			<th scope="col" >{{ __('messages.total_price') }}</th>
+			<th scope="col" >{{ __('messages.budget') }}</th>
+			<th scope="col" >{{ __('messages.remaining_money') }}</th>
 		</thead>
 		<tbody>
 			<tr>
@@ -63,16 +63,16 @@ LAN's shopping
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
 			<th scope="col" >#</th>
-			<th scope="col" >Name</th>
-			<th scope="col" >Cost</th>
-			<th scope="col" >Quantity</th>
+			<th scope="col" >{{ __('messages.name') }}</th>
+			<th scope="col" >{{ __('messages.cost') }}</th>
+			<th scope="col" >{{ __('messages.quantity') }}</th>
 			<th scope="col"></th>
 		</thead>
 
 		<tbody>
 			@if(count($shoppings)==0)
 			<tr>
-				<td colspan="5"><h3 class="text-center">No shoppings to show</h3></td>
+				<td colspan="5"><h3 class="text-center">{{ __('messages.no_shoppings') }}</h3></td>
 			</tr>
 			@endif
 			@foreach($shoppings as $shopping)
@@ -84,13 +84,13 @@ LAN's shopping
 				<td scope="col" class=" text-center">
 					<div class="btn-group">
 						{!! Form::open(['onsubmit'=>'return false;']) !!}
-						<button class="btn btn-success mr-2" id="shopping-view-{{$shopping->id}}" onclick="openShopping({{$shopping->id}})"><i class='fa fa-eye'></i> View</button>
+						<button class="btn btn-success mr-2" id="shopping-view-{{$shopping->id}}" onclick="openShopping({{$shopping->id}})"><i class='fa fa-eye'></i> {{ __('messages.view') }}</button>
 						{{ Form::close() }}
 						{!! Form::open(['method'=>'get','url'=>route('shopping.edit', array('lan' => $lan->id, 'shopping' => $shopping->id))]) !!}
-						<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> Edit</button>
+						<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> {{ __('messages.edit') }}</button>
 						{{ Form::close() }}
 						{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeShopping(event, '.$lan->id.', '.$shopping->id.')']) !!}
-						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+						<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> {{ __('messages.delete') }}</button>
 						{!! Form::close() !!}
 					</div>
 				</td>
@@ -103,23 +103,23 @@ LAN's shopping
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
 		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/lan/'.$lan->id) }}" tabindex="-2">Return to the LAN</a>
+			<a class="btn btn-info" href="{{ url('/lan/'.$lan->id) }}" tabindex="-2">{{ __('messages.back_lan') }}</a>
 		</li>
 
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$lan->id.'/shoppings/') }}" tabindex="-2">First</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$lan->id.'/shoppings/') }}" tabindex="-2">{{ __('messages.first') }}</a>
 		</li>
 		<li class="page-item @if($previous == 0) disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$lan->id.'/shoppings/'.($previous)) : '#' }}" tabindex="-1">Back</a>
+			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$lan->id.'/shoppings/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
 		</li>
 		<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$lan->id.'/shoppings/'.($page)) }}">{{ $page }}</a></li>
 		@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$lan->id.'/shoppings/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
 		@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$lan->id.'/shoppings/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 		<li class="page-item @if($next) @else disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$lan->id.'/shoppings/'.($next)) : '#' }}">Next</a>
+			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$lan->id.'/shoppings/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
 		</li>
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$lan->id.'/shoppings/'.$max) }}">Last</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$lan->id.'/shoppings/'.$max) }}">{{ __('messages.last') }}</a>
 		</li>
 	</ul>
 </nav>

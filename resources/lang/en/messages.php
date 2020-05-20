@@ -15,6 +15,26 @@ return [
 
 	// {{ __('messages.') }}
 	
+	'lan_act'=>'LAN\'s activities',
+	'all_act_lan' => 'All activities for the LAN',
+	'add_activity' => 'Add an activity',
+	
+	'lan_admin'=>'LAN\'s admins',
+	'all_admin_lan' => 'All the admins for the LAN',
+	'add_admin' => 'Add a new admin',
+	
+	'lan_task'=>'LAN\'s tasks',
+	'all_task_lan' => 'All the tasks for the LAN',
+	'add_task' => 'Add a new task',
+	'assign' => 'Assign',
+	
+	'lan_shopping'=>'LAN\'s shopping',
+	'all_shopping_lan' => 'The Shopping List for the LAN ',
+	'no_shoppings' => 'No shopping to show',
+	
+	'lan_game'=>'LAN\'s games',
+	'all_game_lan' => 'All the games for the LAN',
+	
 	'login_required'=>'Log-in required',
 	'account_needed'=>'You must have an account to participate to LANs or create one.',
 	'cannot_see_info_lan'=>'You also won\'t be able to see all the informations about this LAN',

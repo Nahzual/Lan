@@ -13,7 +13,7 @@
     <tbody>
       @if(count($games)==0)
       <tr>
-        <td colspan="7"><h3 class="text-center">{{ __('messages.no_game3') }}</h3></td>
+        <td colspan="7"><h3 class="text-center">{{ __('messages.no_games3') }}</h3></td>
       </tr>
       @endif
 

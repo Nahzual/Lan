@@ -69,7 +69,7 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col">
-						<h3>{{ __('messages.latest_deleted_user') }}</h3>
+						<h3>{{ __('messages.latest_deleted_users') }}</h3>
 					</div>
 					<div class="col">
 						<button class="btn btn-outline-dark shadow-sm float-right" data-toggle="collapse" data-target="#collapse-deleted-users" aria-expanded="false" aria-controls="collapse-deleted-users">{{ __('messages.show_hide') }}</button>

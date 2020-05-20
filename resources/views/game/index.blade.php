@@ -14,7 +14,7 @@
 			<form method="GET" action="{{ route('game.create') }}">
 			@csrf
 			@method('GET')
-				<button type="submit" class="btn  btn-outline-success shadow-sm float-right"><i class='fa fa-plus-square'></i> {{ __('create_new_game') }}</button>
+				<button type="submit" class="btn  btn-outline-success shadow-sm float-right"><i class='fa fa-plus-square'></i> {{ __('messages.create_new_game') }}</button>
 			</form>
 		</div>
 	@endif

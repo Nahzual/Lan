@@ -148,13 +148,13 @@
 						<td scope="col">
 							{!! Form::model($lan, ['method' => 'put', 'onsubmit' => 'return sendRequestAccept(event,'.$lan->id.')']) !!}
 								{{ Form::hidden('waiting_lan', config('waiting.ACCEPTED'),['id'=>'waiting_lan_accept']) }}
-								{{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> Accept', ['class' => 'btn btn-success', 'type' => 'submit']) }}
+								{{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> {{ __('messages.accept') }}', ['class' => 'btn btn-success', 'type' => 'submit']) }}
 							{{ Form::close() }}
 						</td>
 						<td scope="col">
 							{!! Form::model($lan, ['method' => 'put', 'onsubmit' => 'return sendRequestReject(event,'.$lan->id.')']) !!}
 								{{ Form::hidden('waiting_lan', config('waiting.REJECTED'),['id'=>'waiting_lan_reject']) }}
-								{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> Reject', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
+								{{ Form::button('<i class="fa fa-times" aria-hidden="true"></i> {{ __('messages.reject') }}', ['class' => 'btn btn-danger', 'type' => 'submit']) }}
 							{{ Form::close() }}
 						</td>
 					</tr>

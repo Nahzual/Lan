@@ -12,13 +12,13 @@ $lan
 				<div class="card-header">
 					<div class="row">
 						<div class="col mt-2">
-							<h3 class="lead-title">List My Lans</h3>
+							<h3 class="lead-title">{{ __('messages.my_lans') }}</h3>
 						</div>
 						<div class="col mt-1">
 							<form method="GET" action="{{ route('lan.create') }}">
 							@csrf
 							@method('GET')
-								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> Create New Lan</button>
+								<button type="submit" class="btn btn-primary float-right"><i class='fa fa-plus-square'></i> {{ __('messages.create_new_lan') }}</button>
 							</form>
 						</div>
 					</div>

@@ -56,7 +56,7 @@
 	</div>
 
 	<div class="form-group row">
-		<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('mesages.email') }}</label>
+		<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('messages.email') }}</label>
 
 		<div class="col-md-6">
 			<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{!! $user->email !!}" required autocomplete="email">
@@ -84,7 +84,7 @@
 	</div>
 
 	<div class="form-group row">
-		<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('mesages.password') }}</label>
+		<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('messages.password') }}</label>
 
 		<div class="col-md-6">
 			<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
@@ -119,7 +119,7 @@
 		</div>
 	</div>
 	<div class="form-group row">
-		{!! Form::label('name_city', __('mesages.city'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+		{!! Form::label('name_city', __('messages.city'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
 		<div class="col-md-6">
 			{!! Form::text('name_city', $city->name_city, ['class' => 'form-control']) !!}
 		</div>

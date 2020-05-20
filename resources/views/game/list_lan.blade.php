@@ -36,7 +36,7 @@
 
         @if(isset($userIsLanAdmin) && $userIsLanAdmin)
 				<td scope="col" id="game-ports-{{$game->id}}">
-					{{$game->ports_string($ports[$index])}}
+					{{$game->ports_string($ports[$index],$lan->id)}}
 				</td>
         			<td scope="col" clas="text-center">
 					<div class="form-group row text-center">

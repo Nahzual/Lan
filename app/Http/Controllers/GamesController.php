@@ -243,7 +243,7 @@ class GamesController extends Controller
 					if($game!=null){
 						$game_lan=$lan->games()->where('can_play.id_game','=',$game->id)->first();
 						if($game_lan!=null){
-							return view('game.add_port',compact('game'));
+							return view('game.add_port',compact('game','lan'));
 						}else{
 							return back()->with('error','This game is not is this LAN\'s game list.');
 						}
@@ -331,7 +331,7 @@ class GamesController extends Controller
 								$port_game=$game->ports()->where('id_lan','=',$lan->id)->where('port','=',$request->port)->first();
 								if($port_game!=null){
 									DB::table('uses_port')->where('id_game','=',$game->id)->where('id_lan','=',$lan->id)->where('port','=',$request->port)->delete();;
-									return response()->json(['new_port_list'=>$game->ports_string(),'success'=>'The port '.htmlentities($request->port).' is no longer used by the game '.$game->name_game.' for this LAN.']);
+									return response()->json(['new_port_list'=>$game->ports_string(null,$lanID),'success'=>'The port '.htmlentities($request->port).' is no longer used by the game '.$game->name_game.' for this LAN.']);
 								}else{
 									return response()->json(['error'=>'This port is not used by this game.']);
 								}

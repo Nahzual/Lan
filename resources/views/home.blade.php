@@ -9,9 +9,7 @@
 					<h1 class="display-3 text-right">{{ __('messages.hometitle') }}</h1>
 					@if($lan)
 						<div id="homediscover" class="alert alert-dark text-center" role="alert">
-							<span>{{ __('messages.homestats', ['date' => date_format(date_create($lan->created_at), config("display.DATE_FORMAT")), 'reg' => $lan->real_user_count(), 'maxreg' => $lan->max_num_registrants]) }}
-							
-							The latest LAN was created on<?php $date = date_create($lan->created_at); ?> {{date_format($date, config("display.DATE_FORMAT"))}} with {{ $lan->real_user_count() }}/{{ $lan->max_num_registrants }} registrants !</span>
+							<span>{{ __('messages.homestats', ['date' => date_format(date_create($lan->created_at), config("display.DATE_FORMAT")), 'reg' => $lan->real_user_count(), 'maxreg' => $lan->max_num_registrants]) }}</span>
 							<span>{{ __('messages.homejoin') }}</span>
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 								<span aria-hidden="true">&times;</span>

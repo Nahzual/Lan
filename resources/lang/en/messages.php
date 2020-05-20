@@ -297,11 +297,30 @@ return [
 	'cost' => 'Cost',
 	'quantity' => 'Quantity',
 	'choose_material' => 'Choose Material',
-	'' => 'Creating new Shopping',
 	'edit_shopping' => 'Editing Shopping',
 	'create_new_shopping' => 'Creating new Shopping',
 	'add_shopping' => 'Add shopping',
 	'viewing_shopping_lan' => 'Viewing shopping list element of',
+	
+	// tournament
+	'add_to_tournament' => 'Add to tournament',
+	'add_player_tournament' => 'Add players to tournament',
+	'all_tourn' => 'All Tournaments',
+	'hour' => 'Hour',
+	'no_tournaments' => 'No tournaments to show',
+	'create_new_tournament' => 'Creating new Tournament',
+	'tournament_description' => 'Description of tournament',
+	'tournament_name' => 'Name of tournament',
+	'max_nb_player' => 'Maximum number of players',
+	'tournament_mode' => 'Mode of tournament',
+	'solo' =>  'Solo',
+	'teams' => 'Teams',
+	'choose_game' => 'Choose the game :',
+	'nb_players_team' => 'Number of players per team',
+	'edit_tournament' => 'Editing Tournament',
+	'tournament_state' => 'State of tournament :',
+	'tournament_page' => 'Tournament_page',
+
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
@@ -310,23 +329,20 @@ return [
 	
 	// {{ __('messages.') }}
 
-	/**
+	'quick_link' => 'Quick-Links',
+	'activities' => 'Activities',
+	'' => 'Games',
+	'' => 'Tournament',
+	'' => 'Tasks',
+	'' => 'Materials',
+	'' => 'Shoppings',
+	'players' => 'Players',
+	'' => 'Admins',
+	'' => 'Helpers',
+	'' => 'Public View',
 
-	'Quick-Links'
-	'Activities'
-	'Games'
-	'Tournament'
-	'Tasks'
-	'Materials'
-	'Shoppings'
-	'Players'
-	'Admins'
-	'Helpers'
-	'Public View'
-
-	'Helper section'
-	'Admin section'
-	**/
+	'' => 'Helper section',
+	'' => 'Admin section',
 	
 
 ];

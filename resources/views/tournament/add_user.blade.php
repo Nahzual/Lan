@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Add players to tournament {!! $tournament->name_tournament !!}
+{{ __('messages.add_player_tournament') }} {!! $tournament->name_tournament !!}
 @endsection
 
 @section('page-title')
-Tournaments players
+{{ __('messages.add_player_tournament') }}
 @endsection
 
 @section('content')
@@ -57,7 +57,7 @@ Tournaments players
 										<button type=submit class="mr-2 btn btn-success"><i class='fa fa-eye'></i> {{ __('messages.view') }}</button>
 									{{ Form::close() }}
 									{!! Form::open(['method'=>'post','onsubmit'=>'join(event,'.$tournament->id.','.$user->id.')']) !!}
-										<button type="submit" class="btn btn-primary"><i class='fa fa-plus'></i> Add to tournament</button>
+										<button type="submit" class="btn btn-primary"><i class='fa fa-plus'></i>{{ __('messages.add_to_tournament') }}</button>
 									{{ Form::close() }}
 								</div>
 							</td>

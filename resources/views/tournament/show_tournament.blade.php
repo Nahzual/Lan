@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Viewing : {!!$tournament->name_tournament!!}
+{{ __('messages.viewing') }} {!!$tournament->name_tournament!!}
 @endsection
 
 @section('page-title')
-Tournament page
+{{ __('messages.tournament_page') }}
 @endsection
 
 @section('content')

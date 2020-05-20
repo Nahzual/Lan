@@ -3,16 +3,16 @@
   <table class="table card-table">
     <thead class="card-table text-center">
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col" >Game</th>
-      <th scope="col">Hour</th>
-      <th scope="col" >Actions</th>
+      <th scope="col">{{ __('messages.name') }}</th>
+      <th scope="col">{{ __('messages.game') }}</th>
+      <th scope="col">{{ __('messages.hour') }}</th>
+      <th scope="col">{{ __('messages.actions') }}</th>
     </thead>
 
     <tbody>
       @if(count($tournaments)==0)
       <tr>
-        <td colspan="5"><h3 class="text-center">No tournaments to show</h3></td>
+        <td colspan="5"><h3 class="text-center">{{ __('messages.no_tournaments') }}</h3></td>
       </tr>
       @endif
 

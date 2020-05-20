@@ -15,6 +15,9 @@ return [
 
 	// {{ __('messages.') }}
 	
+	'lan_player'=>'LAN\'s players',
+	'all_player_lan' => 'All players for the LAN',
+	
 	'lan_act'=>'LAN\'s activities',
 	'all_act_lan' => 'All activities for the LAN',
 	'add_activity' => 'Add an activity',

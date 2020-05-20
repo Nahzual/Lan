@@ -15,36 +15,39 @@ return [
 
 // {{ __('messages.') }}
 
-	'lan_act'=>'LAN\'s activities',
-	'all_act_lan' => 'All activities for the LAN',
-	'add_activity' => 'Add an activity',
+	'lan_player'=>'Joueurs de la LAN',
+	'all_player_lan' => 'Tous les joueurs de la LAN',
+
+	'lan_act'=>'Activités de la LAN',
+	'all_act_lan' => 'AToutes le activités de la LAN',
+	'add_activity' => 'Ajouter une activité',
 	
-	'lan_admin'=>'LAN\'s admins',
-	'all_admin_lan' => 'All the admins for the LAN',
-	'add_admin' => 'Add a new admin',
+	'lan_admin'=>'Administrateurs de la LAN',
+	'all_admin_lan' => 'Tous les admins de la LAN',
+	'add_admin' => 'Ajouter un nouvel admin',
 	
-	'lan_task'=>'LAN\'s tasks',
-	'all_task_lan' => 'All the tasks for the LAN',
-	'add_task' => 'Add a new task',
-	'assign' => 'Assign',
+	'lan_task'=>'Taches de la LAN',
+	'all_task_lan' => 'Toutes les taches de la LAN',
+	'add_task' => 'Ajouter une nouvelle Tache',
+	'assign' => 'Atribuer',
 	
-	'lan_shopping'=>'LAN\'s shopping',
-	'all_shopping_lan' => 'The Shopping List for the LAN ',
-	'no_shoppings' => 'No shopping to show',
+	'lan_shopping'=>'Achats de la LAN',
+	'all_shopping_lan' => 'Liste des achats pour la LAN ',
+	'no_shoppings' => 'Aucun achat',
 	
-	'lan_game'=>'LAN\'s games',
-	'all_game_lan' => 'All the games for the LAN',
+	'lan_game'=>'Jeux de la LAN',
+	'all_game_lan' => 'Tous les jeux pour la LAN',
 	
-	'login_required'=>'Log-in required',
-	'account_needed'=>'You must have an account to participate to LANs or create one.',
-	'cannot_see_info_lan'=>'You also won\'t be able to see all the informations about this LAN',
-	'reminder'=>'Reminder',
-	'external_users'=>'LANs are managed by external Users',
-	'be_careful'=>'Please, be careful and never leak your credentials',
-	'even_friend'=>'(even to a "close" friend)',
-	'can_make_lan'=>'If you desire, you can also create your own LAN !',
-	'lan_closed'=>'LAN closed',
-	'join_lan'=>'Join this LAN',
+	'login_required'=>'Connexion requise',
+	'account_needed'=>'Vous devez avoir un compte pour participer a des LAN ou en creer de nouvelles.',
+	'cannot_see_info_lan'=>'Vous ne plus pas non plus voir les informations concernant cette LAN',
+	'reminder'=>'Rappel',
+	'external_users'=>'Les LANs sont gérées par des utilisateurs externes au site',
+	'be_careful'=>'Soyez prudent et ne communiquez pas vos informations',
+	'even_friend'=>'(même à un amis "proche")',
+	'can_make_lan'=>'Vous pouvez egalement créer votre propre LAN !',
+	'lan_closed'=>'LAN fermée',
+	'join_lan'=>'Rejoindre cette LAN',
 
 	'chln' => ' Changer la Langue',
 	'site_user' => 'Site Users',
@@ -60,8 +63,8 @@ return [
 	'remember_me' => 'Se souvenir de moi',
 	'forgot_password' => 'Mot de passe oublié ?',
 	'reset_password' => 'Reinitialiser le mot de passe',
-	'send_reset_link' => 'Send Password Reset Link',
-	'confirm_password_before' => 'Please confirm your password before continuing.',
+	'send_reset_link' => 'Envoyer un lien de reinitialisation',
+	'confirm_password_before' => 'Veuilez confirmer votre mot de passe.',
 
 	'lan_creator' => 'LAN Creator',
 
@@ -76,12 +79,12 @@ return [
 	'home_p3t' => 'Organization is key ',
 	'home_p3' => 'Don\'t do it alone ! Add helpers, news admins, deploy tasks, define a shopping list and a to-do list to avoid some last-minute expenses !',
 
-	'homestats' => 'The latest LAN was created on :date with :reg / :maxreg registrants !',
-	'homejoin' => 'Sign-in now to create your first LAN !',
+	'homestats' => 'La LAN la plus récente à été créée le  :date avec :reg / :maxreg participants !',
+	'homejoin' => 'Connectea vous dès maintenant pour créer votre première LAN !',
 
 
 	'name' => 'Nom',
-	'lname' => 'Last Name',
+	'lname' => 'Nom de famille',
 	'username' => 'Username',
 	'pseudo' => 'Pseudo',
 	'email' => 'Adresse e-Mail',
@@ -96,7 +99,7 @@ return [
 	'country' => 'Pays',
 	'address' => 'Adresse',
 
-	'want_contact' => 'If you want to contact this user, please use the "Contact" button and wait for his reply on your mailbox.',
+	'want_contact' => 'Si vous voulez contacter cet utilisateur, veuilez utiliser le bouton "Contacter" et attendre sa reponse.',
 
 	// Stats
 	'statistics' => 'Statistics',
@@ -127,13 +130,13 @@ return [
 	'nohelper' => 'No helpers to show',
 	'helpers' => 'Helpers',
 	'admins' => 'Admins',
-	'nouser' => 'No users to show',
-	'first' => 'First',
+	'nouser' => 'Pas d\'utilisateur',
+	'first' => 'Début',
 	'back' => 'Précédent',
 	'next' => 'Suivant',
-	'last' => 'Last',
+	'last' => 'Fin',
 	'search' => 'Rechercher',
-	'back_admin_dash' => 'Return to the admin Dashboard',
+	'back_admin_dash' => 'Retourner au tableau de bord utilisateur',
 	'accept' => 'Accepter',
 	'reject' => 'Rejeter',
 	'remove' => 'Retirer',

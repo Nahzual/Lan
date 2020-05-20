@@ -257,7 +257,7 @@ class LansController extends Controller{
 					}
 				}
 			}else{
-				return view('lan.show', compact('lan', 'location', 'street', 'city', 'department', 'country', 'games', 'activities'))->with(['userIsLanAdmin'=>false,'userIsLanAdminOrHelper'=>false]);
+				return back()->with('error','This action requires to be logged-in');
 			}
 		}else{
 			return back()->with('error','This LAN does not exist.');

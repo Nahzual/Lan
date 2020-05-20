@@ -51,13 +51,15 @@
 						<th scope="row" class="text-center">{{$material->id}}</th>
 						<td scope="col" class="text-center">{!!$material->name_material!!}</td>
 						<td scope="col">
-							<button class="btn btn-success mb-1" id="material-view-{{$material->id}}" onclick="openMaterial({{$material->id}})"><i class='fa fa-eye'></i></button>
-							{!! Form::open(['method' => 'get','url'=>route('material.edit',$material->id)]) !!}
-								<button type="submit" class="mb-1 d-inline btn btn-warning"><i class='fa fa-edit'></i></button>
-							{!! Form::close() !!}
-							{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return sendRequest(event,'.$material->id.')']) !!}
-								<button type="submit" class="d-inline btn btn-danger"><i class='fa fa-trash'></i></button>
-							{!! Form::close() !!}
+							<div class="btn-group">
+								<button class="btn btn-success mb-1" id="material-view-{{$material->id}}" onclick="openMaterial({{$material->id}})"><i class='fa fa-eye'></i></button>
+								{!! Form::open(['method' => 'get','url'=>route('material.edit',$material->id)]) !!}
+									<button type="submit" class="mb-1 d-inline btn btn-warning"><i class='fa fa-edit'></i></button>
+								{!! Form::close() !!}
+								{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return sendRequest(event,'.$material->id.')']) !!}
+									<button type="submit" class="d-inline btn btn-danger"><i class='fa fa-trash'></i></button>
+								{!! Form::close() !!}
+							</div>
 						</td>
 					</tr>
 					@endforeach

@@ -383,9 +383,6 @@ class LansController extends Controller{
 						}
 					}
 
-					// save lan's previous state
-					$prev_state=$lan->waiting_lan;
-
 					// update LAN
 					if(isset($request->max_num_registrants) && is_numeric($request->max_num_registrants) && $request->max_num_registrants>0){
 						$lan->max_num_registrants=$request->max_num_registrants;
@@ -548,35 +545,6 @@ class LansController extends Controller{
 						file_put_contents($file_name, $request->room);
 					}
 
-					// if the LAN's state has changed, send an email to all of its admins to notify them
-					if(isset($request->waiting_lan) && $lan->waiting_lan!=$prev_state){
-						$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
-						if($lan->waiting_lan==config('waiting.ACCEPTED')){
-							foreach($admins as $admin){
-								try{
-									Mail::send('mails.notification_lan_accepted', ['lan' => $lan], function ($message) use ($admin) {
-										$message->from('lancreator.noreply@gmail.com','LAN Creator')
-										->to($admin->email)
-										->subject('LAN accepted');
-									});
-								}catch(\Exception $e){
-
-								}
-							}
-						}else if($lan->waiting_lan==config('waiting.REJECTED')){
-							foreach($admins as $admin){
-								try{
-									Mail::send('mails.notification_lan_rejected', ['lan' => $lan], function ($message) use ($admin) {
-										$message->from('lancreator.noreply@gmail.com','LAN Creator')
-										->to($admin->email)
-										->subject('LAN rejected');
-									});
-								}catch(\Exception $e){
-
-								}
-							}
-						}
-					}
 
 					return response()->json(['success'=>'Your LAN has been successfully edited.']);
 				}else{
@@ -616,6 +584,61 @@ class LansController extends Controller{
 			}
 		}else{
 			return response()->json(['error'=>'Please login to perform this action.']);
+		}
+	}
+
+	public function validateReject($id,Request $request){
+		if(Auth::check()){
+			if(Auth::user()->isSiteAdmin()){
+				$lan=Lan::find($id);
+				if($lan!=null){
+					if(isset($request->waiting_lan)){
+						$prev_state=$lan->waiting_lan;
+						$lan->waiting_lan=$request->waiting_lan;
+
+						// if the LAN's state has changed, send an email to all of its admins to notify them
+						if(isset($request->waiting_lan) && $lan->waiting_lan!=$prev_state){
+							$admins=$lan->users()->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->get();
+							if($lan->waiting_lan==config('waiting.ACCEPTED')){
+								$lan->save();
+								foreach($admins as $admin){
+									try{
+										Mail::send('mails.notification_lan_accepted', ['lan' => $lan], function ($message) use ($admin) {
+											$message->from('lancreator.noreply@gmail.com','LAN Creator')
+											->to($admin->email)
+											->subject('LAN accepted');
+										});
+									}catch(\Exception $e){
+
+									}
+								}
+								return response()->json(['success'=>'This LAN has been successfully accepted.']);
+
+							}else if($lan->waiting_lan==config('waiting.REJECTED')){
+								$lan->save();
+								foreach($admins as $admin){
+									try{
+										Mail::send('mails.notification_lan_rejected', ['lan' => $lan], function ($message) use ($admin) {
+											$message->from('lancreator.noreply@gmail.com','LAN Creator')
+											->to($admin->email)
+											->subject('LAN rejected');
+										});
+									}catch(\Exception $e){
+
+									}
+								}
+								return response()->json(['success'=>'This LAN has been successfully rejected.']);
+							}
+						}
+					}
+				}else{
+					return response()->json(['error'=>'This LAN does not exist.']);
+				}
+			}else{
+				return response()->json(['error'=>'You do not have enough rights.']);
+			}
+		}else{
+			return response()->json(['error'=>'Please log in to perform this action.']);
 		}
 	}
 

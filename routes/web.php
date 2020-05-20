@@ -43,6 +43,7 @@ Route::get('/lan/{lan}/edit','LansController@edit')->name('lan.edit');
 Route::put('/lan/{lan}','LansController@update')->name('lan.update');
 Route::delete('/lan/{lan}','LansController@destroy')->name('lan.destroy');
 Route::put('/lan/submit/{id}', 'LansController@submit');
+Route::put('/lan/validation/{id}', 'LansController@validateReject');
 
 //Show and list
 Route::get('/lan/{lan}','LansController@show')->name('lan.show');

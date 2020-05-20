@@ -268,7 +268,7 @@ return [
 	'viewing_task' =>'Viewing task ',
 	'' => 'No tasks to show' ,
 	'' => 'Add a Task',
-	'helper_task' => 'Helpers in charge of this task :'
+	'helper_task' => 'Helpers in charge of this task :',
 	'deadline' => 'Deadline',
 	'my_tasks_lan' => 'My tasks for LAN :',
 	'no_tasks' => 'Nothing to do, nothing to show',

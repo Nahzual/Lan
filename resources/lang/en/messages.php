@@ -248,7 +248,7 @@ return [
 	'back_tournament' => 'Go Back to Tournament',
 	'team_name' => 'Name of team :',
 	'team_members'=> 'Team players',
-	'all_players_team' => 'All the players of the team '
+	'all_players_team' => 'All the players of the team ',
 	'cannot_create_team_solo' => 'You can\'t create teams for this tournament, as the match mode of this tournament is solo.',
 	
 	// Account deletion
@@ -268,7 +268,7 @@ return [
 	'viewing_task' =>'Viewing task ',
 	'' => 'No tasks to show' ,
 	'' => 'Add a Task',
-	'helper_task' => 'Helpers in charge of this task :'
+	'helper_task' => 'Helpers in charge of this task :',
 	'deadline' => 'Deadline',
 	'my_tasks_lan' => 'My tasks for LAN :',
 	'no_tasks' => 'Nothing to do, nothing to show',

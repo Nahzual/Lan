@@ -1,18 +1,18 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the admins for the LAN {!! $nlan !!}
+{{ __('messages.all_admin_lan') }} {!! $nlan !!}
 @endsection
 
 @section('page-title')
-LAN's admins
+{{ __('messages.lan_admin') }}
 @endsection
 
 @section('title-buttons')
 <div class="col mt-1">
 	<form method="GET" action="{{ route('lan.add_admin', $id) }}">
 		@csrf
-		<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> Add a new Admin</button>
+		<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> {{ __('messages.add_admin') }}</button>
 	</form>
 </div>
 @endsection
@@ -27,8 +27,8 @@ LAN's admins
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
 			<th scope="col">#</th>
-			<th scope="col">Username</th>
-			<th scope="col">Actions</th>
+			<th scope="col">{{ __('messages.username') }}</th>
+			<th scope="col">{{ __('messages.actions') }}</th>
 		</thead>
 
 		<tbody>
@@ -62,23 +62,23 @@ LAN's admins
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
 		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">Return to the LAN</a>
+			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">{{ __('messages.back_lan') }}</a>
 		</li>
 
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/admins/') }}" tabindex="-2">First</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/admins/') }}" tabindex="-2">{{ __('messages.first') }}</a>
 		</li>
 		<li class="page-item @if($previous == 0) disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/admins/'.($previous)) : '#' }}" tabindex="-1">Back</a>
+			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/admins/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
 		</li>
 		<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/admins/'.($page)) }}">{{ $page }}</a></li>
 		@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/admins/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
 		@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/admins/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 		<li class="page-item @if($next) @else disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/admins/'.($next)) : '#' }}">Next</a>
+			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/admins/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
 		</li>
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/admins/'.$max) }}">Last</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/admins/'.$max) }}">{{ __('messages.last') }}</a>
 		</li>
 	</ul>
 </nav>

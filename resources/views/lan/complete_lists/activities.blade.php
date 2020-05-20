@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All activities for the LAN {!! $lan->name !!}
+{{ __('messages.all_act_lan') }} {!! $lan->name !!}
 @endsection
 
 @section('page-title')
-LAN's activities
+{{ __('messages.lan_act') }}
 @endsection
 
 @section('title-buttons')
@@ -13,7 +13,7 @@ LAN's activities
 	<div class="col mt-1">
 		<form method="GET" action="{{ route('activity.create', $lan->id) }}">
 			@csrf
-			<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> Add an activity</button>
+			<button type="submit" class="btn btn-outline-success float-right"><i class='fa fa-plus-square'></i> {{ __('messages.add_activity') }}</button>
 		</form>
 	</div>
 @endif
@@ -29,14 +29,14 @@ LAN's activities
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
 			<th scope="col" >#</th>
-			<th scope="col" >Name</th>
-			<th scope="col" >Actions</th>
+			<th scope="col" >{{ __('messages.name') }}</th>
+			<th scope="col" >{{ __('messages.actions') }}</th>
 		</thead>
 
 		<tbody>
 			@if(count($activities)==0)
 			<tr>
-				<td colspan="5"><h3 class="text-center">No activities to show</h3></td>
+				<td colspan="5"><h3 class="text-center">{{ __('messages.no_activities') }}</h3></td>
 			</tr>
 			@endif
 			@foreach($activities as $activity)
@@ -50,10 +50,10 @@ LAN's activities
 							@if ($userIsLanAdmin)
 							{{ Form::close() }}
 							{!! Form::open(['method'=>'get','url'=>route('activity.edit', array('lan' => $lan->id, 'activity' => $activity->id))]) !!}
-							<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> Edit</button>
+							<button class="btn btn-warning mr-2"><i class='fa fa-edit'></i> {{ __('messages.edit') }}</button>
 							{{ Form::close() }}
 							{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeActivity(event, '.$lan->id.', '.$activity->id.')']) !!}
-							<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete</button>
+							<button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> {{ __('messages.delete') }}</button>
 						{!! Form::close() !!}
 						@endif
 					</div>

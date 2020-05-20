@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the games for the LAN {!! $nlan !!}
+{{ __('messages.all_game_lan') }} {!! $nlan !!}
 @endsection
 
 @section('page-title')
-LAN's games
+{{ __('messages.lan_game') }}
 @endsection
 
 @section('title-buttons')
@@ -14,7 +14,7 @@ LAN's games
 	<form method="GET" action="{{ route('lan.add_game', $id) }}">
 		@csrf
 		@method('GET')
-		<button type="submit" class="btn btn-outline-dark float-right"><i class='fa fa-plus-square'></i> Find new games</button>
+		<button type="submit" class="btn btn-outline-dark float-right"><i class='fa fa-plus-square'></i> {{ __('messages.add_game') }}</button>
 	</form>
 </div>
 @endif
@@ -30,16 +30,16 @@ LAN's games
 	<table class="table card-table">
 		<thead class="card-table text-center">
 			<th scope="col">#</th>
-			<th scope="col">Name</th>
-			<th scope="col">Release date</th>
-			<th scope="col">Game type</th>
-			@if($userIsLanAdmin) <th scope="col">Used ports</th> <th scope="col">Actions</th> @endif
+			<th scope="col">{{ __('messages.name') }}</th>
+			<th scope="col">{{ __('messages.release_date') }}</th>
+			<th scope="col">{{ __('messages.game_type') }}</th>
+			@if($userIsLanAdmin) <th scope="col">{{ __('messages.used_ports') }}</th> <th scope="col">Actions</th> @endif
 		</thead>
 
 		<tbody>
 			@if(count($games)==0)
 			<tr>
-				<td colspan="5"><h3 class="text-center">No games to show</h3></td>
+				<td colspan="5"><h3 class="text-center">{{ __('messages.no_games') }}</h3></td>
 			</tr>
 			@endif
 
@@ -65,9 +65,9 @@ LAN's games
 				<td scope="col">
 					<div class="row text-center">
 						<div class="col">
-							<button class="btn btn-primary shadow-sm mb-2" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> Ports</button>
+							<button class="btn btn-primary shadow-sm mb-2" onclick="openGame({{$game->id}})"><i class='fa fa-plus-square'></i> / <i class='fa fa-minus-square'></i> {{ __('messages.ports') }}</button>
 						  {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeGame(event,'.$id.','.$game->id.')']) !!}
-							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> Remove</button>
+							<button type="submit" class="btn btn-danger"><i class='fa fa-times'></i> {{ __('messages.remove') }}</button>
 						  {!! Form::close() !!}
 						</div>
 					</div>
@@ -82,23 +82,23 @@ LAN's games
 <nav aria-label="page navigation">
 	<ul class="pagination justify-content-end">
 		<li class="page-item">
-			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">Return to the LAN</a>
+			<a class="btn btn-info" href="{{ url('/lan/'.$id) }}" tabindex="-2">{{ __('messages.back_lan') }}</a>
 		</i>
 
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/games/') }}" tabindex="-2">First</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/games/') }}" tabindex="-2">{{ __('messages.first') }}</a>
 		</li>
 		<li class="page-item @if($previous == 0) disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/games/'.($previous)) : '#' }}" tabindex="-1">Back</a>
+			<a class="btn btn-outline-info" href="{{ $previous!=0 ?  url('/lan/'.$id.'/games/'.($previous)) : '#' }}" tabindex="-1">{{ __('messages.back') }}</a>
 		</li>
 		<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/games/'.($page)) }}">{{ $page }}</a></li>
 		@if(($page+1)<=$max) <li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/games/'.($page+1)) }}">{{ ($page+1) }}</a></li>@endif
 		@if(($page+2)<=$max)<li class="page-item"><a class="btn btn-outline-dark" href="{{ url('/lan/'.$id.'/games/'.($page+2)) }}">{{ ($page+2) }}</a></li>@endif
 		<li class="page-item @if($next) @else disabled @endif">
-			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/games/'.($next)) : '#' }}">Next</a>
+			<a class="btn btn-outline-info" href="{{ $next ? url('/lan/'.$id.'/games/'.($next)) : '#' }}">{{ __('messages.next') }}</a>
 		</li>
 		<li class="page-item">
-			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/games/'.$max) }}">Last</a>
+			<a class="btn btn-secondary" href="{{ url('/lan/'.$id.'/games/'.$max) }}">{{ __('messages.last') }}</a>
 		</li>
 	</ul>
 </nav>

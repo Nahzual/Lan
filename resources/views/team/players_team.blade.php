@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-All the players of the team {{ $team->name_team }}
+{{ __('messages.all_players_team') }} {{ $team->name_team }}
 @if(count($users)<$tournament->number_per_team)
 {!! Form::open(['onsubmit'=>'return false;']) !!}
 	<button type="submit" class="btn btn-primary float-right" id="AddNewTeamSubmit" onclick="document.location.reload(false)"><i class="fa fa-plus-square"></i> Join</button>
@@ -11,7 +11,7 @@ All the players of the team {{ $team->name_team }}
 @endsection
 
 @section('page-title')
-Participants of team
+{{ __('messages.team_members') }}
 @endsection
 
 @section('content')
@@ -23,15 +23,15 @@ Participants of team
 	<table class="text-center table card-table table-bordered">
 		<thead class="card-table text-center">
 			<th scope="col">#</th>
-			<th scope="col">Pseudo</th>
-			<th scope="col">Name</th>
+			<th scope="col">{{ __('messages.pseudo') }}</th>
+			<th scope="col">{{ __('messages.name') }}</th>
 		</thead>
 
 		<tbody>
 
 			@if(count($users)==0)
 			<tr>
-				<td colspan="3"><h3>No players to show</h3></td>
+				<td colspan="3"><h3>{{ __('messages.no_players2') }}</h3></td>
 			</tr>
 			@endif
 
@@ -53,7 +53,7 @@ Participants of team
 	</table>
 </div>
 <div class="col">
-            <a class="btn btn-outline-info shadow-sm" href="{{ route('tournament.show_tournament', [$tournament->lan_id, $tournament]) }}"><i class='fa fa-arrow-left'></i> Go Back to Tournament</a>
+            <a class="btn btn-outline-info shadow-sm" href="{{ route('tournament.show_tournament', [$tournament->lan_id, $tournament]) }}"><i class='fa fa-arrow-left'></i> {{ __('messages.back_tournament') }}</a>
 </div>
 @endsection
 

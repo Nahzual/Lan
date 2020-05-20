@@ -3,17 +3,17 @@
   <table class="table card-table">
     <thead class="card-table text-center">
       <th scope="col" class="lead">#</th>
-      <th scope="col" class="lead ">Name</th>
-      <th scope="col" class="lead">Number_of_member</th>
-      <th scope="col" class="lead">Member</th>
-      <th scope="col" class="lead">Join tournament</th>
+      <th scope="col" class="lead ">{{ __('messages.name') }}</th>
+      <th scope="col" class="lead">{{ __('messages.nbr_members') }}</th>
+      <th scope="col" class="lead">{{ __('messages.member') }}</th>
+      <th scope="col" class="lead">{{ __('messages.join_tournament') }}</th>
       @if($userIsLanAdmin) <th scope="col" class="lead "></th> @endif
     </thead>
 
     <tbody>
       @if(count($teams)==0)
       <tr>
-        <td colspan="7"><h3 class="text-center">No Participants for the moment</h3></td>
+        <td colspan="7"><h3 class="text-center">{{ __('messages.no_participants') }}</h3></td>
       </tr>
       @else
 
@@ -32,14 +32,14 @@
                 {!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTeam(event,'.$tournament->id.','.$team->id.')']) !!}
                   <div class="form-group row text-center">
                     <div class="col">
-                      <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> Delete participation</button>
+                      <button type="submit" class="btn btn-danger"><i class='fa fa-trash'></i> {{ __('messages.delete_participation') }}</button>
                     </div>
                   </div>
                 {!! Form::close() !!}
               </td>
             @else
               <td scope="col" class="">
-                <button type="submit" class="btn btn-primary" id="AddNewTeamSubmit"><i class="fa fa-plus-square"></i>Join</button>
+                <button type="submit" class="btn btn-primary" id="AddNewTeamSubmit"><i class="fa fa-plus-square"></i> {{ __('messages.join') }}</button>
                </td>
             @endif
           </tr>

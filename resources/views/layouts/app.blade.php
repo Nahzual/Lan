@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>LAN Creator</title>
+    <title>{{ __('messages.lan_creator') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -32,7 +32,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Lan Creator
+                    {{ __('messages.lan_creator') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -51,7 +51,7 @@
                                 <a class="nav-link" href="{{ route('all_lans') }}">{{ __('messages.find_lan') }}</a><!-- Insérer lien vers page listant les LANs-->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contact.index') }}">Contact</a><!-- Insérer lien vers page de contact-->
+                                <a class="nav-link" href="{{ route('contact.index') }}">{{ __('messages.contact') }}</a><!-- Insérer lien vers page de contact-->
                             </li>
                         @guest
                             <li class="nav-item">

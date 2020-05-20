@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Site Users
+{{ __('messages.site_user') }}
 @endsection
 
 @section('page-title')
-Site Users
+{{ __('messages.site_user') }}
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@ Site Users
 	</div>
 	<div class="row form-group text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-info shadow-sm"><i class="fa fa-search"></i> Search</button>
+			<button type="submit" class="btn btn-outline-info shadow-sm"><i class="fa fa-search"></i> {{ __('messages.search') }}</button>
 		</div>
 	</div>
 {{ Form::close() }}

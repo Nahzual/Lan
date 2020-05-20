@@ -4,7 +4,7 @@
     <thead class="card-table text-center">
       <th scope="col">#</th>
       <th scope="col">{{ __('messages.name') }}</th>
-      <th scope="col">{{ __('messages.release_date')</th>
+      <th scope="col">{{ __('messages.release_date') }}</th>
       <th scope="col">{{ __('messages.game_type') }}</th>
 			@if(isset($userIsLanAdmin) && $userIsLanAdmin)
 			<th scope="col">{{ __('messages.used_ports') }}</th>

@@ -13,6 +13,8 @@ return [
 	*/
 
 	'chln' => ' Change Language',
+	'site_user' => 'Site Users',
+	'user_page' => 'User page',
 
 	// Menu
 
@@ -64,8 +66,12 @@ return [
 
 	// Stats
 	'statistics' => 'Statistics',
-	'user_admin_lan' => '{0} This user isn\'t an admin on any LAN currently |{1} This user is currently administrating :count lan|[2,*] This user is currently administrating :count lans',
-
+	'user_admin_lan_current' => '{0} This user isn\'t an admin on any LAN currently |{1} This user is currently administrating :count lan|[2,*] This user is currently administrating :count lans',
+	'user_helper_lan_current' => '{0} This user isn\'t an helping on any LAN currently |{1} This user is currently helping on :count lan|[2,*] This user is currently helping on :count lans',
+	'user_player_lan_current' => '{0} This user isn\'t planning on playing in any LAN currently |{1} This user is planning to play in :count lan|[2,*] This user is planning to play in :count lans',
+	'user_admin_lan' => '{0} This user hasn\'t been an admin on any LAN yet |{1} This user has been administrating :count lan so far|[2,*] This user has been administrating :count lans so far',
+	'user_helper_lan' => '{0} This user hasn\'t helped on any LAN yet |{1} This user has helped on :count lan so far|[2,*] This user has helped on :count lans so far',
+	'user_player_lan' => '{0} This user hasn\'t played in any LAN yet |{1} This user has played in :count lan so far |[2,*] This user has played in :count lans so far',
 
 	//echo trans_choice('time.minutes_ago', 5, ['value' => 5]);
 
@@ -226,7 +232,33 @@ return [
 	'unmark' => 'Unmark',
 	'create_new_game' => 'Create a new game',
 	'add_game' => 'Add game',
-	'game' => 'Game'
+	'game' => 'Game',
+	
+	// team
+	'nbr_members' => 'Number of member',
+	'member' => 'Member',
+	'join_tournament' => 'Join tournament',
+	'join' => 'Join',
+	'no_players' => 'No Participants for the moment',
+	'no_players2' => 'No players to show',
+	'delete_participation' => 'Delete participation',
+	'create_new_team' => 'Creating new Team',
+	'back_tournament' => 'Go Back to Tournament',
+	'team_name' => 'Name of team :',
+	'team_members'=> 'Participants of team',
+	'all_players_team' => 'All the players of the team '
+	
+	// Account deletion
+	
+	'account_deletion' => 'Account deletion',
+	'confirm_wish_delete' => 'Do you really want to delete your account ?',
+	'deletion_consequence' => 'You will no longer be able to log in to your account after this operation.',
+	'deletion_option' => 'You have two options to delete your account : you can either disable your account, or permanently delete it.',
+	'deletion_option_explanation' => 'In the first case only, you can recover your account by contacting an administrator using the "Contact" page. You will have to remember at least the email address associated with this account.',
+	'deletion_recovery' => 'Be careful, you will also have to prove that you still have access to this email address.',
+	'proceed' => 'Proceed ?',
+	'disable_account' => 'Disable your account',
+	'delete_account' => 'Delete your account',
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
@@ -251,7 +283,9 @@ return [
 
 	'Helper section'
 	'Admin section'
-
+	**/
+	
+	/**
 	// Shopping
 	'The Shopping List for the LAN '
 	'To buy'

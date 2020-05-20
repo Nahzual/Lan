@@ -53,7 +53,7 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 					<a class="dropdown-item" href="{{ route('user.updateTheme', $logged_user->id) }}"><i class="fa fa-paint-brush"></i> {{ __('messages.chtheme') }}</a>
           <a class="dropdown-item" href="{{ route('user.edit',$logged_user->id) }}" onclick="event.preventDefault(); document.getElementById('edit-profile-form').submit();"><i class="fa fa-wrench"></i> {{ __('messages.settings') }}</a>
-					<a class="dropdown-item" href="{{ route('user.confirmDestroy',$logged_user->id) }}"><i class="fa fa-trash"></i> {{ 'Delete your account' }}</a>
+					<a class="dropdown-item" href="{{ route('user.confirmDestroy',$logged_user->id) }}"><i class="fa fa-trash"></i> {{ __('messages.delete_account') }}</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{{ route('user.updateLanguage', $logged_user->id) }}"><i class="fa fa-language"></i>{{ __('messages.chln') }}</a>
 

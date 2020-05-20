@@ -8,13 +8,13 @@ User : {!!$user->pseudo!!}
 @endsection
 
 @section('page-title')
-User page
+{{ __('messages.user_page') }}
 @endsection
 
 @section('title-buttons')
 <div class="col">
 	{!! Form::open(['onsubmit'=>'return sendRequest(event,'.$user->id.')']) !!}
-		<button type="submit" class="btn btn-dark float-right"><i class="fa fa-send"></i> Contact</button>
+		<button type="submit" class="btn btn-dark float-right"><i class="fa fa-send"></i> {{ __('messages.contact') }}</button>
 	{!! Form::close() !!}
 </div>
 @endsection
@@ -54,15 +54,13 @@ User page
 				<h4>{{ __('messages.statistics') }}</h4>
 			</div>
 			<div class="card-body">
-				<p>{{ trans_choice('messages.user_admin_lan', $lans_admin_count, ['count' => $lans_admin_count]) }}
-				
-				This user is currently administrating {{$lans_admin_count}} {{($lans_admin_count>1) ? 'lans' : 'lan'}}</p>
-				<p>This user is currently helping on {{$lans_helper_count}} {{($lans_helper_count>1) ? 'lans' : 'lan'}}</p>
-				<p>This user is planning to play in {{$lans_player_count}} {{($lans_player_count>1) ? 'lans' : 'lan'}}</p>
+				<p>{{ trans_choice('messages.user_admin_lan_current', $lans_admin_count, ['count' => $lans_admin_count]) }}</p>
+				<p>{{ trans_choice('messages.user_helper_lan_current', $lans_helper_count, ['count' => $lans_helper_count]) }}</p>
+				<p>{{ trans_choice('messages.user_player_lan_current', $lans_player_count, ['count' => $lans_player_count]) }}</p>
 				<hr/>
-				<p>This user has been administrating {{$lans_former_admin_count}} {{($lans_former_admin_count>1) ? 'lans' : 'lan'}}</p>
-				<p>This user has been helping on {{$lans_former_helper_count}} {{($lans_former_helper_count>1) ? 'lans' : 'lan'}}</p>
-				<p>This user has been playing in {{$lans_former_player_count}} {{($lans_former_player_count>1) ? 'lans' : 'lan'}}</p>
+				<p>{{ trans_choice('messages.user_admin_lan', $lans_former_admin_count, ['count' => $lans_former_admin_count]) }}</p>
+				<p>{{ trans_choice('messages.user_helper_lan', $lans_former_helper_count, ['count' => $lans_former_helper_count]) }}</p>
+				<p>{{ trans_choice('messages.user_player_lan', $lans_former_player_count, ['count' => $lans_former_player_count]) }}</p>
 			</div>
 		</div>
 	</div>

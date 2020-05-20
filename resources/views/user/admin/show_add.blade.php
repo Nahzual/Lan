@@ -16,7 +16,7 @@
           {!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'addAdmin(event,'.$lan->id.','.$admin->id.')']) !!}
             <div class="form-group row text-center">
               <div class="col">
-                <button type="submit" class="btn btn-success shadow-sm"><i class='fa fa-plus-square'></i>{{ __('messages.add') }}</button>
+                <button type="submit" class="btn btn-success shadow-sm"><i class='fa fa-plus-square'></i> {{ __('messages.add') }}</button>
               </div>
             </div>
           {!! Form::close() !!}

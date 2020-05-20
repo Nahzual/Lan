@@ -7,7 +7,7 @@
       <div class="col">
 				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#lan_helpers" aria-expanded="false" aria-controls="lan_helpers">{{ __('messages.show_hide') }}</button>
 				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('lan.add_helper', $lan->id) }}"><i class='fa fa-plus'></i></a>
-				<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.helper_list', $lan->id) }}"><i class='fa fa-list'></i> All</a>
+				<a class="btn btn-outline-primary shadow-sm float-right" href="{{ route('lan.helper_list', $lan->id) }}"><i class='fa fa-list'></i> {{ __('messages.all') }}</a>
       </div>
    	</div>
  	</div>

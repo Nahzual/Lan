@@ -21,7 +21,7 @@
 					{!! Form::open(['method' => 'post','url'=>'', 'onsubmit'=>'assign(event,'.$lan->id.','.$task->id.','.$helper->id.')']) !!}
 					<div class="form-group row text-center">
 						<div class="col">
-							<button type="submit" class="btn btn-success shadow-sm"><i class='fa fa-plus-square'></i>{{ __('messages.add') }}</button>
+							<button type="submit" class="btn btn-success shadow-sm"><i class='fa fa-plus-square'></i> {{ __('messages.add') }}</button>
 						</div>
 					</div>
 					{!! Form::close() !!}

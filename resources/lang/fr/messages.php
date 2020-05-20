@@ -142,23 +142,23 @@ return [
 	'remove' => 'Retirer',
 
 
-	'admin_lan' => 'All the admins for the LAN ',
-	'add_new_admin' => 'Add a new Admin',
+	'admin_lan' => 'Tous les admins de la LAN ',
+	'add_new_admin' => 'Ajouter un nouvel Admin',
 	'adding_admin_lan' => 'Ajouter un admin a la LAN :',
 	'admin_name' => 'Nom de l\'admin :',
 
-	'helper_lan' => 'All the helpers for the LAN ',
-	'add_new_helper' => 'Add a new Helper',
-	'adding_helper_lan' => 'Ajouter un helper a la LAN :',
-	'helper_name' => 'nom du helper :',
+	'helper_lan' => 'Tous les aides pour la LAN ',
+	'add_new_helper' => 'Ajouter un nouvel aide',
+	'adding_helper_lan' => 'Ajouter un aide a la LAN :',
+	'helper_name' => 'nom de l\'aide :',
 
-	'add_new_game' => 'Add a new game',
-	'add_new_material' => 'Add a new material',
+	'add_new_game' => 'Ajouter un nouveau jeu',
+	'add_new_material' => 'Ajouter un nouveau matériel',
 
 	'back_home' => ' Retour a la page d\'accueil',
 	'back_lan' => ' Retourner a la LAN',
-	'back_dashboard' => ' Retourner au dashboard',
-	'back_game' => 'Return to the game list',
+	'back_dashboard' => ' Retourner au tableau de bord',
+	'back_game' => 'Retourner aux jeux',
 
 	'participants' => 'Participants',
 	'state' => 'State',
@@ -181,14 +181,14 @@ return [
 	'all_materials' => 'Gérer le matériel',
 
 	'no_lans' =>'Aucune LAN à afficher',
-	'no_users'=>'No users to show',
-	'no_games'=>'No games to show',
+	'no_users'=>'Aucun utilisateur à afficher',
+	'no_games'=>'Aucun jeu a afficher',
 	'no_games2'=> 'What\'s gaming, doc ?',
 	'no_games3'=> 'Your game is in another castle...',
-	'latest_users' => 'Latest users',
-	'latest_deleted_users' => 'Latest deleted users',
+	'latest_users' => 'Utilisateur le plus récent',
+	'latest_deleted_users' => 'Utilisateur le plus récemment supprimé',
 
-	'pending_lans' => 'Pending LANs',
+	'pending_lans' => 'LANs en attente',
 
 	'my_lans' =>'Mes LANs',
 	'my_lans_helper' =>'LANs sur lesquelles j\'aide',
@@ -201,7 +201,7 @@ return [
 	'nb_max_registrants' => 'Nombre maximum de participants',
 	'date' => 'Date ',
 	'duration' => 'Durée (en jours)',
-	'budget' => 'Budget (in €)',
+	'budget' => 'Budget (en €)',
 	'room_length' => 'Longeur de la salle (en mètres)',
 	'room_width' => 'Largeur de la salle (en mètres)',
 	'location' => 'Adresse',
@@ -216,12 +216,12 @@ return [
 	'empty_space' => 'Espace libre :',
 
 	'viewing' => 'Viewing :',
-	'room_dim' => 'Room dimensions',
+	'room_dim' => 'Dimenssions de la salle',
 
 	// Edit
 	'update' => 'Sauvegarder',
-	'edit_title_lan' => 'Editing LAN ',
-	'edit_profile' => 'Edit your profile',
+	'edit_title_lan' => 'Mettre a jour LAN ',
+	'edit_profile' => 'Mettre a jour le profile',
 
 	// Contact
 	'contact_us' => 'Nous Contacter',
@@ -230,7 +230,7 @@ return [
 	'attachment' => 'Piece jointe',
 	'send' => ' Envoyer',
 
-	'logged_as' => 'Logged in as:',
+	'logged_as' => 'Utilisateur connecté:',
 
 	// Activity
 
@@ -256,10 +256,10 @@ return [
 	'port' => 'Port :',
 
 	// games
-	'release_date' => 'Release date',
-	'price' => 'Price (in €) ',
-	'game_type' => 'Game type',
-	'solo' => '1 player',
+	'release_date' => 'Date de sortie',
+	'price' => 'Prix (en €) ',
+	'game_type' => 'Type de jeu',
+	'solo' => '1 joueur',
 	'multi_local' => 'Local multiplayer',
 	'Online multiplayer',
 	'used_ports' => 'Used ports',
@@ -268,9 +268,9 @@ return [
 	'find_new_games' => 'Find new games',
 	'mark' => 'Mark',
 	'unmark' => 'Unmark',
-	'create_new_game' => 'Create a new game',
-	'add_game' => 'Add game',
-	'game' => 'Game',
+	'create_new_game' => 'Créer un nouveau jeu',
+	'add_game' => 'Ajouter un jeu',
+	'game' => 'Jeu',
 
 	// team
 	'add_players' => 'Add players',
@@ -279,42 +279,41 @@ return [
 	'member' => 'Member',
 	'join_tournament' => 'Join tournament',
 	'join' => 'Join',
-	'no_players' => 'No Participants for the moment',
-	'no_players2' => 'No players to show',
+	'no_players' => 'Pas de joueurs',
+	'no_players2' => 'Pas de joueurs',
 	'delete_participation' => 'Delete participation',
-	'create_new_team' => 'Creating new Team',
-	'back_tournament' => 'Go Back to Tournament',
-	'team_name' => 'Name of team :',
+	'create_new_team' => 'Créer une nouvelle équipe',
+	'back_tournament' => 'Retourner au tournois',
+	'team_name' => 'No, de l\'équipe:',
 	'team_members'=> 'Team players',
 	'all_players_team' => 'All the players of the team ',
 	'cannot_create_team_solo' => 'You can\'t create teams for this tournament, as the match mode of this tournament is solo.',
 
 	// Account deletion
 
-	'account_deletion' => 'Account deletion',
-	'confirm_wish_delete' => 'Do you really want to delete your account ?',
+	'account_deletion' => 'Supprimer le compte',
+	'confirm_wish_delete' => 'Voulez vous vrai,ent suppri,er votre compte ?',
 	'deletion_consequence' => 'You will no longer be able to log in to your account after this operation.',
 	'deletion_option' => 'You have two options to delete your account : you can either disable your account, or permanently delete it.',
 	'deletion_option_explanation' => 'In the first case only, you can recover your account by contacting an administrator using the "Contact" page. You will have to remember at least the email address associated with this account.',
 	'deletion_recovery' => 'Be careful, you will also have to prove that you still have access to this email address.',
-	'proceed' => 'Proceed ?',
+	'proceed' => 'Continuer ?',
 	'disable_account' => 'Disable your account',
-	'delete_account' => 'Delete your account',
+	'delete_account' => 'Supprimer votre compte',
 
 	// Tasks
 	'task_page' =>'Task page',
 	'viewing_task' =>'Viewing task ',
-	'' => 'No tasks to show' ,
 	'add_task' => 'Add a Task',
 	'helper_task' => 'Helpers in charge of this task :',
 	'deadline' => 'Deadline',
-	'my_tasks_lan' => 'My tasks for LAN :',
-	'no_tasks' => 'Nothing to do, nothing to show',
-	'create_new_task' => 'Creating new task',
-	'back_tasklist' => 'Go to your tasklist',
-	'adding_helper_task' => 'Adding helper to Task',
-	'editing_task' => 'Editing Task',
-	'assign_to_helper' => 'Assign to an helper',
+	'my_tasks_lan' => 'Mes tâches pour la LAN :',
+	'no_tasks' => 'Aucune tâche pour le moment',
+	'create_new_task' => 'Créer une nouvelle tâche',
+	'back_tasklist' => 'Aller à la liste des tâches',
+	'adding_helper_task' => 'Ajouter un aide à cette tâche',
+	'editing_task' => '?ettre à jour lq tâche',
+	'assign_to_helper' => 'Attribuer à un aide',
 
 	// material
 	'materials' => 'Materials',

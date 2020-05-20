@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Editing Material : {!! $material->name_material !!}
+{{ __('messages.edit_material') }} : {!! $material->name_material !!}
 @endsection
 
 @section('page-title')
-Editing Material
+{{ __('messages.edit_material') }}
 @endsection
 
 
@@ -17,24 +17,24 @@ Editing Material
 {!! Form::model($material, ['method' => 'put', 'onsubmit' => 'return sendRequest(event,'.$material->id.')']) !!}
 	<div>
 		<div class="form-group">
-			{!! Form::label('name_material', 'Name') !!}
+			{!! Form::label('name_material', __('messages.name')) !!}
 			{!! Form::text('name_material', null, ['class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('desc_material', 'Description of the material') !!}
+			{!! Form::label('desc_material', __('messages.description')) !!}
 			{!! Form::text('desc_material', null, ['class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('category_material', 'Category of the material') !!}
+			{!! Form::label('category_material', __('messages.category')) !!}
 			{!! Form::text('category_material', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="form-group row text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Update</button>
+			<button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> {{ __('messages.update') }}</button>
 		</div>
 		<div class="col">
-			<a class="btn btn-primary" href="{{ route('dashboard.admin') }}"><i class='fa fa-arrow-left'></i> Go back to dashboard</a>
+			<a class="btn btn-primary" href="{{ route('dashboard.admin') }}"><i class='fa fa-arrow-left'></i> {{ __('messages.back_dashboard') }}</a>
 		</div>
 	</div>
 {!! Form::close() !!}

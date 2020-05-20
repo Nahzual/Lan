@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Materials
+{{ __('messages.materials') }}
 @endsection
 
 @section('page-title')
-Materials
+{{ __('messages.materials') }}
 @endsection
 
 @section('content')
@@ -15,13 +15,13 @@ Materials
 {!! Form::open(['method'=>'get','url'=>'/adm/materials']) !!}
 	<div class="row form-group">
 		<div class="col">
-			<h4>Material's name or category :</h4>
+			<h4>{{ __('messages.material_name_or_cat') }}</h4>
 			{!! Form::text('name_material',(isset($name)) ? $name : null,['class'=>'form-control']) !!}
 		</div>
 	</div>
 	<div class="row form-group text-center">
 		<div class="col">
-			<button type="submit" class="btn btn-outline-info shadow-sm"><i class="fa fa-search"></i> Search</button>
+			<button type="submit" class="btn btn-outline-info shadow-sm"><i class="fa fa-search"></i> {{ __('messages.search') }}</button>
 		</div>
 	</div>
 {{ Form::close() }}
@@ -42,7 +42,7 @@ Materials
 				<tbody>
 					@if(count($materials)==0)
 					<tr>
-						<td colspan="6"><h3 class="text-center">No materials to show</h3></td>
+						<td colspan="6"><h3 class="text-center">{{ __('messages.no_materials') }}</h3></td>
 					</tr>
 					@endif
 

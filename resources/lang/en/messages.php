@@ -278,6 +278,27 @@ return [
 	'editing_task' => 'Editing Task',
 	'assign_to_helper' => 'Assign to an helper',
 	
+	// material
+	'materials' => 'Materials',
+	'edit_material' => 'Editing Material',
+	'category' => 'Category',
+	'create_new_materials' => 'Creating new Material',
+	'multiple_cat' => 'You can enter several categories by spacing them out with a delimiter of your choice (comma, white space...)',
+	'material_name_or_cat' => 'Material\'s name or category :',
+	'no_materials' => 'No materials to show',
+	'add_material' => 'Add material',
+	'edit_quantity' => 'Edit quantity',
+	
+	// Shopping
+	'' => 'The Shopping List for the LAN',
+	'to_buy' => 'To buy',
+	'' => 'Total price',
+	'Remaining money' => '',
+	'cost' => 'Cost',
+	'quantity' => 'Quantity',
+	'' => 'Choose Material',
+	'' => 'Creating new Shopping',
+	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
 	//'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
@@ -301,20 +322,6 @@ return [
 
 	'Helper section'
 	'Admin section'
-	**/
-	
-	/**
-	// Shopping
-	'The Shopping List for the LAN '
-	'To buy'
-	'Total price'
-	'Budget'
-	'Remaining money'
-	'Cost'
-	'Price'
-	'Quantity'
-	'Choose Material'
-	'Creating new Shopping'
 	**/
 	
 

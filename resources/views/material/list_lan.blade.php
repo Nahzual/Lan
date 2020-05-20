@@ -3,15 +3,15 @@
   <table class="table card-table text-center">
     <thead class="card-table text-center">
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Actions</th>
+      <th scope="col">{{ __('messages.name') }}</th>
+      <th scope="col">{{ __('messages.quantity') }}</th>
+      <th scope="col">{{ __('messages.actions') }}</th>
     </thead>
 
     <tbody>
       @if(count($materials)==0)
       <tr>
-        <td colspan="6"><h3 class="text-center">No materials to show</h3></td>
+        <td colspan="6"><h3 class="text-center">{{ __('messages.no_materials') }}</h3></td>
       </tr>
       @endif
 
@@ -24,7 +24,7 @@
           {!! Form::open(['method' => 'put','url'=>'', 'onsubmit'=>'return editQuantity(event,'.$lan->id.','.$material->id.')']) !!}
             <div class="form-group text-center mt-2">
               <div class="col">
-                <button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> Edit quantity</button>
+                <button type="submit" class="btn btn-primary"><i class='fa fa-edit'></i> {{ __('messages.edit_quantity') }}</button>
               </div>
             </div>
           {!! Form::close() !!}

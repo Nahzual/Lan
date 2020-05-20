@@ -43,6 +43,7 @@ Route::get('/lan/{lan}/edit','LansController@edit')->name('lan.edit');
 Route::put('/lan/{lan}','LansController@update')->name('lan.update');
 Route::delete('/lan/{lan}','LansController@destroy')->name('lan.destroy');
 Route::put('/lan/submit/{id}', 'LansController@submit');
+Route::put('/lan/validation/{id}', 'LansController@validateReject');
 
 //Show and list
 Route::get('/lan/{lan}','LansController@show')->name('lan.show');
@@ -142,6 +143,7 @@ Route::get('/tournament/{tournament}/join/{page}','TournamentsController@joinLis
 Route::get('lan/{lan}/tournament/{tournament}/show', 'TournamentsController@show')->name('tournament.show_tournament');
 Route::get('/lan/{lan}/tournaments/','LansController@list_tournaments')->name('lan.tour_list');
 Route::get('/lan/{lan}/tournaments/{page}','LansController@list_tournaments')->name('lan.tour_list.page');
+Route::get('/lan/{lan}/tournament/{tournament}/tree', 'TournamentsController@tree')->name('tournament.tree');
 
 /* ----------------- TEAM routes ----------------- */
 

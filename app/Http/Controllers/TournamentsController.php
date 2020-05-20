@@ -462,4 +462,24 @@ class TournamentsController extends Controller
 			return redirect('/login')->with('error','Please log in to perform this action.');
 		}
 	}
+
+  /**
+  * Tournament tree
+  *
+  * @return \Illuminate\Contracts\Support\Renderable
+  */
+  public function tree($lanId, $tournamentId)
+  {
+    if(Auth::check()){
+      $user=Auth::user();
+      $userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+      $tournament= Tournament::all()->find($tournamentId);
+      $teams= Team::all()->where('tournament_id', $tournamentId);
+      return view('tournament.tree', compact('tournament', 'teams', 'userIsLanAdmin', 'lanId'));
+    }else{
+      return redirect('/login')->with('error','Please log in to have access to this page.');
+    }
+  }
+
+
 }

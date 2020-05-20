@@ -1,7 +1,12 @@
 <div class="card">
+
+@if ($userIsLanAdmin)
   <div class="card-header">
     <h3 class="float-left mt-2">About</h3>
+    {!! Form::open(['onsubmit'=>'return false;']) !!}
+    <a class="btn btn-primary float-right" href="{{ route('tournament.tree', array('lan' => $lan->id, 'tournament' => $tournament->id)) }}"><i class='fa fa-plus'></i> Tree</a>	{{ Form::close() }}
   </div>
+@endif  
 
   <div class="card-body">
 		@if(isset($teams))

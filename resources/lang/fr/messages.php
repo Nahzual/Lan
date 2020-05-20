@@ -12,6 +12,20 @@ return [
 	|
 	*/
 
+
+// {{ __('messages.') }}
+	
+	'login_required'=>'Log-in required',
+	'account_needed'=>'You must have an account to participate to LANs or create one.',
+	'cannot_see_info_lan'=>'You also won\'t be able to see all the informations about this LAN',
+	'reminder'=>'Reminder',
+	'external_users'=>'LANs are managed by external Users',
+	'be_careful'=>'Please, be careful and never leak your credentials',
+	'even_friend'=>'(even to a "close" friend)',
+	'can_make_lan'=>'If you desire, you can also create your own LAN !',
+	'lan_closed'=>'LAN closed',
+	'join_lan'=>'Join this LAN',
+
 	'chln' => ' Changer la Langue',
 	'site_user' => 'Site Users',
 	'user_page' => 'User page',
@@ -179,7 +193,7 @@ return [
 	'empty_space' => 'Espace libre :',
 
 	'viewing' => 'Viewing :',
-	'' => 'Room dimensions',
+	'room_dim' => 'Room dimensions',
 
 	// Edit
 	'update' => 'Sauvegarder',
@@ -330,25 +344,24 @@ return [
 	'tree' => 'Tree',
 	
 	'add_player' => 'Add a new player',
-
 	
 	// notification
 	
 	// added as admin
 	'visit_dashboard' => 'Visit your dashboard or LAN list to see everything you can do.',
 	'added_as_admin' => 'You have been added as admin on',
-	'added_as_admin_by' => 'by :Name :Lastname Your can now edit and delete this LAN, and add admins and helpers to it.'
-	'added_as_admin_mistake' => 'If you think this might be a mistake, you can contact the LAN admin who added you on :email .'
+	'added_as_admin_by' => 'by :Name :Lastname Your can now edit and delete this LAN, and add admins and helpers to it.',
+	'added_as_admin_mistake' => 'If you think this might be a mistake, you can contact the LAN admin who added you on :email .',
 	
 	// added as helper
 	'added_as_helper' => 'You have been added as helper on',
 	'added_as_helper_by' => 'by :name :lastname . You can now create tasks for this LAN and edit its shopping list.',
-	'added_as_helper_mistake' => 'If you think this might be a mistake, you can contact the LAN admin who added you on :email .'
+	'added_as_helper_mistake' => 'If you think this might be a mistake, you can contact the LAN admin who added you on :email .',
 	
 	// removed from helper
 	'removed_from_helper' => 'You have been removed from the helper list of',
 	'removed_from_helper_by' => 'by :name :lastname . Your can no longer create tasks for this LAN or edit its shopping list.',
-	'removed_from_helper_mistake' => 'If you think this might be a mistake, you can contact the LAN admin on :email .'
+	'removed_from_helper_mistake' => 'If you think this might be a mistake, you can contact the LAN admin on :email .',
 	
 	// contact
 	'tried_contact' => ' :name :lastname :pseudo tried to contact you using our website. If you want, you can reply at :email',
@@ -369,7 +382,6 @@ return [
 	'game_over' => 'You have been banned from LanCreator by an administrator. You can no longer log on our website.',
 	'ban_mistake' => 'If you think this is a mistake, please reply to this mail. Don\'t forget to mention the reasons why you think that you didn\'t deserve to be banned from LanCreator.',
 	
-
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE

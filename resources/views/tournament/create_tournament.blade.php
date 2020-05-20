@@ -60,17 +60,8 @@
 </div>
 {!! Form::close() !!}
 
-<script>
-  function changementType() {
-    var match_mod_tournament = document.getElementById("match_mod_tournament").value;
-    var div = document.getElementById("number");
-    if (match_mod_tournament == "1") {
-    div.style="display:block";
-    } else {
-    div.style="display:none";
-    }
-  }
-</script>
+<script type="text/javascript" src="/js/ajax/tournament/ajax_create.js"></script>
+
 <script src=" http://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">

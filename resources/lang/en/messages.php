@@ -343,6 +343,6 @@ return [
 
 	'' => 'Helper section',
 	'' => 'Admin section',
-	
+
 
 ];

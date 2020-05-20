@@ -42,16 +42,20 @@ class TeamsController extends Controller
 			$user=Auth::user();
 			$tournament = Tournament::find($tournamentId);
 			if($tournament!=null){
-				$players_count=$tournament->players_count();
-				if($tournament->max_player_count_tournament-$players_count>=$tournament->number_per_team){
-					$lan=$tournament->lan;
-					if($user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()){
-						return view('team.create_team', compact('tournament'));
+				if($tournament->match_mod_tournament==config('tournament.TEAM') && $tournament->number_per_team!=1){
+					$players_count=$tournament->players_count();
+					if($tournament->max_player_count_tournament-$players_count>=$tournament->number_per_team){
+						$lan=$tournament->lan;
+						if($user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()){
+							return view('team.create_team', compact('tournament'));
+						}else{
+							return back()->with('error', 'You must be an admin of the LAN to perform this action.');
+						}
 					}else{
-						return back()->with('error', 'You must be an admin of the LAN to perform this action.');
+						return back()->with('error', 'You can\'t create a new team, because the number of players will exceed the maximum number of players of this tournament.');
 					}
 				}else{
-					return back()->with('error', 'You can\'t create a new team, because the number of players will exceed the maximum number of players of this tournament.');
+					return back()->with(['error'=>'You can\'t create a team for this tournament as it is in SOLO mode.']);
 				}
 			}else{
 				return back()->with('error', 'This tournament does not exist.');
@@ -72,37 +76,41 @@ class TeamsController extends Controller
 			$user=Auth::user();
 			$tournament = Tournament::find($tournamentId);
 			if($tournament!=null){
-				$lan=$tournament->lan;
-				if($user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()){
-					$players_count=$tournament->players_count($teams);
-					if($tournament->max_player_count_tournament-$players_count>=$tournament->number_per_team){
-						if(isset($request->name_team)){
-							$team = new Team();
-							$team->name_team = htmlentities($request->name_team);
-							$team->tournament()->associate($tournament->id);
-							$team->save();
+				if($tournament->match_mod_tournament==config('tournament.TEAM') && $tournament->number_per_team!=1){
+					$lan=$tournament->lan;
+					if($user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()){
+						$players_count=$tournament->players_count();
+						if($tournament->max_player_count_tournament-$players_count>=$tournament->number_per_team){
+							if(isset($request->name_team)){
+								$team = new Team();
+								$team->name_team = htmlentities($request->name_team);
+								$team->tournament()->associate($tournament->id);
+								$team->save();
 
-							return response()->json([
-								'success'=>'Your team has been saved successfully.'
-							]);
+								return response()->json([
+									'success'=>'Your team has been saved successfully.'
+								]);
+							}else{
+								return response()->json([
+									'error'=>"The team's name is required."
+								]);
+							}
 						}else{
-							return response()->json([
-								'error'=>"The team's name is required."
-							]);
+							return response()->json(['error'=>'If a new team is created, the number of players will exceed the maximum number of players of this tournament.']);
 						}
 					}else{
-						return response()->json(['error'=>'If a new team is created, the number of players will exceed the maximum number of players of this tournament.']);
+						return response()->json([
+							'error'=>"You must be an admin of the LAN to perform this action."
+						]);
 					}
 				}else{
-					return response()->json([
-						'error'=>"You must be an admin of the LAN to perform this action."
-					]);
+					return response()->json(['error'=>'You can\'t create a team for this tournament as it is in SOLO mode.']);
 				}
 			}else{
 				return response()->json(['error'=>'This tournament does not exist.']);
 			}
 		}else{
-			return redirect('/login')->with('error','You must be logged in to edit a LAN.');
+			return response()->json(['error'=>'You must be logged in to create a team.']);
 		}
 	}
 

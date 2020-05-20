@@ -86,9 +86,9 @@ class TournamentsController extends Controller
 					}
 
 					if(isset($request->opening_date_tournament)){
-						$date=date_create($request->opening_date_tournament);
+						$date=date_create_from_format('H:i',$request->opening_date_tournament);
 
-						if($date && $date->format('H:i:s')===$request->opening_date_tournament){
+						if($date && $date->format('H:i')===$request->opening_date_tournament){
 							$tournament->opening_date_tournament = htmlentities($request->opening_date_tournament);
 						}else{
 							return response()->json(['error'=>'The start time is not valid.']);
@@ -122,7 +122,7 @@ class TournamentsController extends Controller
 					if(isset($request->id_game)){
 						$game=Game::find($request->id_game);
 						if($game!=null){
-							$game=$lan->games()->where('game_id','=',$request->id_game)->first();
+							$game=$lan->games()->where('id_game','=',$request->id_game)->first();
 							if($game!=null){
 								$tournament->id_game = htmlentities($request->id_game);
 							}else{
@@ -249,9 +249,9 @@ class TournamentsController extends Controller
 						}
 
 						if(isset($request->opening_date_tournament)){
-							$date=date_create($request->opening_date_tournament);
+							$date=date_create_from_format('H:i',$request->opening_date_tournament);
 
-							if($date && $date->format('H:i:s')===$request->opening_date_tournament){
+							if($date && $date->format('H:i')===$request->opening_date_tournament){
 								$tournament->opening_date_tournament = htmlentities($request->opening_date_tournament);
 							}else{
 								return response()->json(['error'=>'The start time is not valid.']);
@@ -277,7 +277,7 @@ class TournamentsController extends Controller
 						if(isset($request->id_game) && $request->id_game!=$tournament->id_game){
 							$game=Game::find($request->id_game);
 							if($game!=null){
-								$game=$lan->games()->where('game_id','=',$request->id_game)->first();
+								$game=$lan->games()->where('id_game','=',$request->id_game)->first();
 								if($game!=null){
 									$tournament->id_game = htmlentities($request->id_game);
 								}else{
@@ -468,18 +468,36 @@ class TournamentsController extends Controller
   *
   * @return \Illuminate\Contracts\Support\Renderable
   */
-  public function tree($lanId, $tournamentId)
-  {
-    if(Auth::check()){
-      $user=Auth::user();
-      $userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
-      $tournament= Tournament::all()->find($tournamentId);
-      $teams= Team::all()->where('tournament_id', $tournamentId);
-      return view('tournament.tree', compact('tournament', 'teams', 'userIsLanAdmin', 'lanId'));
-    }else{
-      return redirect('/login')->with('error','Please log in to have access to this page.');
-    }
+  public function tree($lanId, $tournamentId){
+		if(Auth::check()){
+			$lan=Lan::find($lanId);
+			if($lan!=null){
+				$tournament=$lan->tournaments()->find($tournamentId);
+				if($tournament!=null){
+					$user=Auth::user();
+					$userIsLanAdmin=$user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lanId)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()!=null;
+					$teams=Team::where('tournament_id', '=', $tournamentId)->get();
+
+					if($tournament->match_mod_tournament==config('tournament.SOLO') || $tournament->number_per_team==1){
+						$players=$teams->toBase();
+						foreach($players as $key=>$team){
+							$players[$key]=$team->users()->first();
+						}
+						return view('tournament.tree', compact('lan', 'tournament', 'game', 'userIsLanAdmin', 'players','teams'));
+
+					}else{
+						$players_count=$tournament->players_count($teams);
+						return view('tournament.tree', compact('lan', 'tournament', 'game', 'userIsLanAdmin', 'teams','players_count'));
+					}
+
+				}else{
+					return back()->with('error','This tournament doesn\'t exist.');
+				}
+			}else{
+				return back()->with('error','This LAN doesn\'t exist.');
+			}
+		}else{
+			return redirect('/login')->with('error','Please log in to have access to this page.');
+		}
   }
-
-
 }

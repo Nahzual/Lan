@@ -267,7 +267,7 @@ return [
 	'task_page' =>'Task page',
 	'viewing_task' =>'Viewing task ',
 	'' => 'No tasks to show' ,
-	'' => 'Add a Task',
+	'add_task' => 'Add a Task',
 	'helper_task' => 'Helpers in charge of this task :',
 	'deadline' => 'Deadline',
 	'my_tasks_lan' => 'My tasks for LAN :',
@@ -293,7 +293,7 @@ return [
 	'' => 'The Shopping List for the LAN',
 	'to_buy' => 'To buy',
 	'total_price' => 'Total price',
-	'Remaining money' => '',
+	'remaining_money' => 'Remaining money',
 	'cost' => 'Cost',
 	'quantity' => 'Quantity',
 	'choose_material' => 'Choose Material',
@@ -317,9 +317,16 @@ return [
 	'teams' => 'Teams',
 	'choose_game' => 'Choose the game :',
 	'nb_players_team' => 'Number of players per team',
+	'nb_players' => 'Number of players',
 	'edit_tournament' => 'Editing Tournament',
 	'tournament_state' => 'State of tournament :',
 	'tournament_page' => 'Tournament_page',
+	
+	'teams_for_tournament' => 'All teams for the tournament',
+	'tournament_teams' => 'Tournament\'s teams',
+	'add_team' => 'Add a team'.
+	'about' => 'About',
+	'tree' => 'Tree',
 
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
@@ -331,18 +338,15 @@ return [
 
 	'quick_link' => 'Quick-Links',
 	'activities' => 'Activities',
-	'' => 'Games',
-	'' => 'Tournament',
-	'' => 'Tasks',
-	'' => 'Materials',
-	'' => 'Shoppings',
+	'gamess' => 'Games',
+	'Tournament' => 'Tournament',
+	'tasks' => 'Tasks',
+	'shoppings' => 'Shoppings',
 	'players' => 'Players',
-	'' => 'Admins',
-	'' => 'Helpers',
-	'' => 'Public View',
 
-	'' => 'Helper section',
-	'' => 'Admin section',
+	'public_view' => 'Public View',
+	'helper_section' => 'Helper section',
+	'admin_section' => 'Admin section',
 
 
 ];

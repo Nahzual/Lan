@@ -267,7 +267,7 @@ return [
 	'task_page' =>'Task page',
 	'viewing_task' =>'Viewing task ',
 	'' => 'No tasks to show' ,
-	'' => 'Add a Task',
+	'add_task' => 'Add a Task',
 	'helper_task' => 'Helpers in charge of this task :',
 	'deadline' => 'Deadline',
 	'my_tasks_lan' => 'My tasks for LAN :',
@@ -293,7 +293,7 @@ return [
 	'' => 'The Shopping List for the LAN',
 	'to_buy' => 'To buy',
 	'total_price' => 'Total price',
-	'Remaining money' => '',
+	'remaining_money' => 'Remaining money',
 	'cost' => 'Cost',
 	'quantity' => 'Quantity',
 	'choose_material' => 'Choose Material',
@@ -329,20 +329,17 @@ return [
 	
 	// {{ __('messages.') }}
 
-	'' => 'Quick-Links',
-	'' => 'Activities',
-	'' => 'Games',
-	'' => 'Tournament',
-	'' => 'Tasks',
-	'' => 'Materials',
-	'' => 'Shoppings',
-	'' => 'Players',
-	'' => 'Admins',
-	'' => 'Helpers',
-	'' => 'Public View',
+	'quick_link' => 'Quick-Links',
+	'activities' => 'Activities',
+	'gamess' => 'Games',
+	'Tournament' => 'Tournament',
+	'tasks' => 'Tasks',
+	'shoppings' => 'Shoppings',
+	'players' => 'Players',
 
-	'' => 'Helper section',
-	'' => 'Admin section',
+	'public_view' => 'Public View',
+	'helper_section' => 'Helper section',
+	'admin_section' => 'Admin section',
 
 
 ];

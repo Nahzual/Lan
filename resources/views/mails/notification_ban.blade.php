@@ -7,8 +7,8 @@
 			<h1>LAN Creator</h1>
 		</div>
 		<div class="card-body">
-			<p>You have been banned from LanCreator by an administrator. You can no longer log on our website.</p>
-			<p>If you think this is a mistake, please reply to this mail. Don't forget to mention the reasons why you think that you didn't deserve to be banned from LanCreator.</p>
+			<p>{{ __('messages.game_over') }}</p>
+			<p>{{ __('messages.ban_mistake') }}</p>
 		</div>
 	</div>
 </div>

@@ -7,7 +7,7 @@
 			<h1>LAN Creator</h1>
 		</div>
 		<div class="card-body">
-			<p>Your LAN {!!$lan->name!!}<small>#{{$lan->id}}</small> has been accepted ! Players can now join it from the "All lans" page.</p>
+			<p>{{ __('messages.your_lan') }} {!!$lan->name!!}<small>#{{$lan->id}}</small>{{ __('messages.accepted') }}</p>
 		</div>
 	</div>
 </div>

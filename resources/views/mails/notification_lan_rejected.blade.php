@@ -7,7 +7,7 @@
 			<h1>LAN Creator</h1>
 		</div>
 		<div class="card-body">
-			<p>Your LAN {!!$lan->name!!}<small>#{{$lan->id}}</small> has been rejected, please edit its informations before submitting it again.</p>
+			<p>{{ __('messages.your_lan') }} {!!$lan->name!!}<small>#{{$lan->id}}</small>{{ __('messages.rejected') }}</p>
 		</div>
 	</div>
 </div>

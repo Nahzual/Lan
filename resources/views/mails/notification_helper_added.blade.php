@@ -7,8 +7,9 @@
 			<h1>LAN Creator</h1>
 		</div>
 		<div class="card-body">
-			<p>You have been added as helper on {!!$lan->name!!}<small>#{{$lan->id}}</small> by {!!$admin->name.' '.$admin->lastname!!}. Your can now create tasks for this LAN and edit its shopping list.</p>
-			<p>If you think this might be a mistake, you can contact the LAN admin on {{$admin->email}}.</p>
+			<p>{{ __('messages'added_as_helper') }}{!!$lan->name!!}<small>#{{$lan->id}}</small>
+			{{ __('messages'added_as_helper_by', [ 'name'=>$admin->name, 'lastname' => $admin->lastname]) }}</p>
+			<p>{{ __('messages'added_as_helper_mistake', [ 'email'=>$admin->email]) }}</p>
 		</div>
 	</div>
 </div>

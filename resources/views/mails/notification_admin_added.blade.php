@@ -7,9 +7,10 @@
 			<h1>LAN Creator</h1>
 		</div>
 		<div class="card-body">
-			<p>You have been added as admin on {!!$lan->name!!}<small>#{{$lan->id}}</small> by {!!$admin->name.' '.$admin->lastname!!}. Your can now edit and delete this LAN, and add admins and helpers to it.</p>
-			<p>Visit your dashboard or LAN list to see everything you can do.</p>
-			<p>If you think this might be a mistake, you can contact the LAN admin who added you on {{$admin->email}}.</p>
+			<p>{{ __('messages.added_as_admin') }} {!!$lan->name!!}<small>#{{$lan->id}}</small> 
+			{{ __('messages.added_as_admin_by', ['name' => $admin->name, lastname => $admin->lastname ]) }}</p>
+			<p>{{ __('messages.visit_dashboard') }}</p>
+			<p>{{ __('messages.added_as_admin_mistake', ['email' => $admin->email]) }}</p>
 		</div>
 	</div>
 </div>

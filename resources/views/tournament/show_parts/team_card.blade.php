@@ -3,26 +3,26 @@
 		<div class="row">
 			@if(isset($players))
 			<div class="col mt-2">
-				<h4>Players</h4>
+				<h4>{{ __('messages.players') }}</h4>
 			</div>
 			<div class="col">
-				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#tournament_teams" aria-expanded="false" aria-controls="tournament_teams">Show/hide</button>
+				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#tournament_teams" aria-expanded="false" aria-controls="tournament_teams">{{ __('messages.show_hide') }}</button>
 				@if($players->count() < $tournament->max_player_count_tournament)
-				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('tournament.join_list', $tournament->id) }}"><i class='fa fa-plus'></i> Add a new player</a>
+				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('tournament.join_list', $tournament->id) }}"><i class='fa fa-plus'></i> {{ __('messages.add_player') }}</a>
 				@else
-				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('tournament.join_list', $tournament->id) }}" title="The maximum number of players for this tournament is reached" disabled><i class='fa fa-plus'></i>  Add a new player</a>
+				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('tournament.join_list', $tournament->id) }}" title="The maximum number of players for this tournament is reached" disabled><i class='fa fa-plus'></i> {{ __('messages.add_player') }}</a>
 				@endif
 			</div>
 			@else
 			<div class="col mt-2">
-				<h4>Teams</h4>
+				<h4>{{ __('messages.teams') }}</h4>
 			</div>
 			<div class="col">
-				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#tournament_teams" aria-expanded="false" aria-controls="tournament_teams">Show/hide</button>
+				<button class="btn btn-outline-dark shadow-sm float-right ml-2" data-toggle="collapse" data-target="#tournament_teams" aria-expanded="false" aria-controls="tournament_teams">{{ __('messages.show_hide') }}</button>
 				@if($teams->count()*$tournament->number_per_team < $tournament->max_player_count_tournament)
-				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('team.create_team', $tournament->id) }}"><i class='fa fa-plus'></i> Create a new team</a>
+				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('team.create_team', $tournament->id) }}"><i class='fa fa-plus'></i> {{ __('messages.create_new_team') }}</a>
 				@else
-				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('team.create_team', $tournament->id) }}" title="The maximum number of teams for this tournament is reached" disabled><i class='fa fa-plus'></i> Create a new team</a>
+				<a class="btn btn-success shadow-sm float-right ml-2" href="{{ route('team.create_team', $tournament->id) }}" title="The maximum number of teams for this tournament is reached" disabled><i class='fa fa-plus'></i> {{ __('messages.create_new_team') }}</a>
 				@endif
 			</div>
 			@endif
@@ -38,8 +38,8 @@
 				<table class="text-center table card-table table-bordered">
 					<thead class="card-table text-center">
 						<th scope="col" >#</th>
-						<th scope="col" >Name</th>
-						@if(!isset($players)) <th scope="col" >Number of players</th> @endif
+						<th scope="col" >{{ __('messages.name') }}</th>
+						@if(!isset($players)) <th scope="col" >{{ __('messages.nb_players') }}</th> @endif
 						<th scope="col"></th>
 					</thead>
 
@@ -47,7 +47,7 @@
 						@if(isset($players))
 							@if(count($players)==0)
 								<tr>
-									<td colspan="5"><h3 class="text-center">No players to show</h3></td>
+									<td colspan="5"><h3 class="text-center">{{ __('messages.no_players') }}</h3></td>
 								</tr>
 							@endif
 							@foreach($players as $player)
@@ -56,10 +56,10 @@
 									<td scope="col">{!!$player->pseudo!!}</td>
 									<td scope="col" class=" text-center">
 										<div class="btn-group">
-											<a class="btn btn-success" href="{{ route('user.show', $player->id) }}"><i class='fa fa-eye'></i> View</a>
+											<a class="btn btn-success" href="{{ route('user.show', $player->id) }}"><i class='fa fa-eye'></i> {{ __('messages.view') }}</a>
 											@if ($userIsLanAdmin)
 												{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTeam(event, '.$tournament->id.', '.$player->pivot->team_id.')']) !!}
-												<button type="submit" class="btn btn-danger ml-2"><i class='fa fa-times'></i> Remove</button>
+												<button type="submit" class="btn btn-danger ml-2"><i class='fa fa-times'></i> {{ __('messages.remove') }}</button>
 												{!! Form::close() !!}
 											@endif
 										</div>
@@ -69,7 +69,7 @@
 						@else
 							@if(count($teams)==0)
 								<tr>
-									<td colspan="5"><h3 class="text-center">No teams to show</h3></td>
+									<td colspan="5"><h3 class="text-center">{{ __('messages.no_teams') }}</h3></td>
 								</tr>
 							@endif
 							@foreach($teams as $team)
@@ -80,14 +80,14 @@
 									<td scope="col" class=" text-center">
 										<div class="btn-group">
 											{!! Form::open(['method'=>'get','url'=>route('team.players_team', array('tournament' =>$tournament->id, 'team' => $team->id)) ]) !!}
-												<button class="btn btn-success"><i class='fa fa-eye'></i> View</button>
+												<button class="btn btn-success"><i class='fa fa-eye'></i> {{ __('messages.view') }}</button>
 											{{ Form::close() }}
 											@if ($userIsLanAdmin)
 												{!! Form::open(['method' => 'get','url'=>route('team.join_list',$team->id) ]) !!}
-													<button type="submit" class="btn btn-primary ml-2" {!! ($team->users->count()>=$tournament->number_per_team) ? 'title="The team if full" disabled' : '' !!}><i class="fa fa-user-plus"></i> Add players</button>
+													<button type="submit" class="btn btn-primary ml-2" {!! ($team->users->count()>=$tournament->number_per_team) ? 'title="The team if full" disabled' : '' !!}><i class="fa fa-user-plus"></i> {{ __('messages.add_players') }}</button>
 												{{ Form::close() }}
 												{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeTeam(event, '.$tournament->id.', '.$team->id.')']) !!}
-													<button type="submit" class="btn btn-danger ml-2"><i class='fa fa-trash'></i> Delete</button>
+													<button type="submit" class="btn btn-danger ml-2"><i class='fa fa-trash'></i> {{ __('messages.delete') }}</button>
 												{!! Form::close() !!}
 											@endif
 										</div>

@@ -7,8 +7,9 @@
 			<h1>LAN Creator</h1>
 		</div>
 		<div class="card-body">
-			<p>You are no longer registered to the LAN {!!$lan->name!!}<small>#{{$lan->id}}</small> because the place you choosed is no longer available.</p>
-			<p>You will have to choose an other place, but you can still join this LAN on the home page if there are places left.</p>
+			<p>{{ __('messages.player_removed_retry') }} {!!$lan->name!!}<small>#{{$lan->id}}</small> 
+			{{ __('messages.player_removed_p2') }}</p>
+			<p>{{ __('messages.player_removed_retry') }}</p>
 		</div>
 	</div>
 </div>	

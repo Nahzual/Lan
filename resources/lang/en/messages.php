@@ -244,7 +244,7 @@ return [
 	'no_players' => 'No Participants for the moment',
 	'no_players2' => 'No players to show',
 	'delete_participation' => 'Delete participation',
-	'create_new_team' => 'Creating new Team',
+	'create_new_team' => 'Create a new Team',
 	'back_tournament' => 'Go Back to Tournament',
 	'team_name' => 'Name of team :',
 	'team_members'=> 'Team players',
@@ -324,10 +324,50 @@ return [
 	
 	'teams_for_tournament' => 'All teams for the tournament',
 	'tournament_teams' => 'Tournament\'s teams',
-	'add_team' => 'Add a team'.
+	'add_team' => 'Add a team',
 	'about' => 'About',
 	'tree' => 'Tree',
+	
+	'add_player' => 'Add a new player',
 
+	
+	// notification
+	
+	// added as admin
+	'visit_dashboard' => 'Visit your dashboard or LAN list to see everything you can do.',
+	'added_as_admin' => 'You have been added as admin on',
+	'added_as_admin_by' => 'by :Name :Lastname Your can now edit and delete this LAN, and add admins and helpers to it.'
+	'added_as_admin_mistake' => 'If you think this might be a mistake, you can contact the LAN admin who added you on :email .'
+	
+	// added as helper
+	'added_as_helper' => 'You have been added as helper on',
+	'added_as_helper_by' => 'by :name :lastname . You can now create tasks for this LAN and edit its shopping list.',
+	'added_as_helper_mistake' => 'If you think this might be a mistake, you can contact the LAN admin who added you on :email .'
+	
+	// removed from helper
+	'removed_from_helper' => 'You have been removed from the helper list of',
+	'removed_from_helper_by' => 'by :name :lastname . Your can no longer create tasks for this LAN or edit its shopping list.',
+	'removed_from_helper_mistake' => 'If you think this might be a mistake, you can contact the LAN admin on :email .'
+	
+	// contact
+	'tried_contact' => ' :name :lastname :pseudo tried to contact you using our website. If you want, you can reply at :email',
+	'tried_contact_mistake' => 'If you think this is a mistake, you can ignore this message.',
+	'tried_contact_spam' => 'If you feel like this user is spamming you, or causing you any type of trouble, you can contact a site administrator using the "Contact" page. Feel free to include screenshots, or any other file that can make us better understand your issue.',
+	
+	// lan accepted/rejected
+	'your_lan' => 'Your LAN',
+	'rejected' => 'has been rejected, please edit its informations before submitting it again.',
+	'accepted' => ' has been accepted ! Players can now join it from the "All lans" page.',
+	
+	// player removed
+	'player_removed' => 'You are no longer registered to the LAN ',
+	'player_removed_p2' => 'because the place you choosed is no longer available.',
+	'player_removed_retry' => 'You will have to choose an other place, but you can still join this LAN on the home page if there are places left.',
+	
+	// ban
+	'game_over' => 'You have been banned from LanCreator by an administrator. You can no longer log on our website.',
+	'ban_mistake' => 'If you think this is a mistake, please reply to this mail. Don\'t forget to mention the reasons why you think that you didn\'t deserve to be banned from LanCreator.',
+	
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE

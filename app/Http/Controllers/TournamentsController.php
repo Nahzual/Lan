@@ -86,9 +86,13 @@ class TournamentsController extends Controller
 					}
 
 					if(isset($request->opening_date_tournament)){
-						$date=date_create_from_format('H:i',$request->opening_date_tournament);
+						$date=date_create_from_format('H:i:s',$request->opening_date_tournament);
+						if(!$date){
+							$request->opening_date_tournament=$request->opening_date_tournament.':00';
+							$date=date_create_from_format('H:i:s',$request->opening_date_tournament);
+						}
 
-						if($date && $date->format('H:i')===$request->opening_date_tournament){
+						if($date && $date->format('H:i:s')==$request->opening_date_tournament){
 							$tournament->opening_date_tournament = htmlentities($request->opening_date_tournament);
 						}else{
 							return response()->json(['error'=>'The start time is not valid.']);
@@ -249,12 +253,16 @@ class TournamentsController extends Controller
 						}
 
 						if(isset($request->opening_date_tournament)){
-							$date=date_create_from_format('H:i',$request->opening_date_tournament);
+							$date=date_create_from_format('H:i:s',$request->opening_date_tournament);
+							if(!$date){
+								$request->opening_date_tournament=$request->opening_date_tournament.':00';
+								$date=date_create_from_format('H:i:s',$request->opening_date_tournament);
+							}
 
-							if($date && $date->format('H:i')===$request->opening_date_tournament){
+							if($date && $date->format('H:i:s')==$request->opening_date_tournament){
 								$tournament->opening_date_tournament = htmlentities($request->opening_date_tournament);
 							}else{
-								return response()->json(['error'=>'The start time is not valid.']);
+								return response()->json(['error'=>'The start time is not valid.'.$request->opening_date_tournament]);
 							}
 						}
 
@@ -272,6 +280,10 @@ class TournamentsController extends Controller
 							$tournament->max_player_count_tournament = htmlentities($request->max_player_count_tournament);
 						}else if(isset($request->max_player_count_tournament)){
 							return response()->json(['error'=>'The number of players in the tournament must be a positive number.']);
+						}
+
+						if(isset($request->is_finished_tournament)){
+							$tournament->is_finished_tournament = htmlentities($request->is_finished_tournament);
 						}
 
 						if(isset($request->id_game) && $request->id_game!=$tournament->id_game){

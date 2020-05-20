@@ -24,7 +24,7 @@ Creating new Tournament
   </div>
   <div class="form-group">
     {!! Form::label('opening_date_tournament', 'Begins...', ['class' => 'display-6']) !!}
-    {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control','required'=>'']) !!}
+    {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control','required'=>'','step'=>'1']) !!}
   </div>
   <div class="form-group">
     {!! Form::label('max_player_count_tournament', 'Maximum number of players :', ['class' => 'display-6']) !!}

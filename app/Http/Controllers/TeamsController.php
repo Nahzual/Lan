@@ -43,7 +43,7 @@ class TeamsController extends Controller
 			$tournament = Tournament::find($tournamentId);
 			if($tournament!=null){
 				if($tournament->match_mod_tournament==config('tournament.TEAM') && $tournament->number_per_team!=1){
-					$players_count=$tournament->players_count();
+					$players_count=$tournament->teams_count()*$tournament->number_per_team;
 					if($tournament->max_player_count_tournament-$players_count>=$tournament->number_per_team){
 						$lan=$tournament->lan;
 						if($user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()){
@@ -79,7 +79,7 @@ class TeamsController extends Controller
 				if($tournament->match_mod_tournament==config('tournament.TEAM') && $tournament->number_per_team!=1){
 					$lan=$tournament->lan;
 					if($user->isSiteAdmin() || $user->lans()->where('lan_user.lan_id','=',$lan->id)->where('lan_user.rank_lan','=',config('ranks.ADMIN'))->first()){
-						$players_count=$tournament->players_count();
+						$players_count=$tournament->teams_count()*$tournament->number_per_team;
 						if($tournament->max_player_count_tournament-$players_count>=$tournament->number_per_team){
 							if(isset($request->name_team)){
 								$team = new Team();
@@ -96,7 +96,7 @@ class TeamsController extends Controller
 								]);
 							}
 						}else{
-							return response()->json(['error'=>'If a new team is created, the number of players will exceed the maximum number of players of this tournament.']);
+							return response()->json(['error'=>'You can\'t create a new team, because the number of players will exceed the maximum number of players of this tournament.']);
 						}
 					}else{
 						return response()->json([

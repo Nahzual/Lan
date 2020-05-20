@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Editing Tournament : {!!$tournament->name!!}
+Editing Tournament : {!!$tournament->name_tournament!!}
 @endsection
 
 @section('page-title')
@@ -18,7 +18,6 @@ Editing Tournament
     <div class="form-group">
       {!! Form::label('is_finished_tournament', 'State of tournament :', ['class' => 'display-6']) !!}
       {!! Form::select('is_finished_tournament', array('0'=>'Not finished', '1'=>'Finished'), null,['id'=>'is_finished_tournament', 'class'=>'form-control']) !!}
-
 		</div>
     <div class="form-group">
 			{!! Form::label('name_tournament', 'Name', ['class' => 'display-6']) !!}
@@ -30,7 +29,7 @@ Editing Tournament
 		</div>
     <div class="form-group">
       {!! Form::label('opening_date_tournament', 'Houre of begin tournament :', ['class' => 'display-6']) !!}
-      {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control']) !!}
+      {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control','step'=>'1']) !!}
 		</div>
     <div class="form-group">
       {!! Form::label('max_player_count_tournament', 'Maximum number of players :', ['class' => 'display-6']) !!}

@@ -23,7 +23,7 @@
 			{!! Form::text('desc_task', null, ['class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('deadline_task', __('messages.deadline), ['class' => '']) !!}
+			{!! Form::label('deadline_task', __('messages.deadline'), ['class' => '']) !!}
 			{!! Form::date('deadline_task', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>

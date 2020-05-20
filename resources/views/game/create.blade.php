@@ -23,7 +23,7 @@
 			{!! Form::textarea('desc_game', null, ['class' => 'form-control','size'=>'30x5']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('release_date_game', {{ __('messages.release_date') }}, ['class' => 'display-6']) !!}
+			{!! Form::label('release_date_game', __('messages.release_date'), ['class' => 'display-6']) !!}
 			{!! Form::date('release_date_game', null, ['class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">

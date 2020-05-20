@@ -129,6 +129,23 @@ class LansController extends Controller{
 			$lan = new Lan();
 
 			// update LAN
+
+			if(isset($request->room_width) && is_numeric($request->room_width) && $request->room_width>0){
+				$lan->room_width=$request->room_width;
+			}else if(isset($request->room_width)){
+				return response()->json(['error'=>'The room width has to be a positive number.']);
+			}else{
+				return response()->json(['error'=>"The room width is required."]);
+			}
+
+			if(isset($request->room_length) && is_numeric($request->room_length) && $request->room_length>0){
+				$lan->room_length=$request->room_length;
+			}else if(isset($request->room_length)){
+				return response()->json(['error'=>'The room length has to be a positive number.']);
+			}else{
+				return response()->json(['error'=>"The room length is required."]);
+			}
+
 			if(isset($request->max_num_registrants) && is_numeric($request->max_num_registrants) && $request->max_num_registrants>0){
 				$lan->max_num_registrants=$request->max_num_registrants;
 			}else if(isset($request->max_num_registrants)){

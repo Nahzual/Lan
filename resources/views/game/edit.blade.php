@@ -27,7 +27,7 @@ Editing Game
 			{!! Form::date('release_date_game', null, ['class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">
-			{!! Form::label('cost_game', __('messages.price), ['class' => 'display-6']) !!}
+			{!! Form::label('cost_game', __('messages.price'), ['class' => 'display-6']) !!}
 			{!! Form::number('cost_game', null, ['min'=>'0', 'class' => 'form-control']) !!}
 		</div>
 		<div class="form-group">

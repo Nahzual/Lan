@@ -5,7 +5,7 @@
 @endsection
 
 @section('page-title')
-{{ __('messages.game;) }}
+{{ __('messages.game') }}
 @endsection
 
 

@@ -16,13 +16,14 @@ class Game extends Model
   	public $timestamps=false;
 
 	/*Returns the connexion_ports used for this game*/
- 	public function ports(){
-   		return $this->belongsToMany('App\Lan','uses_port','id_game','id_lan')->select('uses_port.port');
-  	}
+ 	public function ports($lanId=null){
+   	if(isset($lanId)) return $this->belongsToMany('App\Lan','uses_port','id_game','id_lan')->where('id_lan','=',$lanId)->select('uses_port.port');
+		else return $this->belongsToMany('App\Lan','uses_port','id_game','id_lan')->select('uses_port.port');
+	}
 
 	/*Returns the connexion_ports used for this game as String*/
-	public function ports_string($ports_collection=null){
-		if(!isset($ports_collection)) $ports_collection=$this->ports;
+	public function ports_string($ports_collection=null,$lanId){
+		if(!isset($ports_collection)) $ports_collection=$this->ports($lanId)->get();
 		$list='';
 		$size=count($ports_collection);
 		$toEnd=$size;

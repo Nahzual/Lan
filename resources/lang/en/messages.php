@@ -292,7 +292,7 @@ return [
 	// Shopping
 	'' => 'The Shopping List for the LAN',
 	'to_buy' => 'To buy',
-	'' => 'Total price',
+	'total_price' => 'Total price',
 	'Remaining money' => '',
 	'cost' => 'Cost',
 	'quantity' => 'Quantity',
@@ -301,6 +301,7 @@ return [
 	'edit_shopping' => 'Editing Shopping',
 	'create_new_shopping' => 'Creating new Shopping',
 	'add_shopping' => 'Add shopping',
+	'viewing_shopping_lan' => 'Viewing shopping list element of',
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE

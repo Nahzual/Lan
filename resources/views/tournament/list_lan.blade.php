@@ -21,7 +21,7 @@
       <tr id="row-tournament-lan-{{$tournament->id}}">
         <th scope="row" class="text-center">{{$tournament->id}}</th>
         <td scope="col" class="text-center ">{{$tournament->name_tournament}}</a></td>
-        <td scope="col" class="text-center ">{{ substr(($tournament->desc_tournament), 0, 50) }}</td>
+        <td scope="col" class="text-center ">{{$tournament->game->name_game}}</td>
         <td scope="col" class="text-center">{{ $tournament->opening_date_tournament }}</td>
 
 

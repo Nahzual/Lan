@@ -212,12 +212,12 @@ return [
 	'error_404_message' => 'The page you attempted to reach is not registered.',
 	'error_500' => '500 error',
 	'error_500_message' => 'The server encountered a fatal error. Please, contact the website\'s admin',
-	
+
 	// Ports
 	'add_port_game_lan' => 'Adding port to game ":game" for LAN :lan',
 	'add_port_game' => 'Adding port to game ":game"',
 	'port' => 'Port :',
-	
+
 	// games
 	'release_date' => 'Release date',
 	'price' => 'Price (in €) ',
@@ -234,7 +234,7 @@ return [
 	'create_new_game' => 'Create a new game',
 	'add_game' => 'Add game',
 	'game' => 'Game',
-	
+
 	// team
 	'add_players' => 'Add players',
 	'add_users' => 'Add users',
@@ -251,9 +251,9 @@ return [
 	'team_members'=> 'Team players',
 	'all_players_team' => 'All the players of the team ',
 	'cannot_create_team_solo' => 'You can\'t create teams for this tournament, as the match mode of this tournament is solo.',
-	
+
 	// Account deletion
-	
+
 	'account_deletion' => 'Account deletion',
 	'confirm_wish_delete' => 'Do you really want to delete your account ?',
 	'deletion_consequence' => 'You will no longer be able to log in to your account after this operation.',
@@ -263,7 +263,7 @@ return [
 	'proceed' => 'Proceed ?',
 	'disable_account' => 'Disable your account',
 	'delete_account' => 'Delete your account',
-	
+
 	// Tasks
 	'task_page' =>'Task page',
 	'viewing_task' =>'Viewing task ',
@@ -278,7 +278,7 @@ return [
 	'adding_helper_task' => 'Adding helper to Task',
 	'editing_task' => 'Editing Task',
 	'assign_to_helper' => 'Assign to an helper',
-	
+
 	// material
 	'materials' => 'Materials',
 	'edit_material' => 'Editing Material',
@@ -289,7 +289,7 @@ return [
 	'no_materials' => 'No materials to show',
 	'add_material' => 'Add material',
 	'edit_quantity' => 'Edit quantity',
-	
+
 	// Shopping
 	'' => 'The Shopping List for the LAN',
 	'to_buy' => 'To buy',
@@ -302,7 +302,7 @@ return [
 	'create_new_shopping' => 'Creating new Shopping',
 	'add_shopping' => 'Add shopping',
 	'viewing_shopping_lan' => 'Viewing shopping list element of',
-	
+
 	// tournament
 	'add_to_tournament' => 'Add to tournament',
 	'add_player_tournament' => 'Add players to tournament',
@@ -322,7 +322,7 @@ return [
 	'edit_tournament' => 'Editing Tournament',
 	'tournament_state' => 'State of tournament :',
 	'tournament_page' => 'Tournament_page',
-	
+
 	'teams_for_tournament' => 'All teams for the tournament',
 	'tournament_teams' => 'Tournament\'s teams',
 	'add_team' => 'Add a team',
@@ -330,7 +330,6 @@ return [
 	'tree' => 'Tree',
 	
 	'add_player' => 'Add a new player',
-
 	
 	// notification
 	
@@ -374,13 +373,14 @@ return [
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE
 	//'goodbye' => 'Goodbye, :Name', // Goodbye, Dayle
 	//{{ __('messages.add_port_game', ['game' => $game->name_game, 'lan' => $lan->name]) }}
-	
+
 	// {{ __('messages.') }}
 
 	'quick_link' => 'Quick-Links',
 	'activities' => 'Activities',
 	'gamess' => 'Games',
 	'Tournament' => 'Tournament',
+	'tournaments' => 'Tournaments',
 	'tasks' => 'Tasks',
 	'shoppings' => 'Shoppings',
 	'players' => 'Players',

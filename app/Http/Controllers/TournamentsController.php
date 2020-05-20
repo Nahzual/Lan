@@ -523,11 +523,11 @@ class TournamentsController extends Controller
 						foreach($players as $key=>$team){
 							$players[$key]=$team->users()->first();
 						}
-						return view('tournament.tree', compact('lan', 'tournament', 'game', 'userIsLanAdmin', 'players','teams'));
+						return view('tournament.tree', compact('lan', 'tournament', 'userIsLanAdmin', 'players','teams'));
 
 					}else{
 						$players_count=$tournament->players_count($teams);
-						return view('tournament.tree', compact('lan', 'tournament', 'game', 'userIsLanAdmin', 'teams','players_count'));
+						return view('tournament.tree', compact('lan', 'tournament', 'userIsLanAdmin', 'teams','players_count'));
 					}
 
 				}else{

@@ -32,7 +32,7 @@ class Tournament extends Model
 	/*Returns the number of users that joined this tournament*/
 	public function players_count($teams=null){
 		if($teams==null) $teams=$this->teams;
-		
+
 		$players_count=0;
 		foreach($teams as $team){
 			$count=$team->users()->selectRaw('COUNT(*) as count')->first();
@@ -41,5 +41,11 @@ class Tournament extends Model
 			$players_count+=$count;
 		}
 		return $players_count;
+	}
+
+	/*Returns the number of teams created for that tournament*/
+	public function teams_count($teams=null){
+		if($teams==null) $teams=$this->teams;
+		return count($teams);
 	}
 }

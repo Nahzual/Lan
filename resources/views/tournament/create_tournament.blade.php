@@ -24,7 +24,7 @@
   </div>
   <div class="form-group">
     {!! Form::label('opening_date_tournament', __('messages.date') , ['class' => 'display-6']) !!}
-    {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control','required'=>'']) !!}
+    {!! Form::time('opening_date_tournament', null, ['id'=>'opening_date_tournament', 'min'=>'1', 'class'=>'form-control','required'=>'','step'=>'1']) !!}
   </div>
   <div class="form-group">
     {!! Form::label('max_player_count_tournament', __('messages.max_nb_player') , ['class' => 'display-6']) !!}

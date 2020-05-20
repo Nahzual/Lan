@@ -12,6 +12,7 @@ function sendRequest(e,lanId,tournamentId){
 		+'&opening_date_tournament='+$("[name='opening_date_tournament']").val()
 		+'&max_player_count_tournament='+$("[name='max_player_count_tournament']").val()
 		+'&match_mod_tournament='+$("[name='match_mod_tournament']").val()
+		+'&is_finished_tournament='+$("[name='is_finished_tournament']").val()
 		+'&id_game='+$("[name='id_game']").val(),
 
 		success: function(data){

@@ -296,8 +296,11 @@ return [
 	'Remaining money' => '',
 	'cost' => 'Cost',
 	'quantity' => 'Quantity',
-	'' => 'Choose Material',
+	'choose_material' => 'Choose Material',
 	'' => 'Creating new Shopping',
+	'edit_shopping' => 'Editing Shopping',
+	'create_new_shopping' => 'Creating new Shopping',
+	'add_shopping' => 'Add shopping',
 	
 	// echo __('messages.welcome', ['name' => 'dayle']);
 	//'welcome' => 'Welcome, :NAME', // Welcome, DAYLE

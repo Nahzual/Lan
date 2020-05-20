@@ -3,17 +3,17 @@
 	<table class="table card-table">
 		<thead class="card-table text-center">
 			<th scope="col" class="lead">#</th>
-			<th scope="col" class="lead">Name</th>
-			<th scope="col" class="lead">Description of the material</th>
-			<th scope="col" class="lead">Cost</th>
-			<th scope="col" class="lead ">Quantity</th>
+			<th scope="col" class="lead">{{ __('messages.name') }}</th>
+			<th scope="col" class="lead">{{ __('messages.description') }}</th>
+			<th scope="col" class="lead">{{ __('messages.cost') }}</th>
+			<th scope="col" class="lead">{{ __('messages.quantity') }}</th>
 			@if($userIsLanAdmin) <th scope="col" class="lead "></th> @endif
 		</thead>
 
 		<tbody>
 			@if(count($materials)==0)
 				<tr>
-					<td colspan="5"><h3 class="text-center">No materials to show</h3></td>
+					<td colspan="5"><h3 class="text-center">{{ __('messages.no_materials') }}</h3></td>
 				</tr>
 			@endif
 
@@ -29,7 +29,7 @@
 							{!! Form::open(['method' => 'delete','url'=>'', 'onsubmit'=>'return removeShopping(event,'.$lan->id.','.$shopping->id.')']) !!}
 							<div class="form-group row text-center">
 								<div class="col">
-									<button type="submit" class="btn btn-warning"><i class='fa fa-times'></i> Remove</button>
+									<button type="submit" class="btn btn-warning"><i class='fa fa-times'></i> {{ __('messages.remove') }}</button>
 								</div>
 							</div>
 							{!! Form::close() !!}

@@ -27,14 +27,14 @@ $lan
 				<div class="card-header text-center">
 					<div class="row lead">
 						<div class="col">#</div>
-						<div class="col">Name</div>
-						<div class="col">Price</div>
-						<div class="col">Quantity</div>
-						<div class="col">View</div>
-						<div class="col">Edit</div>
-						<div class="col">Add</div>
-						<div class="col">Remove</div>
-						<div class="col">Delete</div>
+						<div class="col">{{ __('messages.name') }}</div>
+						<div class="col">{{ __('messages.price') }}</div>
+						<div class="col">{{ __('messages.quantity') }}</div>
+						<div class="col">{{ __('messages.view') }}</div>
+						<div class="col">{{ __('messages.edit') }}</div>
+						<div class="col">{{ __('messages.add') }}</div>
+						<div class="col">{{ __('messages.remove') }}</div>
+						<div class="col">{{ __('messages.delete') }}</div>
 					</div>
 				</div>
 

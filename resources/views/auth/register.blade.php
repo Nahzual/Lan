@@ -109,30 +109,78 @@
 							</div>
 						</div>
 
+						<div class="form-group row">
+							{!! Form::label('num_street', __('messages.streetnbr'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+							<div class="col-md-6">
+								<input type="number" name="num_street" id="num_street" min="1" placeholder="{{ __('messages.streetnbr') }}" value="{{ old('num_street') }}" class="form-control @error('num_street') is-invalid @enderror"></input>
 
+								@error('num_street')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
+						</div>
+						<div class="form-group row">
+							{!! Form::label('name_street', __('messages.streetname'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+							<div class="col-md-6">
+								<input type="text" name="name_street" id="name_street"  placeholder="{{ __('messages.streetname') }}" value="{{ old('name_street') }}" class="form-control @error('name_street') is-invalid @enderror"></input>
 
+								@error('name_street')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
+						</div>
+						<div class="form-group row">
+							{!! Form::label('name_city', __('messages.city'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+							<div class="col-md-6">
+								<input type="text" name="name_city" id="name_city"  placeholder="{{ __('messages.city') }}" value="{{ old('name_city') }}" class="form-control @error('name_city') is-invalid @enderror"></input>
 
-	<div>
-		{!! Form::label('location', __('messages.location'), ['class' => 'display-6']) !!}
-		<div id="location" class="input-group mb-1">
-			{!! Form::number('num_street', null, ['id'=>'num_street','min'=>'0', 'placeholder'=>__('messages.streetnbr'),'class' => 'form-control']) !!}
-			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_street', null, ['id'=>'name_street','placeholder'=> __('messages.streetname'), 'class' => 'form-control']) !!}
-			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_city', null, ['id'=>'name_city','placeholder'=>__('messages.city'),'class' => 'form-control']) !!}
-		</div>
-		<div class="input-group mb-5">
-			{!! Form::text('zip_city', null, ['id'=>'zip_city','placeholder'=>__('messages.zip'),'class' => 'form-control']) !!}
-			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_department', null, ['id'=>'name_department','placeholder'=>__('messages.depname'),'class' => 'form-control']) !!}
-			<span class="input-group-addon mr-2"></span>
-			{!! Form::text('name_country', null, ['id'=>'name_country','placeholder'=> __('messages.country'), 'class' => 'form-control']) !!}
-		</div>
-	</div>
+								@error('name_city')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
+						</div>
+						<div class="form-group row">
+							{!! Form::label('zip_city', __('messages.zip'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+							<div class="col-md-6">
+								<input type="text" name="zip_city" id="zip_city"  placeholder="{{ __('messages.zip') }}" value="{{ old('zip_city') }}" class="form-control @error('zip_city') is-invalid @enderror"></input>
 
+								@error('zip_city')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
+						</div>
+						<div class="form-group row">
+							{!! Form::label('name_department', __('messages.depname'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+							<div class="col-md-6">
+								<input type="text" name="name_department" id="name_department"  placeholder="{{ __('messages.depname') }}" value="{{ old('name_department') }}" class="form-control @error('name_department') is-invalid @enderror"></input>
 
+								@error('name_department')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
+						</div>
+						<div class="form-group row">
+							{!! Form::label('name_country', __('messages.country'), ['class' => 'col-md-4 col-form-label text-md-right']) !!}
+							<div class="col-md-6">
+								<input type="text" name="name_country" id="name_country"  placeholder="{{ __('messages.country') }}" value="{{ old('name_country') }}" class="form-control @error('name_country') is-invalid @enderror"></input>
 
-
+								@error('name_country')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
+						</div>
 
 						<div class="form-group row mb-0">
 							<div class="col-md-6 offset-md-4">

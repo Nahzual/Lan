@@ -62,6 +62,12 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
 			      'tel_user' => ['required', 'unique:users','digits:10'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+						'name_country' => ['required', 'string'],
+						'name_department' => ['required', 'string'],
+						'name_city' => ['required', 'string'],
+						'zip_city' => ['required', 'digits:5'],
+						'name_street' => ['required','string'],
+						'num_street' => ['required', 'integer','min:1'],
         ]);
     }
 
@@ -71,9 +77,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-      //Country
+    protected function create(array $data){
       $countries = Country::where('name_country','=',$data['name_country'])->get();
       if($countries != null){$country = $countries->first();}
       if(!isset($country)){
